@@ -8,7 +8,9 @@
         "version": "1.3"
       }
     },
-    "hook": {},
+    "hook": {
+      "on-activate": "  # Make pi-models available on PATH\n  if [ -d \"$PWD/cli/pi-models\" ]; then\n    export PATH=\"$PWD/cli/pi-models/src:$PATH\"\n  fi\n\n  # Install npm deps for pi-models if needed\n  if [ -f \"$PWD/cli/pi-models/bun.lock\" ] && [ ! -d \"$PWD/cli/pi-models/node_modules\" ]; then\n    echo \"→ Installing pi-models dependencies...\"\n    (cd \"$PWD/cli/pi-models\" && bun install --silent) || true\n  fi\n\n  # Check optional external binaries (see DEPENDENCIES.md)\n  for bin in rtk skate; do\n    if ! command -v \"$bin\" >/dev/null 2>&1; then\n      echo \"⚠  Optional: '$bin' not found on PATH — some features may not work\"\n      echo \"   Install: brew install $bin\"\n    fi\n  done\n"
+    },
     "profile": {},
     "options": {}
   },
