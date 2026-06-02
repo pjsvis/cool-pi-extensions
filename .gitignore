@@ -1,0 +1,9 @@
+# Flox runtime (manifest is committed, cache/run is not)
+.flox/cache/
+.flox/run/
+
+# Node
+cli/pi-models/node_modules/
+
+# macOS
+.DS_Store

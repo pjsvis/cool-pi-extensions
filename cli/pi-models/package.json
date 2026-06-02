@@ -1,0 +1,13 @@
+{
+  "name": "pi-models",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "citty": "0.2.2"
+  },
+  "scripts": {
+    "build": "bun build src/main.ts --outfile dist/pi-models.js --target bun --format esm && chmod +x dist/pi-models.js",
+    "dev": "bun run src/main.ts"
+  }
+}
