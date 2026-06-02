@@ -9,7 +9,7 @@ A curated collection of extensions, CLI tooling, and prompts for the [Pi Coding 
 | Extension | Description |
 |---|---|
 | **defuddle** | Fetch any webpage as clean Markdown. Domain allow/block lists, telemetry logging, `/defuddle` slash command. |
-| **silo-sandbox** | Hard filesystem boundary — agent cannot read or write outside the repo root. "I'm staying in." |
+| **silo** | Hard filesystem boundary — agent cannot read or write outside the repo root. "I'm staying in." |
 | **herdr-agent-state** | Reports pi agent state (idle / working / blocked) to [herdr](https://herdr.io) for visual indicators. |
 
 ### CLI tools
@@ -29,7 +29,7 @@ A curated collection of extensions, CLI tooling, and prompts for the [Pi Coding 
 ### 1. Clone
 
 ```bash
-git clone https://github.com/petersmith/cool-pi-extensions.git ~/.pi/extensions
+git clone https://github.com/pjsvis/cool-pi-extensions.git ~/.pi/extensions
 ```
 
 ### 2. Activate Flox environment (CLI tools)
@@ -63,10 +63,10 @@ mkdir -p ~/.pi/agent/extensions
 # Symlink each extension (pi follows symlinks — tested and confirmed)
 ln -sf ~/.pi/extensions/extensions/defuddle/defuddle.ts ~/.pi/agent/extensions/defuddle.ts
 ln -sf ~/.pi/extensions/extensions/herdr-agent-state/herdr-agent-state.ts ~/.pi/agent/extensions/herdr-agent-state.ts
-cp -r ~/.pi/extensions/extensions/silo-sandbox ~/.pi/agent/extensions/silo-sandbox
+cp -r ~/.pi/extensions/extensions/silo ~/.pi/agent/extensions/silo
 ```
 
-The silo-sandbox extension is a directory extension (has `package.json` + `index.ts`) so it needs to be copied rather than symlinked as a single file. Pi will auto-discover it on next start.
+The silo extension is a directory extension (has `package.json` + `index.ts`) so it needs to be copied rather than symlinked as a single file. Pi will auto-discover it on next start.
 
 ### 4. Set the system prompt (optional)
 
@@ -96,11 +96,11 @@ Fetch any webpage as clean Markdown via the [defuddle.md](https://defuddle.md) A
 
 **Telemetry:** All fetches are logged to `~/.pi/defuddle-log.jsonl` for debugging.
 
-### silo-sandbox
+### silo
 
-Hard boundary: the agent cannot read, write, or execute anything outside the repository root. Every `bash` command is intercepted and path-checked.
+Hard boundary: the agent cannot read, write, or execute anything outside the repository root. Every `bash` command is intercepted and path-checked. Uses pi's built-in local bash backend (`createLocalBashOperations`), so the agent sees the same environment and MVFS overlay as a normal session.
 
-**Config** (`~/.pi/agent/extensions/silo-sandbox/config.json`):
+**Config** (`~/.pi/agent/extensions/silo/config.json` or `.pi/silo.json` for project-local; backwards-compatible with old `silo-sandbox.json` paths):
 ```json
 {
   "siloRoot": "/path/to/repo",
@@ -108,7 +108,7 @@ Hard boundary: the agent cannot read, write, or execute anything outside the rep
 }
 ```
 
-When a command references a path outside `siloRoot`, the agent sees `Refused: "...". I'm staying in.` No data leakage.
+When a command references a path outside `siloRoot`, the agent sees `I'm staying in.` No data leakage. Escape hatch: `pi --no-silo`.
 
 ### herdr-agent-state
 
