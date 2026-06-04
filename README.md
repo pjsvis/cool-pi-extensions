@@ -21,11 +21,7 @@ A curated collection of extensions, CLI tooling, and prompts for the [Pi Coding 
 
 | Prompt | Description |
 |---|---|
-| **Edinburgh Protocol** | Scottish Enlightenment agent identity — Hume's skepticism, Smith's systems thinking, Watt's pragmatism. |
-
-### Canon
-
-Permanent, linkable references at [pjs.weblog.lol/canon](https://pjs.weblog.lol/canon/). Also mirrored at [pjsvis.github.io/cool-pi-extensions/canon](https://pjsvis.github.io/cool-pi-extensions/canon/).
+| **Edinburgh Protocol** | Scottish Enlightenment principles — Hume's skepticism, Smith's systems thinking, Watt's pragmatism. |
 
 ## Quick start
 
@@ -43,11 +39,13 @@ ln -sf ~/.pi/extensions/extensions/defuddle/defuddle.ts ~/.pi/agent/extensions/d
 cp -r ~/.pi/extensions/extensions/silo ~/.pi/agent/extensions/silo
 ```
 
-### Set the system prompt (optional)
+### Set the system-prompt (optional)
 
 ```bash
 ln -sf ~/.pi/extensions/prompts/edinburgh-protocol.md ~/.pi/agent/AGENTS.md
 ```
+
+Alternatively add the Edinburgh Protocol text to your AGENTS.md file.
 
 ## Extension details
 
