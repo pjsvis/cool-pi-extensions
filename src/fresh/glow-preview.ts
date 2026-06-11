@@ -195,7 +195,7 @@ globalThis.glow_preview_toggle = async function (): Promise<void> {
 
   // Preview exists but we're on a different tab — close old and preview current instead.
   if (previewBufferId !== 0) {
-    editor.closeBuffer(previewBufferId);
+    await editor.closeBuffer(previewBufferId);
     previewBufferId = 0;
     sourceBufferId = 0;
     // Fall through to open a new preview for the current buffer
