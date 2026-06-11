@@ -89,15 +89,19 @@ event hooks.
 
 ### Key API patterns
 
-| Task | API |
-|---|---|
-| Register a command | `editor.registerCommand(name, desc, handlerName, context)` |
-| Open a virtual buffer (full tab) | `editor.createVirtualBuffer({ name, mode, readOnly, entries })` |
-| Open a virtual buffer (split pane) | `editor.createVirtualBufferInSplit({ name, mode, ratio, direction, panelId, entries })` |
-| Run an external command | `editor.spawnProcess(cmd, args, cwd)` → `ProcessHandle<SpawnResult>` |
-| Read buffer content | `editor.getBufferText(bufferId, start, end)` → `Promise<string>` |
-| Define custom mode | `editor.defineMode(name, [[key, action], ...], readOnly)` |
-| Subscribe to events | `editor.on("after_file_save" \| "buffer_closed" \| ..., handler)` |
+**Register a command** — `editor.registerCommand(name, desc, handlerName, context)`
+
+**Open a virtual buffer (full tab)** — `editor.createVirtualBuffer({ name, mode, readOnly, entries })`
+
+**Open a virtual buffer (split pane)** — `editor.createVirtualBufferInSplit({ name, mode, ratio, direction, panelId, entries })`
+
+**Run an external command** — `editor.spawnProcess(cmd, args, cwd)` → `ProcessHandle<SpawnResult>`
+
+**Read buffer content** — `editor.getBufferText(bufferId, start, end)` → `Promise<string>`
+
+**Define custom mode** — `editor.defineMode(name, [[key, action], ...], readOnly)`
+
+**Subscribe to events** — `editor.on("after_file_save" | "buffer_closed" | ..., handler)`
 
 ### External tool integration pattern
 

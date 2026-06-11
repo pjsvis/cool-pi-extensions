@@ -56,22 +56,16 @@ Zero onboarding. The system teaches itself.
 **Visitor Entry Self-Teaching.**
 
 Like REST (Representational State Transfer), it's a named pattern with an acronym that maps to its principles:
-
-| Letter | Principle | What it means |
-|---|---|---|
-| **V** | Visitor | Design for visitors, not just users. A visitor knows nothing. A user knows something. |
-| **E** | Entry | The entry point teaches the system. If `just orient` doesn't tell you everything you need to start, you haven't finished designing it. |
-| **S** | Self | The API references itself. `orient` lists the other verbs. `browse` lists the docs. The map contains the map. |
-| **T** | Teach | Zero-friction discovery. A first-time visitor should understand the system in under 60 seconds without reading anything. |
+**V is for Visitor** — Design for visitors, not just users. A visitor knows nothing. A user knows something.
+**E is for Entry** — The entry point teaches the system. If `just orient` doesn't tell you everything you need to start, you haven't finished designing it.
+**S is for Self** — The API references itself. `orient` lists the other verbs. `browse` lists the docs. The map contains the map.
+**T is for Teach** — Zero-friction discovery. A first-time visitor should understand the system in under 60 seconds without reading anything.
 
 ## Two Verbs, Two Audiences
 
 The pattern is simple: **one verb per audience**.
-
-| Verb | Audience | Teaches |
-|---|---|---|
-| `orient` | Agents | Where is the work? What's active? What do I do next? |
-| `browse` | Humans | What's here? How do I read it? What can I explore? |
+**`orient`** — For agents: Where is the work? What's active? What do I do next?
+**`browse`** — For humans: What's here? How do I read it? What can I explore?
 
 Agents and humans have different needs. Agents need to act; humans need to understand. Giving them the same verb is like giving a pilot and a passenger the same controls.
 
@@ -113,13 +107,13 @@ Like REST, VEST is a pattern named with an acronym. But the philosophy is differ
 
 **The VEST solution:** If the repo is rubbish, there's no need to read much further, far less navigate an endless expanse. `just orient` tells you what matters. If there's nothing active, you're done. If there's work, you know where to start. The system tells you its own state — no archaeology required.
 
-| | REST | VEST |
-|---|---|---|
-| Philosophy | Here is the API name, here is the rest of it | You are new here — what do you want to know? |
-| Assumption | You know what you're looking for | You know nothing |
-| Size | Expansive — document everything | Minimal — two verbs |
-| Maintenance | High — docs must match implementation | Low — the system teaches itself |
-| Failure mode | Hours lost to stale documentation | 30 seconds to understand it's not worth it |
+**REST** — Here is the API name, here is the rest of it
+**VEST** — You are new here — what do you want to know?
+**Philosophy:** Here is the API name, here is the rest of it → Here is the VEST alternative: You are new here — what do you want to know?
+**Assumption:** You know what you're looking for → VEST assumes: You know nothing
+**Size:** Expansive — document everything → VEST is: Minimal — two verbs
+**Maintenance:** High — docs must match implementation → VEST cost: Low — the system teaches itself
+**Failure mode:** Hours lost to stale documentation → VEST failure: 30 seconds to understand it's not worth it
 
 REST optimizes for known unknowns. VEST optimizes for unknown unknowns.
 

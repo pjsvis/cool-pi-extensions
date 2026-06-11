@@ -4,27 +4,18 @@ Extensions run inside pi's runtime and only need what pi provides.
 CLI tools and optional integrations may need additional binaries on `PATH`.
 
 ## Required — CLI tools
-
-| Tool | Needs | Install |
-|---|---|---|
-| `pi-models` | `bun` ≥1.3 | `flox activate` (or `brew install bun`) |
-| `just` (task runner) | `just` | `flox activate` (or `brew install just`) |
-| `td` (agent task memory) | `td` | `brew install td` (from `marcus/homebrew-tap`) |
-| `sidecar` (user monitor) | `sidecar` | `brew install sidecar` (from `marcus/homebrew-tap`) |
+**`pi-models`** — Needs: `bun` ≥1.3. Install: `flox activate` (or `brew install bun`)
+**`just` (task runner)** — Needs: `just`. Install: `flox activate` (or `brew install just`)
+**`td` (agent task memory)** — Needs: `td`. Install: `brew install td` (from `marcus/homebrew-tap`)
+**`sidecar` (user monitor)** — Needs: `sidecar`. Install: `brew install sidecar` (from `marcus/homebrew-tap`)
 
 ## Required — extensions
-
-| Extension | Needs | Install |
-|---|---|---|
-| *none — all extensions use only pi's built-in runtime* | — | — |
+**Extensions:** *none — all extensions use only pi's built-in runtime*
 
 ## Optional — integrations
-
-| Integration | Needs | Install |
-|---|---|---|
-| rtk (token compression) | `rtk` binary | `brew install rtk` |
-| skate (secret management) | `skate` binary | `brew install skate` |
-| glow (markdown preview / `just help`) | `glow` binary | `brew install glow` |
+**rtk (token compression)** — Needs: `rtk` binary. Install: `brew install rtk`
+**skate (secret management)** — Needs: `skate` binary. Install: `brew install skate`
+**glow (markdown preview / `just help`)** — Needs: `glow` binary. Install: `brew install glow`
 
 ## Adding a new dependency
 

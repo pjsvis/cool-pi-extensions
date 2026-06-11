@@ -12,14 +12,14 @@
 alacritty → herdr → pi → [new tab] → fresh → [new tab] → sidecar
 ```
 
-| Layer | Tool | Purpose |
-|---|---|---|
-| Terminal | Alacritty | GPU-accelerated terminal emulator |
-| Connection | herdr | SSH config and session management |
-| Agent | pi | Coding agent with Edinburgh Protocol identity |
-| Editor | Fresh | Terminal-native code editor |
-| Monitor | sidecar | TUI for watching agent progress and worktrees |
-| Task memory | td | Structured session and issue tracking for agents |
+
+
+**Terminal layer:** Alacritty — GPU-accelerated terminal emulator
+**Connection layer:** herdr — SSH config and session management
+**Agent layer:** pi — Coding agent with Edinburgh Protocol identity
+**Editor layer:** Fresh — Terminal-native code editor
+**Monitor layer:** sidecar — TUI for watching agent progress and worktrees
+**Task memory layer:** td — Structured session and issue tracking for agents
 
 td is for **agents**. sidecar is for **you** — the human supervising the agents.
 
@@ -154,10 +154,9 @@ Or inside pi, open a new tab (`Ctrl+T` in Fresh) and run Fresh + sidecar there.
 
 ## Key files in this repo
 
-| File | Purpose |
-|---|---|
-| `justfile` | Task runner — `just provision`, `just orient`, `just help` |
-| `AGENTS.md` | Agent instructions — Edinburgh Protocol + project context |
-| `MANIFEST.md` | Full repo index |
-| `playbooks/dev-stack-setup.md` | This guide |
-| `DEPENDENCIES.md` | Tool dependency reference |
+
+**`justfile`** — Task runner: `just provision`, `just orient`, `just help`
+**`AGENTS.md`** — Agent instructions: Edinburgh Protocol + project context
+**`MANIFEST.md`** — Full repo index
+**`playbooks/dev-stack-setup.md`** — This guide
+**`DEPENDENCIES.md`** — Tool dependency reference

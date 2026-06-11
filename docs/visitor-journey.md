@@ -58,17 +58,14 @@ No active work. Run 'td next' to see the next issue to start.
 ```
 
 **What you now know:**
-
-| Question | Answer |
-|---|---|
-| Where am I? | `cool-pi-extensions`, branch `main` |
-| What tools are available? | `bun`, `just`, `glow`, `pi`, Fresh |
-| What's the stack? | Alacritty → herdr → pi → fresh |
-| Is there active work? | No (td says so) |
-| How do I find work? | `td next` |
-| How do I normalize? | `just adopt-edinburgh` |
-| What is this project? | VEST Protocol, extensions, CLI tooling |
-| Where do I read more? | `just read docs/the-vest-protocol.md` |
+**Where am I?** — `cool-pi-extensions`, branch `main`
+**What tools are available?** — `bun`, `just`, `glow`, `pi`, Fresh
+**What's the stack?** — Alacritty → herdr → pi → fresh
+**Is there active work?** — No (td says so)
+**How do I find work?** — `td next`
+**How do I normalize?** — `just adopt-edinburgh`
+**What is this project?** — VEST Protocol, extensions, CLI tooling
+**Where do I read more?** — `just read docs/the-vest-protocol.md`
 
 **Time elapsed:** 30 seconds.
 
@@ -186,12 +183,11 @@ You report to the user:
 
 The system taught itself. You are productive.
 
-| Step | What you learned | How you learned it |
-|---|---|---|
-| 1 | Environment, tools, active work | `just orient` |
-| 2 | Normalized identity | `just adopt-edinburgh` |
-| 3 | Philosophy, structure | `just browse`, `just read` |
-| 4 | Ready to work | `just dev` |
+
+**Step 1** — Environment, tools, active work. Learned via: `just orient`
+**Step 2** — Normalized identity. Learned via: `just adopt-edinburgh`
+**Step 3** — Philosophy, structure. Learned via: `just browse`, `just read`
+**Step 4** — Ready to work. Learned via: `just dev`
 
 **Total time:** Under 5 minutes.
 

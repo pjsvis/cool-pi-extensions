@@ -19,11 +19,11 @@ attempting installation. No step should fail if re-run.
 
 Start by running `uname -s` to detect the platform:
 
-| `uname -s` output | Platform | Package manager |
-|---|---|---|
-| `Darwin` | macOS | Homebrew (install if missing) |
-| `Linux` | Linux | apt (Debian/Ubuntu) or detect |
-| `MINGW*` or `MSYS*` | Windows (Git Bash / WSL) | winget or apt (inside WSL) |
+
+
+**`Darwin`** — macOS → Homebrew (install if missing)
+**`Linux`** — Linux → apt (Debian/Ubuntu) or detect
+**`MINGW*` or `MSYS*`** — Windows (Git Bash / WSL) → winget or apt (inside WSL)
 
 If on macOS and `brew` is not found, install Homebrew first:
 ```bash

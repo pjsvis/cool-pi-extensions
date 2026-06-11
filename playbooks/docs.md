@@ -8,12 +8,12 @@ Long-form, human-readable documents translated from machine-readable artifacts. 
 
 ## Relationship to other silos
 
-| Silo | Format | Audience |
-|---|---|---|
-| `prompts/edinburgh-protocol-evals-v1.json` | JSON | Extension runtime |
-| `docs/edinburgh-protocol-evals.md` | Markdown prose | Humans |
-| `prompts/edinburgh-protocol.md` | Markdown (system prompt) | Agent + human |
-| `prompts/edinburgh-protocol.md` | Markdown | Agent identity — Edinburgh Protocol |
+
+
+**`prompts/edinburgh-protocol-evals-v1.json`** — JSON format, consumed by extension runtime
+**`docs/edinburgh-protocol-evals.md`** — Markdown prose, optimized for human readers
+**`prompts/edinburgh-protocol.md`** — Markdown (system prompt format), read by agent + human
+**`prompts/edinburgh-protocol.md`** — Markdown, serves as agent identity under Edinburgh Protocol
 
 The JSON fixture is a runtime dependency — the extension reads it directly. The Markdown in `docs/` is a companion document: same content, but structured for reading rather than parsing.
 

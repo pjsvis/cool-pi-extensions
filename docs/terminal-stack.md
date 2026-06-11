@@ -6,14 +6,13 @@ WSL2). SSH-native — no browser, no Electron, no GUI required. Just a terminal.
 
 ## Stack overview
 
-| Layer | Tool | Role | macOS | Linux | WSL2 |
-|---|---|---|---|---|---|
-| Networking | **TailScale** | WireGuard mesh — connect any device to any device | ✓ | ✓ | ✓ |
-| Terminal | **Alacritty** | GPU rendering, font, clipboard | ✓ | ✓ | ✓ (native Windows + WSL) |
-| Session multiplexing | **herdr** | Tab/session mgmt, daemon, agent orchestration | ✓ | ✓ | ✓ |
-| AI agent | **pi** | LLM-driven code gen, tool use, Edinburgh Protocol | ✓ | ✓ | ✓ |
-| Editor | **Fresh** | Fast terminal editor, plugin system, LSP | ✓ | ✓ | ✓ |
-| Mobile SSH | **Echo** (iOS) | Ghostty engine, Mosh, Face ID, touch-optimized | iOS/iPadOS | — | — |
+
+**Networking (TailScale)** — WireGuard mesh: connect any device to any device. macOS ✓ · Linux ✓ · WSL2 ✓
+**Terminal (Alacritty)** — GPU rendering, font, clipboard. macOS ✓ · Linux ✓ · WSL2 ✓ (native Windows + WSL)
+**Session multiplexing (herdr)** — Tab/session mgmt, daemon, agent orchestration. macOS ✓ · Linux ✓ · WSL2 ✓
+**AI agent (pi)** — LLM-driven code gen, tool use, Edinburgh Protocol. macOS ✓ · Linux ✓ · WSL2 ✓
+**Editor (Fresh)** — Fast terminal editor, plugin system, LSP. macOS ✓ · Linux ✓ · WSL2 ✓
+**Mobile SSH (Echo on iOS)** — Ghostty engine, Mosh, Face ID, touch-optimized. iOS/iPadOS ✓ · Linux — · WSL2 —
 
 ### Why this over VS Code Remote / JetBrains Gateway
 
@@ -36,6 +35,42 @@ WSL2). SSH-native — no browser, no Electron, no GUI required. Just a terminal.
   "remote file system" abstraction layer that breaks `git`, `find`, or shell
   scripts.
 
+## The shared agent-human platform
+
+Most dev tooling is built for either humans or agents — never both in the same
+workspace. This stack is different. It's designed around a specific requirement:
+
+**A shared context and workplace where both parties see the same things, each
+use their preferred affordances, and neither loses state when reality intervenes.**
+
+Four properties make this work:
+
+**Shared visibility.** Both the human and the agent work in the same herdr
+session. The human sees pi's output, the agent sees the editor state. sidecar
+adds a third view — a live dashboard of active worktrees and td state — without
+intruding on either workspace. Everyone is reading from the same page.
+
+**Stability.** The stack is terminal-native and platform-agnostic. Alacritty
+renders consistently across macOS, Linux, and Windows (WSL2). The agent sees
+the same environment regardless of where it connects from. No GUI abstraction
+layers, no platform-specific configuration surprises.
+
+**Persistence.** herdr keeps sessions alive across disconnections. SSH drops,
+laptop lid closes, train enters a tunnel — reconnect and everything is exactly
+where it was. pi is mid-sentence. Fresh has your unsaved changes. td has the
+handoff context. The workspace survives the network.
+
+**Connectivity.** Every layer works over SSH. TailScale gives you a fixed
+address on a private mesh — connect from a phone, a tablet, a Chromebook, or a
+15-year-old ThinkPad. The agent works identically from anywhere.
+
+The key insight: **the window problem is a fake problem**. Desktop window
+managers differ wildly across platforms. The fix is not to pick the best one —
+it's to leave the OS window manager out of it entirely. herdr sessions + Alacritty
+tabs give you everything both parties need in a platform-agnostic shell.
+Windows, Mac, Linux: identical experience. Same session, same context, same
+shared workspace.
+
 ## The extension layer
 
 Extensions bridge the tools, providing quality-of-life features for both agents
@@ -46,27 +81,24 @@ and users. They live in two runtimes:
 Run inside pi's Node.js runtime. Provide custom tools, slash commands, and
 lifecycle hooks for the AI agent.
 
-| Extension | Role |
-|---|---|
-| **silo** | Hard filesystem boundary — agent can't read/write outside the repo |
-| **defuddle** | Fetch any webpage as clean Markdown (agent-accessible tool) |
-| **edinburgh-evals** | Model behavioral gate — Protocol trap vectors against candidate models |
+
+**silo** — Hard filesystem boundary: agent can't read/write outside the repo
+**defuddle** — Fetch any webpage as clean Markdown (agent-accessible tool)
+**edinburgh-evals** — Model behavioral gate: Protocol trap vectors against candidate models
 
 ### Fresh plugins (TypeScript, QuickJS)
 
 Run inside Fresh's sandboxed QuickJS runtime. Provide virtual buffers, overlays,
 and external tool integration for the human user.
 
-| Plugin | Role |
-|---|---|
-| **glow-preview** | Full-screen Glow-rendered markdown preview. Toggle with keybind, auto-refresh on save, ANSI-color-matched to Fresh's theme. |
+
+**glow-preview** — Full-screen Glow-rendered markdown preview. Toggle with keybind, auto-refresh on save, ANSI-color-matched to Fresh's theme.
 
 ### CLI tools
 
-| Tool | Role |
-|---|---|
-| **pi-check** | Provider connectivity checker — probes every model provider's `/models` endpoint |
-| **pi-models** | `models.json` manager — add/remove/list/validate providers and models |
+
+**pi-check** — Provider connectivity checker: probes every model provider's `/models` endpoint
+**pi-models** — `models.json` manager: add/remove/list/validate providers and models
 
 ## SSH workflow — a day in the life
 
@@ -146,19 +178,16 @@ the CPU is.
    SSH. If you can `ssh` to it, you can run the full stack on it.
 
 ## Comparison matrix
-
-| | This stack | VS Code Remote | JetBrains Gateway | tmux + vim |
-|---|---|---|---|---|
-| **Cross-platform** | ✓ (macOS, Linux, WSL2) | ✓ | ✓ | ✓ (Unix only) |
-| **SSH-native** | ✓ (everything) | ✓ (UI is local) | ✓ (UI is local) | ✓ |
-| **AI agent** | ✓ (pi, in-terminal) | ✓ (Copilot, sidebar) | ✓ (AI Assistant) | ✗ |
-| **Session persistence** | ✓ (herdr) | ✗ (per-window) | ✗ (IDE restart) | ✓ (tmux) |
-| **Remote GPU needed** | ✗ | ✗ | ✗ | ✗ |
-| **Remote GUI needed** | ✗ | ✗ | ✗ | ✗ |
-| **Terminal-only** | ✓ | ✗ | ✗ | ✓ |
-| **Plugin system** | ✓ (Fresh + pi) | ✓ (VS Code) | ✓ (IntelliJ) | ✓ (vim/neovim) |
-| **Markdown preview** | ✓ (glow-preview) | ✓ (built-in) | ✓ (built-in) | ✗ (external) |
-| **Agent guardrails** | ✓ (silo + evals) | ✗ | ✗ | ✗ |
+**Cross-platform:** This stack ✓ (macOS, Linux, WSL2) · VS Code Remote ✓ · JetBrains Gateway ✓ · tmux + vim ✓ (Unix only)
+**SSH-native:** This stack ✓ (everything) · VS Code Remote ✓ (UI is local) · JetBrains Gateway ✓ (UI is local) · tmux + vim ✓
+**AI agent:** This stack ✓ (pi, in-terminal) · VS Code Remote ✓ (Copilot, sidebar) · JetBrains Gateway ✓ (AI Assistant) · tmux + vim ✗
+**Session persistence:** This stack ✓ (herdr) · VS Code Remote ✗ (per-window) · JetBrains Gateway ✗ (IDE restart) · tmux + vim ✓ (tmux)
+**Remote GPU needed:** This stack ✗ · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✗
+**Remote GUI needed:** This stack ✗ · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✗
+**Terminal-only:** This stack ✓ · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✓
+**Plugin system:** This stack ✓ (Fresh + pi) · VS Code Remote ✓ (VS Code) · JetBrains Gateway ✓ (IntelliJ) · tmux + vim ✓ (vim/neovim)
+**Markdown preview:** This stack ✓ (glow-preview) · VS Code Remote ✓ (built-in) · JetBrains Gateway ✓ (built-in) · tmux + vim ✗ (external)
+**Agent guardrails:** This stack ✓ (silo + evals) · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✗
 
 ## Future directions
 
