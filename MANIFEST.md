@@ -77,6 +77,7 @@ work starts.
 | 004 | [briefs/004-glow-fresh-preview.md](briefs/004-glow-fresh-preview.md) | complete |
 | 005 | [briefs/005-nex-n2-pro-not-in-pi-list.md](briefs/005-nex-n2-pro-not-in-pi-list.md) | lesson documented |
 | 006 | [briefs/006-manifest-system-lesson.md](briefs/006-manifest-system-lesson.md) | lesson documented |
+| 007 | [briefs/007-glow-cmdp-mode-toggle.md](briefs/007-glow-cmdp-mode-toggle.md) | implemented |
 
 ---
 
@@ -88,6 +89,7 @@ next.
 | # | File | Description |
 |---|---|---|
 | 003 | [debriefs/003-protocol-evals.md](debriefs/003-protocol-evals.md) | Edinburgh Protocol evals implementation retrospective. |
+| 004 | [debriefs/004-glow-cmdp-mode-toggle.md](debriefs/004-glow-cmdp-mode-toggle.md) | Glow CMD/⌘+P mode-toggle retrospective. |
 
 ---
 
@@ -100,6 +102,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 | 001 | [decisions/001-glow-full-tab.md](decisions/001-glow-full-tab.md) | Full-tab preview over split pane for markdown rendering. |
 | 002 | [decisions/002-ansi-color-numbers.md](decisions/002-ansi-color-numbers.md) | ANSI color numbers over hex for Glamour theme matching. |
 | 003 | [decisions/003-glow-width-90.md](decisions/003-glow-width-90.md) | Hardcode Glow width at 90 chars after bisect experiment. |
+| 004 | [decisions/004-glow-cmdp-mode-command.md](decisions/004-glow-cmdp-mode-command.md) | Glow toggle is a mode command, not an Explorer follower. |
 
 ---
 

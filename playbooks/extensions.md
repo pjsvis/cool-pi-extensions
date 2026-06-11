@@ -133,11 +133,23 @@ several patterns worth preserving:
 - **Toggle needs three states**: preview focused → close it; preview in
   background → switch to it; no preview → open one. The middle state prevents
   duplicate previews when the user tabs away and presses the shortcut again.
+- **CMD/⌘+P is a mode toggle, not an Explorer follower**. Do not make Glow
+  subscribe to Explorer click/open events just to follow file browsing. Let
+  Fresh own navigation; make the Glow command robust as a mode command:
+  `closed → open/focus`, `open/background → focus`, `open/focused → close and
+  return to source`.
+- **Focus the preview split explicitly**. `editor.showBuffer()` can leave the
+  cursor/focus in an unexpected pane. If a command is meant to enter a mode,
+  use the preview buffer’s split list (`BufferInfo.splits`) and
+  `editor.focusSplit(splitId)` before `editor.showBuffer(bufferId)`.
 - **Temp file for untitled buffers**: `editor.writeFile("/tmp/...", content)`
   then point Glow at the temp file. No stdin piping complexity.
 - **Auto-refresh on save**: `editor.on("after_file_save", ...)` refreshes the
   preview. Guard with `previewBufferId !== 0` to avoid work when the preview
   isn't open.
+- **Keep source and navigation separate**. The source buffer/split is the place
+  Glow should return to on close. It should not be silently rewritten by Fresh
+  Explorer preview buffers or other transient navigation artifacts.
 
 ---
 

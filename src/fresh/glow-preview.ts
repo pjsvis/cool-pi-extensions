@@ -5,11 +5,12 @@
  *
  * Renders the current markdown buffer through Glow (charmbracelet/glow)
  * in a full-screen tab. Bind "Glow Preview: Toggle" to a key via
- * Edit → Keybinding Editor (recommended: Ctrl+Shift+M).
+ * Edit → Keybinding Editor (current local binding: CMD/⌘+P).
  *
  * Features:
  * - Full-screen Glow-rendered preview as a tab
  * - Toggle: opens preview; press again on preview = close, return to source
+ * - Toggle is a mode command: focused preview closes, background preview focuses
  * - Auto-refresh on save when editing .md files
  * - Works with unnamed/untitled buffers (uses a temp file)
  * - q / Escape to close preview, r to refresh
@@ -28,6 +29,60 @@ let sourceSplitId = 0;
 
 /** Path to the temp file used for untitled buffers. */
 const TEMP_PATH = "/tmp/fresh-glow-preview-temp.md";
+
+function focusPreviewBuffer(): void {
+  if (previewBufferId === 0) return;
+
+  const info = editor.getBufferInfo(previewBufferId);
+  const splitId = info?.splits[0] || editor.getActiveSplitId();
+  if (splitId !== 0) {
+    editor.focusSplit(splitId);
+  }
+  editor.showBuffer(previewBufferId);
+}
+
+async function openPreviewFromBuffer(bufferId: number): Promise<boolean> {
+  if (bufferId === 0) {
+    editor.setStatus("No active buffer to preview");
+    return false;
+  }
+
+  const length = editor.getBufferLength(bufferId);
+  if (length === 0) {
+    editor.setStatus("Buffer is empty — nothing to preview");
+    return false;
+  }
+
+  const bufPath = editor.getBufferPath(bufferId);
+  let ok = false;
+
+  if (bufPath && bufPath !== "") {
+    ok = await renderWithGlow(bufPath);
+    if (ok) {
+      const fname = bufPath.split("/").pop() || bufPath;
+      editor.setStatus(`Glow preview: ${fname}`);
+    }
+  } else {
+    try {
+      const text = await editor.getBufferText(bufferId, 0, length);
+      editor.writeFile(TEMP_PATH, text);
+      ok = await renderWithGlow(TEMP_PATH);
+      if (ok) {
+        editor.setStatus("Glow preview (untitled buffer)");
+      }
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      editor.setStatus(`Preview error: ${msg}`);
+    }
+  }
+
+  if (ok) {
+    sourceBufferId = bufferId;
+    sourceSplitId = editor.getActiveSplitId();
+  }
+
+  return ok;
+}
 
 // ── Mode ─────────────────────────────────────────────────────────────────────
 
@@ -140,41 +195,15 @@ globalThis.glow_preview_toggle = async function (): Promise<void> {
 
   // If preview exists but is in the background, just switch to it
   if (previewBufferId !== 0) {
-    editor.showBuffer(previewBufferId);
+    focusPreviewBuffer();
     return;
   }
 
-  // Otherwise: open a new preview from the current buffer
+  // Otherwise: open a new preview from the current buffer and focus it.
   const bufId = editor.getActiveBufferId();
-  const length = editor.getBufferLength(bufId);
-
-  if (length === 0) {
-    editor.setStatus("Buffer is empty — nothing to preview");
-    return;
-  }
-
-  sourceBufferId = bufId;
-  sourceSplitId = editor.getActiveSplitId();
-  const bufPath = editor.getBufferPath(bufId);
-
-  if (bufPath && bufPath !== "") {
-    const ok = await renderWithGlow(bufPath);
-    if (ok) {
-      const fname = bufPath.split("/").pop() || bufPath;
-      editor.setStatus(`Glow preview: ${fname}`);
-    }
-  } else {
-    try {
-      const text = await editor.getBufferText(bufId, 0, length);
-      editor.writeFile(TEMP_PATH, text);
-      const ok = await renderWithGlow(TEMP_PATH);
-      if (ok) {
-        editor.setStatus("Glow preview (untitled buffer)");
-      }
-    } catch (e) {
-      const msg = e instanceof Error ? e.message : String(e);
-      editor.setStatus(`Preview error: ${msg}`);
-    }
+  const ok = await openPreviewFromBuffer(bufId);
+  if (ok && previewBufferId !== 0) {
+    focusPreviewBuffer();
   }
 };
 
@@ -212,7 +241,7 @@ editor.on("after_file_save", (args) => {
 
 editor.registerCommand(
   "Glow Preview: Toggle",
-  "Full-screen markdown preview via Glow (q to close, r to refresh)",
+  "Enter/exit Glow preview mode (CMD/⌘+P locally); q/Esc also closes from preview",
   "glow_preview_toggle",
   null
 );
