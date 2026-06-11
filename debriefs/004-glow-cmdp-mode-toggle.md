@@ -70,6 +70,20 @@ editor.showBuffer(previewBufferId);
 
 This makes `CMD/⌘+P` behave like a real mode transition.
 
+We also moved the local Fresh binding to the `global` keybinding context:
+
+```json
+{
+  "key": "p",
+  "modifiers": ["super"],
+  "action": "glow_preview_toggle",
+  "when": "global"
+}
+```
+
+That means Fresh handles the shortcut at app focus level instead of only when
+the text editor panel has focus.
+
 ## What did not work
 
 ### Subscribing Glow to Explorer events

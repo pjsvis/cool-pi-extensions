@@ -142,6 +142,10 @@ several patterns worth preserving:
   cursor/focus in an unexpected pane. If a command is meant to enter a mode,
   use the preview buffer’s split list (`BufferInfo.splits`) and
   `editor.focusSplit(splitId)` before `editor.showBuffer(bufferId)`.
+- **Use Fresh `global` keybindings for app-level mode toggles**. If a shortcut
+  should work from Explorer, terminal, prompts, or editor panels, set
+  `"when": "global"` in `~/.config/fresh/config.json`. Without that, Fresh may
+  treat the binding as `normal`/panel-scoped.
 - **Temp file for untitled buffers**: `editor.writeFile("/tmp/...", content)`
   then point Glow at the temp file. No stdin piping complexity.
 - **Auto-refresh on save**: `editor.on("after_file_save", ...)` refreshes the

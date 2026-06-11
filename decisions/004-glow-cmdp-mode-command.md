@@ -19,7 +19,7 @@ should return to on close.
 Glow should not follow Explorer clicks.
 
 Instead, the Glow toggle command (`Glow Preview: Toggle`, locally bound to
-`CMD/⌘+P`) should be a robust mode command:
+`CMD/⌘+P` at Fresh `global` keybinding context) should be a robust mode command:
 
 ```text
 Glow closed
@@ -55,5 +55,7 @@ Fresh owns navigation. Glow owns preview mode.
 - To preview a newly selected markdown file, the user presses `CMD/⌘+P`.
 - The command must explicitly focus the Glow split; `showBuffer` alone is not
   enough for reliable mode entry.
+- The keybinding should be `global`, not `normal`, so Fresh handles it at app
+  focus level rather than only when the editor text panel owns focus.
 - The source buffer/split remains stable until Glow is closed, avoiding
   surprising return behavior.

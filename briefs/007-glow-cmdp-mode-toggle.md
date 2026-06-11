@@ -44,7 +44,8 @@ Implementation details:
 - `glow_preview_toggle` now uses the mode state machine instead of trying to
   infer intent from Explorer events.
 - The local Fresh keybinding remains `CMD/⌘+P` (`super+p`) in
-  `~/.config/fresh/config.json`.
+  `~/.config/fresh/config.json`, with `"when": "global"` so the app handles it
+  before panel-specific bindings.
 
 ## Acceptance criteria
 
