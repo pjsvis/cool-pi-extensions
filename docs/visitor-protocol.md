@@ -1,6 +1,8 @@
-# The Visitor Protocol
+# The VEST Protocol
 
-> *A system's API should teach you the system.*
+> **Visitor Entry Self-Teaching** — *A system's API should teach you the system.*
+
+Like REST (Representational State Transfer), the VEST Protocol is a named pattern with an acronym that maps to its core principles. Where REST optimizes for state transfer across networks, VEST optimizes for zero-friction discovery across audiences.
 
 ## The Pattern
 
@@ -12,6 +14,15 @@ An API with **two verbs for two audiences**:
 | `browse` | Humans | What's here? How do I read it? What can I explore? |
 
 The entry point is the documentation. No manual, no index, no onboarding doc. Just two commands, and from those two commands the entire context unfolds.
+
+## The VEST Acronym
+
+| Letter | Principle | What it means |
+|---|---|---|
+| **V** | Visitor | Design for visitors, not just users. A visitor knows nothing. A user knows something. |
+| **E** | Entry | The entry point teaches the system. If `just orient` doesn't tell you everything you need to start, you haven't finished designing it. |
+| **S** | Self | The API references itself. `orient` lists the other verbs. `browse` lists the docs. The map contains the map. |
+| **T** | Teach | Zero-friction discovery. A first-time visitor should understand the system in under 60 seconds without reading anything. |
 
 ## Informal Spec
 
@@ -82,11 +93,21 @@ SESSION: ses_61dc04
 
 **The irony.** The simplest API is the hardest to design. Adding nothing was the work. The team resisted the urge to document everything, create taxonomies, write elaborate onboarding guides. Instead they asked: what does an agent need to start work? What does a human need to discover context? The answers were two verbs.
 
-## Why it works
+## VEST vs REST
 
-The Visitor Protocol is **Mentational Efficiency** in practice. The map is so clean the territory barely needs explaining. You don't need a manual when the entry point teaches the system.
+Like REST, VEST is a pattern named with an acronym. The acronym is retrofitted to describe the pattern, not the other way around.
 
-It also solves the discoverability problem. Most APIs assume you already know what they do. The Visitor Protocol assumes you know nothing — and builds the teaching into the first command.
+| | REST | VEST |
+|---|---|---|
+| Stands for | Representational State Transfer | Visitor Entry Self-Teaching |
+| Optimizes for | State transfer across networks | Discovery across audiences |
+| Constraint | Uniform interface | Dual-audience verbs |
+| Entry point | Resource-based URLs | `orient` + `browse` |
+| Self-describing | Hypermedia links | API lists other verbs |
+
+REST says: every resource has an address, and the address tells you what you can do with it.
+
+VEST says: every audience has a verb, and the verb tells you what you need to know.
 
 ---
 
