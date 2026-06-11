@@ -354,6 +354,58 @@ install-brew:
     echo "Installing optional brew dependencies..."
     brew install rtk skate glow
 
+# ── Dev environment ─────────────────────────────────────────────────────
+# Spin up the full dev stack in herdr tabs: pi | fresh | glow | shell
+# Usage: `just dev`
+# Requires: herdr running, pi, fresh, glow installed
+
+[group("dev")]
+dev:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    REPO_CWD=$(pwd)
+
+    echo "🚀 Spinning up dev stack in herdr..."
+    echo ""
+
+    # Create the dev workspace (suppress JSON noise)
+    HERDR_OUT=$(herdr workspace create --cwd "$REPO_CWD" --label "dev-stack" --no-focus 2>&1)
+    if echo "$HERDR_OUT" | grep -q '"type":"workspace_created"'; then
+      echo "  ✓ Created workspace: dev-stack"
+    else
+      echo "  ⚠ Herdr output: $HERDR_OUT"
+    fi
+
+    sleep 0.5
+
+    # Get the dev-stack workspace ID
+    WS_ID=$(herdr workspace list 2>/dev/null | jq -r '.result.workspaces[] | select(.label == "dev-stack") | .workspace_id' 2>/dev/null || echo "")
+
+    if [[ -z "$WS_ID" || "$WS_ID" == "null" ]]; then
+      echo "  ⚠ Could not find dev-stack workspace."
+      exit 1
+    fi
+
+    # Create 4 tabs
+    for label in pi fresh glow shell; do
+      TAB_OUT=$(herdr tab create --workspace "$WS_ID" --cwd "$REPO_CWD" --label "$label" --no-focus 2>&1)
+      if echo "$TAB_OUT" | grep -q '"type":"tab_created"'; then
+        echo "  ✓ Created tab: $label"
+      fi
+      sleep 0.2
+    done
+
+    echo ""
+    echo "✓ Dev stack ready! Switch tabs and run:"
+    echo ""
+    echo "  Tab 'pi'    → \`pi\`"
+    echo "  Tab 'fresh' → \`fresh\`"
+    echo "  Tab 'glow'  → \`glow\`"
+    echo "  Tab 'shell' → use it!"
+    echo ""
+    echo "  → \`just adopt-edinburgh && just orient\` to set up an agent"
+
 # ── Full stack install ───────────────────────────────────────────────────
 # Dial in the complete dev stack from a fresh machine.
 # Run this once; subsequent runs just verify.
