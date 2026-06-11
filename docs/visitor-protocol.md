@@ -93,21 +93,24 @@ SESSION: ses_61dc04
 
 **The irony.** The simplest API is the hardest to design. Adding nothing was the work. The team resisted the urge to document everything, create taxonomies, write elaborate onboarding guides. Instead they asked: what does an agent need to start work? What does a human need to discover context? The answers were two verbs.
 
-## VEST vs REST
+## VEST vs REST: The Philosophy
 
-Like REST, VEST is a pattern named with an acronym. The acronym is retrofitted to describe the pattern, not the other way around.
+Like REST, VEST is a pattern named with an acronym. But the philosophy is different — and that difference matters in the age of agents.
+
+**REST** was designed for the web: vast, documented, hierarchical. Document everything. Expose an expansive API surface to meet all possible requirements.
+
+**VEST** was designed for visitors: self-contained, self-teaching, minimal. Two verbs. Everything else follows.
 
 | | REST | VEST |
 |---|---|---|
-| Stands for | Representational State Transfer | Visitor Entry Self-Teaching |
-| Optimizes for | State transfer across networks | Discovery across audiences |
-| Constraint | Uniform interface | Dual-audience verbs |
-| Entry point | Resource-based URLs | `orient` + `browse` |
-| Self-describing | Hypermedia links | API lists other verbs |
+| Philosophy | Here is the API name, here is the rest of it | You are new here — what do you want to know? |
+| Assumption | You know what you're looking for | You know nothing |
+| Size | Expansive — document everything | Minimal — two verbs |
+| Failure mode | Hours lost to stale documentation | 30 seconds to understand it's not worth it |
 
-REST says: every resource has an address, and the address tells you what you can do with it.
+REST optimizes for known unknowns. VEST optimizes for unknown unknowns.
 
-VEST says: every audience has a verb, and the verb tells you what you need to know.
+In the age of agents — where the visitor might be a language model dropping into a mid-sprint session with no context — you need VEST. Not a manual. Not an index. Just: `just orient`.
 
 ---
 

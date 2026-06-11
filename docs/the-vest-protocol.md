@@ -99,21 +99,29 @@ But it's also a proof-of-concept for the VEST Protocol. Every design decision is
 
 **The irony.** The simplest API is the hardest to design. Adding nothing was the work. The team resisted the urge to document everything, create taxonomies, write elaborate onboarding guides. Instead they asked: what does an agent need to start work? What does a human need to discover context? The answers were two verbs.
 
-## VEST vs REST
+## VEST vs REST: The Philosophy
 
-Like REST, VEST is a pattern named with an acronym. The acronym is retrofitted to describe the pattern, not the other way around.
+Like REST, VEST is a pattern named with an acronym. But the philosophy is different — and that difference matters in the age of agents.
+
+**REST** was designed for the web: vast, documented, hierarchical. Document everything. Expose an expansive API surface to meet all possible requirements. Here is the endpoint, here is what it does, here is the schema.
+
+**The REST problem:** If the API is large and poorly maintained, you're sunk. You spend hours reading documentation that doesn't match the implementation. You hit endpoints that don't exist. You parse error messages that tell you nothing.
+
+**VEST** was designed for visitors: self-contained, self-teaching, minimal. Two verbs. Everything else follows from those verbs. You are new here — what do you want to know?
+
+**The VEST solution:** If the repo is rubbish, there's no need to read much further, far less navigate an endless expanse. `just orient` tells you what matters. If there's nothing active, you're done. If there's work, you know where to start. The system tells you its own state — no archaeology required.
 
 | | REST | VEST |
 |---|---|---|
-| Stands for | Representational State Transfer | Visitor Entry Self-Teaching |
-| Optimizes for | State transfer across networks | Discovery across audiences |
-| Constraint | Uniform interface | Dual-audience verbs |
-| Entry point | Resource-based URLs | `orient` + `browse` |
-| Self-describing | Hypermedia links | API lists other verbs |
+| Philosophy | Here is the API name, here is the rest of it | You are new here — what do you want to know? |
+| Assumption | You know what you're looking for | You know nothing |
+| Size | Expansive — document everything | Minimal — two verbs |
+| Maintenance | High — docs must match implementation | Low — the system teaches itself |
+| Failure mode | Hours lost to stale documentation | 30 seconds to understand it's not worth it |
 
-REST says: every resource has an address, and the address tells you what you can do with it.
+REST optimizes for known unknowns. VEST optimizes for unknown unknowns.
 
-VEST says: every audience has a verb, and the verb tells you what you need to know.
+In the age of agents — where the visitor might be a language model dropping into a mid-sprint session with no context — you need VEST. Not a manual. Not an index. Not a CONTRIBUTING.md. Just: `just orient`.
 
 ## The Invitation
 
