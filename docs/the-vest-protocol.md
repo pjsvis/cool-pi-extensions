@@ -123,6 +123,41 @@ REST optimizes for known unknowns. VEST optimizes for unknown unknowns.
 
 In the age of agents — where the visitor might be a language model dropping into a mid-sprint session with no context — you need VEST. Not a manual. Not an index. Not a CONTRIBUTING.md. Just: `just orient`.
 
+## The Structure Is the API
+
+When you run `glow` in this repo, you see:
+```
+README.md
+AGENTS.md
+justfile
+MANIFEST.md
+briefs/
+debriefs/
+decisions/
+docs/
+playbooks/
+prompts/
+```
+
+The **folders teach you the conventions**. You don't need a doc about conventions:
+
+- `briefs/` → what's being built
+- `debriefs/` → what was learned
+- `decisions/` → why X was chosen
+- `docs/` → reference material
+- `playbooks/` → how-to guides
+- `prompts/` → agent identity and fixtures
+
+Read `briefs/`, see the format. Brief 001, done. Brief 007, implemented. The process is in the content, not in a PROCESS.md. No tools required. Just `glow` and explore.
+
+## You Don't Need a Jumpsuit
+
+REST is a hazmat suit. Comprehensive. Full-body protection. Designed for every contingency. The problem: you're not handling hazardous materials — you're reading a repo.
+
+VEST is a vest. Lightweight. Functional. Two pockets, five buttons. You put it on, you're ready to work.
+
+You don't need to document everything. You need the system to tell you what matters. When you arrive: `just orient`. When you explore: `just browse`. That's it. No jumpsuit required.
+
 ## The Invitation
 
 This repo is a working example. Clone it, run `just orient`, run `just browse`. See how it feels to drop into a system that teaches itself.
