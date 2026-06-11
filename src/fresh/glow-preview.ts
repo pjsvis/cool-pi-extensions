@@ -146,6 +146,17 @@ function isMarkdownBuffer(bufferId: number): boolean {
   return path.endsWith(".md") || language.includes("markdown");
 }
 
+function focusPreviewBuffer(): void {
+  if (previewBufferId === 0) return;
+
+  const info = editor.getBufferInfo(previewBufferId);
+  const splitId = info?.splits[0] || editor.getActiveSplitId();
+  if (splitId !== 0) {
+    editor.focusSplit(splitId);
+  }
+  editor.showBuffer(previewBufferId);
+}
+
 function scheduleExplorerSync(bufferId: number): void {
   if (!explorerSyncEnabled || previewBufferId === 0 || bufferId === previewBufferId) return;
   if (!isMarkdownBuffer(bufferId)) return;
@@ -156,7 +167,7 @@ function scheduleExplorerSync(bufferId: number): void {
     explorerSyncTimer = 0;
     if (previewBufferId === 0) return;
     void renderBufferToPreview(pendingExplorerSyncBufferId, { updateSource: false }).then(() => {
-      if (previewBufferId !== 0) editor.showBuffer(previewBufferId);
+      if (previewBufferId !== 0) focusPreviewBuffer();
     });
   }, 150);
 }
@@ -180,7 +191,7 @@ async function createPreviewTab(entries: TextPropertyEntry[]): Promise<void> {
     editingDisabled: true,
   });
   previewBufferId = result.bufferId;
-  editor.showBuffer(previewBufferId);
+  focusPreviewBuffer();
 }
 
 // ── Close handler (bound to q / Escape in glow-preview mode) ─────────────────
@@ -225,7 +236,7 @@ globalThis.glow_preview_toggle = async function (): Promise<void> {
 
   // If preview exists but is in the background, just switch to it
   if (previewBufferId !== 0) {
-    editor.showBuffer(previewBufferId);
+    focusPreviewBuffer();
     return;
   }
 
