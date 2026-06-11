@@ -88,3 +88,79 @@ read FILE="MANIFEST.md":
 [group("docs")]
 read-stack:
     just read docs/terminal-stack.md
+
+# ── Provisioning ────────────────────────────────────────────────────
+
+[group("provision")]
+provision:
+    @just check-deps && just check-pi && just check-fresh && just check-install-brew
+
+[group("provision")]
+check-deps:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "=== Required tools ==="
+    for bin in bun just; do
+      if command -v "$bin" >/dev/null 2>&1; then
+        echo "  ✓ $bin"
+      else
+        echo "  ✗ $bin — NOT FOUND"
+      fi
+    done
+    echo ""
+    echo "=== Optional tools ==="
+    for bin in rtk skate glow; do
+      if command -v "$bin" >/dev/null 2>&1; then
+        echo "  ✓ $bin"
+      else
+        echo "  ✗ $bin — not installed (brew install $bin)"
+      fi
+    done
+
+[group("provision")]
+check-pi:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo ""
+    echo "=== pi ==="
+    if command -v pi >/dev/null 2>&1; then
+      ver=$(pi --version 2>/dev/null || echo "unknown")
+      echo "  ✓ pi: $ver"
+    else
+      echo "  ✗ pi not on PATH"
+      echo "  → npm install -g @mariozechner/pi-coding-agent"
+    fi
+
+[group("provision")]
+check-fresh:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo ""
+    echo "=== Fresh editor ==="
+    if [ -d ~/.config/fresh ]; then
+      plugins=$(ls ~/.config/fresh/plugins/*.ts 2>/dev/null | wc -l | tr -d ' ')
+      echo "  ✓ Fresh config: ~/.config/fresh ($plugins plugin(s))"
+    else
+      echo "  ✗ Fresh config not found at ~/.config/fresh"
+    fi
+
+[group("provision")]
+check-install-brew:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo ""
+    echo "=== Brew-installed optional tools ==="
+    for bin in rtk skate glow; do
+      if command -v "$bin" >/dev/null 2>&1; then
+        echo "  ✓ $bin"
+      else
+        echo "  ✗ $bin — brew install $bin"
+      fi
+    done
+
+[group("provision")]
+install-brew:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "Installing optional brew dependencies..."
+    brew install rtk skate glow

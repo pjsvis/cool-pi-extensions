@@ -38,13 +38,51 @@ on-activate = '''
     (cd "$PWD/src/cli/pi-models" && bun install --silent) || true
   fi
 
-  # Check optional external binaries (see DEPENDENCIES.md)
-  for bin in rtk skate glow fresh; do
-    if ! command -v "$bin" >/dev/null 2>&1; then
-      echo "⚠  Optional: '$bin' not found on PATH — some features may not work"
-      echo "   Install: brew install $bin"
+  echo ""
+  echo "=== cool-pi-extensions environment check ==="
+
+  MISSING=0
+
+  # Required tools
+  for bin in bun just; do
+    if command -v "$bin" >/dev/null 2>&1; then
+      echo "  ✓ $bin"
+    else
+      echo "  ✗ $bin — NOT FOUND (required)"
+      MISSING=1
     fi
   done
+
+  # Optional tools
+  for bin in rtk skate glow; do
+    if command -v "$bin" >/dev/null 2>&1; then
+      echo "  ✓ $bin (optional)"
+    else
+      echo "  ⚠ $bin — not found (optional, brew install $bin)"
+    fi
+  done
+
+  # pi
+  if command -v pi >/dev/null 2>&1; then
+    echo "  ✓ pi"
+  else
+    echo "  ✗ pi — not on PATH (npm install -g @mariozechner/pi-coding-agent)"
+    MISSING=1
+  fi
+
+  # Fresh editor config
+  if [ -d ~/.config/fresh ]; then
+    echo "  ✓ Fresh config (~/.config/fresh)"
+  else
+    echo "  ⚠ Fresh config not found at ~/.config/fresh"
+  fi
+
+  echo ""
+  if [ $MISSING -eq 1 ]; then
+    echo "⚠  Some required tools are missing — run 'just provision' for details"
+  else
+    echo "✓  Environment ready"
+  fi
 '''
 
 
