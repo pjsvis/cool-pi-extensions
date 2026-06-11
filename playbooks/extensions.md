@@ -138,6 +138,13 @@ several patterns worth preserving:
 - **Auto-refresh on save**: `editor.on("after_file_save", ...)` refreshes the
   preview. Guard with `previewBufferId !== 0` to avoid work when the preview
   isn't open.
+- **Explorer sync is possible and useful**: Fresh exposes `after_file_open` and
+  `buffer_activated`, so a markdown file opened from the explorer can update the
+  Glow preview. Use a short debounce (150ms) and skip non-markdown buffers to
+  avoid render storms.
+- **Make surprise reversible**: explorer sync is enabled by default, but expose
+  a command palette toggle so users can pin the preview to the original file if
+  they prefer.
 
 ---
 

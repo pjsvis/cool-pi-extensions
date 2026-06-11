@@ -77,6 +77,7 @@ work starts.
 | 004 | [briefs/004-glow-fresh-preview.md](briefs/004-glow-fresh-preview.md) | complete |
 | 005 | [briefs/005-nex-n2-pro-not-in-pi-list.md](briefs/005-nex-n2-pro-not-in-pi-list.md) | lesson documented |
 | 006 | [briefs/006-manifest-system-lesson.md](briefs/006-manifest-system-lesson.md) | lesson documented |
+| 007 | [briefs/007-glow-explorer-sync.md](briefs/007-glow-explorer-sync.md) | implemented |
 
 ---
 
