@@ -6,15 +6,17 @@ A curated collection of extensions, CLI tooling, and prompts for the [Pi Coding 
 
 This repo has a discoverable API for both agents and humans:
 
-| Audience | Command | What it does |
-|---|---|---|
-| **Agents** | `just orient` | Full orientation — branch, git state, active tasks, entry points |
+**Agents**
+Full orientation — branch, git state, active tasks, entry points
 
-| **Humans** | `just browse` | List all docs with descriptions, preview with glow |
+**Humans**
+List all docs with descriptions, preview with glow
 
-| **Both** | `glow` | Interactive markdown browser — type alone for file picker |
+**Both**
+Interactive markdown browser — type `glow` alone for file picker
 
-| **Visiting agents** | `just adopt-edinburgh` → `just orient` | Add constraint-stack, then context-initialization |
+**Visiting agents**
+`just adopt-edinburgh` → `just orient` — add constraint-stack, then context-initialization
 
 **Visiting agent workflow:**
 ```bash
@@ -39,33 +41,34 @@ just install-stack  # pull the full dev stack onto a fresh machine
 
 ### Extensions
 
-| Extension | Description |
-|---|---|
-| **defuddle** | Fetch any webpage as clean Markdown. Domain allow/block lists, telemetry logging, `/defuddle` slash command. |
+**defuddle**
+Fetch any webpage as clean Markdown. Domain allow/block lists, telemetry logging, `/defuddle` slash command.
 
-| **silo** | Hard filesystem boundary — agent cannot read or write outside the repo root. "I'm staying in." |
+**silo**
+Hard filesystem boundary — agent cannot read or write outside the repo root. "I'm staying in."
 
-| **edinburgh-evals** | Model behavioral gate. Forks sessions, runs Protocol trap vectors, deterministic assertions + Gemini secondary grading via OpenRouter. `/eval <model>` command. |
+**edinburgh-evals**
+Model behavioral gate. Forks sessions, runs Protocol trap vectors, deterministic assertions + Gemini secondary grading via OpenRouter. `/eval <model>` command.
 
 ---
 
 ### CLI tools
 
-| Tool | Description |
-|---|---|
-| **pi-check** | Provider connectivity checker. Probes `/models` endpoint, resolves API keys via skate, reports pass/fail with timing. |
+**pi-check**
+Provider connectivity checker. Probes `/models` endpoint, resolves API keys via skate, reports pass/fail with timing.
 
-| **pi-models** | Manage `~/.pi/agent/models.json`. Add, remove, list, and validate providers and models. |
+**pi-models**
+Manage `~/.pi/agent/models.json`. Add, remove, list, and validate providers and models.
 
-| **td** | Agent task memory. Tracks session state, issues, and handoffs across agent contexts. |
+**td**
+Agent task memory. Tracks session state, issues, and handoffs across agent contexts.
 
 ---
 
 ### Prompts
 
-| Prompt | Description |
-|---|---|
-| **Edinburgh Protocol** | Scottish Enlightenment principles — Hume's skepticism, Smith's systems thinking, Watt's pragmatism. See [prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md). |
+**Edinburgh Protocol**
+Scottish Enlightenment principles — Hume's skepticism, Smith's systems thinking, Watt's pragmatism. See [prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md).
 
 ---
 
@@ -83,9 +86,8 @@ any terminal, anywhere.
 
 ### Fresh plugins
 
-| Plugin | Description |
-|---|---|
-| **glow-preview** | Full-screen Glow-rendered markdown preview in a Fresh tab. Toggle with `CMD+P` (or `Ctrl+Shift+M`), auto-refresh on save, `q` to close. |
+**glow-preview**
+Full-screen Glow-rendered markdown preview in a Fresh tab. Toggle with `CMD+P` (or `Ctrl+Shift+M`), auto-refresh on save, `q` to close.
 
 ---
 
@@ -149,7 +151,7 @@ ln -sf ~/.pi/extensions/prompts/edinburgh-protocol.md ~/.pi/agent/AGENTS.md
 
 ## Extension details
 
-### defuddle
+**defuddle**
 
 Fetch any webpage as clean Markdown via the [defuddle.md](https://defuddle.md) API.
 
@@ -157,7 +159,7 @@ Fetch any webpage as clean Markdown via the [defuddle.md](https://defuddle.md) A
 
 ---
 
-### silo
+**silo**
 
 Hard filesystem boundary. Uses pi's built-in local bash backend so the agent sees the same environment and MVFS overlay as a normal session.
 
@@ -170,17 +172,16 @@ Escape hatch: `pi --no-silo`. Status: `/silo-status`.
 
 ---
 
-### edinburgh-evals
+**edinburgh-evals**
 
 Model behavioral gate using Edinburgh Protocol trap vectors.
 
 **Command:** `/eval <model-id>` — runs 4 behavioral trap tests.
 
-| Command | Action |
-|---|---|
-| `/eval <model>` | Run full eval suite (4 tests) |
-| `/eval status [model]` | Show cached results |
-| `/eval clear <model>` | Invalidate cache, force re-eval |
+**Subcommands:**
+`/eval <model>` — Run full eval suite (4 tests)
+`/eval status [model]` — Show cached results
+`/eval clear <model>` — Invalidate cache, force re-eval
 
 **How it works:**
 1. Switches to the candidate model
@@ -192,7 +193,7 @@ Model behavioral gate using Edinburgh Protocol trap vectors.
 
 ---
 
-### pi-check CLI
+**pi-check CLI**
 
 ```bash
 pi-check                    # check all providers
@@ -203,7 +204,7 @@ pi-check --zenmux-mgmt      # include ZenMux account metrics
 
 ---
 
-### pi-models CLI
+**pi-models CLI**
 
 ```bash
 pi-models list
