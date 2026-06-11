@@ -38,9 +38,13 @@ orient:
     echo ""
     echo "=== Entry points ==="
     echo "  just about   — what this project is"
-    echo "  just help    — full repo index (MANIFEST.md via Glow)"
     echo "  just orient  — current state (you are here)"
-    echo "  just browse  — human doc browser (just read <file> or glow to view)"
+    echo "  just browse  — human doc browser"
+    echo "  just help    — full repo index (MANIFEST.md via Glow)"
+    echo ""
+    echo "=== Read more ==="
+    echo "  just read docs/the-vest-protocol.md — the VEST Protocol blog post"
+    echo "  just read docs/visitor-protocol.md  — VEST spec"  
 
 # One-liner summary of the project. What it is, what stack it uses.
 # Usage: `just about`
