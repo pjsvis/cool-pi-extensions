@@ -52,6 +52,8 @@ work starts.
 **Brief 006: [briefs/006-manifest-system-lesson.md](briefs/006-manifest-system-lesson.md)** — lesson documented
 
 **Brief 008: [briefs/008-the-invisible-cables.md](briefs/008-the-invisible-cables.md)** — complete
+
+**Insights playbook: [playbooks/insights.md](playbooks/insights.md)** — Persistent collection of small observations that don't fit existing playbooks. Discoverable affordances, invisible infrastructure, fractal pattern, window problem, ADR-first, code block test, just-enough documentation.
 ---
 
 ## Debriefs
@@ -59,6 +61,8 @@ work starts.
 Post-implementation reflections. Capture what worked, what didn't, what to try
 next.
 **Debrief 004: [debriefs/004-glow-cmdp-mode-toggle.md](debriefs/004-glow-cmdp-mode-toggle.md)** — Glow CMD/⌘+P mode-toggle retrospective.
+
+**Debrief 005: [debriefs/005-visibility-patterns.md](debriefs/005-visibility-patterns.md)** — Discoverable affordances: VEST approach to UX, auto-refresh creates discovery moment, zero onboarding friction.
 
 ---
 
