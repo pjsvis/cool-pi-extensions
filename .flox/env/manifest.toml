@@ -12,8 +12,8 @@ bun.version = "1.3"
 just.pkg-path = "just"
 # td and sidecar: install via 'brew tap marcus/homebrew-tap && brew install td sidecar'
 # (not available in nixpkgs — see 'just install-stack' for the full brew command)
-# gum.pkg-path = "gum"
-# gum.version = "^0.14.5"
+gum.pkg-path = "gum"
+gum.version = "^0.14.5"
 
 
 ## Environment Variables ---------------------------------------------
