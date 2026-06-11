@@ -44,7 +44,11 @@ orient:
     echo ""
     echo "=== Read more ==="
     echo "  just read docs/the-vest-protocol.md — the VEST Protocol blog post"
-    echo "  just read docs/visitor-protocol.md  — VEST spec"  
+    echo "  just read docs/visitor-protocol.md  — VEST spec"
+    echo ""
+    echo "=== Optional constraints ==="
+    echo "  just adopt-edinburgh — apply Edinburgh Protocol (normalize agents)"
+    echo "  For visiting agents: just adopt-edinburgh → just orient"  
 
 # One-liner summary of the project. What it is, what stack it uses.
 # Usage: `just about`
@@ -72,6 +76,46 @@ about:
 [group("meta")]
 help:
     @glow -s ~/.config/glow/styles/fresh-high-contrast.json MANIFEST.md 2>/dev/null || cat MANIFEST.md
+
+# ── Agent: constraints ────────────────────────────────────────────────────
+# The Edinburgh Protocol is a constraint stack that normalizes agent behavior
+# across different models. Hume's skepticism, Smith's systems thinking,
+# Watt's pragmatism. Consistent results, less variance.
+#
+# Usage:
+#   just adopt-edinburgh    → apply to local pi agent
+#   just read prompts/edinburgh-protocol.md  → read the protocol
+
+[group("agent")]
+adopt-edinburgh:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    SOURCE="$(pwd)/prompts/edinburgh-protocol.md"
+    TARGET="$HOME/.pi/agent/AGENTS.md"
+
+    if [[ ! -f "$SOURCE" ]]; then
+      echo "Error: prompts/edinburgh-protocol.md not found."
+      echo "Run this from the cool-pi-extensions repo."
+      exit 1
+    fi
+
+    # Backup existing AGENTS.md if it exists and isn't already the symlink
+    if [[ -f "$TARGET" && ! -L "$TARGET" ]]; then
+      cp "$TARGET" "$TARGET.bak"
+      echo "Backed up existing AGENTS.md → AGENTS.md.bak"
+    fi
+
+    ln -sf "$SOURCE" "$TARGET"
+    echo "Edinburgh Protocol adopted as system prompt."
+    echo ""
+    echo "Restart pi to activate. For visiting agents:"
+    echo "  1. just adopt-edinburgh  (add constraint-stack)"
+    echo "  2. just orient           (context-initialization)"
+
+[group("agent")]
+show-edinburgh:
+    @glow -s ~/.config/glow/styles/fresh-high-contrast.json prompts/edinburgh-protocol.md
 
 # ── Manifest hygiene ────────────────────────────────────────────────────────
 # Ensures docs/playbooks index matches filesystem. Run after major changes.

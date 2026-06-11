@@ -11,6 +11,17 @@ This repo has a discoverable API for both agents and humans:
 | **Agents** | `just orient` | Full orientation — branch, git state, active tasks, entry points |
 | **Humans** | `just browse` | List all docs with descriptions, preview with glow |
 | **Both** | `glow` | Interactive markdown browser — type alone for file picker |
+| **Visiting agents** | `just adopt-edinburgh` → `just orient` | Add constraint-stack, then context-initialization |
+
+**Visiting agent workflow:**
+```bash
+just adopt-edinburgh   # Apply Edinburgh Protocol (normalize behavior)
+just orient            # Context-initialization
+```
+
+The Edinburgh Protocol is a constraint stack that normalizes agent behavior
+across different models. Hume's skepticism, Smith's systems thinking, Watt's
+pragmatism. Consistent results, less variance.
 
 Start here:
 ```bash
