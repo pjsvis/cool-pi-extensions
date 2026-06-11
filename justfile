@@ -126,17 +126,107 @@ browse:
     echo "→ glow             to browse interactively"
 
 # ── Docs: render with Glow ─────────────────────────────────────────────────
-# Glow is the human interface for markdown. Type `glow` alone for interactive
-# file browser; `just read <file>` for direct render.
-# Usage: `just read playbooks/dev-stack-setup.md`
+# Glow is the human interface for markdown.
+# Usage:
+#   just read              → fzf picker, fuzzy find, glow render
+#   just read <file>       → direct render (skip fzf)
+#   just read docs/        → fzf restricted to docs/
+#   just read playbooks/   → fzf restricted to playbooks/
+#   just read help         → easter egg: the help they actually need
 
 [group("docs")]
-read FILE="MANIFEST.md":
-    glow -s ~/.config/glow/styles/fresh-high-contrast.json {{ FILE }}
+read FILE="":
+    #!/usr/bin/env bash
+    set -euo pipefail
 
-[group("docs")]
-read-stack:
-    just read docs/terminal-stack.md
+    # Easter eggs — because devs don't RTFM until they have to
+    if [[ "{{FILE}}" == "help" ]]; then
+      echo "# 🐣 you found the easter egg"
+      echo ""
+      echo "## just read — the cheat sheet"
+      echo "- no args → fzf picker (fuzzy find, enter to glow)"
+      echo "- \<file\> → direct glow render"
+      echo "- docs/ → fzf scoped to docs/"
+      echo "- playbooks/ → fzf scoped to playbooks/"
+      echo "- help → this (because you didn't read the comment)"
+      echo "- vest → easter egg within an easter egg"
+      echo ""
+      echo "## hotkeys in fzf"
+      echo "- ↑↓ navigate | Enter select | Ctrl+C abort | Ctrl+/ fuzzy search"
+      echo ""
+      echo "## pro tip"
+      echo "\`glow\` (no args) opens the interactive browser."
+      echo "\`just orient\` tells you where you are."
+      echo ""
+      echo "now go build something."
+      echo ""
+      echo "*— the VEST Protocol*"
+      exit 0
+    fi
+
+    if [[ "{{FILE}}" == "vest" ]]; then
+      echo "# 🦺 you found the vest"
+      echo ""
+      echo "> VEST = Visitor Entry Self-Teaching"
+      echo ""
+      echo "Two verbs. Two audiences. Zero friction."
+      echo ""
+      echo "- \`just orient\` → agents"
+      echo "- \`just browse\` → humans"
+      echo "- \`glow\` → both"
+      echo ""
+      echo "## the philosophy"
+      echo ""
+      echo "You don't need a hazmat suit."
+      echo "You need a vest."
+      echo ""
+      echo "Lightweight. Functional."
+      echo "You put it on, you're ready to work."
+      echo ""
+      echo "## learn more"
+      echo "\`just read docs/the-vest-protocol.md\`"
+      echo "\`just read docs/visitor-protocol.md\`"
+      echo ""
+      echo "*— cool-pi-extensions*"
+      exit 0
+    fi
+
+    # Direct file given — render it
+    if [[ -n "{{FILE}}" && "{{FILE}}" != "" ]]; then
+      if [[ -f "{{FILE}}" ]]; then
+        glow -s ~/.config/glow/styles/fresh-high-contrast.json "{{FILE}}"
+      else
+        # Scoped search — look in docs/ or playbooks/
+        SCOPE="{{FILE}}"
+        if [[ "$SCOPE" == "docs/" ]]; then
+          SELECTED=$(find docs -name "*.md" | fzf --preview 'glow -s ~/.config/glow/styles/fresh-high-contrast.json {}' --preview-window=right:60%)
+        elif [[ "$SCOPE" == "playbooks/" ]]; then
+          SELECTED=$(find playbooks -name "*.md" | fzf --preview 'glow -s ~/.config/glow/styles/fresh-high-contrast.json {}' --preview-window=right:60%')
+        else
+          SELECTED=$(find . -name "*.md" ! -path "./node_modules/*" | fzf --preview 'glow -s ~/.config/glow/styles/fresh-high-contrast.json {}' --preview-window=right:60%' --query "{{FILE}}")
+        fi
+        if [[ -n "$SELECTED" ]]; then
+          glow -s ~/.config/glow/styles/fresh-high-contrast.json "$SELECTED"
+        fi
+      fi
+      exit 0
+    fi
+
+    # No args — fzf picker
+    echo "📖 pick a file to glow..."
+    SELECTED=$(find . -name "*.md" ! -path "./node_modules/*" ! -path "./.git/*" | \
+      fzf --preview 'glow -s ~/.config/glow/styles/fresh-high-contrast.json {}' \
+         --preview-window=right:60% \
+         --header="VEST Protocol: just read <file> for direct, just read docs/ to scope, help for cheat sheet" \
+         --bind="ctrl-h:change-preview(glow -s ~/.config/glow/styles/fresh-high-contrast.json {1} 2>/dev/null || echo 'preview unavailable')" \
+         --bind="?:toggle-preview" \
+         --height=80%)
+
+    if [[ -n "$SELECTED" ]]; then
+      glow -s ~/.config/glow/styles/fresh-high-contrast.json "$SELECTED"
+    else
+      echo "cancelled. try 'just browse' to list files."
+    fi
 
 # ── Provisioning ────────────────────────────────────────────────────
 # Check what tools are installed. Run `just provision` anytime to verify.
