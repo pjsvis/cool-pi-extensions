@@ -20,6 +20,7 @@ Structured reference material.
 
 | File | Description |
 |---|---|
+| [docs/visitor-protocol.md](docs/visitor-protocol.md) | API pattern — two verbs for two audiences (orient/browse). Zero-friction discovery. |
 | [docs/terminal-stack.md](docs/terminal-stack.md) | Stack architecture — Alacritty, herdr, pi, Fresh. SSH workflow, cross-platform. |
 | [docs/standard-mono-repo-pattern.md](docs/standard-mono-repo-pattern.md) | Directory-level organisational convention for extensions and tooling. |
 | [docs/edinburgh-protocol-evals.md](docs/edinburgh-protocol-evals.md) | Human-readable version of the Edinburgh Protocol evaluation fixture. |
