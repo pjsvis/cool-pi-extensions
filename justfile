@@ -357,7 +357,7 @@ install-brew:
 # ── Dev environment ─────────────────────────────────────────────────────
 # Spin up the full dev stack in herdr tabs: pi | fresh | glow | shell
 # Usage: `just dev`
-# Requires: herdr running, pi, fresh, glow installed
+# Requires: herdr running, gum (optional), pi, fresh, glow installed
 
 [group("dev")]
 dev:
@@ -365,36 +365,82 @@ dev:
     set -euo pipefail
 
     REPO_CWD=$(pwd)
+    REPO_NAME=$(basename "$REPO_CWD")
 
-    echo "🚀 Spinning up dev stack in herdr..."
+    echo "🚀 Dev stack for: $REPO_NAME"
     echo ""
 
-    # Create the dev workspace (suppress JSON noise)
-    HERDR_OUT=$(herdr workspace create --cwd "$REPO_CWD" --label "dev-stack" --no-focus 2>&1)
-    if echo "$HERDR_OUT" | grep -q '"type":"workspace_created"'; then
-      echo "  ✓ Created workspace: dev-stack"
-    else
-      echo "  ⚠ Herdr output: $HERDR_OUT"
-    fi
-
-    sleep 0.5
-
-    # Get the dev-stack workspace ID (last one = most recent)
-    WS_ID=$(herdr workspace list 2>/dev/null | jq -r '[.result.workspaces[] | select(.label == "dev-stack") | .workspace_id] | last' 2>/dev/null) || true
-
-    if [[ -z "$WS_ID" || "$WS_ID" == "null" || "$WS_ID" == "" ]]; then
-      echo "  ⚠ Could not find dev-stack workspace. Ensure herdr is running."
+    # Check herdr is running
+    if ! herdr workspace list &>/dev/null; then
+      echo "  ⚠ Herdr is not running."
+      echo "  → Start herdr first: just open alacritty and type \`herdr\`"
       exit 1
     fi
 
-    # Create 4 tabs
-    for label in pi fresh glow shell; do
-      TAB_OUT=$(herdr tab create --workspace "$WS_ID" --cwd "$REPO_CWD" --label "$label" --no-focus 2>&1)
-      if echo "$TAB_OUT" | grep -q '"type":"tab_created"'; then
-        echo "  ✓ Created tab: $label"
+    # Get workspaces
+    WS_LIST=$(herdr workspace list 2>/dev/null)
+
+    # Check if workspace with REPO_NAME exists
+    EXISTING=$(echo "$WS_LIST" | jq -r ".result.workspaces[] | select(.label == \"$REPO_NAME\") | .workspace_id" 2>/dev/null)
+
+    if [[ -n "$EXISTING" && "$EXISTING" != "null" ]]; then
+      # Workspace exists — offer options
+      TAB_COUNT=$(echo "$WS_LIST" | jq -r ".result.workspaces[] | select(.label == \"$REPO_NAME\") | .tab_count" 2>/dev/null || echo "0")
+      WS_ID="$EXISTING"
+
+      echo "  ✓ Found workspace: $REPO_NAME ($TAB_COUNT tabs)"
+
+      if command -v gum &>/dev/null; then
+        CHOICE=$(gum choose "Use existing" "Close and recreate" "Cancel" 2>/dev/null) || exit 0
+      else
+        echo ""
+        read -p "  Use existing or recreate? [U/r/c] " confirm
+        confirm=${confirm:-U}
+        case "$confirm" in
+          c|C) echo "Cancelled."; exit 0 ;;
+          r|R) CHOICE="Close and recreate" ;;
+          *) CHOICE="Use existing" ;;
+        esac
       fi
-      sleep 0.2
-    done
+
+      if [[ "$CHOICE" == "Close and recreate" ]]; then
+        herdr workspace close "$WS_ID" 2>/dev/null || true
+        echo "  ✓ Closed old workspace"
+        unset EXISTING WS_ID
+      fi
+    fi
+
+    # Create workspace if needed
+    if [[ -z "$EXISTING" || "$EXISTING" == "null" ]]; then
+      HERDR_OUT=$(herdr workspace create --cwd "$REPO_CWD" --label "$REPO_NAME" --no-focus 2>&1)
+      if echo "$HERDR_OUT" | grep -q '"type":"workspace_created"'; then
+        echo "  ✓ Created workspace: $REPO_NAME"
+      else
+        echo "  ⚠ Failed: $HERDR_OUT"
+        exit 1
+      fi
+      sleep 0.5
+      WS_ID=$(echo "$WS_LIST" | jq -r ".result.workspaces[] | select(.label == \"$REPO_NAME\") | .workspace_id" 2>/dev/null) || true
+
+      if [[ -z "$WS_ID" || "$WS_ID" == "null" ]]; then
+        echo "  ⚠ Could not find created workspace."
+        exit 1
+      fi
+    fi
+
+    # Create tabs if workspace is fresh (< 2 tabs)
+    WS_LIST=$(herdr workspace list 2>/dev/null)  # Refresh after potential close
+    TAB_COUNT=$(echo "$WS_LIST" | jq -r ".result.workspaces[] | select(.workspace_id == \"$WS_ID\") | .tab_count" 2>/dev/null || echo "0")
+
+    if [[ "$TAB_COUNT" -lt 2 ]]; then
+      for label in pi fresh glow shell; do
+        TAB_OUT=$(herdr tab create --workspace "$WS_ID" --cwd "$REPO_CWD" --label "$label" --no-focus 2>&1)
+        echo "$TAB_OUT" | grep -q '"type":"tab_created"' && echo "  ✓ Created tab: $label" || true
+        sleep 0.2
+      done
+    else
+      echo "  ✓ Workspace already has tabs — ready to use"
+    fi
 
     echo ""
     echo "✓ Dev stack ready! Switch tabs and run:"
