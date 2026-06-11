@@ -119,6 +119,17 @@ Fresh plugins can shell out to CLI tools via `spawnProcess`. Key considerations:
 5. **Untitled buffers**: Write buffer content to a temp file (`/tmp/...`) and
    point the external tool at the temp file.
 
+6. **The seam between apps can be leveraged — but watch for jagged edges**.
+   Plugins live at the boundary between Fresh's QuickJS environment and
+   external processes (glow, spawnProcess, etc.). At these seams, async
+   operations are non-blocking by default — `editor.closeBuffer()` returns
+   immediately, leaving the old state intact while you move on. The fix:
+   always `await` at the seam. When you don't, you get intermittent failures
+   that feel like heisenbugs — sometimes it works, sometimes the old preview
+   flickers or the new one fails to open. The metaphor: you can bridge two
+   systems, but the bridge has seams, and if you don't bolt them down with
+   `await`, things slip through.
+
 ### Glow Preview Plugin — lessons learned
 
 The `glow-preview.ts` plugin (brief `004-glow-fresh-preview.md`) revealed
