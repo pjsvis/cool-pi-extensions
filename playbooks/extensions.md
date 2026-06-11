@@ -138,3 +138,61 @@ several patterns worth preserving:
 - **Auto-refresh on save**: `editor.on("after_file_save", ...)` refreshes the
   preview. Guard with `previewBufferId !== 0` to avoid work when the preview
   isn't open.
+
+---
+
+## Pi Model Configuration — lessons learned
+
+**Incident:** `nex-agi/nex-n2-pro:free` was not visible in Pi's model selector.
+
+### What happened
+
+1. The model was already in Pi's **built-in registry** (`pi-ai/dist/models.generated.js`)
+   — confirmed by grep. It should have appeared automatically, no config needed.
+2. It was added to `openrouter.modelOverrides` in `~/.pi/agent/models.json`.
+3. Per the [Pi models docs](https://github.com/earendil-works/pi-mono/blob/main/docs/models.md):
+   *"`modelOverrides` are applied to built-in provider models. Unknown model IDs are ignored."*
+4. So `modelOverrides` was silently doing nothing — the entry was unknown to Pi.
+5. I moved the model to `openrouter.models` array. Still not visible after restart.
+
+### Key lessons
+
+1. **Don't configure what's built-in.** If a model is in `pi-ai/dist/models.generated.js`,
+   it appears automatically. Adding it to `models.json` is at best redundant,
+   at worst causes unexpected provider behavior.
+2. **Check the registry first.** Before touching `models.json`, verify:
+   ```bash
+   grep "model-id" ~/.local/share/fnm/node-versions/v22.22.2/installation/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-ai/dist/models.generated.js
+   ```
+   If found → it's built-in, no config needed.
+3. **`modelOverrides` is only for overriding existing built-in models.** It cannot
+   register new ones. Unknown IDs are silently ignored.
+4. **`models` array on built-in providers is for merging custom models**, not for
+   re-declaring built-in models. Adding a `models` array to OpenRouter may switch
+   it into a "static config" mode that suppresses the dynamic built-in list.
+5. **If a built-in model doesn't appear**, the issue is likely:
+   - Auth not configured for the provider (`hasConfiguredAuth` check)
+   - A filter in the UI selector
+   - A Pi version mismatch (built-in list may differ between versions)
+
+### Verification checklist
+
+```bash
+# 1. Is it in the built-in registry?
+grep "model-slug" ~/.local/share/fnm/node-versions/v22.22.2/installation/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-ai/dist/models.generated.js
+
+# 2. Does the provider have auth?
+skate get open_api_key  # or whatever key the provider needs
+
+# 3. Does pi see it via CLI?
+pi --list-models | grep "model-slug"
+
+# 4. Check models.json is valid JSON
+cat ~/.pi/agent/models.json | jq -e 'true'
+```
+
+### Reference
+
+- [Pi models docs](https://github.com/earendil-works/pi-mono/blob/main/docs/models.md)
+- Built-in registry: `node_modules/@earendil-works/pi-ai/dist/models.generated.js`
+- `model-registry.js` in pi-coding-agent `dist/core/` handles merge semantics

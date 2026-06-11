@@ -37,7 +37,7 @@ How-to guides for recurring tasks. Give pi the URL and it executes.
 | File | Description |
 |---|---|
 | [playbooks/terminal-stack.md](playbooks/terminal-stack.md) | Pi-executable install playbook — idempotent install of the full stack. |
-| [playbooks/extensions.md](playbooks/extensions.md) | Pi extension conventions + Fresh plugin conventions + Glow lessons learned. |
+| [playbooks/extensions.md](playbooks/extensions.md) | Pi extension conventions + Fresh plugin conventions + Glow + Pi model config lessons. |
 | [playbooks/briefs.md](playbooks/briefs.md) | How to write a project brief. |
 | [playbooks/debriefs.md](playbooks/debriefs.md) | How to write a project debrief. |
 | [playbooks/decisions.md](playbooks/decisions.md) | How to write a decision record. |
@@ -61,6 +61,7 @@ work starts.
 | 002 | [briefs/002-pi-check-zenmux.md](briefs/002-pi-check-zenmux.md) | pending |
 | 003 | [briefs/003-protocol-evals.md](briefs/003-protocol-evals.md) | pending |
 | 004 | [briefs/004-glow-fresh-preview.md](briefs/004-glow-fresh-preview.md) | complete |
+| 005 | [briefs/005-nex-n2-pro-not-in-pi-list.md](briefs/005-nex-n2-pro-not-in-pi-list.md) | lesson documented |
 
 ---
 
