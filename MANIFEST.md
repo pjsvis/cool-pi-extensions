@@ -21,6 +21,7 @@ Structured reference material.
 | File | Description |
 |---|---|
 | [docs/the-vest-protocol.md](docs/the-vest-protocol.md) | Blog post introducing the VEST Protocol and cool-pi-extensions. |
+| [docs/visitor-journey.md](docs/visitor-journey.md) | Guided tour — visiting agent walks through orientation in under 5 minutes. |
 | [docs/visitor-protocol.md](docs/visitor-protocol.md) | API pattern spec — two verbs for two audiences (orient/browse). Zero-friction discovery. |
 | [docs/terminal-stack.md](docs/terminal-stack.md) | Stack architecture — Alacritty, herdr, pi, Fresh. SSH workflow, cross-platform. |
 | [docs/standard-mono-repo-pattern.md](docs/standard-mono-repo-pattern.md) | Directory-level organisational convention for extensions and tooling. |

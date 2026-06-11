@@ -44,6 +44,7 @@ orient:
     echo ""
     echo "=== Read more ==="
     echo "  just read docs/the-vest-protocol.md — the VEST Protocol blog post"
+    echo "  just read docs/visitor-journey.md   — guided tour (visiting agent)"
     echo "  just read docs/visitor-protocol.md  — VEST spec"
     echo ""
     echo "=== Optional constraints ==="
