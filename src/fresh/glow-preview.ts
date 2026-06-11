@@ -193,10 +193,12 @@ globalThis.glow_preview_toggle = async function (): Promise<void> {
     return;
   }
 
-  // If preview exists but is in the background, just switch to it
+  // Preview exists but we're on a different tab — close old and preview current instead.
   if (previewBufferId !== 0) {
-    focusPreviewBuffer();
-    return;
+    editor.closeBuffer(previewBufferId);
+    previewBufferId = 0;
+    sourceBufferId = 0;
+    // Fall through to open a new preview for the current buffer
   }
 
   // Otherwise: open a new preview from the current buffer and focus it.
