@@ -11,6 +11,8 @@ WSL2). SSH-native — no browser, no Electron, no GUI required. Just a terminal.
 **Terminal (Alacritty)** — GPU rendering, font, clipboard. macOS ✓ · Linux ✓ · WSL2 ✓ (native Windows + WSL)
 **Session multiplexing (herdr)** — Tab/session mgmt, daemon, agent orchestration. macOS ✓ · Linux ✓ · WSL2 ✓
 **AI agent (pi)** — LLM-driven code gen, tool use, Edinburgh Protocol. macOS ✓ · Linux ✓ · WSL2 ✓
+
+**Observability (td + sidecar)** — Session continuity and handoff for agents (td); human oversight layer showing all worktrees and agent state (sidecar). macOS ✓ · Linux ✓ · WSL2 ✓
 **Editor (Fresh)** — Fast terminal editor, plugin system, LSP. macOS ✓ · Linux ✓ · WSL2 ✓
 **Mobile SSH (Echo on iOS)** — Ghostty engine, Mosh, Face ID, touch-optimized. iOS/iPadOS ✓ · Linux — · WSL2 —
 
