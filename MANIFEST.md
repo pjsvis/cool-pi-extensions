@@ -1,46 +1,33 @@
 # MANIFEST
 
-Directory of markdown files in this repository. No code indexing — just
-documentation, playbooks, briefs, debriefs, and decisions.
+Directory of markdown files in this repository.
+
+---
+
+## API
+
+| Command | Audience | What it does |
+|---|---|---|
+| `just orient` | Agents | Full orientation — branch, git state, active tasks, entry points |
+| `just browse` | Humans | List all docs, preview with glow |
+| `glow` | Both | Interactive markdown browser |
 
 ---
 
 ## Docs
 
-Structured reference material. Start here for architectural context.
+Structured reference material.
 
 | File | Description |
 |---|---|
-| [docs/terminal-stack.md](docs/terminal-stack.md) | Stack architecture — six-layer terminal-native toolchain (TailScale, Alacritty, herdr, pi, Fresh, Echo). SSH workflow, cross-platform matrix, comparison with VS Code/JetBrains/tmux. |
-| [docs/standard-mono-repo-pattern.md](docs/standard-mono-repo-pattern.md) | Directory-level organisational convention for pi extensions and tooling. |
+| [docs/terminal-stack.md](docs/terminal-stack.md) | Stack architecture — Alacritty, herdr, pi, Fresh. SSH workflow, cross-platform. |
+| [docs/standard-mono-repo-pattern.md](docs/standard-mono-repo-pattern.md) | Directory-level organisational convention for extensions and tooling. |
 | [docs/edinburgh-protocol-evals.md](docs/edinburgh-protocol-evals.md) | Human-readable version of the Edinburgh Protocol evaluation fixture. |
 | [docs/edinburgh-protocol-eval.md](docs/edinburgh-protocol-eval.md) | Earlier Edinburgh Protocol evaluation notes and scoring commentary. |
 | [docs/model-eval-q2-2026.md](docs/model-eval-q2-2026.md) | Q2 2026 model evaluation results and recommendations. |
 | [docs/provider-registry.md](docs/provider-registry.md) | Provider connectivity and model registration reference. |
 | [docs/the-information-arbitrage-stack.md](docs/the-information-arbitrage-stack.md) | Essay on information asymmetry and tooling choices. |
 | [docs/the-kahneman-shift.md](docs/the-kahneman-shift.md) | Essay on System 1/System 2 thinking applied to AI agents. |
-| [docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md](docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md) | Archived external article on Nex/NVIDIA model economics and agent tooling. |
-
-### External articles
-
-Blog drafts in the [blog-posts](https://github.com/pjsvis/blog-posts) repo:
-
-| Title | File | Description |
-|---|---|---|
-| The Harness-Harness | `_drafts/2026-06-11-harness-harness.md` | Why we need scaffolding for our scaffolding. Blackadder tone. |
-| Terminal-native stack | `_drafts/2026-06-11-terminal-native-stack.md` | Toolchain justification — layer by layer, "tt" naming wars, AngularJS flashbacks. |
-| The Silo Manifesto | `_drafts/2026-06-11-silo-manifesto.md` | Methodology — briefs, debriefs, td, Edinburgh Protocol, silo boundary. |
-
----
-
-## Canon
-
-Permanent, linkable reference HTML.
-
-| File | Description |
-|---|---|
-| [canon/index.html](canon/index.html) | Canon index page. |
-| [canon/edinburgh-protocol.html](canon/edinburgh-protocol.html) | The Edinburgh Protocol agent identity and operating method. |
 
 ---
 
@@ -50,18 +37,16 @@ How-to guides for recurring tasks. Give pi the URL and it executes.
 
 | File | Description |
 |---|---|
-| [playbooks/terminal-stack.md](playbooks/terminal-stack.md) | Pi-executable install playbook — idempotent install of the full stack. |
 | [playbooks/dev-stack-setup.md](playbooks/dev-stack-setup.md) | Full dev stack setup guide — alacritty → herdr → pi → fresh (+ sidecar / td). |
-| [playbooks/extensions.md](playbooks/extensions.md) | Pi extension conventions + Fresh plugin conventions + Glow + Pi model config lessons. |
+| [playbooks/terminal-stack.md](playbooks/terminal-stack.md) | Pi-executable install playbook — idempotent install of the full stack. |
+| [playbooks/extensions.md](playbooks/extensions.md) | Pi extension conventions + Fresh plugin conventions + lessons. |
 | [playbooks/briefs.md](playbooks/briefs.md) | How to write a project brief. |
 | [playbooks/debriefs.md](playbooks/debriefs.md) | How to write a project debrief. |
 | [playbooks/decisions.md](playbooks/decisions.md) | How to write a decision record. |
-| [playbooks/canon.md](playbooks/canon.md) | Canon publishing conventions. |
 | [playbooks/cli.md](playbooks/cli.md) | CLI tool conventions. |
 | [playbooks/config.md](playbooks/config.md) | Configuration file conventions. |
 | [playbooks/docs.md](playbooks/docs.md) | Documentation conventions. |
 | [playbooks/prompts.md](playbooks/prompts.md) | Prompt engineering conventions. |
-| [playbooks/writing.md](playbooks/writing.md) | Writing conventions for the repo. |
 
 ---
 

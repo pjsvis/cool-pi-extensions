@@ -97,6 +97,29 @@ td-next:
 td-context ID:
     td context {{ ID }}
 
+# ── Human: browse docs ──────────────────────────────────────────────────
+# List all available docs with glow preview. For humans browsing the repo.
+# Usage: `just browse`
+
+[group("human")]
+browse:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "=== docs/ (reference) ==="
+    ls docs/*.md 2>/dev/null | while read f; do
+      fname=$(basename "$f" .md)
+      echo "  • $f"
+    done
+    echo ""
+    echo "=== playbooks/ (guides) ==="
+    ls playbooks/*.md 2>/dev/null | while read f; do
+      fname=$(basename "$f" .md)
+      echo "  • $f"
+    done
+    echo ""
+    echo "→ just read <file>  to render any file with glow"
+    echo "→ glow             to browse interactively"
+
 # ── Docs: render with Glow ─────────────────────────────────────────────────
 # Glow is the human interface for markdown. Type `glow` alone for interactive
 # file browser; `just read <file>` for direct render.

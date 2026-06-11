@@ -13,7 +13,7 @@ Long-form, human-readable documents translated from machine-readable artifacts. 
 | `prompts/edinburgh-protocol-evals-v1.json` | JSON | Extension runtime |
 | `docs/edinburgh-protocol-evals.md` | Markdown prose | Humans |
 | `prompts/edinburgh-protocol.md` | Markdown (system prompt) | Agent + human |
-| `canon/edinburgh-protocol.html` | HTML | Published web |
+| `prompts/edinburgh-protocol.md` | Markdown | Agent identity — Edinburgh Protocol |
 
 The JSON fixture is a runtime dependency — the extension reads it directly. The Markdown in `docs/` is a companion document: same content, but structured for reading rather than parsing.
 
