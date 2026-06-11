@@ -11,6 +11,7 @@ default:
 # ── Agent: Session orientation ─────────────────────────────────────────────
 # Run at session start to orient the agent. Shows branch, git state,
 # in-flight tasks, and key repo entry points.
+# Usage: `just orient` (or say "orient me" to the agent)
 
 [group("meta")]
 orient:
@@ -41,7 +42,8 @@ orient:
     echo "  just orient  — current state (you are here)"
     echo "  just read playbooks/dev-stack-setup.md — full dev stack guide"
 
-# What this project is
+# One-liner summary of the project. What it is, what stack it uses.
+# Usage: `just about`
 [group("meta")]
 about:
     @echo "cool-pi-extensions"
@@ -60,18 +62,23 @@ about:
     @echo "just help        — full repo index (MANIFEST.md via Glow)"
     @echo "just read playbooks/dev-stack-setup.md — full dev stack guide"
 
-# Full repo index (MANIFEST.md rendered with Glow)
+# Full repo index. Renders MANIFEST.md through Glow for humans.
+# Usage: `just help` (also: type `glow` anywhere for interactive markdown browser)
 [group("meta")]
 help:
     @glow -s ~/.config/glow/styles/fresh-high-contrast.json MANIFEST.md 2>/dev/null || cat MANIFEST.md
 
 # ── Manifest hygiene ────────────────────────────────────────────────────────
+# Ensures docs/playbooks index matches filesystem. Run after major changes.
+# Usage: `just check-manifest`
 
 [group("manifest")]
 check-manifest:
     bun scripts/check-manifest.ts
 
 # ── Task management (td) ──────────────────────────────────────────────────
+# td tracks agent session state, issues, and handoffs.
+# Run `just td-new` at the start of every agent session.
 
 [group("td")]
 td-new:
@@ -91,6 +98,9 @@ td-context ID:
     td context {{ ID }}
 
 # ── Docs: render with Glow ─────────────────────────────────────────────────
+# Glow is the human interface for markdown. Type `glow` alone for interactive
+# file browser; `just read <file>` for direct render.
+# Usage: `just read playbooks/dev-stack-setup.md`
 
 [group("docs")]
 read FILE="MANIFEST.md":
@@ -101,6 +111,7 @@ read-stack:
     just read docs/terminal-stack.md
 
 # ── Provisioning ────────────────────────────────────────────────────
+# Check what tools are installed. Run `just provision` anytime to verify.
 
 [group("provision")]
 provision:
@@ -179,6 +190,7 @@ install-brew:
 # ── Full stack install ───────────────────────────────────────────────────
 # Dial in the complete dev stack from a fresh machine.
 # Run this once; subsequent runs just verify.
+# Usage: `just install-stack`
 
 [group("provision")]
 install-stack:

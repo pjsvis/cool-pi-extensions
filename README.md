@@ -43,13 +43,30 @@ installs everything)
 |---|---|
 | **glow-preview** | Full-screen Glow-rendered markdown preview in a Fresh tab. Toggle with a keybind (recommended: `Ctrl+Shift+M`), auto-refresh on save, `q` to close. ANSI-color-matched to Fresh's theme. |
 
+### Human interfaces
+
+**Glow** is the human interface for markdown files. Type `glow` from any directory
+to get an interactive file browser with live preview. No need to open files —
+browse, preview, and navigate visually. Integrates with Fresh via the glow-preview
+plugin for inline previewing while editing.
+
+**sidecar** is the human monitor for agent sessions. Runs in a separate terminal
+to show active worktrees, td session state, agent conversation history, and
+merge workflow. Watch your agent work without interfering.
+
 ## Quick start
 
 ```bash
 git clone https://github.com/pjsvis/cool-pi-extensions.git ~/.pi/extensions
 cd ~/.pi/extensions
 flox activate
+just orient        # orient yourself (shows what is installed, active tasks, entry points)
+glow               # browse markdown files visually
+just install-stack # pull the full dev stack onto a fresh machine
 ```
+
+**The onboarding document:** [`playbooks/dev-stack-setup.md`](playbooks/dev-stack-setup.md) —
+step-by-step guide to set up alacritty → herdr → pi → fresh (+ sidecar / td).
 
 ### Install CLI tools globally
 
