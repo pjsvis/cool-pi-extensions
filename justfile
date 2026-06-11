@@ -379,8 +379,8 @@ dev:
 
     sleep 0.5
 
-    # Get the dev-stack workspace ID (handle null gracefully with -euo pipefail)
-    WS_ID=$(herdr workspace list 2>/dev/null | jq -r '.result.workspaces[] | select(.label == "dev-stack") | .workspace_id' 2>/dev/null) || true
+    # Get the dev-stack workspace ID (last one = most recent)
+    WS_ID=$(herdr workspace list 2>/dev/null | jq -r '[.result.workspaces[] | select(.label == "dev-stack") | .workspace_id] | last' 2>/dev/null) || true
 
     if [[ -z "$WS_ID" || "$WS_ID" == "null" || "$WS_ID" == "" ]]; then
       echo "  ⚠ Could not find dev-stack workspace. Ensure herdr is running."
