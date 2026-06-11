@@ -30,6 +30,8 @@ just browse    # human doc browser
 just install-stack  # pull the full dev stack onto a fresh machine
 ```
 
+---
+
 ## What's in the box
 
 ### Extensions
@@ -40,6 +42,8 @@ just install-stack  # pull the full dev stack onto a fresh machine
 | **silo** | Hard filesystem boundary — agent cannot read or write outside the repo root. "I'm staying in." |
 | **edinburgh-evals** | Model behavioral gate. Forks sessions, runs Protocol trap vectors, deterministic assertions + Gemini secondary grading via OpenRouter. `/eval <model>` command. |
 
+---
+
 ### CLI tools
 
 | Tool | Description |
@@ -48,11 +52,15 @@ just install-stack  # pull the full dev stack onto a fresh machine
 | **pi-models** | Manage `~/.pi/agent/models.json`. Add, remove, list, and validate providers and models. |
 | **td** | Agent task memory. Tracks session state, issues, and handoffs across agent contexts. |
 
+---
+
 ### Prompts
 
 | Prompt | Description |
 |---|---|
 | **Edinburgh Protocol** | Scottish Enlightenment principles — Hume's skepticism, Smith's systems thinking, Watt's pragmatism. See [prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md). |
+
+---
 
 ### Terminal-native stack
 
@@ -64,11 +72,15 @@ any terminal, anywhere.
 - [**→ Install playbook**](playbooks/terminal-stack.md) — give pi the URL and it installs everything
 - [**→ Full dev-stack setup**](playbooks/dev-stack-setup.md) — step-by-step onboarding guide
 
+---
+
 ### Fresh plugins
 
 | Plugin | Description |
 |---|---|
 | **glow-preview** | Full-screen Glow-rendered markdown preview in a Fresh tab. Toggle with `CMD+P` (or `Ctrl+Shift+M`), auto-refresh on save, `q` to close. |
+
+---
 
 ## Human interfaces
 
@@ -79,6 +91,8 @@ browse, preview, and navigate visually.
 **sidecar** is the human monitor for agent sessions. Runs in a separate terminal
 to show active worktrees, td session state, agent conversation history, and
 merge workflow. Watch your agent work without interfering.
+
+---
 
 ## Quick start
 
@@ -94,6 +108,8 @@ just orient
 just browse
 ```
 
+---
+
 ## Install CLI tools globally
 
 ```bash
@@ -104,6 +120,8 @@ cd src/cli/pi-check && bun install && bun link
 cd src/cli/pi-models && bun install
 ```
 
+---
+
 ## Activate extensions
 
 ```bash
@@ -112,11 +130,15 @@ ln -sf ~/.pi/extensions/src/extensions/defuddle/defuddle.ts ~/.pi/agent/extensio
 cp -r ~/.pi/extensions/src/extensions/silo ~/.pi/agent/extensions/silo
 ```
 
+---
+
 ## Set the system-prompt (optional)
 
 ```bash
 ln -sf ~/.pi/extensions/prompts/edinburgh-protocol.md ~/.pi/agent/AGENTS.md
 ```
+
+---
 
 ## Extension details
 
@@ -125,6 +147,8 @@ ln -sf ~/.pi/extensions/prompts/edinburgh-protocol.md ~/.pi/agent/AGENTS.md
 Fetch any webpage as clean Markdown via the [defuddle.md](https://defuddle.md) API.
 
 **Commands:** `/defuddle <url>`, `/defuddle allow <domain>`, `/defuddle list`, `/defuddle stats`
+
+---
 
 ### silo
 
@@ -136,6 +160,8 @@ Hard filesystem boundary. Uses pi's built-in local bash backend so the agent see
 ```
 
 Escape hatch: `pi --no-silo`. Status: `/silo-status`.
+
+---
 
 ### edinburgh-evals
 
@@ -157,6 +183,8 @@ Model behavioral gate using Edinburgh Protocol trap vectors.
 
 **Fixture:** `prompts/edinburgh-protocol-evals-v1.json` — [human-readable version](docs/edinburgh-protocol-evals.md)
 
+---
+
 ### pi-check CLI
 
 ```bash
@@ -166,6 +194,8 @@ pi-check --json             # machine-readable output
 pi-check --zenmux-mgmt      # include ZenMux account metrics
 ```
 
+---
+
 ### pi-models CLI
 
 ```bash
@@ -174,6 +204,8 @@ pi-models add zai glm-5.1 --reasoning --price 1.40/5.60 --context 200000 --max-t
 pi-models remove minimax MiniMax-M2.1
 pi-models validate
 ```
+
+---
 
 ## Writing your own extension
 
@@ -189,6 +221,8 @@ export default function (pi: ExtensionAPI) {
 
 See [pi's extension docs](https://github.com/earendil-works/pi-mono/blob/main/docs/extensions.md) for the full API reference.
 
+---
+
 ## Dependencies
 
 [Flox](https://flox.dev) provides `bun` for the CLI tools. Extensions run inside pi's runtime and don't need Flox.
@@ -198,6 +232,8 @@ See [pi's extension docs](https://github.com/earendil-works/pi-mono/blob/main/do
 **Fresh plugins:** [Glow](https://github.com/charmbracelet/glow) (markdown renderer), [Fresh](https://sinelaw.github.io/fresh/) (editor).
 
 Optional: `rtk` (token compression). See [DEPENDENCIES.md](DEPENDENCIES.md).
+
+---
 
 ## License
 
