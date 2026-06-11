@@ -6,95 +6,43 @@
 
 ---
 
+## Setup
+
+```bash
+flox activate
+just dev
+```
+
+`flox activate` handles the toolchain pre-reqs (bun, just, glow, rtk, skate, pi). `just dev` handles the rest — symlinks, config, extensions, everything else the repo needs to work.
+
+Run both. You're done.
+
+---
+
 ## What this stack is
 
 ```
 alacritty → herdr → pi → [new tab] → fresh → [new tab] → sidecar
 ```
 
+**Terminal:** Alacritty  
+**Session:** herdr  
+**Agent:** pi (Edinburgh Protocol)  
+**Editor:** Fresh  
+**Monitor:** sidecar  
+**Memory:** td (per-session, agent-facing)
 
-
-**Terminal layer:** Alacritty — GPU-accelerated terminal emulator
-**Connection layer:** herdr — SSH config and session management
-**Agent layer:** pi — Coding agent with Edinburgh Protocol identity
-**Editor layer:** Fresh — Terminal-native code editor
-**Monitor layer:** sidecar — TUI for watching agent progress and worktrees
-**Task memory layer:** td — Structured session and issue tracking for agents
-
-td is for **agents**. sidecar is for **you** — the human supervising the agents.
+sidecar is for **you** — the human supervising. td is for **agents** — session continuity and handoff.
 
 ---
 
-## Step-by-step setup
-
-### 1. Alacritty
+## Provisioning check
 
 ```bash
-brew install alacritty
+just provision
 ```
 
-Configure `~/.config/alacritty.toml` for your display and font preferences.
-
-### 2. herdr
-
-```bash
-brew install herdr
-```
-
-Set up your SSH hosts and connection profiles. herdr manages your SSH config so you don't have to.
-
-### 3. pi (the agent)
-
-```bash
-npm install -g @mariozechner/pi-coding-agent
-```
-
-Authenticate with your provider(s):
-```bash
-skate set open_api_key <key>
-```
-
-When your agent starts, it reads `AGENTS.md` and `just orient` to understand the project context.
-
-### 4. Fresh (editor)
-
-Download from [getfresh.dev](https://getfresh.dev) and install.
-
-Configure your keybindings. Recommended:
-- `CMD+P` → `Glow Preview: Toggle` (markdown preview)
-- `Ctrl+Shift+M` → same (backup)
-
-Install the Glow plugin:
-```bash
-ln -s /path/to/cool-pi-extensions/src/fresh/glow-preview.ts ~/.config/fresh/plugins/glow-preview.ts
-```
-
-### 5. sidecar (monitor)
-
-```bash
-brew install sidecar
-```
-
-sidecar runs alongside your agent session. It shows:
-- Active worktrees and branches
-- td session and issue state
-- Agent conversation history
-- Worktree diffs and merge status
-
-You can watch your agent work without interfering.
-
-### 6. td (task memory)
-
-```bash
-brew install td
-```
-
-td runs per-session. At the start of every agent context window:
-```bash
-td usage --new-session
-```
-
-Your agent logs progress, decisions, and blockers to td. The next agent session resumes exactly where the previous one stopped.
+Run any time to verify the toolchain is complete. `flox activate` also runs this check on activation.
 
 ---
 
@@ -105,46 +53,24 @@ When an agent (or you) runs:
 just orient
 ```
 
-It reports:
-- Current git branch and state
-- Last commit
-- Active td tasks
-- Key entry points
+It reports: branch, git state, active td tasks, key entry points.
 
-For a new agent joining the project, `just orient` and `just help` are the two commands that matter.
-
----
-
-## Provisioning check
-
-Run at any time:
-```bash
-just provision
-```
-
-Checks:
-- `bun`, `just` (required)
-- `rtk`, `skate`, `glow` (optional)
-- `pi` availability
-- Fresh config presence
-
-Flox also runs this check on `flox activate`.
+For a new agent, `just orient` and `just help` are the two commands that matter. The system teaches itself.
 
 ---
 
 ## Typical workflow
 
 ```
-# Terminal 1 — agent
+# Agent session
 alacritty
 herdr connect <host>
 pi
 
-# Inside pi, before context ends
+# Before context ends
 td handoff <issue-id> --done "..." --remaining "..."
 
-# Terminal 2 — monitoring (optional)
-alacritty
+# Human monitoring (optional)
 sidecar
 ```
 
@@ -152,11 +78,10 @@ Or inside pi, open a new tab (`Ctrl+T` in Fresh) and run Fresh + sidecar there.
 
 ---
 
-## Key files in this repo
+## Key files
 
-
-**`justfile`** — Task runner: `just provision`, `just orient`, `just help`
-**`AGENTS.md`** — Agent instructions: Edinburgh Protocol + project context
-**`MANIFEST.md`** — Full repo index
-**`playbooks/dev-stack-setup.md`** — This guide
-**`DEPENDENCIES.md`** — Tool dependency reference
+**`justfile`** — Task runner  
+**`AGENTS.md`** — Agent instructions  
+**`MANIFEST.md`** — Repo index  
+**`DEPENDENCIES.md`** — Tool reference  
+**`playbooks/insights.md`** — Project insights
