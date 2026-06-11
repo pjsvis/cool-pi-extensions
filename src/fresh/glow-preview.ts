@@ -11,7 +11,6 @@
  * - Full-screen Glow-rendered preview as a tab
  * - Toggle: opens preview; press again on preview = close, return to source
  * - Auto-refresh on save when editing .md files
- * - Explorer sync: markdown files opened/activated from the explorer update the preview
  * - Works with unnamed/untitled buffers (uses a temp file)
  * - q / Escape to close preview, r to refresh
  */
@@ -24,18 +23,8 @@ let previewBufferId = 0;
 /** Buffer ID of the source markdown buffer being previewed. */
 let sourceBufferId = 0;
 
-/** Buffer ID of the file currently rendered in the preview. */
-let displayedBufferId = 0;
-
 /** The split we came from, so we can return to it on close. */
 let sourceSplitId = 0;
-
-/** Whether explorer-driven markdown activations should update the preview. */
-let explorerSyncEnabled = true;
-
-/** Debounce state for explorer-driven preview updates. */
-let explorerSyncTimer = 0;
-let pendingExplorerSyncBufferId = 0;
 
 /** Path to the temp file used for untitled buffers. */
 const TEMP_PATH = "/tmp/fresh-glow-preview-temp.md";
@@ -93,85 +82,6 @@ async function renderWithGlow(filePath: string): Promise<boolean> {
   }
 }
 
-async function renderBufferToPreview(bufferId: number, options: { updateSource?: boolean } = {}): Promise<boolean> {
-  const { updateSource = true } = options;
-  const length = editor.getBufferLength(bufferId);
-  if (length === 0) {
-    editor.setStatus("Buffer is empty — nothing to preview");
-    return false;
-  }
-
-  const bufPath = editor.getBufferPath(bufferId);
-  if (bufPath && bufPath !== "") {
-    const ok = await renderWithGlow(bufPath);
-    if (ok) {
-      displayedBufferId = bufferId;
-      if (updateSource) {
-        sourceBufferId = bufferId;
-        sourceSplitId = editor.getActiveSplitId();
-      }
-      const fname = bufPath.split("/").pop() || bufPath;
-      editor.setStatus(`Glow preview: ${fname}`);
-    }
-    return ok;
-  }
-
-  try {
-    const text = await editor.getBufferText(bufferId, 0, length);
-    editor.writeFile(TEMP_PATH, text);
-    const ok = await renderWithGlow(TEMP_PATH);
-    if (ok) {
-      displayedBufferId = bufferId;
-      if (updateSource) {
-        sourceBufferId = bufferId;
-        sourceSplitId = editor.getActiveSplitId();
-      }
-      editor.setStatus("Glow preview (untitled buffer)");
-    }
-    return ok;
-  } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e);
-    editor.setStatus(`Preview error: ${msg}`);
-    return false;
-  }
-}
-
-function isMarkdownBuffer(bufferId: number): boolean {
-  const info = editor.getBufferInfo(bufferId);
-  if (!info) return false;
-  if (info.is_virtual) return false;
-
-  const path = info.path || editor.getBufferPath(bufferId);
-  const language = info.language.toLowerCase();
-  return path.endsWith(".md") || language.includes("markdown");
-}
-
-function focusPreviewBuffer(): void {
-  if (previewBufferId === 0) return;
-
-  const info = editor.getBufferInfo(previewBufferId);
-  const splitId = info?.splits[0] || editor.getActiveSplitId();
-  if (splitId !== 0) {
-    editor.focusSplit(splitId);
-  }
-  editor.showBuffer(previewBufferId);
-}
-
-function scheduleExplorerSync(bufferId: number): void {
-  if (!explorerSyncEnabled || previewBufferId === 0 || bufferId === previewBufferId) return;
-  if (!isMarkdownBuffer(bufferId)) return;
-
-  pendingExplorerSyncBufferId = bufferId;
-  if (explorerSyncTimer) clearTimeout(explorerSyncTimer);
-  explorerSyncTimer = setTimeout(() => {
-    explorerSyncTimer = 0;
-    if (previewBufferId === 0) return;
-    void renderBufferToPreview(pendingExplorerSyncBufferId, { updateSource: false }).then(() => {
-      if (previewBufferId !== 0) focusPreviewBuffer();
-    });
-  }, 150);
-}
-
 /**
  * Create a new full-screen preview tab. Closes any existing preview first.
  */
@@ -191,7 +101,6 @@ async function createPreviewTab(entries: TextPropertyEntry[]): Promise<void> {
     editingDisabled: true,
   });
   previewBufferId = result.bufferId;
-  focusPreviewBuffer();
 }
 
 // ── Close handler (bound to q / Escape in glow-preview mode) ─────────────────
@@ -202,11 +111,6 @@ globalThis.glow_preview_close = function (): void {
   editor.closeBuffer(previewBufferId);
   previewBufferId = 0;
   sourceBufferId = 0;
-  displayedBufferId = 0;
-  if (explorerSyncTimer) {
-    clearTimeout(explorerSyncTimer);
-    explorerSyncTimer = 0;
-  }
 
   // Return focus to the source split
   if (sourceSplitId !== 0) {
@@ -236,13 +140,42 @@ globalThis.glow_preview_toggle = async function (): Promise<void> {
 
   // If preview exists but is in the background, just switch to it
   if (previewBufferId !== 0) {
-    focusPreviewBuffer();
+    editor.showBuffer(previewBufferId);
     return;
   }
 
   // Otherwise: open a new preview from the current buffer
   const bufId = editor.getActiveBufferId();
-  await renderBufferToPreview(bufId, { updateSource: true });
+  const length = editor.getBufferLength(bufId);
+
+  if (length === 0) {
+    editor.setStatus("Buffer is empty — nothing to preview");
+    return;
+  }
+
+  sourceBufferId = bufId;
+  sourceSplitId = editor.getActiveSplitId();
+  const bufPath = editor.getBufferPath(bufId);
+
+  if (bufPath && bufPath !== "") {
+    const ok = await renderWithGlow(bufPath);
+    if (ok) {
+      const fname = bufPath.split("/").pop() || bufPath;
+      editor.setStatus(`Glow preview: ${fname}`);
+    }
+  } else {
+    try {
+      const text = await editor.getBufferText(bufId, 0, length);
+      editor.writeFile(TEMP_PATH, text);
+      const ok = await renderWithGlow(TEMP_PATH);
+      if (ok) {
+        editor.setStatus("Glow preview (untitled buffer)");
+      }
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      editor.setStatus(`Preview error: ${msg}`);
+    }
+  }
 };
 
 // ── Manual refresh (bound to 'r' in glow-preview mode) ───────────────────────
@@ -253,13 +186,17 @@ globalThis.glow_refresh = async function (): Promise<void> {
     return;
   }
 
-  const targetBufferId = displayedBufferId || sourceBufferId;
-  if (targetBufferId === 0) {
-    editor.setStatus("No source buffer to refresh from");
-    return;
+  const bufPath = editor.getBufferPath(sourceBufferId);
+  if (bufPath && bufPath !== "") {
+    await renderWithGlow(bufPath);
+    editor.setStatus("Preview refreshed");
+  } else {
+    const length = editor.getBufferLength(sourceBufferId);
+    const text = await editor.getBufferText(sourceBufferId, 0, length);
+    editor.writeFile(TEMP_PATH, text);
+    await renderWithGlow(TEMP_PATH);
+    editor.setStatus("Preview refreshed (untitled)");
   }
-
-  await renderBufferToPreview(targetBufferId, { updateSource: false });
 };
 
 // ── Auto-refresh on save ─────────────────────────────────────────────────────
@@ -267,19 +204,7 @@ globalThis.glow_refresh = async function (): Promise<void> {
 editor.on("after_file_save", (args) => {
   if (previewBufferId === 0) return true;
   if (!args.path.endsWith(".md")) return true;
-  if (displayedBufferId !== 0 && args.buffer_id === displayedBufferId) {
-    renderBufferToPreview(displayedBufferId, { updateSource: false });
-  }
-  return true;
-});
-
-editor.on("after_file_open", (args) => {
-  scheduleExplorerSync(args.buffer_id);
-  return true;
-});
-
-editor.on("buffer_activated", (args) => {
-  scheduleExplorerSync(args.buffer_id);
+  renderWithGlow(args.path);
   return true;
 });
 
@@ -292,46 +217,17 @@ editor.registerCommand(
   null
 );
 
-editor.registerCommand(
-  "Glow Preview: Toggle Explorer Sync",
-  "Update the Glow preview when a markdown file is opened or activated",
-  "glow_preview_toggle_explorer_sync",
-  null
-);
-
-globalThis.glow_preview_toggle_explorer_sync = function (): void {
-  explorerSyncEnabled = !explorerSyncEnabled;
-  if (!explorerSyncEnabled && explorerSyncTimer) {
-    clearTimeout(explorerSyncTimer);
-    explorerSyncTimer = 0;
-  }
-  editor.setStatus(`Glow preview explorer sync ${explorerSyncEnabled ? "enabled" : "disabled"}`);
-};
-
 // ── Cleanup ──────────────────────────────────────────────────────────────────
 
 editor.on("buffer_closed", (args) => {
   // If the source buffer is closed, tear down the preview too
   if (args.buffer_id === sourceBufferId) {
     sourceBufferId = 0;
-    displayedBufferId = 0;
     if (previewBufferId !== 0) {
       editor.closeBuffer(previewBufferId);
       previewBufferId = 0;
     }
-    if (explorerSyncTimer) {
-      clearTimeout(explorerSyncTimer);
-      explorerSyncTimer = 0;
-    }
-    return true;
   }
-
-  // If the currently displayed buffer closes, fall back to the source buffer
-  if (args.buffer_id === displayedBufferId && sourceBufferId !== 0) {
-    displayedBufferId = sourceBufferId;
-    void renderBufferToPreview(displayedBufferId, { updateSource: false });
-  }
-
   return true;
 });
 
