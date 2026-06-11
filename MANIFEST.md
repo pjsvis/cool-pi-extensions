@@ -20,6 +20,8 @@ Structured reference material.
 **[docs/edinburgh-protocol-evals.md](docs/edinburgh-protocol-evals.md)** — Human-readable version of the Edinburgh Protocol evaluation fixture.
 **[docs/edinburgh-protocol-eval.md](docs/edinburgh-protocol-eval.md)** — Earlier Edinburgh Protocol evaluation notes and scoring commentary.
 **[docs/model-eval-q2-2026.md](docs/model-eval-q2-2026.md)** — Q2 2026 model evaluation results and recommendations.
+
+**[docs/model-eval-bankruptcy.md](docs/model-eval-bankruptcy.md)** — Reaction piece: the benchmaxxing problem, Star Wars prequel analogy, intellectual texture hollowing. MiniMax and GLM indicted.
 **[docs/provider-registry.md](docs/provider-registry.md)** — Provider connectivity and model registration reference.
 **[docs/the-information-arbitrage-stack.md](docs/the-information-arbitrage-stack.md)** — Essay on information asymmetry and tooling choices.
 **[docs/the-kahneman-shift.md](docs/the-kahneman-shift.md)** — Essay on System 1/System 2 thinking applied to AI agents.
