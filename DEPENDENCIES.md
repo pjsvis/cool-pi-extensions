@@ -8,6 +8,7 @@ CLI tools and optional integrations may need additional binaries on `PATH`.
 | Tool | Needs | Install |
 |---|---|---|
 | `pi-models` | `bun` ≥1.3 | `flox activate` (or `brew install bun`) |
+| `just` (task runner) | `just` | `flox activate` (or `brew install just`) |
 
 ## Required — extensions
 
@@ -21,6 +22,7 @@ CLI tools and optional integrations may need additional binaries on `PATH`.
 |---|---|---|
 | rtk (token compression) | `rtk` binary | `brew install rtk` |
 | skate (secret management) | `skate` binary | `brew install skate` |
+| glow (markdown preview / `just help`) | `glow` binary | `brew install glow` |
 
 ## Adding a new dependency
 
@@ -31,7 +33,7 @@ CLI tools and optional integrations may need additional binaries on `PATH`.
 2. If it's a **system binary needed by an extension at runtime**, add it to the
    "Required — extensions" table above and update the Flox hook to check for it.
 
-3. If it's **opt-in** (like rtk or skate), list it under "Optional — integrations"
+5. If it's **opt-in** (like rtk, skate, or glow), list it under "Optional — integrations"
    and the Flox hook will warn if it's missing but won't block activation.
 
 ## Flox hook

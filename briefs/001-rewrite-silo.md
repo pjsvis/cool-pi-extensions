@@ -1,8 +1,8 @@
-# brief: Rewrite silo extension
+# brief: Rewrite silo extension — DONE
 
 **Created:** 2026-06-02
 **TD:** td-8997b7
-**Status:** pending
+**Status:** done
 
 ## What
 
@@ -34,10 +34,9 @@ In `index.ts`:
 - Blocked paths still return "I'm staying in."
 - `/silo-status` still works
 - Config file path: `.pi/silo.json` (project) and `extensions/silo/config.json` (global)
-- `herdr-agent-state` no longer needed? (It was auto-installed by herdr, not custom — check)
-- README updated with new name and install instructions
+- `herdr-agent-state` no longer needed? ~~was removed in prior cleanup~~
 
-## Out of scope
+## Done — implemented 2026-06-02
 
 - Test suite (for now — can add later with pi's provider test framework)
 - Video/audio input support

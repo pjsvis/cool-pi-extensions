@@ -2,8 +2,20 @@
 .flox/cache/
 .flox/run/
 
+# Runtime data
+.silo/
+
 # Node
 cli/pi-models/node_modules/
+cli/pi-check/node_modules/
 
 # macOS
 .DS_Store
+.todos/
+.sidecar/
+.sidecar-agent
+.sidecar-task
+.sidecar-pr
+.sidecar-start.sh
+.sidecar-base
+.td-root

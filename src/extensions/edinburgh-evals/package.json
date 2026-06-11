@@ -1,0 +1,10 @@
+{
+  "name": "edinburgh-evals",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Edinburgh Protocol model behavioral evals — fork-based trap vectors with deterministic assertions + Gemini secondary grading",
+  "pi": {
+    "extensions": ["./index.ts"]
+  }
+}

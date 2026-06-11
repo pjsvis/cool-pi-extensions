@@ -9,6 +9,7 @@ schema-version = "1.11.0"
 [install]
 bun.pkg-path = "bun"
 bun.version = "1.3"
+just.pkg-path = "just"
 # gum.pkg-path = "gum"
 # gum.version = "^0.14.5"
 
@@ -38,7 +39,7 @@ on-activate = '''
   fi
 
   # Check optional external binaries (see DEPENDENCIES.md)
-  for bin in rtk skate; do
+  for bin in rtk skate glow fresh; do
     if ! command -v "$bin" >/dev/null 2>&1; then
       echo "⚠  Optional: '$bin' not found on PATH — some features may not work"
       echo "   Install: brew install $bin"
