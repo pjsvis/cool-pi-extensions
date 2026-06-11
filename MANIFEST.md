@@ -51,6 +51,7 @@ How-to guides for recurring tasks. Give pi the URL and it executes.
 | File | Description |
 |---|---|
 | [playbooks/terminal-stack.md](playbooks/terminal-stack.md) | Pi-executable install playbook — idempotent install of the full stack. |
+| [playbooks/dev-stack-setup.md](playbooks/dev-stack-setup.md) | Full dev stack setup guide — alacritty → herdr → pi → fresh (+ sidecar / td). |
 | [playbooks/extensions.md](playbooks/extensions.md) | Pi extension conventions + Fresh plugin conventions + Glow + Pi model config lessons. |
 | [playbooks/briefs.md](playbooks/briefs.md) | How to write a project brief. |
 | [playbooks/debriefs.md](playbooks/debriefs.md) | How to write a project debrief. |

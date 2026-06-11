@@ -9,6 +9,8 @@ CLI tools and optional integrations may need additional binaries on `PATH`.
 |---|---|---|
 | `pi-models` | `bun` ≥1.3 | `flox activate` (or `brew install bun`) |
 | `just` (task runner) | `just` | `flox activate` (or `brew install just`) |
+| `td` (agent task memory) | `td` | `brew install td` (from `marcus/homebrew-tap`) |
+| `sidecar` (user monitor) | `sidecar` | `brew install sidecar` (from `marcus/homebrew-tap`) |
 
 ## Required — extensions
 
@@ -40,3 +42,20 @@ CLI tools and optional integrations may need additional binaries on `PATH`.
 
 `flox activate` checks that required binaries are present and warns about
 missing optional ones. See `.flox/env/manifest.toml` → `[hook]`.
+
+## Stack overview
+
+```
+alacritty → herdr → pi → [new tab] → fresh → [new tab] → sidecar
+```
+
+- **td** runs per-session for agents. It captures session identity, issue state,
+  and handoff context so the next agent session resumes exactly where the
+  previous one stopped.
+- **sidecar** runs alongside the agent for human supervisors. It shows active
+  worktrees, td session state, agent conversation history, and merge workflow
+  in a TUI.
+- Both are installed via `marcus/homebrew-tap`:
+  ```bash
+  brew install td sidecar
+  ```

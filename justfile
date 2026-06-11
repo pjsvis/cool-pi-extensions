@@ -26,13 +26,20 @@ orient:
     last=$(git log -1 --format="%cr · %s" 2>/dev/null || echo "unknown")
     echo "Last commit: $last"
     echo ""
-    echo "=== Active tasks ==="
+    echo "=== Stack ==="
+    echo "  alacritty → herdr → pi → fresh (+ sidecar / td)"
+    echo ""
+    echo "=== Agent tasks (td) ==="
     td current 2>/dev/null || echo "  (td not available)"
+    echo ""
+    echo "=== Provisioning ==="
+    just provision 2>/dev/null | grep -E "^[ ✓✗]" || true
     echo ""
     echo "=== Entry points ==="
     echo "  just about   — what this project is"
-    echo "  just help    — full repo index (MANIFEST.md)"
+    echo "  just help    — full repo index (MANIFEST.md via Glow)"
     echo "  just orient  — current state (you are here)"
+    echo "  just read playbooks/dev-stack-setup.md — full dev stack guide"
 
 # What this project is
 [group("meta")]
@@ -42,12 +49,16 @@ about:
     @echo "A curated collection of extensions, CLI tooling, prompts,"
     @echo "and Fresh editor plugins for the terminal-native development stack."
     @echo ""
-    @echo "Stack: TailScale → Alacritty → herdr → pi → Fresh → Echo"
-    @echo "Docs:  MANIFEST.md"
-    @echo "Blog:  The Harness-Harness · Terminal Stack · Silo Manifesto"
+    @echo "Stack: alacritty → herdr → pi → fresh (+ sidecar / td)"
     @echo ""
-    @echo "just orient — current state"
-    @echo "just help   — full index"
+    @echo "The one-liner: tell your coding agent to orient itself to the project."
+    @echo "It will check everything and walk you through the rest."
+    @echo ""
+    @echo "just install-stack — pull the full dev stack onto a fresh machine"
+    @echo "just provision    — check what is already installed"
+    @echo "just orient      — current state (you are here)"
+    @echo "just help        — full repo index (MANIFEST.md via Glow)"
+    @echo "just read playbooks/dev-stack-setup.md — full dev stack guide"
 
 # Full repo index (MANIFEST.md rendered with Glow)
 [group("meta")]
@@ -164,3 +175,38 @@ install-brew:
     set -euo pipefail
     echo "Installing optional brew dependencies..."
     brew install rtk skate glow
+
+# ── Full stack install ───────────────────────────────────────────────────
+# Dial in the complete dev stack from a fresh machine.
+# Run this once; subsequent runs just verify.
+
+[group("provision")]
+install-stack:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "=== cool-pi-extensions: full stack install ==="
+    echo ""
+    echo "--- Core terminals ---"
+    brew install alacritty herdr
+    echo ""
+    echo "--- Task/agent memory (td) and monitor (sidecar) ---"
+    brew tap marcus/homebrew-tap
+    brew install td sidecar
+    echo ""
+    echo "--- pi coding agent ---"
+    npm install -g @mariozechner/pi-coding-agent
+    echo ""
+    echo "--- Just task runner + bun runtime ---"
+    brew install just bun
+    echo ""
+    echo "--- Optional: token compression, secrets, markdown preview ---"
+    brew install rtk skate glow
+    echo ""
+    echo "--- Fresh editor (download from getfresh.dev) ---"
+    echo "  → Download from https://getfresh.dev"
+    echo ""
+    echo "--- Clone cool-pi-extensions ---"
+    echo "  git clone https://github.com/pjsvis/cool-pi-extensions.git"
+    echo "  cd cool-pi-extensions && flox activate"
+    echo ""
+    echo "Done. Run 'just orient' to verify your environment."
