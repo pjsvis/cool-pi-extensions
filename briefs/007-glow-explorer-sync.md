@@ -34,7 +34,8 @@ The plugin now:
 2. Subscribes to `after_file_open` and `buffer_activated`.
 3. Debounces explorer-driven updates by 150ms.
 4. Skips non-markdown buffers and the Glow preview buffer itself.
-5. Re-renders the preview from the active markdown buffer.
+5. Re-renders the preview from the active markdown buffer without replacing the
+   original source buffer/split used for close/return behavior.
 6. Keeps the Glow preview tab focused after sync.
 7. Provides `Glow Preview: Toggle Explorer Sync` to disable/enable the behavior.
 
@@ -62,5 +63,5 @@ The plugin now:
 
 | File | Purpose |
 |---|---|
-| `src/fresh/glow-preview.ts` | Explorer sync hooks and debounce. |
+| `src/fresh/glow-preview.ts` | Explorer sync hooks, debounce, and source/displayed buffer separation. |
 | `briefs/007-glow-explorer-sync.md` | This brief. |
