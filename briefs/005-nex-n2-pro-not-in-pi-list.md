@@ -19,10 +19,16 @@ a prior Edinburgh Protocol eval having run successfully against it.
 
 ## Root cause
 
-The model is **already built-in** to pi. It should appear without any `models.json`
-configuration. The actual reason for invisibility is unclear — may be a Pi UI
-filter, auth state, or version mismatch. The eval runner uses the model directly
-via API calls (bypassing the selector), so "works in eval" ≠ "visible in UI."
+The model was already in Pi's **built-in registry** AND callable via API (eval
+runner proved it). The actual reason for TUI invisibility:
+
+**`~/.pi/agent/settings.json` → `enabledModels` is an explicit allowlist.**
+
+Only 6 models were listed. `nex-agi/nex-n2-pro:free` was not in the list, so
+the TUI selector filtered it out — even though `--list-models` showed it fine.
+
+**Lesson:** `--list-models` bypasses the `enabledModels` filter. "Visible via CLI"
+≠ "visible in TUI selector."
 
 ## Lessons
 
@@ -37,7 +43,8 @@ Documented in `playbooks/extensions.md` under **Pi Model Configuration — lesso
 
 ## Action items
 
-- [ ] Investigate why built-in `nex-n2-pro:free` isn't showing in selector
-- [ ] Consider filing a Pi issue if this is a UI filtering bug
-- [ ] Revert the `models` array addition to `openrouter` in `~/.pi/agent/models.json`
-  (it was added speculatively and is not needed for a built-in model)
+- [x] Add model to `settings.json.enabledModels` — fixed, model now visible
+- [x] Revert the `models` array addition to `openrouter` — done
+- [ ] Update playbook with `enabledModels` allowlist lesson — done in `playbooks/extensions.md`
+- [ ] Consider a Pi UX improvement: warn when a model is in `models.json`
+  but not in `enabledModels`, or show all models by default with a filter option

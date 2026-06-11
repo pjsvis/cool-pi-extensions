@@ -170,10 +170,30 @@ several patterns worth preserving:
 4. **`models` array on built-in providers is for merging custom models**, not for
    re-declaring built-in models. Adding a `models` array to OpenRouter may switch
    it into a "static config" mode that suppresses the dynamic built-in list.
-5. **If a built-in model doesn't appear**, the issue is likely:
+5. **If a built-in model doesn't appear in the TUI selector**, the issue is likely:
+   - `enabledModels` allowlist in `~/.pi/agent/settings.json` — only listed models
+     appear in the TUI selector. CLI `--list-models` ignores this filter.
+     Fix: add the model ID to `settings.json.enabledModels` array.
    - Auth not configured for the provider (`hasConfiguredAuth` check)
-   - A filter in the UI selector
    - A Pi version mismatch (built-in list may differ between versions)
+
+### `enabledModels` allowlist in settings.json
+
+The TUI model selector respects `~/.pi/agent/settings.json` → `enabledModels`, an
+**explicit allowlist**. Models not in this array are hidden from the selector,
+but remain callable via CLI (`--model nex-agi/nex-n2-pro:free`) and API.
+
+```bash
+# Check
+cat ~/.pi/agent/settings.json | jq '.enabledModels'
+
+# Add a model
+cat ~/.pi/agent/settings.json | jq '.enabledModels += ["nex-agi/nex-n2-pro:free"]' \
+  > /tmp/settings.json && mv /tmp/settings.json ~/.pi/agent/settings.json
+```
+
+**Rule:** After adding a new model, remember to add it to `enabledModels` if you
+want it visible in the interactive selector.
 
 ### Verification checklist
 
