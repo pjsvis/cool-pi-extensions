@@ -40,7 +40,7 @@ orient:
     echo "  just about   — what this project is"
     echo "  just help    — full repo index (MANIFEST.md via Glow)"
     echo "  just orient  — current state (you are here)"
-    echo "  just read playbooks/dev-stack-setup.md — full dev stack guide"
+    echo "  just browse  — human doc browser (just read <file> or glow to view)"
 
 # One-liner summary of the project. What it is, what stack it uses.
 # Usage: `just about`
@@ -59,6 +59,7 @@ about:
     @echo "just install-stack — pull the full dev stack onto a fresh machine"
     @echo "just provision    — check what is already installed"
     @echo "just orient      — current state (you are here)"
+    @echo "just browse      — human doc browser"
     @echo "just help        — full repo index (MANIFEST.md via Glow)"
     @echo "just read playbooks/dev-stack-setup.md — full dev stack guide"
 
