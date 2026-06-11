@@ -43,6 +43,8 @@ No CONTRIBUTING.md to read. No onboarding guide. No taxonomy of directories. The
 
 The VEST Protocol — Visitor, Entry, Self, Teach — is not a framework. It's a design constraint: every entry point should teach the next step. If `just orient` doesn't tell you what you need to start, the design is incomplete.
 
+*(For the record: this could have been called the harness-harness protocol, the meta-meta-framework, or indeed anything that sounds like someone over-engineered a solution to a problem that was always a non-problem. We chose VEST because a bulletproof vest is lightweight, functional, and does exactly one job. The irony is the point.)*
+
 The Edinburgh Protocol is the identity constraint: Hume's skepticism (check your assumptions), Smith's systems thinking (trace the incentives), Watt's pragmatism (does it work?). Before you answer a question, you simulate an impartial spectator. You reject ideology. You follow the evidence.
 
 These are not decorative. They are operational.
