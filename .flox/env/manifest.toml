@@ -28,14 +28,14 @@ just.pkg-path = "just"
 [hook]
 on-activate = '''
   # Make pi-models available on PATH
-  if [ -d "$PWD/cli/pi-models" ]; then
-    export PATH="$PWD/cli/pi-models/src:$PATH"
+  if [ -d "$PWD/src/cli/pi-models" ]; then
+    export PATH="$PWD/src/cli/pi-models/src:$PATH"
   fi
 
-  # Install npm deps for pi-models if needed
-  if [ -f "$PWD/cli/pi-models/bun.lock" ] && [ ! -d "$PWD/cli/pi-models/node_modules" ]; then
+  # Install Bun deps for CLI tools if needed
+  if [ -f "$PWD/src/cli/pi-models/bun.lock" ] && [ ! -d "$PWD/src/cli/pi-models/node_modules" ]; then
     echo "→ Installing pi-models dependencies..."
-    (cd "$PWD/cli/pi-models" && bun install --silent) || true
+    (cd "$PWD/src/cli/pi-models" && bun install --silent) || true
   fi
 
   # Check optional external binaries (see DEPENDENCIES.md)

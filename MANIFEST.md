@@ -14,9 +14,12 @@ Structured reference material. Start here for architectural context.
 | [docs/terminal-stack.md](docs/terminal-stack.md) | Stack architecture — six-layer terminal-native toolchain (TailScale, Alacritty, herdr, pi, Fresh, Echo). SSH workflow, cross-platform matrix, comparison with VS Code/JetBrains/tmux. |
 | [docs/standard-mono-repo-pattern.md](docs/standard-mono-repo-pattern.md) | Directory-level organisational convention for pi extensions and tooling. |
 | [docs/edinburgh-protocol-evals.md](docs/edinburgh-protocol-evals.md) | Human-readable version of the Edinburgh Protocol evaluation fixture. |
+| [docs/edinburgh-protocol-eval.md](docs/edinburgh-protocol-eval.md) | Earlier Edinburgh Protocol evaluation notes and scoring commentary. |
+| [docs/model-eval-q2-2026.md](docs/model-eval-q2-2026.md) | Q2 2026 model evaluation results and recommendations. |
 | [docs/provider-registry.md](docs/provider-registry.md) | Provider connectivity and model registration reference. |
 | [docs/the-information-arbitrage-stack.md](docs/the-information-arbitrage-stack.md) | Essay on information asymmetry and tooling choices. |
 | [docs/the-kahneman-shift.md](docs/the-kahneman-shift.md) | Essay on System 1/System 2 thinking applied to AI agents. |
+| [docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md](docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md) | Archived external article on Nex/NVIDIA model economics and agent tooling. |
 
 ### External articles
 
@@ -27,6 +30,17 @@ Blog drafts in the [blog-posts](https://github.com/pjsvis/blog-posts) repo:
 | The Harness-Harness | `_drafts/2026-06-11-harness-harness.md` | Why we need scaffolding for our scaffolding. Blackadder tone. |
 | Terminal-native stack | `_drafts/2026-06-11-terminal-native-stack.md` | Toolchain justification — layer by layer, "tt" naming wars, AngularJS flashbacks. |
 | The Silo Manifesto | `_drafts/2026-06-11-silo-manifesto.md` | Methodology — briefs, debriefs, td, Edinburgh Protocol, silo boundary. |
+
+---
+
+## Canon
+
+Permanent, linkable reference HTML.
+
+| File | Description |
+|---|---|
+| [canon/index.html](canon/index.html) | Canon index page. |
+| [canon/edinburgh-protocol.html](canon/edinburgh-protocol.html) | The Edinburgh Protocol agent identity and operating method. |
 
 ---
 
@@ -62,6 +76,7 @@ work starts.
 | 003 | [briefs/003-protocol-evals.md](briefs/003-protocol-evals.md) | pending |
 | 004 | [briefs/004-glow-fresh-preview.md](briefs/004-glow-fresh-preview.md) | complete |
 | 005 | [briefs/005-nex-n2-pro-not-in-pi-list.md](briefs/005-nex-n2-pro-not-in-pi-list.md) | lesson documented |
+| 006 | [briefs/006-manifest-system-lesson.md](briefs/006-manifest-system-lesson.md) | lesson documented |
 
 ---
 
@@ -106,3 +121,4 @@ Reusable prompt templates and agent identity frameworks.
 | [src/extensions/](src/extensions/) | Pi extensions — defuddle, silo, edinburgh-evals. |
 | [src/cli/](src/cli/) | CLI tools — pi-check, pi-models. |
 | [src/fresh/](src/fresh/) | Fresh editor plugins — glow-preview. |
+| [scripts/](scripts/) | Lightweight repo hygiene scripts — manifest/barnacle checks. |

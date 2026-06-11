@@ -54,6 +54,12 @@ about:
 help:
     @glow -s ~/.config/glow/styles/fresh-high-contrast.json MANIFEST.md 2>/dev/null || cat MANIFEST.md
 
+# ── Manifest hygiene ────────────────────────────────────────────────────────
+
+[group("manifest")]
+check-manifest:
+    bun scripts/check-manifest.ts
+
 # ── Task management (td) ──────────────────────────────────────────────────
 
 [group("td")]

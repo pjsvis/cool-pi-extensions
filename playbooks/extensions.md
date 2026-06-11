@@ -216,3 +216,57 @@ cat ~/.pi/agent/models.json | jq -e 'true'
 - [Pi models docs](https://github.com/earendil-works/pi-mono/blob/main/docs/models.md)
 - Built-in registry: `node_modules/@earendil-works/pi-ai/dist/models.generated.js`
 - `model-registry.js` in pi-coding-agent `dist/core/` handles merge semantics
+
+---
+
+## Manifest systems & barnacle control
+
+**Incident:** `cool-pi-extensions` accumulated small documentation drift after a
+repo reorganization: `MANIFEST.md` missed docs, `.flox/env/manifest.toml`
+referenced old `cli/` paths, and one playbook still said `npm install`.
+
+### TradingAgents reference implementation
+
+`~/Dev/GitHub/TradingAgents` has a much heavier manifest system worth studying:
+
+- `SILO_MANIFEST.md` — agent orientation and asset map.
+- `*/INDEX.jsonl` registries for briefs, debriefs, decisions, docs, playbooks,
+  code, scripts, and lexicon.
+- `scripts/reg.ts` — unified registry CLI (`list`, `sync`, `check`, `enrich`,
+  `mine`, `import`, `promote`, `state`, `scripts`).
+- `scripts/barnacle-scrubber.ts` — mechanical + optional LLM scan for stale
+  docs, path rewrites, redundant prose, and drydock quarantine.
+
+That system is appropriate for a large, evolving codebase with many agents and
+many generated artifacts. It is overkill for this repo.
+
+### Cool-pi-extensions approach
+
+Use a **bounded manifest checker**, not a full registry framework:
+
+```bash
+just check-manifest
+```
+
+`scripts/check-manifest.ts` checks:
+
+1. `MANIFEST.md` lists every file in `docs/`, `playbooks/`, `briefs/`,
+   `debriefs/`, `decisions/`, and `prompts/`.
+2. `MANIFEST.md` has no stale entries.
+3. Internal markdown links resolve.
+4. Known path drift is absent:
+   - `.flox/env/manifest.toml` uses `src/cli/...`, not old `cli/...`.
+   - `playbooks/terminal-stack.md` uses `bun install`, not `npm install`.
+   - `docs/edinburgh-protocol-eval.md` uses `src/cli/pi-check/...`.
+
+### Principle
+
+Gödel says a formal system cannot be both complete and consistent. We are not
+pretending to solve completeness. We are enforcing the invariants that matter:
+
+- The index matches the filesystem.
+- Internal links resolve.
+- Old path conventions do not quietly re-enter.
+- Install commands match the repo standard.
+
+That is enough to stop barnacles forming at the documentation boundary.

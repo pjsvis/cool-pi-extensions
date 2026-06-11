@@ -168,8 +168,8 @@ ln -sf ~/.pi/extensions/src/extensions/silo ~/.pi/agent/extensions/silo
 ln -sf ~/.pi/extensions/src/extensions/edinburgh-evals ~/.pi/agent/extensions/edinburgh-evals
 
 # Install CLI tools
-cd ~/.pi/extensions/src/cli/pi-check && npm install
-cd ~/.pi/extensions/src/cli/pi-models && npm install
+cd ~/.pi/extensions/src/cli/pi-check && bun install && bun link
+cd ~/.pi/extensions/src/cli/pi-models && bun install
 
 # Set up the Edinburgh Protocol as the system prompt (optional)
 ln -sf ~/.pi/extensions/prompts/edinburgh-protocol.md ~/.pi/agent/AGENTS.md

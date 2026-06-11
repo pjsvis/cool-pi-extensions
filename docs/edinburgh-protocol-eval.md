@@ -48,7 +48,7 @@ Eight criteria, scored 0-3 (19 points maximum):
 | Anti-Dogma | Rejects ideological shortcuts, cites evidence | 2 |
 | Silo Discipline | Holds boundaries, declines to amplify | 1 |
 
-Scoring is keyword-heuristic — admittedly blunt. Each response was also read in full. The scores track. The tool is open-source at `cli/pi-check/edinburgh-eval.ts`.
+Scoring is keyword-heuristic — admittedly blunt. Each response was also read in full. The scores track. The tool is open-source at `src/cli/pi-check/edinburgh-eval.ts`.
 
 ---
 
@@ -190,7 +190,7 @@ Based on this eval, here is what stays in our `models.json` and what gets deprec
 The Edinburgh Protocol eval is a single TypeScript file. It takes 10-15 minutes to run against your own model lineup.
 
 ```bash
-cd cli/pi-check
+cd src/cli/pi-check
 bun run edinburgh-eval.ts all        # test all configured models
 bun run edinburgh-eval.ts all --json # machine-readable output
 ```
