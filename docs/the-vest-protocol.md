@@ -99,6 +99,8 @@ But it's also a proof-of-concept for the VEST Protocol. Every design decision is
 
 **The irony.** The simplest API is the hardest to design. Adding nothing was the work. The team resisted the urge to document everything, create taxonomies, write elaborate onboarding guides. Instead they asked: what does an agent need to start work? What does a human need to discover context? The answers were two verbs.
 
+**The Bruce Willis of protocols.** Some say the VEST Protocol is full of holes. Two verbs? No comprehensive documentation? No hierarchical taxonomy? But that's exactly the point. A bulletproof vest isn't reinforced steel — it's lightweight, functional, and designed to save your life when everything goes wrong. VEST is the same. When an agent drops into a mid-sprint session with no context, VEST catches the bullet. `just orient` tells them where they are. `just browse` tells them what's available. The holes aren't vulnerabilities — they're where the discovery happens.
+
 ## VEST vs REST: The Philosophy
 
 Like REST, VEST is a pattern named with an acronym. But the philosophy is different — and that difference matters in the age of agents.
