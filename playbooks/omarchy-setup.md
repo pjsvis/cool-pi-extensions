@@ -172,11 +172,22 @@ pi --version
 
 ## Install Fresh (editor)
 
-Download from [getfresh.dev](https://getfresh.dev) and install:
+Fresh is written in Rust. On Linux, install via cargo:
+
 ```bash
-# Check the website for Linux install instructions
-# Fresh may need to be built from source or installed via cargo
+# Install Rust if not present
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+
+# Install Fresh
+cargo install fresh-editor
+
+# Verify
+which fresh
+fresh --version
 ```
+
+Alternative: check [github.com/sinelaw/fresh](https://github.com/sinelaw/fresh) for pre-built binaries.
 
 Install the glow-preview plugin:
 ```bash
