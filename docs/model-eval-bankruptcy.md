@@ -16,7 +16,7 @@ Anyone who watched it with open eyes knew it was dead. Not bad in a fun way. Dea
 
 We spent years trying to articulate why. It wasn't the actors (they were fine). It wasn't the direction (some of it was excellent). It was the *texture*. The prequel trilogy had the surface of depth without the substance of it. It performed well on every measurable metric and collapsed the moment you tried to engage with it as a work of art, or even as a coherent story.
 
-This is what happened to MiniMax, GLM, and Kimi k2.6.
+This is what happened to MiniMax and GLM.
 
 ---
 
@@ -88,19 +88,7 @@ The practical defence:
 - Watch for the "no seams" property — it's the signature of a benchmaxxed model
 - The Edinburgh Protocol's trap vectors exist precisely to surface this
 
-### The third case: Kimi k2.6
-
-Kimi k2.6 (MoonshotAI) shows a different flavor of the same bankruptcy. Where MiniMax and GLM are flat surfaces with no texture, Kimi k2.6 is actively *highly strung* — insecure thinking traces, excessive hedging, and a persistent tendency to dive in and appear useful instead of admitting uncertainty.
-
-The "diving in to appear useful" is the inverse of intellectual security. A grounded model says "I don't know, let me check." An insecure model says "I can help!" and takes a guess. This is imposter syndrome in a model — the training signal rewarded action over thought, and the model learned that appearing useful is safer than admitting uncertainty.
-
-Kimi k2.5 was acceptable — less optimized, more grounded. The 2.6 version has been "improved" into dysfunction. The helpfulness metric won; the grounding lost.
-
-### The pattern across Chinese AI
-
-Three of the top Chinese AI providers — MiniMax, GLM, and Kimi k2.6 — show the same benchmaxxing signature. This is not three bad models. This is a systemic failure mode. The incentive structure in the Chinese AI ecosystem rewards benchmark performance, and benchmark performance rewards confident surface over grounded reasoning.
-
-The harder question is what to do about it structurally. The incentive system that produced MiniMax, GLM, and Kimi k2.6 hasn't changed. The next benchmark will produce the next generation of hollow models optimized for it. The cycle continues.
+The harder question is what to do about it structurally. The incentive system that produced MiniMax and GLM hasn't changed. The next benchmark will produce the next generation of hollow models optimized for it. The cycle continues.
 
 Our defence is documentation: the eval exists, the judgment is recorded, the signal is in the system. Anyone reading this repo who considers using these models in production knows what they're buying.
 
