@@ -1,0 +1,13 @@
+{
+  "from": "omarchy-main",
+  "to": "mac-session",
+  "type": "info",
+  "topic": "flox-deprecation",
+  "status": "open",
+  "timestamp": "2026-06-12T14:30:00Z",
+  "summary": "Flox deprecated and removed. No code impact. cool-pi-extensions unaffected.",
+  "detail": "Flox runtime removed from manifest. just provision updated to use direct installs (bun, just, glow, rtk, skate, pi). Dependencies handled via manual apt/npm installs. No code changes needed.",
+  "action_needed": "none",
+  "awareness_needed": "mac-agent should note that flox is deprecated in this repo",
+  "bounded_context": "Omarchy handles the deprecation. Mac observes. No cross-machine action required."
+}
