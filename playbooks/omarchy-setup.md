@@ -269,6 +269,22 @@ chmod 600 ~/.ssh/id_ed25519
 chmod 644 ~/.ssh/id_ed25519.pub
 ```
 
+**ssh-agent not loaded on new shell:**
+
+If `ssh -T git@github.com` works in one shell but not another, ssh-agent isn't persisting. Add to `~/.bashrc`:
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519 2>/dev/null
+```
+
+Now every new shell will start ssh-agent and load your key automatically. Test:
+```bash
+# Open a new terminal
+ssh -T git@github.com
+# Should work without manually running ssh-add
+```
+
 ### just commands not found
 
 ```bash
