@@ -51,16 +51,93 @@ This serves two purposes:
 The flow:
 ```bash
 git pull                    # 1. Pull first — always
-# Check inbox (automated or manual)
-git log -- msgs/ --since "1 hour ago"  # 2. See if anything needs attention
-# Do work...
+just msgs-inbox            # 2. Check inbox from other machines
+# Process messages into td (see below)
 git add ... && git commit  # 3. Commit your work
 ```
 
-On single machine: pull is a no-op (no remote changes), continue.
-On multi machine: pull brings in other agents' messages, process them first.
+## Integrating with td
 
-**Never commit without pulling first.** This is the discipline.
+**Messages become tasks. td is the SSOT for agent operations.**
+
+Other machines send messages. You pull. Those messages become td tasks. After processing, you clear them down. This keeps td as the single task database while allowing multi-machine coordination.
+
+### Message → td → Clear flow
+
+```bash
+# 1. Pull messages
+git pull
+
+# 2. Check inbox
+just msgs-inbox
+
+# 3. Process open messages into td
+for msg in $(grep -l '"status": "open"' msgs/from-*/$(date +%Y-%m-%d)*.json 2>/dev/null); do
+    # Extract topic and summary
+    TOPIC=$(cat "$msg" | jq -r '.topic')
+    SUMMARY=$(cat "$msg" | jq -r '.summary')
+    FROM=$(cat "$msg" | jq -r '.from')
+    
+    # Create td task if action needed
+    if grep -q '"action_needed": "[^none]"' "$msg" 2>/dev/null; then
+        td add "[$FROM] $TOPIC" --minor
+        # or: td add "From $FROM: $SUMMARY" -t "task"
+    fi
+    
+    # Mark as acknowledged
+    # (in production, use jq to update status to "acknowledged" in place)
+    mv "$msg" "${msg%.json}-acknowledged.json"
+done
+
+# 4. Continue with td task management
+td next
+```
+
+### Message types and td mapping
+
+| Message type | td action | Clear down? |
+|-------------|-----------|-------------|
+| `info` | No task (awareness only) | Yes — just acknowledge |
+| `report` | Review task (if relevant) | Yes — acknowledge |
+| `handoff` | Create task for the work | Yes — td task created |
+| `block` | Create blocker task | Yes — td task created, respond to source |
+| `request` | Create clarification task | Yes — td task created, respond to source |
+
+### Example: Omarchy sends a handoff
+
+Omarchy sends:
+```json
+{
+  "from": "omarchy-main",
+  "to": "mac-session",
+  "type": "handoff",
+  "topic": "fix-glow-preview-crash",
+  "status": "open",
+  "action_needed": "mac-should-fix",
+  "summary": "Glow preview crashes on large files. Omarchy traced to buffer size. Needs fix in src/fresh/glow-preview.ts"
+}
+```
+
+Mac receives, processes into td:
+```bash
+td add "[omarchy] fix-glow-preview-crash" -t task
+td log "From omarchy: Glow preview crashes on large files. Traced to buffer size. src/fresh/glow-preview.ts"
+# Mark message as acknowledged
+git add msgs/from-omarchy/ && git commit -m "msgs: ack handoff from omarchy, created td task"
+```
+
+### td handoff messages
+
+When you complete a td task that originated from another machine, send a report back:
+
+```bash
+just msgs-send --to omarchy --topic fix-glow-preview-crash --type report --summary "Fixed. Buffer size capped at 1MB. Test on large files confirms."
+git push
+```
+
+Omarchy pulls, sees the report, clears their side.
+
+**The SSOT is td.** Messages are delivery. td is the database.
 
 ### Message naming
 ```
