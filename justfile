@@ -492,3 +492,7 @@ install-stack:
 # Sync skate secrets to Omarchy
 sync-skate:
     SKATE_HOST=omarchy.local ./scripts/sync-skate-to-omarchy.sh
+
+# Export skate keys to a script for Omarchy
+skate-export:
+    ./scripts/skate-to-omarchy.sh skate-omarchy-setup.sh
