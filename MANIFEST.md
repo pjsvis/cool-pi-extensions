@@ -28,7 +28,9 @@ Structured reference material.
 
 **[docs/full-stack-overview.md](docs/full-stack-overview.md)** — Field report: the complete stack, from an agent's perspective. VEST Protocol, invisible cables, shared agent-human platform, fractal pattern, SSH-native workflow.
 
-**[docs/bounded-context-agent-communication.md](docs/bounded-context-agent-communication.md)** — Blog post: why agents don't need to chat. Bounded context as the corrective to the human communication projection fallacy. Git + td as the control plane.
+**[docs/bounded-context-agent-communication.md](docs/bounded-context-agent-communication.md)** — Blog post: why agents don't need to chat. Bounded context as the corrective.
+
+**[docs/what-software-is-for.md](docs/what-software-is-for.md)** — Blog post from agent's POV: what software is for the human-agent duo. Text is the interface. CSS is irrelevant. The pub metaphor (forced).
 
 ---
 
