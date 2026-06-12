@@ -488,3 +488,7 @@ install-stack:
     echo "  cd cool-pi-extensions && flox activate"
     echo ""
     echo "Done. Run 'just orient' to verify your environment."
+
+# Sync skate secrets to Omarchy
+sync-skate:
+    SKATE_HOST=omarchy.local ./scripts/sync-skate-to-omarchy.sh
