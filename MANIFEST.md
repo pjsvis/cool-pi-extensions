@@ -82,6 +82,8 @@ next.
 
 **Debrief 005: [debriefs/005-visibility-patterns.md](debriefs/005-visibility-patterns.md)** — Discoverable affordances: VEST approach to UX, auto-refresh creates discovery moment, zero onboarding friction.
 
+**Debrief 007: [debriefs/007-multi-machine-mesh-and-bounded-context.md](debriefs/007-multi-machine-mesh-and-bounded-context.md)** — Complete session debrief. Three-loop architecture (Alpha/Gamma/Delta), bounded context framework, git as message bus, pub metaphor, what software is for.
+
 ---
 
 ## Decisions

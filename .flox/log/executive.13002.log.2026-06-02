@@ -1,0 +1,10 @@
+2026-06-02T19:17:17.389951Z  INFO flox_activations::cli::executive: ExecutiveArgs { dot_flox_path: "/Users/petersmith/Dev/GitHub/cool-pi-extensions/.flox", executive_ctx: "/Users/petersmith/.cache/flox/run/activations/f73b061d-cool-pi-extensions/mh7na3d7prirmxqpsix84q5l0r8iljpw-environment-develop.1780427837383/executive_ctx_RZi69v" }
+2026-06-02T19:17:17.394468Z  INFO flox_activations::cli::executive: sending SIGUSR1 to parent 12994
+2026-06-02T19:17:17.394501Z  INFO flox_activations::cli::executive: starting monitoring loop
+2026-06-02T19:17:17.394501Z  INFO flox_activations::cli::executive::log_gc: still watching, woof woof
+2026-06-02T19:17:17.540514Z  INFO monitoring: flox_core::activations: detaching terminated PID pid=12994 start_id=StartIdentifier { store_path: "/nix/store/mh7na3d7prirmxqpsix84q5l0r8iljpw-environment-develop", timestamp: UnixTimestampMillis(1780427837383) }
+2026-06-02T19:17:17.540561Z  INFO monitoring: flox_activations::cli::executive: running cleanup after all PIDs terminated
+2026-06-02T19:17:17.540569Z  INFO monitoring: flox_activations::cli::executive: running cleanup
+2026-06-02T19:17:17.540586Z  INFO monitoring: flox_activations::cli::executive: did not shut down process-compose reason="no socket"
+2026-06-02T19:17:17.541158Z  INFO monitoring: flox_activations::cli::executive: finished cleanup
+2026-06-02T19:17:17.541472Z  INFO flox_activations::cli::executive: executive exiting: Ok(())

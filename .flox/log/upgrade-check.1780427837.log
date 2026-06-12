@@ -1,0 +1,30 @@
+2026-06-02T19:17:17.369733Z DEBUG flox: FLOX_VERSION=1.11.4
+2026-06-02T19:17:17.370954Z DEBUG flox::config: Global config directory overridden path="/Users/petersmith/.config/flox"
+2026-06-02T19:17:17.371195Z DEBUG flox_core::sentry: Initializing Sentry with DSN: https://85c9526795f5047c99a5247aab616295:@o4506548203094016.ingest.us.sentry.io/4506548241825792
+2026-06-02T19:17:17.373003Z DEBUG flox_core::sentry: Configuring Sentry user with metrics UUID
+2026-06-02T19:17:17.373018Z DEBUG flox: set _FLOX_SUBSYSTEM_VERBOSITY=2
+2026-06-02T19:17:17.373717Z DEBUG flox::config: Global config directory overridden path="/Users/petersmith/.config/flox"
+2026-06-02T19:17:17.373960Z DEBUG flox::commands: Metrics collection enabled
+2026-06-02T19:17:17.373978Z DEBUG flox::utils::update_notifications: Skipping update check in development mode
+2026-06-02T19:17:17.374025Z DEBUG flox::utils::init::catalog_client: using catalog client with url: https://api.flox.dev
+2026-06-02T19:17:17.374045Z DEBUG flox_catalog::client: building catalog HTTP client catalog_url=https://api.flox.dev handle=Err(NotAuthenticated("You are not logged in to FloxHub.\n\nTo login you can either\n* login to FloxHub with 'flox auth login',\n* set the 'floxhub_token' field to '<your token>' in your config\n* set the '$FLOX_FLOXHUB_TOKEN=<your_token>' environment variable.")) extra_headers=1
+2026-06-02T19:17:17.374181Z DEBUG flox::commands: feature flags configured=Features { upload: false, qa: false }
+2026-06-02T19:17:17.375170Z DEBUG check-upgrade: flox::utils::metrics: pushing entry to metrics buffer: MetricEntry { subcommand: Some("check-upgrade"), extras: {}, timestamp: 2026-06-02 19:17:17.375107 +00:00:00, uuid: feaad2e2-dd98-4ccd-bf33-89d58f0e0f94, flox_version: "1.11.4", os_family: Some("Mac OS"), os_family_release: Some("25.5.0"), os: None, os_version: None, empty_flags: [], invocation_sources: [] }
+2026-06-02T19:17:17.375333Z DEBUG check-upgrade: flox_catalog::client: building catalog HTTP client catalog_url=https://api.flox.dev handle=Err(NotAuthenticated("You are not logged in to FloxHub.\n\nTo login you can either\n* login to FloxHub with 'flox auth login',\n* set the 'floxhub_token' field to '<your token>' in your config\n* set the '$FLOX_FLOXHUB_TOKEN=<your_token>' environment variable.")) extra_headers=2
+2026-06-02T19:17:17.376172Z DEBUG check-upgrade: flox_rust_sdk::models::environment: detected concrete environment type: path
+2026-06-02T19:17:17.376629Z DEBUG check-upgrade: flox_rust_sdk::providers::upgrade_checks: created unlocked upgrade information guard upgrade_information_path="/Users/petersmith/Dev/GitHub/cool-pi-extensions/.flox/cache/upgrade-checks.json"
+2026-06-02T19:17:17.376801Z DEBUG check-upgrade: flox_rust_sdk::providers::upgrade_checks: lock acquired upgrade_information_path="/Users/petersmith/Dev/GitHub/cool-pi-extensions/.flox/cache/upgrade-checks.json"
+2026-06-02T19:17:17.377326Z DEBUG check-upgrade:check-upgrade: flox_rust_sdk::models::environment::core_environment: upgrading to_upgrade=""
+2026-06-02T19:17:17.377661Z DEBUG check-upgrade:check-upgrade: flox_manifest::raw: updating package pkg=bun
+2026-06-02T19:17:17.377680Z DEBUG check-upgrade:check-upgrade: flox_rust_sdk::models::environment::core_environment: checking group membership for requested packages
+2026-06-02T19:17:17.377685Z DEBUG check-upgrade:check-upgrade: flox_rust_sdk::models::environment::core_environment: using catalog client to upgrade
+2026-06-02T19:17:17.377689Z DEBUG check-upgrade:check-upgrade: flox_rust_sdk::models::environment::core_environment: upgrading to_upgrade=""
+2026-06-02T19:17:17.379564Z DEBUG check-upgrade:check-upgrade:resolve_manifest:resolve: flox_catalog::client: resolving package groups n_groups=1
+2026-06-02T19:17:18.064005Z DEBUG check-upgrade:check-upgrade:resolve_manifest:resolve: flox_catalog::client: received resolved package groups n_groups=1
+2026-06-02T19:17:18.064058Z DEBUG check-upgrade:check-upgrade:resolve_manifest: flox_rust_sdk::providers::lock_manifest: no resolution failures detected
+2026-06-02T19:17:18.064646Z DEBUG check-upgrade:check-upgrade:build: flox_rust_sdk::providers::buildenv: bulk checking validity of store_paths (paths passed to stdin) cmd=/nix/store/7dawj12021lfw9s8wx0rhdz8ndr7sap6-nix-2.31.4/bin/nix --option extra-experimental-features 'nix-command flakes' path-info --offline --stdin
+2026-06-02T19:17:18.143837Z DEBUG check-upgrade:check-upgrade:build: flox_rust_sdk::providers::buildenv: bulk setting gc roots for store_paths cmd="echo '/nix/store/jgl1hjr0cf6s32jcnqmkp44av4flamap-bun-1.3.13' | /nix/store/7dawj12021lfw9s8wx0rhdz8ndr7sap6-nix-2.31.4/bin/nix --option extra-experimental-features 'nix-command flakes' build --stdin --offline -j 0 --out-link /Users/petersmith/.cache/flox/process/.tmpE6WJ3e/temp-roots/pre-checked-paths"
+2026-06-02T19:17:18.208465Z DEBUG check-upgrade:check-upgrade:build: flox_rust_sdk::providers::buildenv: using 'auto' store
+2026-06-02T19:17:18.208490Z DEBUG check-upgrade:check-upgrade:build: flox_rust_sdk::providers::buildenv: building environment cmd=/nix/store/7dawj12021lfw9s8wx0rhdz8ndr7sap6-nix-2.31.4/bin/nix --option extra-experimental-features 'nix-command flakes' --option pure-eval false --print-build-logs build --no-link --offline --json --file /nix/store/4kmbpmzl8r3b2l3qhmlknjqm5l4k3pah-flox-buildenv-0.0.1/lib/buildenv.nix --argstr manifestLock /Users/petersmith/.cache/flox/process/.tmpE6WJ3e/.tmpsFTwUx
+2026-06-02T19:17:18.758689Z DEBUG check-upgrade: flox_rust_sdk::providers::upgrade_checks: wrote upgrade information upgrade_information_path="/Users/petersmith/Dev/GitHub/cool-pi-extensions/.flox/cache/upgrade-checks.json"
+2026-06-02T19:17:18.760107Z DEBUG flox::commands: removing process tempdir temp_dir="/Users/petersmith/.cache/flox/process/.tmpE6WJ3e"
