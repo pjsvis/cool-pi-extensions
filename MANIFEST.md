@@ -64,6 +64,8 @@ work starts.
 **TailScale: [playbooks/tailscale.md](playbooks/tailscale.md)** — Private mesh networking: install, authenticate, SSH from anywhere, MagicDNS, exit nodes.
 
 **Omarchy setup: [playbooks/omarchy-setup.md](playbooks/omarchy-setup.md)** — Fresh machine setup: disable suspend, SSH + GitHub auth, clone repo, install TailScale/herdr/pi/Fresh/td, provision the stack.
+
+**Agent messages: [playbooks/agent-messages.md](playbooks/agent-messages.md)** — Git-native inter-agent communication. msgs/ directories, JSON messages, push/pull coordination. War-game scenario documented.
 ---
 
 ## Debriefs

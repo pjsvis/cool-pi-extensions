@@ -500,3 +500,37 @@ skate-export:
 # Sync pi config to Omarchy
 sync-pi:
     ./scripts/sync-pi-to-omarchy.sh
+
+# Agent messaging via Git
+msgs-inbox:
+    @#!/bin/bash
+    @echo "=== Unacknowledged messages ==="
+    @git pull 2>/dev/null && grep -l '"status": "open"' msgs/from-*/{{date +%Y-%m-%d}}*.json 2>/dev/null | while read f; do echo "--- $$f ---"; cat "$$f" | jq -c '.summary, .topic, .from' 2>/dev/null || echo "(jq not available)"; done || echo "No messages today"
+
+msgs-read:
+    @#!/bin/bash
+    @echo "=== Recent messages (last 24h) ==="
+    @git log --oneline -- msgs/ --since "24 hours ago" 2>/dev/null || echo "No recent messages"
+
+msgs-send:
+    @#!/bin/bash
+    @echo "Usage: just msgs-send to=OMARCHY topic=FLUX type=info summary='Your message'"
+    @echo "Example: just msgs-send to=omarchy topic=task-x type=report summary='Done'"
+
+# Agent messaging
+msgs-inbox:
+    @echo "Checking for open messages..." && git pull 2>/dev/null || true && ls msgs/from-*/ 2>/dev/null | head -20
+
+msgs-send:
+    @#!/bin/bash
+    @set -e
+    @FROM="${USER:-mac}"
+    @TO="${TO:-omarchy}"
+    @TOPIC="${TOPIC:-test}"
+    @TYPE="${TYPE:-info}"
+    @SUMMARY="${SUMMARY:-Test message}"
+    @FILE="msgs/from-$${FROM}/$(date +%Y-%m-%d-%H%M)-$${TOPIC}.json"
+    @mkdir -p "msgs/from-$${FROM}/"
+    @echo "{\"from\":\"$${FROM}\",\"to\":\"$${TO}\",\"type\":\"$${TYPE}\",\"topic\":\"$${TOPIC}\",\"status\":\"open\",\"timestamp\":\"$$(date -Iseconds)\",\"summary\":\"$${SUMMARY}\"}" > "$$FILE"
+    @echo "Message written to $$FILE"
+    @echo "Commit with: git add msgs/from-$${FROM}/ && git commit -m 'msgs: $${TYPE} to $${TO} re $${TOPIC}'"
