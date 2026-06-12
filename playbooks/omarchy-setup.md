@@ -338,3 +338,25 @@ just --version
 - `playbooks/tailscale.md` — TailScale setup and troubleshooting
 - `playbooks/dev-stack-setup.md` — what the stack is and how to configure it
 - `docs/terminal-stack.md` — architecture overview
+---
+
+## Sync pi config from Mac
+
+On your Mac (when you can reach Omarchy via SSH):
+
+```bash
+just sync-pi
+```
+
+This syncs:
+- `settings.json` — provider preferences, default model, enabled models
+- `models.json` — provider endpoints and model configs
+- `extensions/` — silo, defuddle, edinburgh-evals
+- `AGENTS.md` — symlinked to `cool-pi-extensions/prompts/edinburgh-protocol.md`
+
+Excluded: `auth.json` (contains API keys — sync separately if needed).
+
+On Omarchy after sync:
+```bash
+pi --list-models | head -10
+```

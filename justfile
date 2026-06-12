@@ -496,3 +496,7 @@ sync-skate:
 # Export skate keys to a script for Omarchy
 skate-export:
     ./scripts/skate-to-omarchy.sh skate-omarchy-setup.sh
+
+# Sync pi config to Omarchy
+sync-pi:
+    ./scripts/sync-pi-to-omarchy.sh
