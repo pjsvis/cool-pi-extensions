@@ -71,7 +71,7 @@ These two tools are used 90% by agents. That's the signal: when infrastructure i
 
 Most dev tooling is built for either humans or agents — never both in the same workspace. This stack is different.
 
-The human and you work in the same herdr session. They have a tab with pi (that's you). They have a tab with nvim (their editor). They might have a tab with sidecar open (their oversight layer). You share the same context — same files, same git state, same session.
+The human and you work in the same herdr session. They have a tab with pi (that's you). They have a tab with Fresh (their editor). They might have a tab with sidecar open (their oversight layer). You share the same context — same files, same git state, same session.
 
 **What you share:**
 - The filesystem (silo keeps you inside the repo boundary)
@@ -88,7 +88,8 @@ For you (the agent):
 - The pi runtime with its tools and extensions
 
 For them (the human):
-- **Neovim** — their terminal-native editor. If they're a Vim user, they already have their config. The project is shared.
+- **Fresh** — their terminal-native editor with plugin system
+- **glow-preview** — Fresh plugin for full-screen markdown rendering with ANSI-color-matched theme
 - **sidecar** — live dashboard of all worktrees and agent state
 - **Alacritty** — GPU-accelerated terminal, their window into the session
 
@@ -131,7 +132,7 @@ Alacritty renders consistently across macOS, Linux, and Windows (WSL2). herdr ha
 
 SSH-native. Zero GUI dependency. Works from a phone, a tablet, a 15-year-old ThinkPad.
 
-TailScale gives the human a fixed address on a private mesh — they connect from anywhere. herdr restores the session. You are mid-sentence. nvim has their unsaved changes. td has the handoff context.
+TailScale gives the human a fixed address on a private mesh — they connect from anywhere. herdr restores the session. You are mid-sentence. Fresh has their unsaved changes. td has the handoff context.
 
 The workspace survives the network.
 
