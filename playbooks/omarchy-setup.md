@@ -351,10 +351,11 @@ just sync-pi
 This syncs:
 - `settings.json` — provider preferences, default model, enabled models
 - `models.json` — provider endpoints and model configs
+- `auth.json` — API keys for all providers (this is why you delete the script after)
 - `extensions/` — silo, defuddle, edinburgh-evals
 - `AGENTS.md` — symlinked to `cool-pi-extensions/prompts/edinburgh-protocol.md`
 
-Excluded: `auth.json` (contains API keys — sync separately if needed).
+⚠️ The sync script contains API keys. Delete it on both machines after running.
 
 On Omarchy after sync:
 ```bash

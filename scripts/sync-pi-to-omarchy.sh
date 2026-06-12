@@ -52,9 +52,11 @@ mkdir -p "$TEMP_DIR"
 echo "[1/4] Copying config files..."
 cp "$PI_DIR/settings.json" "$TEMP_DIR/"
 cp "$PI_DIR/models.json" "$TEMP_DIR/"
+cp "$PI_DIR/auth.json" "$TEMP_DIR/"
 
 echo "  settings.json: $(wc -c < "$TEMP_DIR/settings.json") bytes"
 echo "  models.json: $(wc -c < "$TEMP_DIR/models.json") bytes"
+echo "  auth.json: $(wc -c < "$TEMP_DIR/auth.json") bytes (API keys)"
 
 # Copy extensions directory
 echo ""
@@ -83,7 +85,6 @@ echo "Extensions:"
 [ -d "$TEMP_DIR/extensions" ] && ls "$TEMP_DIR/extensions/" || echo "  (none)"
 echo ""
 echo "Excluded:"
-echo "  auth.json (contains API keys - sync manually if needed)"
 echo "  *.bak files"
 
 # Dry run
