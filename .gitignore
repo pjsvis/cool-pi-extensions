@@ -19,3 +19,6 @@ cli/pi-check/node_modules/
 .sidecar-start.sh
 .sidecar-base
 .td-root
+# Skate setup scripts (contain secrets)
+skate-omarchy-setup.sh
+skate-*-setup.sh
