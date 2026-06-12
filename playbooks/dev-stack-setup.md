@@ -13,14 +13,14 @@ A herdr space configured for AI-assisted development. One active agent with a se
 ```
 herdr session: cool-pi-extensions
 ├── tab 1: pi (the agent)
-├── tab 2: fresh (the editor)
+├── tab 2: nvim (the editor)
 ├── tab 3: sidecar (the human's oversight layer)
 └── tab 4: shell (auxiliary)
 ```
 
 **pi** runs in the agent layer with Edinburgh Protocol identity. It reads `AGENTS.md` and `just orient` to understand the project context. It has td for session continuity and silo for filesystem boundaries.
 
-**fresh** is the editor. It opens files directly on the remote. It has a glow-preview plugin for full-screen markdown rendering.
+**nvim** (Neovim) is the editor. If you're a Vim user, you already know what to do — install your config, point it at the project. Markdown preview via `glow` CLI or your preferred plugin. The editor is yours; the project is shared.
 
 **sidecar** is the human's view. It shows active worktrees, td state, agent conversation history, merge status. The human can watch the agent work without interfering.
 

@@ -13,7 +13,7 @@ WSL2). SSH-native — no browser, no Electron, no GUI required. Just a terminal.
 **AI agent (pi)** — LLM-driven code gen, tool use, Edinburgh Protocol. macOS ✓ · Linux ✓ · WSL2 ✓
 
 **Observability (td + sidecar)** — Session continuity and handoff for agents (td); human oversight layer showing all worktrees and agent state (sidecar). macOS ✓ · Linux ✓ · WSL2 ✓
-**Editor (Fresh)** — Fast terminal editor, plugin system, LSP. macOS ✓ · Linux ✓ · WSL2 ✓
+**Editor (Neovim)** — Fast terminal editor, plugin system, LSP. macOS ✓ · Linux ✓ · WSL2 ✓
 **Mobile SSH (Echo on iOS)** — Ghostty engine, Mosh, Face ID, touch-optimized. iOS/iPadOS ✓ · Linux — · WSL2 —
 
 ### Why this over VS Code Remote / JetBrains Gateway
@@ -188,7 +188,7 @@ the CPU is.
 **Remote GUI needed:** This stack ✗ · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✗
 **Terminal-only:** This stack ✓ · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✓
 **Plugin system:** This stack ✓ (Fresh + pi) · VS Code Remote ✓ (VS Code) · JetBrains Gateway ✓ (IntelliJ) · tmux + vim ✓ (vim/neovim)
-**Markdown preview:** This stack ✓ (glow-preview) · VS Code Remote ✓ (built-in) · JetBrains Gateway ✓ (built-in) · tmux + vim ✗ (external)
+**Markdown preview:** This stack ✓ (glow CLI) · VS Code Remote ✓ (built-in) · JetBrains Gateway ✓ (built-in) · tmux + vim ✓ (external)
 **Agent guardrails:** This stack ✓ (silo + evals) · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✗
 
 ## Future directions
