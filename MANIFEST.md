@@ -55,7 +55,11 @@ work starts.
 
 **Brief 008: [briefs/008-the-invisible-cables.md](briefs/008-the-invisible-cables.md)** — complete
 
-**Insights playbook: [playbooks/insights.md](playbooks/insights.md)** — Persistent collection of small observations that don't fit existing playbooks. Discoverable affordances, invisible infrastructure, fractal pattern, window problem, ADR-first, code block test, just-enough documentation.
+**Insights playbook: [playbooks/insights.md](playbooks/insights.md)** — Persistent collection of small observations that don't fit existing playbooks.
+
+**herdr: [playbooks/herdr.md](playbooks/herdr.md)** — Session multiplexing: workspaces, tabs, keybindings, daemon persistence, SSH integration.
+
+**TailScale: [playbooks/tailscale.md](playbooks/tailscale.md)** — Private mesh networking: install, authenticate, SSH from anywhere, MagicDNS, exit nodes.
 ---
 
 ## Debriefs
