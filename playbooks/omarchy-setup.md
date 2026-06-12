@@ -10,6 +10,29 @@ You SSH in from your Mac (or iPhone/iPad) and work there. It's always on, always
 
 ## Fresh machine — what to do first
 
+### 0. Install the cool languages
+
+**Rust** (for Fresh):
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+```
+
+**Go** (for herdr, td, sidecar, and general purpose):
+```bash
+# Download and install
+wget https://go.dev/dl/go1.23.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.23.linux-amd64.tar.gz
+rm go1.23.linux-amd64.tar.gz
+
+# Add to PATH
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> ~/.bashrc
+
+# Verify
+go version
+```
+
 ### 1. Disable suspend
 
 A headless machine under a desk should never sleep:
