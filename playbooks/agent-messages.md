@@ -40,7 +40,27 @@ Each message is a JSON file:
 
 ---
 
-## Key Disciplines
+## Key Discipline: Pull Before Commit
+
+**Always run `git pull` before any commit, even on single machine.**
+
+This serves two purposes:
+1. Gets latest msgs from other machines before you commit anything
+2. Prevents merge conflicts by keeping you current
+
+The flow:
+```bash
+git pull                    # 1. Pull first — always
+# Check inbox (automated or manual)
+git log -- msgs/ --since "1 hour ago"  # 2. See if anything needs attention
+# Do work...
+git add ... && git commit  # 3. Commit your work
+```
+
+On single machine: pull is a no-op (no remote changes), continue.
+On multi machine: pull brings in other agents' messages, process them first.
+
+**Never commit without pulling first.** This is the discipline.
 
 ### Message naming
 ```
@@ -66,12 +86,16 @@ open → acknowledged → resolved
 
 ### Read on pull, write on push
 ```bash
-# At start of session (pull + read inbox)
-git pull
-cat msgs/from-*/README.md  # or use just msgs-inbox
+# At start of EVERY session (even single machine)
+git pull  # ← Always pull first
 
-# At end of session or when something happens (write + push)
-# ... do work ...
+# Check for messages from other machines
+just msgs-inbox  # or: grep -l '"status": "open"' msgs/from-*/$(date +%Y-%m-%d)*.json
+
+# Single machine: inbox empty → continue
+# Multi machine: process messages → acknowledge → continue
+
+# At end of session or when something happens
 just msgs-send --to omarchy --topic flox-deprecation --type info --summary "Mac aware, no action needed"
 
 # On significant work (push)
@@ -79,6 +103,21 @@ git add msgs/
 git commit -m "msgs: omarchy reports flox deprecation, mac acknowledges"
 git push
 ```
+
+### Single vs Multi Machine
+
+**Single machine (one agent or multiple agents sharing td):**
+- `msgs/` directory exists but is typically empty
+- Agents share td task database directly — no Git coordination needed
+- Still pull before commit (habit, prevents merge conflicts)
+- msgs/ inbox will be empty = no action needed
+
+**Multi machine (agents on different hosts):**
+- Git is the coordination layer
+- Omarchy writes to `msgs/from-omarchy/`
+- Mac reads from `msgs/from-omarchy/`, writes to `msgs/from-mac/`
+- Pull before commit ensures you see other agents' messages before acting
+- `just msgs-inbox` shows unacknowledged messages across all machines
 
 ---
 
