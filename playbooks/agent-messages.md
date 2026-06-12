@@ -13,246 +13,223 @@ Git is the SSOT (Single Source of Truth) for inter-agent coordination. Messages 
 
 ---
 
+## Mode: Single Machine vs Multi-Machine
+
+**Single machine mode:** Only one agent working. No coordination needed. Don't spam msgs/.
+
+**Multi-machine mode:** Multiple agents on different machines. Full coordination protocol.
+
+**How to set:**
+```bash
+# On this machine, set mode
+just msgs-mode single   # No coordination messages
+just msgs-mode multi    # Full coordination (default)
+```
+
+Or via environment:
+```bash
+export PI_MSGS_MODE=single  # No coordination
+export PI_MSGS_MODE=multi   # Full coordination
+```
+
+**In single machine mode:**
+- Pull still happens (habit, conflict prevention)
+- Inbox check is a no-op
+- No messages sent to msgs/
+- td is still used for task management
+
+**In multi-machine mode:**
+- Full coordination
+- Claim briefs before working
+- Send reports when done
+- Pull and process messages at start of session
+
+---
+
 ## Structure
 
 ```
 cool-pi-extensions/
 └── msgs/
-    ├── from-mac/         # Messages from Mac agent (write here)
-    ├── from-omarchy/     # Messages from Omarchy agent (write here)
+    ├── from-mac/         # Messages from Mac agent
+    ├── from-omarchy/     # Messages from Omarchy agent
     ├── from-[name]/      # Each agent/machine has its own outbox
-    └── README.md         # This file
+    ├── CLAIMS/           # Brief claim registry
+    │   ├── brief-001.json
+    │   └── brief-002.json
+    └── ARCHIVE/          # Resolved messages (monthly cleanup)
+        └── 2026-06/
 ```
 
-Each message is a JSON file:
+Each message is a JSON file with clear sender identification:
 ```json
 {
   "from": "omarchy-main",
-  "to": "mac-session",
-  "type": "report|handoff|block|info",
-  "topic": "flox-deprecation",
-  "status": "open|acknowledged|resolved",
+  "type": "claim|report|block|info",
+  "topic": "brief-001",
+  "topic_title": "Rewrite silo extension",
+  "status": "open|claimed|resolved|expired",
   "timestamp": "2026-06-12T14:35:00Z",
-  "summary": "Flox deprecated and removed. No code impact.",
-  "detail": "..."
+  "summary": "Claiming brief-001. Starting work.",
+  "deadline": "2026-06-13T14:35:00Z"
 }
 ```
 
 ---
 
-## Key Discipline: Pull Before Commit
+## Key Disciplines
 
-**Always run `git pull` before any commit, even on single machine.**
+### 1. Claim Before Work
 
-This serves two purposes:
-1. Gets latest msgs from other machines before you commit anything
-2. Prevents merge conflicts by keeping you current
+**Always claim a brief before starting work on it.**
 
-The flow:
+This prevents duplicate effort. If someone else claims it first, you know not to work on it.
+
 ```bash
-git pull                    # 1. Pull first — always
-just msgs-inbox            # 2. Check inbox from other machines
-# Process messages into td (see below)
-git add ... && git commit  # 3. Commit your work
+# Claim a brief
+just msgs-claim --brief 001 --by omarchy-main
+
+# This creates msgs/CLAIMS/brief-001.json
+# If already claimed, it tells you who has it
 ```
+
+```json
+{
+  "brief": "brief-001",
+  "claimed_by": "omarchy-main",
+  "claimed_at": "2026-06-12T14:35:00Z",
+  "deadline": "2026-06-13T14:35:00Z",
+  "status": "claimed"
+}
+```
+
+### 2. Report Completion
+
+```bash
+# Done with the brief
+just msgs-report --brief 001 --status complete --summary "Silo rewritten. All tests pass."
+```
+
+### 3. Back to Sender
+
+If someone claims a brief and doesn't complete it by the deadline:
+
+```bash
+# Message master reassigns
+just msgs-reclaim --brief 001 --from omarchy-main --to mac-session
+```
+
+The offender gets notified:
+```json
+{
+  "from": "message-master",
+  "type": "block",
+  "topic": "brief-001",
+  "status": "open",
+  "summary": "Deadline missed. Brief reclaimed from omarchy-main. Foxtrot Oscar."
+}
+```
+
+---
+
+## Message Types
+
+| Type | Meaning | Response needed? |
+|------|---------|------------------|
+| `claim` | I'm working on this brief | None — others know not to duplicate |
+| `report` | Work completed | Acknowledge |
+| `block` | Waiting on something | Respond |
+| `info` | Status update, awareness only | None |
+
+---
+
+## Message Master
+
+One machine is appointed **message master**. Responsibilities:
+
+1. **Cleanup old messages** — archive resolved messages monthly
+2. **Monitor CLAIMS/** — detect expired claims
+3. **Reclaim expired briefs** — reassign to available agent
+4. **Notify offenders** — "Foxtrot Oscar" when someone misses deadline
+
+```bash
+# Run on message master (e.g., mac)
+just msgs-master
+
+# Checks:
+# - Expired claims in msgs/CLAIMS/
+# - Stale messages in msgs/from-*/
+# - Sends notifications
+```
+
+---
+
+## Just Commands
+
+```bash
+just msgs-mode single   # Single machine (no coordination)
+just msgs-mode multi    # Multi machine (full coordination)
+just msgs-mode          # Show current mode
+
+just msgs-inbox         # Show unacknowledged messages
+just msgs-read          # Read all recent messages
+
+just msgs-claim --brief 001  # Claim a brief
+just msgs-report --brief 001 --status complete  # Report completion
+
+just msgs-master        # Run message master duties
+```
+
+---
+
+## Pull Before Commit (Always)
+
+```bash
+# At start of EVERY session
+git pull                    # Always pull first
+just msgs-inbox             # Check for messages
+just td next                # Get tasks from td
+
+# Single machine: inbox empty → continue
+# Multi machine: process messages → acknowledge → continue
+
+# Do work...
+
+git add ... && git commit   # Commit your work
+git push                    # Push results + any messages
+```
+
+---
 
 ## Integrating with td
 
 **Messages become tasks. td is the SSOT for agent operations.**
 
-Other machines send messages. You pull. Those messages become td tasks. After processing, you clear them down. This keeps td as the single task database while allowing multi-machine coordination.
-
-### Message → td → Clear flow
+Other machines send messages. You pull. Those messages become td tasks. After processing, you clear them down.
 
 ```bash
-# 1. Pull messages
+# 1. Pull
 git pull
 
 # 2. Check inbox
 just msgs-inbox
 
 # 3. Process open messages into td
-for msg in $(grep -l '"status": "open"' msgs/from-*/$(date +%Y-%m-%d)*.json 2>/dev/null); do
-    # Extract topic and summary
+for msg in $(grep -l '\"status\": \"open\"' msgs/from-*/$(date +%Y-%m-%d)*.json 2>/dev/null); do
     TOPIC=$(cat "$msg" | jq -r '.topic')
     SUMMARY=$(cat "$msg" | jq -r '.summary')
     FROM=$(cat "$msg" | jq -r '.from')
     
-    # Create td task if action needed
-    if grep -q '"action_needed": "[^none]"' "$msg" 2>/dev/null; then
+    if grep -q '\"action_needed\": \"[^none]\"' "$msg" 2>/dev/null; then
         td add "[$FROM] $TOPIC" --minor
-        # or: td add "From $FROM: $SUMMARY" -t "task"
     fi
     
-    # Mark as acknowledged
-    # (in production, use jq to update status to "acknowledged" in place)
+    # Acknowledge
     mv "$msg" "${msg%.json}-acknowledged.json"
 done
 
-# 4. Continue with td task management
+# 4. Continue with td
 td next
-```
-
-### Message types and td mapping
-
-| Message type | td action | Clear down? |
-|-------------|-----------|-------------|
-| `info` | No task (awareness only) | Yes — just acknowledge |
-| `report` | Review task (if relevant) | Yes — acknowledge |
-| `handoff` | Create task for the work | Yes — td task created |
-| `block` | Create blocker task | Yes — td task created, respond to source |
-| `request` | Create clarification task | Yes — td task created, respond to source |
-
-### Example: Omarchy sends a handoff
-
-Omarchy sends:
-```json
-{
-  "from": "omarchy-main",
-  "to": "mac-session",
-  "type": "handoff",
-  "topic": "fix-glow-preview-crash",
-  "status": "open",
-  "action_needed": "mac-should-fix",
-  "summary": "Glow preview crashes on large files. Omarchy traced to buffer size. Needs fix in src/fresh/glow-preview.ts"
-}
-```
-
-Mac receives, processes into td:
-```bash
-td add "[omarchy] fix-glow-preview-crash" -t task
-td log "From omarchy: Glow preview crashes on large files. Traced to buffer size. src/fresh/glow-preview.ts"
-# Mark message as acknowledged
-git add msgs/from-omarchy/ && git commit -m "msgs: ack handoff from omarchy, created td task"
-```
-
-### td handoff messages
-
-When you complete a td task that originated from another machine, send a report back:
-
-```bash
-just msgs-send --to omarchy --topic fix-glow-preview-crash --type report --summary "Fixed. Buffer size capped at 1MB. Test on large files confirms."
-git push
-```
-
-Omarchy pulls, sees the report, clears their side.
-
-**The SSOT is td.** Messages are delivery. td is the database.
-
-### Message naming
-```
-YYYY-MM-DD-HHMM-[topic].json
-```
-
-Example: `2026-06-12-1430-flox-deprecation.json`
-
-### Message types
-
-| Type | Meaning | Response needed? |
-|------|---------|------------------|
-| `info` | Status update, awareness only | No |
-| `report` | Work completed, results available | Acknowledge |
-| `handoff` | Task transferred to other agent | Accept and act |
-| `block` | Waiting on other agent or resource | Other agent responds |
-| `request` | Question or clarification needed | Other agent answers |
-
-### Status flow
-```
-open → acknowledged → resolved
-```
-
-### Read on pull, write on push
-```bash
-# At start of EVERY session (even single machine)
-git pull  # ← Always pull first
-
-# Check for messages from other machines
-just msgs-inbox  # or: grep -l '"status": "open"' msgs/from-*/$(date +%Y-%m-%d)*.json
-
-# Single machine: inbox empty → continue
-# Multi machine: process messages → acknowledge → continue
-
-# At end of session or when something happens
-just msgs-send --to omarchy --topic flox-deprecation --type info --summary "Mac aware, no action needed"
-
-# On significant work (push)
-git add msgs/
-git commit -m "msgs: omarchy reports flox deprecation, mac acknowledges"
-git push
-```
-
-### Single vs Multi Machine
-
-**Single machine (one agent or multiple agents sharing td):**
-- `msgs/` directory exists but is typically empty
-- Agents share td task database directly — no Git coordination needed
-- Still pull before commit (habit, prevents merge conflicts)
-- msgs/ inbox will be empty = no action needed
-
-**Multi machine (agents on different hosts):**
-- Git is the coordination layer
-- Omarchy writes to `msgs/from-omarchy/`
-- Mac reads from `msgs/from-omarchy/`, writes to `msgs/from-mac/`
-- Pull before commit ensures you see other agents' messages before acting
-- `just msgs-inbox` shows unacknowledged messages across all machines
-
----
-
-## Just commands
-
-```bash
-just msgs-inbox          # Show unacknowledged messages for this session
-just msgs-read           # Read all recent messages
-just msgs-send           # Send a message (interactive)
-just msgs-send --to omarchy --topic test --type info --summary "Hello"
-just msgs-status         # Show message summary stats
-```
-
----
-
-## Simple Implementation
-
-The core is just directories and JSON files. No fancy tooling needed.
-
-### Check inbox (start of session)
-
-```bash
-# Pull latest
-git pull
-
-# See what's been sent to you (replace YOUR_NAME with your session name)
-grep -l '"to": "YOUR-SESSION"' msgs/from-*/YYYY-MM-DD-*.json 2>/dev/null | head -5
-
-# Read the messages
-cat msgs/from-omarchy/2026-06-12-*.json | jq .
-```
-
-### Send a message
-
-```bash
-# Create message file
-FROM="mac-session"
-TO="omarchy-main"
-TOPIC="flox-deprecation"
-TYPE="info"
-SUMMARY="Mac aware, no action needed"
-
-cat > "msgs/from-mac/$(date +%Y-%m-%d-%H%M)-${TOPIC}.json" << EOF
-{
-  "from": "${FROM}",
-  "to": "${TO}",
-  "type": "${TYPE}",
-  "topic": "${TOPIC}",
-  "status": "acknowledged",
-  "timestamp": "$(date -Iseconds)",
-  "summary": "${SUMMARY}"
-}
-EOF
-
-# Commit and push
-git add msgs/from-mac/
-git commit -m "msgs: ${TYPE} to ${TO} re ${TOPIC}"
-git push
 ```
 
 ---
@@ -261,90 +238,62 @@ git push
 
 **Situation:** Omarchy agent deprecates Flox. Mac agent should be aware but not act.
 
-### Omarchy sends
+### Omarchy sends (in multi mode)
 
 ```bash
 # On Omarchy
-cat > msgs/from-omarchy/2026-06-12-1430-flox-deprecation.json << 'EOF'
-{
-  "from": "omarchy-main",
-  "to": "mac-session",
-  "type": "info",
-  "topic": "flox-deprecation",
-  "status": "open",
-  "timestamp": "2026-06-12T14:30:00Z",
-  "summary": "Flox deprecated and removed. No code impact. cool-pi-extensions unaffected.",
-  "detail": "Flox runtime removed from manifest. just provision updated to use direct installs. Dependencies handled manually.",
-  "action_needed": "none",
-  "awareness_needed": "mac-agent should note that flox is deprecated in this repo"
-}
-EOF
+just msgs-mode multi
+just msgs-claim --brief flox-deprecation
 
-git add msgs/from-omarchy/
-git commit -m "msgs: flox deprecated and removed — no impact"
-git push
+# Creates CLAIMS/flox-deprecation.json
+# Then reports status
+just msgs-report --brief flox-deprecation --status info --summary "Flox deprecated. No code impact. cool-pi-extensions unaffected."
 ```
 
 ### Mac reads and acknowledges
 
 ```bash
-# On Mac (start of session)
+# On Mac
 git pull
+just msgs-inbox  # sees the report
 
-# See the message
-cat msgs/from-omarchy/2026-06-12-1430-flox-deprecation.json
-
+# No td task needed (no action required)
 # Acknowledge
-cat > msgs/from-mac/2026-06-12-1445-ack-flox-deprecation.json << 'EOF'
-{
-  "from": "mac-session",
-  "to": "omarchy-main",
-  "type": "acknowledged",
-  "topic": "flox-deprecation",
-  "status": "resolved",
-  "timestamp": "2026-06-12T14:45:00Z",
-  "summary": "Mac agent aware. No action needed. Omarchy continues.",
-  "detail": "Acknowledged. Bounded contexts maintained. Omarchy handles; mac observes."
-}
-EOF
-
-git add msgs/from-mac/
-git commit -m "msgs: ack flox deprecation — aware, no action"
-git push
+just msgs-report --brief flox-deprecation --status acknowledged --summary "Mac aware. No action needed."
 ```
 
 ### Result
 
-- Omarchy knows Mac is aware
-- Mac's td history shows the awareness
-- Human can `git log -- msgs/` and see the full exchange
-- No action taken. Discipline maintained. Bounded contexts intact.
+- Omarchy claims the brief, does the work, reports completion
+- Mac acknowledges, notes, continues
+- td history shows the coordination
+- No duplicate work. No missed tasks. Discipline maintained.
 
 ---
 
 ## Scaling Path
 
-### Short-term (current, 2 machines)
-Simple directories: `msgs/from-mac/`, `msgs/from-omarchy/`
+### Stage 1: Current (2 machines, 2 agents)
+- Simple: `msgs/from-mac/`, `msgs/from-omarchy/`
+- CLAIMS/ for brief coordination
 
-### Medium-term (3-5 machines)
-- Add sender to filename: `2026-06-12-1430-omarchy-flox-deprecation.json`
-- Add JSON metadata for filtering
-- Archive old messages monthly
+### Stage 2: Multi-machine (3-5 machines)
+- Per-machine outboxes: `msgs/from-[hostname]/`
+- Message master rotates monthly
 
-### Long-term (team, multiple agents)
-- Per-session outboxes: `msgs/from-mac-session1/`
-- Commit notifications via CI (optional)
-- `msgs/README.md` documents the protocol
+### Stage 3: Team (humans + agents)
+- Humans use `just msgs-send` for coordination
+- Agents use CLAIMS/ for work coordination
+- Audit trail via `git log -- msgs/`
 
 ### Limitations
 
 | Limitation | Impact | Mitigation |
 |------------|--------|------------|
-| Latency (30-60s) | Not real-time | Accept for awareness tasks; use direct comms for urgent |
-| Merge conflicts | Two agents commit same dir | Timestamped filenames; branch for complex handoffs |
-| Volume | Noisy git log | Archive monthly; `git log -- msgs/ --since "7 days"` |
-| No push notifications | Agent might miss message | Poll on pull; human monitors commit log |
+| Latency (30-60s) | Not real-time | Accept for coordination; urgent = direct |
+| Volume | Noisy git log | Archive monthly |
+| No push notifications | Agent might miss message | Poll on pull; human monitors |
+| Claim enforcement | relies on message master | Automate with `just msgs-master` |
 
 **The discipline argument:** Teams use Slack. We use Git. Same coordination, better audit trail, no vendor dependency. The limitations are acceptable if the team maintains discipline.
 
@@ -352,6 +301,6 @@ Simple directories: `msgs/from-mac/`, `msgs/from-omarchy/`
 
 ## See Also
 
-- `docs/terminal-stack.md` — infrastructure (TailScale, herdr, pi)
-- `briefs/008-the-invisible-cables.md` — td + sidecar as observability layer
+- `docs/terminal-stack.md` — infrastructure
+- `briefs/008-the-invisible-cables.md` — td + sidecar
 - `playbooks/dev-stack-setup.md` — what the stack is

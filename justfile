@@ -534,3 +534,57 @@ msgs-send:
     @echo "{\"from\":\"$${FROM}\",\"to\":\"$${TO}\",\"type\":\"$${TYPE}\",\"topic\":\"$${TOPIC}\",\"status\":\"open\",\"timestamp\":\"$$(date -Iseconds)\",\"summary\":\"$${SUMMARY}\"}" > "$$FILE"
     @echo "Message written to $$FILE"
     @echo "Commit with: git add msgs/from-$${FROM}/ && git commit -m 'msgs: $${TYPE} to $${TO} re $${TOPIC}'"
+
+# Agent messaging modes and commands
+msgs-mode:
+    @#!/bin/bash
+    @MODE="${1:-}"
+    @if [ -z "$MODE" ]; then
+    @    current=$(cat .msgs-mode 2>/dev/null || echo "multi")
+    @    echo "Current mode: $current"
+    @    echo "Usage: just msgs-mode [single|multi]"
+    @elif [ "$MODE" = "single" ] || [ "$MODE" = "multi" ]; then
+    @    echo "$MODE" > .msgs-mode
+    @    echo "Mode set to: $MODE"
+    @else
+    @    echo "Invalid mode. Use: just msgs-mode [single|multi]"
+    @fi
+
+msgs-inbox:
+    @#!/bin/bash
+    @MODE=$(cat .msgs-mode 2>/dev/null || echo "multi")
+    @if [ "$MODE" = "single" ]; then
+    @    echo "Single machine mode — no messages to process"
+    @    exit 0
+    @fi
+    @echo "=== Inbox ===" && git pull 2>/dev/null && grep -l '"status": "open"' msgs/from-*/$(date +%Y-%m-%d)*.json 2>/dev/null | while read f; do echo "--- $f ---"; jq -r '.from, .topic, .summary' "$f" 2>/dev/null || cat "$f"; done || echo "No open messages"
+
+msgs-claim:
+    @#!/bin/bash
+    @BRIEF="${BRIEF:-}"
+    @BY="${BY:-$USER}"
+    @if [ -z "$BRIEF" ]; then echo "Usage: just msgs-claim BRIEF=001"; exit 1; fi
+    @mkdir -p msgs/CLAIMS
+    @if [ -f "msgs/CLAIMS/brief-$BRIEF.json" ]; then
+    @    current=$(jq -r '.claimed_by' msgs/CLAIMS/brief-$BRIEF.json)
+    @    echo "Brief $BRIEF already claimed by $current"
+    @else
+    @    echo "{\"brief\":\"$BRIEF\",\"claimed_by\":\"$BY\",\"claimed_at\":\"$(date -Iseconds)\",\"status\":\"claimed\"}" > msgs/CLAIMS/brief-$BRIEF.json
+    @    git add msgs/CLAIMS/ && git commit -m "msgs: $BY claims brief-$BRIEF"
+    @    echo "Claimed brief-$BRIEF by $BY"
+    @fi
+
+msgs-report:
+    @#!/bin/bash
+    @BRIEF="${BRIEF:-}"
+    @STATUS="${STATUS:-info}"
+    @SUMMARY="${SUMMARY:-}"
+    @if [ -z "$BRIEF" ]; then echo "Usage: just msgs-report BRIEF=001 STATUS=complete SUMMARY='Done'"; exit 1; fi
+    @mkdir -p "msgs/from-$USER/"
+    @echo "{\"from\":\"$USER\",\"type\":\"report\",\"topic\":\"brief-$BRIEF\",\"status\":\"$STATUS\",\"timestamp\":\"$(date -Iseconds)\",\"summary\":\"$SUMMARY\"}" > "msgs/from-$USER/$(date +%Y-%m-%d-%H%M)-brief-$BRIEF.json"
+    @git add "msgs/from-$USER/" && git commit -m "msgs: $USER reports brief-$BRIEF $STATUS"
+    @echo "Report sent: brief-$BRIEF $STATUS"
+
+msgs-master:
+    @#!/bin/bash
+    @echo "=== Message Master ===" && echo "" && echo "Checking CLAIMS/" && ls msgs/CLAIMS/ 2>/dev/null || echo "No claims" && echo "" && echo "Checking for expired claims..." && grep -l '"deadline"' msgs/CLAIMS/*.json 2>/dev/null | while read f; do deadline=$(jq -r '.deadline' "$f" 2>/dev/null); if [ "$(date -d "$deadline" +%s)" -lt "$(date +%s)" ]; then echo "EXPIRED: $f"; fi; done || echo "No expired claims" && echo "" && echo "Run 'just msgs-cleanup' to archive old messages"
