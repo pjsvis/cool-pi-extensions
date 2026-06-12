@@ -57,6 +57,8 @@ work starts.
 
 **Brief 009: [briefs/009-pi-config-from-repo.md](briefs/009-pi-config-from-repo.md)** — implemented
 
+**Brief 010: [briefs/010-bounded-context-for-agents.md](briefs/010-bounded-context-for-agents.md)** — complete
+
 **Insights playbook: [playbooks/insights.md](playbooks/insights.md)** — Persistent collection of small observations that don't fit existing playbooks.
 
 **herdr: [playbooks/herdr.md](playbooks/herdr.md)** — Session multiplexing: workspaces, tabs, keybindings, daemon persistence, SSH integration.
