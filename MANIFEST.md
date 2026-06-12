@@ -63,6 +63,8 @@ work starts.
 
 **Brief 010: [briefs/010-bounded-context-for-agents.md](briefs/010-bounded-context-for-agents.md)** — complete
 
+**Brief 011: [briefs/011-test-just-dev-on-omarchy.md](briefs/011-test-just-dev-on-omarchy.md)** — pending
+
 **Insights playbook: [playbooks/insights.md](playbooks/insights.md)** — Persistent collection of small observations that don't fit existing playbooks.
 
 **herdr: [playbooks/herdr.md](playbooks/herdr.md)** — Session multiplexing: workspaces, tabs, keybindings, daemon persistence, SSH integration.
