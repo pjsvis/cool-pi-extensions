@@ -31,11 +31,11 @@ herdr session: cool-pi-extensions
 ## Setup
 
 ```bash
-flox activate
+just install-deps
 just dev
 ```
 
-`flox activate` handles the toolchain. `just dev` handles the rest — symlinks, config, extensions.
+`just install-deps` checks and installs the toolchain. `just dev` handles the rest — symlinks, config, extensions.
 
 ---
 

@@ -75,7 +75,7 @@ This repo — [cool-pi-extensions](https://github.com/pjsvis/cool-pi-extensions)
 
 But it's also a proof-of-concept for the VEST Protocol. Every design decision is there to demonstrate:
 
-**Self-contained.** Clone it anywhere, run `just orient`, you're productive. No external dependencies beyond what's in the flox manifest. The repo teaches its own structure.
+**Self-contained.** Clone it anywhere, run `just orient`, you're productive. No external dependencies beyond what `just install-deps` handles. The repo teaches its own structure.
 
 **Agent-agnostic.** The VEST Protocol works with any agent, any context. `just orient` just outputs information. Whether a human reads it or an LLM parses it, the information is the same.
 

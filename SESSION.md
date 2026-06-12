@@ -12,7 +12,7 @@ Improve repo discoverability for agents and humans.
 - [x] Added `just adopt-edinburgh` — Symlinks Edinburgh Protocol as system prompt
 - [x] Added `just dev` — Interactive herdr workspace creation with gum/terminal prompts
 - [x] Removed `canon/` folder and related playbooks (canon.md, writing.md)
-- [x] Added gum to flox manifest
+- [x] Added gum as project dependency
 - [x] Added visual `---` section dividers to README.md
 - [x] **Decision: Convert tables to bold+description lists** — Documented in `docs/decisions/table-rendering.md`
 
@@ -43,4 +43,4 @@ Improve repo discoverability for agents and humans.
 - `glow` — Markdown rendering
 - `fzf` — File picker in `just read`
 - `just` — Task runner
-- `flox` — Environment management
+- `just` — Dependency management and task running

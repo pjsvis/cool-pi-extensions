@@ -458,6 +458,95 @@ dev:
 # Run this once; subsequent runs just verify.
 # Usage: `just install-stack`
 
+# Check and report missing dependencies. Does NOT install anything —
+# it tells the agent what's needed and how to get it.
+# Usage: `just install-deps`
+[group("provision")]
+install-deps:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    RED='\033[0;31m'
+    GREEN='\033[0;32m'
+    YELLOW='\033[0;33m'
+    NC='\033[0m'
+
+    missing_required=0
+    missing_optional=0
+
+    OS="$(uname -s)"
+    if [ "$OS" = "Linux" ] && command -v pacman >/dev/null 2>&1; then
+        PKG="sudo pacman -S"
+        PKG_LABEL="pacman"
+    elif [ "$OS" = "Darwin" ]; then
+        PKG="brew install"
+        PKG_LABEL="brew"
+    else
+        PKG=""
+        PKG_LABEL="your package manager"
+    fi
+
+    echo "=== cool-pi-extensions: dependency check ==="
+    echo ""
+
+    # --- Required ---
+    check_required() {
+        local bin="$1" name="$2" pkg="$3" extra="${4:-}"
+        if command -v "$bin" >/dev/null 2>&1; then
+            printf "  ${GREEN}✓${NC} %s (%s)\n" "$name" "$(command -v "$bin")"
+        else
+            printf "  ${RED}✗${NC} %s — MISSING\n" "$name"
+            if [ -n "$PKG" ] && [ -n "$pkg" ]; then
+                printf "    → Install: %s %s\n" "$PKG" "$pkg"
+            fi
+            if [ -n "$extra" ]; then
+                printf "    → %s\n" "$extra"
+            fi
+            missing_required=1
+        fi
+    }
+
+    # --- Optional ---
+    check_optional() {
+        local bin="$1" name="$2" pkg="$3" extra="${4:-}"
+        if command -v "$bin" >/dev/null 2>&1; then
+            printf "  ${GREEN}✓${NC} %s\n" "$name"
+        else
+            printf "  ${YELLOW}⚠${NC} %s — not found (optional)\n" "$name"
+            if [ -n "$PKG" ] && [ -n "$pkg" ]; then
+                printf "    → Install: %s %s\n" "$PKG" "$pkg"
+            fi
+            if [ -n "$extra" ]; then
+                printf "    → %s\n" "$extra"
+            fi
+            missing_optional=1
+        fi
+    }
+
+    echo "Required:"
+    check_required "bun" "bun" "bun" "curl -fsSL https://bun.sh/install | bash"
+    check_required "just" "just" "just" "cargo install just"
+    check_required "gum" "gum" "gum"
+    check_required "pi" "pi" "" "curl -fsSL https://pi.dev/install.sh | sh"
+
+    echo ""
+    echo "Optional:"
+    check_optional "rtk" "rtk" "rtk"
+    check_optional "skate" "skate" "skate"
+    check_optional "glow" "glow" "glow"
+    check_optional "td" "td" "" "brew install td (from marcus/homebrew-tap)"
+    check_optional "sidecar" "sidecar" "" "brew install sidecar (from marcus/homebrew-tap)"
+
+    echo ""
+    if [ $missing_required -eq 1 ]; then
+        echo "✗ Some required tools are missing. Install them and re-run."
+        exit 1
+    elif [ $missing_optional -eq 1 ]; then
+        echo "✓ Required tools present. Some optional tools missing."
+    else
+        echo "✓ All dependencies satisfied."
+    fi
+
 [group("provision")]
 install-stack:
     #!/usr/bin/env bash
@@ -485,7 +574,7 @@ install-stack:
     echo ""
     echo "--- Clone cool-pi-extensions ---"
     echo "  git clone https://github.com/pjsvis/cool-pi-extensions.git"
-    echo "  cd cool-pi-extensions && flox activate"
+    echo "  cd cool-pi-extensions && just install-deps"
     echo ""
     echo "Done. Run 'just orient' to verify your environment."
 

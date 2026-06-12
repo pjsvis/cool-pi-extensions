@@ -108,7 +108,7 @@ merge workflow. Watch your agent work without interfering.
 ```bash
 git clone https://github.com/pjsvis/cool-pi-extensions.git ~/.pi/extensions
 cd ~/.pi/extensions
-flox activate
+just install-deps
 
 # Agent: orient yourself
 just orient

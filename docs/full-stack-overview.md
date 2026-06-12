@@ -138,6 +138,41 @@ The workspace survives the network.
 
 ---
 
+## The multi-machine mesh
+
+The stack scales horizontally without changing the architecture. Two machines — one on Arch, one on macOS — share the same repo, the same git history, and the same task database. Each machine has its own bounded context: its own worktree, its own td sessions, its own brief assignments. Cross-context coordination happens through git-native messages in `msgs/`.
+
+**The transport layer is Tailscale.** A private mesh with fixed IPs, MagicDNS hostnames, and direct connections. SSH works over the mesh with the same keys as local. No port forwarding, no VPN config, no DynDNS.
+
+**The coordination layer is git.** Each machine has an outbox (`msgs/from-omarchy/`, `msgs/from-mac/`). Messages are JSON files — `claim`, `report`, `block`, `info`. Delivery is `git push`/`git pull`. The audit trail is `git log -- msgs/`. No message broker, no chat protocol, no new infrastructure.
+
+**The discipline is simple:**
+
+```bash
+# Start of session on any machine
+git pull
+just msgs-inbox       # check for cross-context messages
+just orient           # current state, active tasks
+
+# Before committing
+just msgs-claim BRIEF=001   # claim your work
+# ... do the work ...
+just msgs-report BRIEF=001  # report completion
+git push                     # push code + messages
+```
+
+**What you get:** either machine can work on any task. Both machines see the same state. Bounded contexts prevent duplication. The flox deprecation was the first real exchange — Omarchy sent an `info` message, Mac acknowledged 15 minutes later. Real coordination, real audit trail, zero ceremony.
+
+Single-machine mode eliminates the overhead when working alone:
+
+```bash
+just msgs-mode single   # no coordination spam
+```
+
+The system scales to three machines, ten machines, without structural changes. Partition briefs, respect bounded contexts, pull before commit. The architecture is the same at every size.
+
+---
+
 ## How to get started
 
 **For agents:**
