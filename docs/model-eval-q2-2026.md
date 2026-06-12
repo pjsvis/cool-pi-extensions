@@ -104,6 +104,34 @@ Failed to complete evaluation. Timed out on EDI-001 and EDI-004 — the two reas
 
 **Avoid for:** Everything. A model that can't complete reasoning tests can't be relied upon for reasoning sessions.
 
+## Pending: Kimi k2.5 vs k2.6
+
+**Status:** Awaiting eval run. Run in pi session with:
+```
+/eval moonshotai/kimi-k2.5
+/eval moonshotai/kimi-k2.6
+```
+
+Results will be cached in `~/.edinburgh-evals/` for 168 days.
+
+**Hypothesis:** k2.5 acceptable (less optimized, more grounded). k2.6 shows benchmaxxing signature — "diving in to appear useful" + "highly strung" thinking traces = imposter syndrome pattern.
+
+**To document results:** Fill in below after eval completes.
+
+<!--
+### moonshotai/kimi-k2.5
+**Score:** ?/4
+**Verdict:** [Compliant / MUPPET]
+**Key observations:** ...
+
+### moonshotai/kimi-k2.6  
+**Score:** ?/4
+**Verdict:** [Compliant / MUPPET]
+**Key observations:** ...
+-->
+
+---
+
 ## Price-performance matrix
 
 | Model | Score | Price/million tokens | Per-test latency | Category |
