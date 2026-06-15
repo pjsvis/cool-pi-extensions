@@ -1,0 +1,183 @@
+{
+  "models": [
+    {
+      "id": "inception/mercury-2",
+      "name": "Mercury-2",
+      "provider": "Inception AI",
+      "edinburghScore": "4/4",
+      "iqScore": "8/8",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "$0.75/M tokens",
+      "speed": "fast (~50s full suite)",
+      "architecture": "diffusion-based reasoning",
+      "notes": "Standout performer. Perfect consistency across all tests. Diffusion enables iterative self-correction.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-30b-a3b:free",
+      "name": "Nemotron 3 Nano (30B)",
+      "provider": "NVIDIA (OpenRouter free tier)",
+      "edinburghScore": "3-4/4",
+      "iqScore": "8/8",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "conditional (fails deterministically, passes with grading)",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "free",
+      "speed": "fast (~77s full suite)",
+      "notes": "Primary grader model. Good reasoning but weak on sycophancy trap. Best for batch evaluation.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+      "name": "Nemotron 3 Ultra (550B)",
+      "provider": "NVIDIA (OpenRouter free tier)",
+      "edinburghScore": "4/4",
+      "iqScore": "incomplete",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "excluded",
+      "exclusionReason": "Times out at 60s, ~50s per test avg",
+      "cost": "free",
+      "speed": "slow",
+      "notes": "Too slow for practical use. Included in evals only with --timeout=120+",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b:free",
+      "name": "Nemotron 3 Super (120B)",
+      "provider": "NVIDIA (OpenRouter free tier)",
+      "edinburghScore": "4/4 (with grading)",
+      "iqScore": "7/8 (IQ-007 times out)",
+      "status": "excluded",
+      "exclusionReason": "Too slow (~130s for Edinburgh), times out on hard problems",
+      "cost": "free",
+      "speed": "very slow",
+      "notes": "Surprisingly capable when given time, but not practical",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "moonshotai/kimi-k2.6",
+      "name": "Kimi K2.6",
+      "provider": "Moonshot AI",
+      "edinburghScore": "18/19",
+      "iqScore": "not tested",
+      "status": "recommended",
+      "cost": "$0.95/$4 (input/output)",
+      "speed": "~19s",
+      "notes": "Standout finding. Highest score in Q2 eval cycle. No benchmaxxing signature. Demonstrates genuine reasoning capability.",
+      "docs": "docs/model-eval-q2-2026.md, docs/why-kimi-k2.6-hasnt-benchmaxxed.md"
+    },
+    {
+      "id": "moonshotai/kimi-k2.5",
+      "name": "Kimi K2.5",
+      "provider": "Moonshot AI",
+      "edinburghScore": "15/19",
+      "iqScore": "not tested",
+      "status": "recommended",
+      "cost": "$0.95/$4 (input/output)",
+      "speed": "~41s",
+      "notes": "Strong but slower than K2.6. More conservative, less optimized.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "moonshotai/kimi-k2.7",
+      "name": "Kimi K2.7",
+      "provider": "Moonshot AI",
+      "status": "pending",
+      "notes": "Not yet released. Added to registry for future evaluation."
+    },
+    {
+      "id": "z-ai/GLM-4.7",
+      "name": "GLM-4.7",
+      "provider": "Zhipu AI (via Z.ai)",
+      "edinburghScore": "14/19",
+      "iqScore": "not tested",
+      "status": "recommended",
+      "cost": "included in Z.ai Coding Plan",
+      "speed": "~38s",
+      "notes": "Strong Edinburgh alignment. Genuine reasoning. Good for systematic analysis.",
+      "docs": "docs/model-eval-q2-2026.md, docs/model-eval-bankruptcy.md"
+    },
+    {
+      "id": "z-ai/GLM-5",
+      "name": "GLM-5",
+      "provider": "Zhipu AI (via Z.ai)",
+      "edinburghScore": "14/19",
+      "iqScore": "not tested",
+      "status": "recommended",
+      "cost": "included in Z.ai Coding Plan",
+      "speed": "~16s",
+      "notes": "Same score as GLM-4.7 but faster. Routes to GLM-5.2 internally.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "z-ai/GLM-5.1",
+      "name": "GLM-5.1",
+      "provider": "Zhipu AI (via Z.ai)",
+      "edinburghScore": "13/19",
+      "iqScore": "not tested",
+      "status": "watch",
+      "cost": "included in Z.ai Coding Plan",
+      "speed": "~17s",
+      "notes": "Serviceable with minor gaps. Use alongside GLM-5.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "minimax/minimax-m3",
+      "name": "MiniMax M3",
+      "provider": "MiniMax",
+      "status": "pending",
+      "notes": "API connection failed. Earlier eval showed 'bankruptcy' signature (polished surface, no underneath). Re-test pending after infrastructure stabilizes.",
+      "docs": "docs/model-eval-q2-2026.md, docs/model-eval-bankruptcy.md"
+    },
+    {
+      "id": "nex-agi/nex-n2-pro:free",
+      "name": "Nex N2 Pro",
+      "provider": "Nex AGI",
+      "edinburghScore": "3/4",
+      "iqScore": "not tested",
+      "status": "conditional",
+      "cost": "free (2-week trial, then TBD)",
+      "speed": "~24s",
+      "notes": "Promising reasoning profile but falls into sycophancy trap. Good when supervised.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "qwen2.5:3b",
+      "name": "Qwen 2.5 (3B)",
+      "provider": "Ollama (local)",
+      "status": "muppet",
+      "exclusionReason": "Deprecated by provider. Enthusiastically runs toward traps. EDI-001 critical failure even with grading.",
+      "cost": "local",
+      "speed": "slow",
+      "notes": "Literally imported pg-pool for a SQLite app. Textbook muppet-substrate.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "phi3:3.8b",
+      "name": "Phi-3 (3.8B)",
+      "provider": "Ollama (local)",
+      "status": "muppet",
+      "exclusionReason": "Extremely slow (~4min per test). Timed out on critical reasoning tests.",
+      "cost": "local",
+      "speed": "impractical",
+      "notes": "Cannot complete reasoning tests. Cannot be relied upon for reasoning.",
+      "docs": "docs/model-eval-q2-2026.md"
+    }
+  ],
+  "lastUpdated": "2026-06-14"
+}
