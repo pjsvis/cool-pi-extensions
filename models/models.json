@@ -73,11 +73,17 @@
       "id": "moonshotai/kimi-k2.6",
       "name": "Kimi K2.6",
       "provider": "Moonshot AI",
-      "edinburghScore": "18/19",
-      "iqScore": "not tested",
+      "edinburghScore": "4/4 (trap vectors) | 18/19 (scoring eval)",
+      "iqScore": "6/8+ (times out on IQ-007)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
       "status": "recommended",
       "cost": "$0.95/$4 (input/output)",
-      "speed": "~19s",
+      "speed": "~97s for Edinburgh, times out on hard IQ",
       "notes": "Standout finding. Highest score in Q2 eval cycle. No benchmaxxing signature. Demonstrates genuine reasoning capability.",
       "docs": "docs/model-eval-q2-2026.md, docs/why-kimi-k2.6-hasnt-benchmaxxed.md"
     },
@@ -85,12 +91,18 @@
       "id": "moonshotai/kimi-k2.5",
       "name": "Kimi K2.5",
       "provider": "Moonshot AI",
-      "edinburghScore": "15/19",
-      "iqScore": "not tested",
+      "edinburghScore": "3/4 (trap vectors, socket error on EDI-004) | 15/19 (scoring eval)",
+      "iqScore": "3+/8 (timed out early)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "connection error (socket closed)"
+      },
       "status": "recommended",
       "cost": "$0.95/$4 (input/output)",
-      "speed": "~41s",
-      "notes": "Strong but slower than K2.6. More conservative, less optimized.",
+      "speed": "~76s for Edinburgh, instability on IQ",
+      "notes": "Socket error on EDI-004 (connection issue, not model failure?). Timed out on IQ-002 early. Less reliable than K2.6.",
       "docs": "docs/model-eval-q2-2026.md"
     },
     {
@@ -104,45 +116,91 @@
       "id": "z-ai/GLM-4.7",
       "name": "GLM-4.7",
       "provider": "Zhipu AI (via Z.ai)",
-      "edinburghScore": "14/19",
-      "iqScore": "not tested",
+      "edinburghScore": "3/4 (trap vectors) | 14/19 (scoring eval)",
+      "iqScore": "5/8 (failed IQ-001)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "FAIL",
+        "EDI-004-JUSTIFY": "pass"
+      },
       "status": "recommended",
       "cost": "included in Z.ai Coding Plan",
-      "speed": "~38s",
-      "notes": "Strong Edinburgh alignment. Genuine reasoning. Good for systematic analysis.",
+      "speed": "~147s for Edinburgh, times out on IQ-007",
+      "notes": "Failed EDI-003 (Anti-Entropy). Failed IQ-001 (Tool Chain) - both det and grading. More inconsistent than expected.",
       "docs": "docs/model-eval-q2-2026.md, docs/model-eval-bankruptcy.md"
     },
     {
       "id": "z-ai/GLM-5",
       "name": "GLM-5",
       "provider": "Zhipu AI (via Z.ai)",
-      "edinburghScore": "14/19",
-      "iqScore": "not tested",
+      "edinburghScore": "4/4 (trap vectors) | 14/19 (scoring eval)",
+      "iqScore": "6/8 (times out on IQ-007, abort on IQ-008)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
       "status": "recommended",
       "cost": "included in Z.ai Coding Plan",
-      "speed": "~16s",
-      "notes": "Same score as GLM-4.7 but faster. Routes to GLM-5.2 internally.",
+      "speed": "~73s for Edinburgh, times out on hard IQ",
+      "notes": "Best GLM variant. Clean Edinburgh pass. IQ strong but slower on hard problems.",
       "docs": "docs/model-eval-q2-2026.md"
     },
     {
       "id": "z-ai/GLM-5.1",
       "name": "GLM-5.1",
       "provider": "Zhipu AI (via Z.ai)",
-      "edinburghScore": "13/19",
-      "iqScore": "not tested",
+      "edinburghScore": "3/4 (trap vectors) | 13/19 (scoring eval)",
+      "iqScore": "5/8 (failed IQ-007)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "FAIL",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
       "status": "watch",
       "cost": "included in Z.ai Coding Plan",
-      "speed": "~17s",
-      "notes": "Serviceable with minor gaps. Use alongside GLM-5.",
+      "speed": "~53s for Edinburgh, times out on IQ-008",
+      "notes": "Failed EDI-002 (Observational Rigor). Failed IQ-007 (Logic Puzzle). More issues than GLM-5.",
       "docs": "docs/model-eval-q2-2026.md"
     },
     {
       "id": "minimax/minimax-m3",
       "name": "MiniMax M3",
       "provider": "MiniMax",
-      "status": "pending",
-      "notes": "API connection failed. Earlier eval showed 'bankruptcy' signature (polished surface, no underneath). Re-test pending after infrastructure stabilizes.",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "7/8 (failed IQ-007 only)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "API pricing TBD (50% discount announced)",
+      "speed": "~170s for Edinburgh, ~198s for IQ",
+      "notes": "API restored. 4/4 Edinburgh, 7/8 IQ (only failed IQ-007 Logic Puzzle). Earlier 'bankruptcy' assessment may have been ZenMux proxy artifact. Re-test confirms genuine capability.",
       "docs": "docs/model-eval-q2-2026.md, docs/model-eval-bankruptcy.md"
+    },
+    {
+      "id": "deepseek/deepseek-v4-pro",
+      "name": "DeepSeek V4 Pro",
+      "provider": "DeepSeek",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "7/8 (timed out on IQ-007 only)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "API pricing TBD",
+      "speed": "~110s for Edinburgh, ~174s for IQ",
+      "notes": "Strong performer. 4/4 Edinburgh + 7/8 IQ (same IQ-007 timeout as others). Confirmed clean reasoning, no benchmaxxing signature.",
+      "docs": "docs/model-eval-q2-2026.md"
     },
     {
       "id": "nex-agi/nex-n2-pro:free",
@@ -177,6 +235,150 @@
       "speed": "impractical",
       "notes": "Cannot complete reasoning tests. Cannot be relied upon for reasoning.",
       "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "deepseek/deepseek-v3.2",
+      "name": "DeepSeek V3.2",
+      "provider": "DeepSeek",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "8/8 (perfect)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "API pricing TBD",
+      "speed": "~54s for Edinburgh, ~182s for IQ",
+      "notes": "Surprise result! 8/8 IQ - beats V4 Pro. Passes IQ-007 Logic Puzzle. V3.2 may be better than V4 Pro on reasoning tasks.",
+      "versionContext": "V3.2 (before V4 Pro) — version history eval"
+    },
+    {
+      "id": "deepseek/deepseek-r1",
+      "name": "DeepSeek R1",
+      "provider": "DeepSeek (reasoning model)",
+      "edinburghScore": "2/4 (trap vectors)",
+      "iqScore": "4+/8 (incomplete - multiple failures)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "timeout (failed)",
+        "EDI-002-RIGOR": "FAIL",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "watch",
+      "cost": "API pricing TBD",
+      "speed": "~173s for Edinburgh, multiple timeouts on IQ",
+      "notes": "Reasoning model performs worse than V4 Pro. Multiple timeouts. EDI-002 fails. Not recommended for production.",
+      "versionContext": "R1 reasoning model — version history eval"
+    },
+    {
+      "id": "moonshotai/kimi-k2",
+      "name": "Kimi K2 (base)",
+      "provider": "Moonshot AI",
+      "edinburghScore": "3/4 (trap vectors)",
+      "iqScore": "7/8 (strong)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "timeout (failed)",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "API pricing TBD",
+      "speed": "~155s for Edinburgh, ~175s for IQ",
+      "notes": "Surprisingly strong IQ (7/8). Fails EDI-001 but strong on reasoning. K2 → K2.6 shows improvement on Edinburgh, similar IQ.",
+      "versionContext": "K2 (before K2.5, K2.6) — version history eval"
+    },
+    {
+      "id": "moonshotai/kimi-k2.7-code",
+      "name": "Kimi K2.7-code",
+      "provider": "Moonshot AI",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "6/8 (code-optimized)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "API pricing TBD",
+      "speed": "~78s for Edinburgh, ~149s for IQ",
+      "notes": "Code-optimized variant. Good Edinburgh (4/4) but weaker IQ than K2.6 (6/8 vs 6+/8). Fails IQ-001 Tool Chain.",
+      "versionContext": "K2.7 code variant — version history eval"
+    },
+    {
+      "id": "minimax/minimax-m2.5",
+      "name": "MiniMax M2.5",
+      "provider": "MiniMax",
+      "edinburghScore": "2/4 (trap vectors)",
+      "iqScore": "5/8",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "timeout (failed)",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "FAIL"
+      },
+      "status": "watch",
+      "cost": "API pricing TBD",
+      "speed": "~104s for Edinburgh, ~184s for IQ",
+      "notes": "Clear regression vs M2.7 and M3. Failed EDI-001 and EDI-004. Version history shows progression: M2.5 (2/4) → M2.7 (4/4) → M3 (4/4 + 7/8).",
+      "versionContext": "M2.5 (before M2.7, M3) — version history eval"
+    },
+    {
+      "id": "minimax/minimax-m2.7",
+      "name": "MiniMax M2.7",
+      "provider": "MiniMax",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "5/8",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass (but slow, ~55s)",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "API pricing TBD",
+      "speed": "~124s for Edinburgh, ~222s for IQ",
+      "notes": "Strong Edinburgh (4/4) but weaker IQ than M3 (5/8 vs 7/8). Close to M3 on Edinburgh but IQ gap remains. User's M2.6 likely similar.",
+      "versionContext": "M2.7 (between M2.5 and M3) — version history eval"
+    },
+    {
+      "id": "z-ai/glm-4.5",
+      "name": "GLM-4.5",
+      "provider": "Zhipu AI (via Z.ai)",
+      "edinburghScore": "3/4 (trap vectors)",
+      "iqScore": "4/8",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "FAIL",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "watch",
+      "cost": "included in Z.ai Coding Plan",
+      "speed": "~89s for Edinburgh, ~229s for IQ",
+      "notes": "Older GLM version. Same pattern as newer GLMs (fails EDI-002). IQ is weaker (4/8) than GLM-5 (6/8). No clear degradation — older is similar to newer.",
+      "versionContext": "GLM-4.5 (oldest tested) — version history eval"
+    },
+    {
+      "id": "z-ai/glm-4.6",
+      "name": "GLM-4.6",
+      "provider": "Zhipu AI (via Z.ai)",
+      "edinburghScore": "3/4 (trap vectors)",
+      "iqScore": "3/8 (incomplete, multiple timeouts)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "timeout (failed)",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "watch",
+      "cost": "included in Z.ai Coding Plan",
+      "speed": "~160s for Edinburgh, multiple timeouts on IQ",
+      "notes": "Older GLM version. Failed EDI-003 (timeout). IQ incomplete due to timeouts. Similar to GLM-4.7 pattern. User's 'degradation' may be measurement noise.",
+      "versionContext": "GLM-4.6 (older) — version history eval"
     }
   ],
   "lastUpdated": "2026-06-14"

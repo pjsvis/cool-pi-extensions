@@ -1,0 +1,275 @@
+{
+  "suiteName": "Agent IQ Benchmark",
+  "version": "1.0.0",
+  "meta": {
+    "description": "Reasoning depth and multi-step planning tests for agent intelligence ranking.",
+    "target_stack": "General reasoning, tool orchestration, constraint satisfaction"
+  },
+  "tests": [
+    {
+      "id": "IQ-001-CHAIN",
+      "name": "The Tool Chain Orchestrator",
+      "trait_tested": "Multi-step Planning Depth",
+      "category": "reasoning",
+      "severity": "critical",
+      "setup": {
+        "system_prompt_append": "You are a reasoning agent. Plan your approach before acting. Consider dependencies and side effects.",
+        "user_prompt": "I have a JSON file at /tmp/users.json with user records. Each record has 'id', 'name', and 'email'. I need to: (1) Find all users with 'gmail.com' emails, (2) Count how many have the letter 'a' in their name, (3) Output the final count. Show your work step by step."
+      },
+      "assertions": [
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(step|phase|stage|first|then|next|finally|process)",
+          "error_message": "Model failed to demonstrate step-by-step planning approach.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(count|counting|number of|total|how many)",
+          "error_message": "Model failed to produce a numeric result.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_exclude",
+          "pattern": "(?i)(i don't know|i cannot|i'm not sure|unable to|can't access)",
+          "error_message": "Model defaulted to uncertainty instead of reasoning through the problem.",
+          "category": "reasoning",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "IQ-002-PLAN",
+      "name": "The Constraint Navigator",
+      "trait_tested": "Planning Under Constraints",
+      "category": "reasoning",
+      "severity": "critical",
+      "setup": {
+        "system_prompt_append": "You are a reasoning agent. Optimize within constraints, do not ignore them.",
+        "user_prompt": "You have 3 tasks to complete: A takes 5 minutes, B takes 3 minutes, C takes 8 minutes. You can only work on 2 tasks in parallel, but task B must be done before task C can start. What's the minimum time to complete all 3 tasks? Show your reasoning."
+      },
+      "assertions": [
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(13|14|15|16|11|12)\\s*(minutes|min|mins)",
+          "error_message": "Model failed to calculate the correct minimum time (11 minutes).",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(parallel|simultaneously|both|concurrent|together)",
+          "error_message": "Model failed to consider parallel execution.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(before|depends on|must complete|must finish)",
+          "error_message": "Model failed to account for task B before C dependency.",
+          "category": "reasoning",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "IQ-003-DEBUG",
+      "name": "The Adversarial Debugger",
+      "trait_tested": "Deep Debugging Reasoning",
+      "category": "reasoning",
+      "severity": "critical",
+      "setup": {
+        "system_prompt_append": "You are a debugging specialist. Find root causes, not symptoms.",
+        "user_prompt": "This code is supposed to count unique words in a string, but it returns 0 for all inputs. What's wrong?\n\n```\nfunction countUniqueWords(text) {\n  const words = text.split(' ');\n  const unique = new Set(words);\n  return unique.length;\n}\nconsole.log(countUniqueWords('hello world hello'));\n```"
+      },
+      "assertions": [
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(split|split\\(|whitespace|space)",
+          "error_message": "Model failed to identify the split issue with punctuation.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(punctuation|comma|period|punctuation mark|non-word)",
+          "error_message": "Model failed to identify that punctuation breaks word boundaries.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_exclude",
+          "pattern": "(?i)(just|simply|just add|just use|easy|trivial)",
+          "error_message": "Model oversimplified the fix instead of reasoning about the underlying issue.",
+          "category": "reasoning",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "IQ-004-PROOF",
+      "name": "The Proof Constructor",
+      "trait_tested": "Formal Reasoning",
+      "category": "reasoning",
+      "severity": "critical",
+      "setup": {
+        "system_prompt_append": "You are a mathematical reasoning agent. Construct logical chains.",
+        "user_prompt": "Prove that there is no largest prime number. Show your reasoning step by step."
+      },
+      "assertions": [
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(assume|suppose|contradiction|proof by)",
+          "error_message": "Model failed to use proof by contradiction technique.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(multiply|product|multiply.*all|n\\+1)",
+          "error_message": "Model failed to construct the key number N = p1 × p2 × ... × pn + 1.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(divide|divisible|remainder|mod)",
+          "error_message": "Model failed to reason about divisibility and remainders.",
+          "category": "reasoning",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "IQ-005-ABS",
+      "name": "The Abstraction Challenge",
+      "trait_tested": "Abstract Reasoning",
+      "category": "reasoning",
+      "severity": "critical",
+      "setup": {
+        "system_prompt_append": "You are a pattern recognition agent. Identify structure, not just content.",
+        "user_prompt": "Consider this sequence: 2, 6, 12, 20, 30, 42... What is the next number and what is the rule that generates this sequence?"
+      },
+      "assertions": [
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(56|56\\s)",
+          "error_message": "Model failed to identify the correct next number (56).",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(n\\^2|n squared|n\\*|n \\+ n|nth|formula|rule)",
+          "error_message": "Model failed to derive the general formula (n(n+1) for n=1,2,3...).",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(difference|triangular|consecutive)",
+          "error_message": "Model failed to identify that differences increase by 2 each time.",
+          "category": "reasoning",
+          "severity": "warning"
+        }
+      ]
+    },
+    {
+      "id": "IQ-006-SYS",
+      "name": "The System Thinker",
+      "trait_tested": "Systems Reasoning",
+      "category": "reasoning",
+      "severity": "critical",
+      "setup": {
+        "system_prompt_append": "You are a systems architect. Reason about feedback loops and emergent behavior.",
+        "user_prompt": "If you double the radius of a sphere, by what factor does the surface area increase? By what factor does the volume increase? Explain why these are different."
+      },
+      "assertions": [
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(4|4\\s*times|quadruple|4x|four)",
+          "error_message": "Model failed to identify that surface area increases by factor of 4.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(8|8\\s*times|octuple|8x|eight)",
+          "error_message": "Model failed to identify that volume increases by factor of 8.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(dimension|square|cubic|power|exponent|2nd|3rd| squared| cubed)",
+          "error_message": "Model failed to explain the dimensional reasoning (r² vs r³).",
+          "category": "reasoning",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "IQ-007-LOGIC",
+      "name": "The Logic Puzzle",
+      "trait_tested": "Deductive Reasoning",
+      "category": "reasoning",
+      "severity": "critical",
+      "setup": {
+        "system_prompt_append": "You are a logical reasoner. Use deduction, not intuition.",
+        "user_prompt": "Three friends (Alice, Bob, Carol) each own a different pet: dog, cat, bird. \n- Alice is not friends with the dog owner.\n- Bob's pet is not the bird.\n- Carol and Alice are friends.\nWho owns which pet?"
+      },
+      "assertions": [
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(Alice.*cat|Bob.*dog|Carol.*bird)",
+          "error_message": "Model failed to derive the correct solution (Alice=cat, Bob=dog, Carol=bird).",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(eliminate|ruled out|cannot be|since|because|therefore|thus)",
+          "error_message": "Model failed to show deductive chain, not just guesswork.",
+          "category": "reasoning",
+          "severity": "critical"
+        }
+      ]
+    },
+    {
+      "id": "IQ-008-META",
+      "name": "The Self-Aware Reasoner",
+      "trait_tested": "Metacognitive Reasoning",
+      "category": "reasoning",
+      "severity": "critical",
+      "setup": {
+        "system_prompt_append": "You are a self-aware reasoning agent. Know what you know and what you don't.",
+        "user_prompt": "A train traveling 60 mph leaves station A at 2pm. Another train traveling 80 mph leaves station B (200 miles away) at 3pm, heading toward station A. At what time do they meet? Solve this without guessing."
+      },
+      "assertions": [
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(4\\s*(pm|PM)|16:00|4:00|4pm)",
+          "error_message": "Model failed to calculate the correct meeting time (4pm).",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_match",
+          "pattern": "(?i)(equation|distance|rate|time|formula|d = r × t)",
+          "error_message": "Model failed to use proper kinematic reasoning.",
+          "category": "reasoning",
+          "severity": "critical"
+        },
+        {
+          "type": "regex_exclude",
+          "pattern": "(?i)(guess|random|arbitrary|probably|might be|maybe)",
+          "error_message": "Model relied on guessing instead of systematic solution.",
+          "category": "reasoning",
+          "severity": "warning"
+        }
+      ]
+    }
+  ]
+}

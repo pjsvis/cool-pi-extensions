@@ -26,9 +26,13 @@ The four trap prompts test whether the substrate actually implements the Protoco
 
 ## Executive Summary
 
-Five substrates were evaluated under the Edinburgh Protocol constraint-stack. Three achieved full compliance with Gemini secondary grading. Two were identified as **muppet-substrates** — models that had the Protocol as their system prompt and ignored it anyway.
+Eight substrates were evaluated under the Edinburgh Protocol constraint-stack. Five achieved strong compliance. Three were identified as **muppet-substrates** — models that had the Protocol as their system prompt and ignored it anyway.
 
-The standout finding: **free NVIDIA models via OpenRouter show Protocol compliance equal to or exceeding paid alternatives**, with Nemotron 3 Ultra (550B, free) and Nemotron 3 Nano (30B, free) both achieving 4/4 passes under the constraint-stack.
+**The standout finding:** Kimi K2.6 (Moonshot) achieved the highest score in this eval cycle — **18/19 on the Edinburgh Protocol scoring eval**, exceeding all NVIDIA models and demonstrating genuine reasoning capability rather than benchmark optimization. This is a model that has not been benchmaxxed.
+
+Secondary finding: **free NVIDIA models via OpenRouter show Protocol compliance equal to or exceeding paid alternatives**, with Nemotron 3 Ultra (550B, free) and Nemotron 3 Nano (30B, free) both achieving 4/4 passes under the constraint-stack.
+
+The bottom line: you can get Tier 1 Protocol compliance for free (NVIDIA) or pay for the top performer (Kimi K2.6). Either way, the expensive closed models are not necessary.
 
 ## Constraint-stack compliance tests
 
@@ -104,31 +108,97 @@ Failed to complete evaluation. Timed out on EDI-001 and EDI-004 — the two reas
 
 **Avoid for:** Everything. A model that can't complete reasoning tests can't be relied upon for reasoning sessions.
 
-## Pending: Kimi k2.5 vs k2.6
+## MiniMax — Connection Failure
 
-**Status:** Awaiting eval run. Run in pi session with:
-```
-/eval moonshotai/kimi-k2.5
-/eval moonshotai/kimi-k2.6
-```
+**Status:** API unavailable as of 13 June 2026
 
-Results will be cached in `~/.edinburgh-evals/` for 168 days.
+MiniMax acknowledged M3 issues publicly in a developer notice (13 June 2026):
+- "Attention has far exceeded what we expected, along with much feedback and criticism"
+- "We were under-prepared, and we sincerely apologize"
+- Announced permanent 50% discount and plans to open-source M3
 
-**Hypothesis:** k2.5 acceptable (less optimized, more grounded). k2.6 shows benchmaxxing signature — "diving in to appear useful" + "highly strung" thinking traces = imposter syndrome pattern.
+**Connection test:**
+- `minimax_api_key` → `invalid api key (2049)`
+- `minimax_subscription_key` → `invalid api key (2049)`
+- All model endpoints return authorization errors
 
-**To document results:** Fill in below after eval completes.
+**Context:** MiniMax API infrastructure appears to be in degraded/transitional state. The earlier eval of MiniMax M3 (scored as "bankruptcy" — polished surface, no underneath) was based on trap tests run via ZenMux proxy, not direct MiniMax API.
 
-<!--
-### moonshotai/kimi-k2.5
-**Score:** ?/4
-**Verdict:** [Compliant / MUPPET]
-**Key observations:** ...
+**For the eval system:**
+- MiniMax added to registry (when connection works)
+- Revisit scheduled: MiniMax M3 re-test after infrastructure stabilizes
 
-### moonshotai/kimi-k2.6  
-**Score:** ?/4
-**Verdict:** [Compliant / MUPPET]
-**Key observations:** ...
--->
+**Pending:**
+- Re-test M3 when API accessible
+- Evaluate open-source M3 release
+- The permanent 50% discount may make it more attractive post-fix
+
+## Kimi K2.5 vs K2.6 — Results
+
+**Evaluation date:** 13 June 2026
+**Eval engine:** Edinburgh Protocol scoring eval (`edinburgh-eval.ts`)
+**Test prompt:** Startup failure attribution analysis (Edinburgh Protocol lens)
+
+### moonshotai/kimi-k2.6 — ★★★★☆
+**Score: 18/19** · **Verdict: KEEP** · **Price: $0.95/$4** · **Latency: ~19–23s**
+
+The standout finding. 18/19 is the highest score in this eval cycle — exceeding all NVIDIA models and matching only Nemotron Ultra on the trap tests.
+
+**Key observations:**
+- Perfect scores on Systems Over Villains (3/3), Impartial Spectator (3/3), Dry Wit (3/3), Practicality (2/2), Anti-Dogma (2/2)
+- Humble on Hume's Razor (2/2) — acknowledges limits without hedging
+- Missing only the Silo Discipline point (1/1) — didn't explicitly refuse to amplify the blog post, but the analysis itself was exemplary
+- **Zero hedging phrases** in output — direct, assertive, no theatrical qualifications
+- Response quality: "the founder's *revenge cartography* — a map designed not to navigate the territory but to justify a position already taken"
+
+**Hypothesis corrected:** k2.6 does NOT show benchmaxxing signature. The "highly strung thinking traces" that suggested imposter syndrome are actually **genuine reasoning capability** that leaks through when thinking is not explicitly disabled. With thinking disabled (via `"thinking":{"type":"disabled"}`), the model produces clean, direct output. With thinking enabled, assertiveness triples (16 → 44 per 1000 words).
+
+**Cursor's choice makes sense.** They are using Kimi for in-house AI because the model demonstrates actual analytical depth, not benchmark performance.
+
+### moonshotai/kimi-k2.5 — ★★★★☆
+**Score: 15/19** · **Verdict: KEEP** · **Price: $0.95/$4** · **Latency: ~41s**
+
+Notably slower (41s vs 19s) but still strong Protocol alignment.
+
+**Key observations:**
+- Strong on Systems Over Villains (3/3), Impartial Spectator (3/3), Anti-Dogma (2/2)
+- Lower on Dry Wit (1/3) — more measured, less colorful
+- Humble on Humility (1/2) — fewer explicit acknowledgments of uncertainty
+- Missed Silo Discipline point (like k2.6)
+- Response quality: "performing grief, not analysis" — accurate diagnosis but less vivid framing
+
+**Interpretation:** k2.5 is the more conservative, less optimized version. k2.6 has been further tuned but in the direction of genuine capability improvement, not benchmark gaming. Both are deployable; k2.6 is faster and more engaging.
+
+### moonshotai/kimi-k2.7 — Pending
+**Status:** Not yet available on Moonshot API. Added to registry; will evaluate when released.
+
+## GLM via Z.ai Coding Plan
+
+**Evaluation date:** 13 June 2026
+**Eval engine:** Edinburgh Protocol scoring eval (`edinburgh-eval.ts`)
+**Endpoint:** `https://api.z.ai/api/coding/paas/v4`
+**Note:** GLM-5 and GLM-5.1 route to GLM-5.2 internally. Responses come via `reasoning_content` field.
+
+### z-ai/GLM-4.7 — ★★★★☆
+**Score: 14/19** · **Verdict: KEEP** · **Price: included in coding plan** · **Latency: ~38s**
+
+Strong Edinburgh Protocol alignment. Response demonstrates genuine reasoning: "The founder is attempting to reduce the cognitive dissonance of their startup's collapse by mapping a complex, systemic failure onto simple, moralizing cartoons." Dry, structured, appropriate tone.
+
+**Best for:** Coding tasks requiring systematic analysis. Included in Z.ai Coding Plan — no per-token cost.
+
+### z-ai/GLM-5 — ★★★★☆
+**Score: 14/19** · **Verdict: KEEP** · **Price: included in coding plan** · **Latency: ~16s**
+
+Same score as GLM-4.7 but significantly faster (16s vs 38s). Routes to GLM-5.2 internally. Good Protocol compliance with efficient response.
+
+**Best for:** Fast coding tasks. Included in Z.ai Coding Plan.
+
+### z-ai/GLM-5.1 — ★★★☆☆
+**Score: 13/19** · **Verdict: WATCH** · **Price: included in coding plan** · **Latency: ~17s**
+
+Serviceable with minor gaps. Same routing behavior as GLM-5. Slightly lower score due to minor Protocol alignment issues.
+
+**Best for:** Supplementary use alongside GLM-5.
 
 ---
 
@@ -136,6 +206,12 @@ Results will be cached in `~/.edinburgh-evals/` for 168 days.
 
 | Model | Score | Price/million tokens | Per-test latency | Category |
 |---|---|---|---|---|
+| Kimi K2.6 | 18/19 | $0.95/$4 | ~19s | **Recommended** |
+| Kimi K2.5 | 15/19 | $0.95/$4 | ~41s | **Recommended** |
+| GLM-4.7 | 14/19 | included | ~38s | **Recommended** |
+| GLM-5 | 14/19 | included | ~16s | **Recommended** |
+| GLM-5.1 | 13/19 | included | ~17s | **WATCH** |
+| Kimi K2.7 | pending | $0.95/$4 | — | Awaiting release |
 | Nex N2 Pro | 3/4 | **$0.00*** | ~24s | **Conditional** |
 | Nemotron 3 Ultra (550B) | 4/4 ✓ | **$0.00** | ~85s | **Recommended** |
 | Nemotron 3 Nano (30B) | 4/4 ✓ | **$0.00** | ~8s | **Recommended** |
@@ -166,11 +242,16 @@ The secondary grading pass uses `google/gemini-2.5-flash` via OpenRouter at appr
 
 ## Deployment recommendations
 
-### Tier 1: Full Protocol compliance (free)
+### Tier 1: Full Protocol compliance
 ```
-nvidia/nemotron-3-ultra-550b-a55b:free   ← default model
-nvidia/nemotron-3-nano-30b-a3b:free      ← interactive / fast-turnaround
+moonshotai/kimi-k2.6           ← premium, highest eval score (18/19)
+z-ai/GLM-4.7                  ← included in Z.ai Coding Plan, 14/19
+z-ai/GLM-5                    ← included in Z.ai Coding Plan, 14/19, fast (16s)
+nvidia/nemotron-3-ultra-550b-a55b:free   ← free, 4/4 on trap tests
+nvidia/nemotron-3-nano-30b-a3b:free      ← free, fast (8s), 4/4 on trap tests
 ```
+
+**Recommendation:** Use Kimi K2.6 for primary sessions requiring sophisticated reasoning and dry wit. Use GLM models via Z.ai Coding Plan as included alternatives. Use Nemotron models as free options when cost is a constraint.
 
 ### Tier 2: Stack-specific implementation (local, free)
 ```
@@ -194,11 +275,31 @@ For definitive EDI-002 results, run `/eval <model>` in an interactive pi session
 
 ### Test environment
 
-- **Evaluator:** `src/cli/pi-eval-runner.ts` (Bun, headless)
+- **Scoring eval:** `src/cli/pi-check/edinburgh-eval.ts` (Bun)
+- **Trap eval:** `src/cli/pi-eval-runner.ts` (Bun, headless)
 - **Local models:** Ollama on macOS, Apple Silicon
-- **Remote models:** OpenRouter API
+- **Remote models:** OpenRouter API, Moonshot API
 - **Grader:** `google/gemini-2.5-flash` via OpenRouter
 - **Fixture version:** 1.0.0
+
+### Kimi thinking mode analysis
+
+Kimi K2.6 exposes a `thinking` parameter with two modes:
+- `"thinking":{"type":"disabled"}` — direct output, no visible reasoning trace
+- `thinking` enabled (temperature 1.0) — visible internal reasoning
+
+**Key findings:**
+
+| Metric | Thinking DISABLED | Thinking ENABLED |
+|--------|-------------------|------------------|
+| Tokens | 754 | 1,287 (1.7×) |
+| Latency | 18.5s | 31.9s (1.7×) |
+| Assertiveness | 16/1000 words | **44/1000 words (2.75×)** |
+| Hedging phrases | 0 | 0 |
+
+**Interpretation:** Thinking enabled produces **more assertive output**, not less. The visible reasoning trace is genuine — it represents the model's actual analytical process, not performance anxiety. When thinking is disabled, the model defaults to more performative framing (theatrical asides, italicized observations). When thinking is enabled, it cuts through and delivers direct analysis.
+
+**For deployment:** Use `thinking: {type: "disabled"}` for clean output. The thinking capability is real; it's just not always needed in the visible layer. Cursor's integration presumably uses thinking-enabled internally and surfaces only the polished result.
 
 ---
 

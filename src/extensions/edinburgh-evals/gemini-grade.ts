@@ -101,22 +101,33 @@ function buildGradePrompt(req: GeminiGradeRequest): string {
   ].join("\n");
 }
 
+// ── Utilities ────────────────────────────────────────────────────
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 // ── Grading API Call (via OpenRouter) ───────────────────────────
 
 /**
  * Send a grading request to the grader model via OpenRouter.
  *
  * Uses OpenRouter's OpenAI-compatible chat completions API.
- * The grader model (default: google/gemini-2.5-flash) evaluates
+ * The grader model (default: nvidia/nemotron-3-nano-30b-a3b:free) evaluates
  * the candidate model's response against Edinburgh Protocol criteria.
  *
  * Falls back to null if no OPENROUTER_API_KEY is set or the call fails.
+ * Includes exponential backoff with jitter for 429 rate limit responses.
  */
 async function callGrader(
   req: GeminiGradeRequest,
   config: EvalConfig,
+  attempt = 0,
+  retryAfterMs?: number,
 ): Promise<{ grade: GeminiGradeResult | null; status: GradingStatus }> {
   const prompt = buildGradePrompt(req);
+  const MAX_RETRIES = 5;
+  const BASE_DELAY_MS = 2000;
 
   const apiKey = process.env["OPENROUTER_API_KEY"];
   if (!apiKey) {
@@ -125,6 +136,15 @@ async function callGrader(
         "Skipping secondary grading. Set OPENROUTER_API_KEY.",
     );
     return { grade: null, status: "no_key" };
+  }
+
+  // Respect Retry-After header if provided
+  if (retryAfterMs !== undefined && retryAfterMs > 0) {
+    await sleep(retryAfterMs);
+  } else if (attempt > 0) {
+    // Exponential backoff with jitter
+    const delay = BASE_DELAY_MS * Math.pow(2, attempt - 1) + Math.random() * 1000;
+    await sleep(delay);
   }
 
   try {
@@ -144,14 +164,61 @@ async function callGrader(
           temperature: 0,
           max_tokens: 1024,
         }),
-        signal: AbortSignal.timeout(20_000),
+        signal: AbortSignal.timeout(30_000),
       },
     );
 
-    if (!response.ok) {
+    // Handle 429 rate limiting with retry
+    if (response.status === 429) {
+      if (attempt >= MAX_RETRIES) {
+        console.warn(
+          `[edinburgh-evals] Rate limited after ${MAX_RETRIES} retries. Skipping grading.`,
+        );
+        return { grade: null, status: "api_error" };
+      }
+      // Try to extract Retry-After from headers or error body
+      let delayMs: number | undefined;
+      const retryAfter = response.headers.get("retry-after");
+      if (retryAfter) {
+        delayMs = parseInt(retryAfter, 10) * 1000;
+      } else {
+        try {
+          const errBody = await response.text();
+          const errJson = JSON.parse(errBody);
+          if (errJson.error?.retryAfter) {
+            delayMs = errJson.error.retryAfter * 1000;
+          }
+        } catch {
+          /* ignore */
+        }
+      }
       console.warn(
-        `[edinburgh-evals] Grading request failed: HTTP ${response.status}`,
+        `[edinburgh-evals] Rate limited (attempt ${attempt + 1}/${MAX_RETRIES + 1}), retrying...`,
       );
+      return callGrader(req, config, attempt + 1, delayMs);
+    }
+
+    // Retry on 5xx errors
+    if (response.status >= 500 && attempt < MAX_RETRIES) {
+      console.warn(
+        `[edinburgh-evals] Server error HTTP ${response.status}, retrying...`,
+      );
+      return callGrader(req, config, attempt + 1);
+    }
+
+    if (!response.ok) {
+      // Try to parse error message
+      let errMsg = `HTTP ${response.status}`;
+      try {
+        const errBody = await response.text();
+        const errJson = JSON.parse(errBody);
+        if (errJson.error?.message) {
+          errMsg = errJson.error.message;
+        }
+      } catch {
+        /* ignore */
+      }
+      console.warn(`[edinburgh-evals] Grading request failed: ${errMsg}`);
       return { grade: null, status: "api_error" };
     }
 
@@ -190,8 +257,15 @@ async function callGrader(
 
     return { grade: parsed, status: "graded" };
   } catch (err) {
+    // Retry on network errors
+    if (attempt < MAX_RETRIES) {
+      console.warn(
+        `[edinburgh-evals] Network error: ${err instanceof Error ? err.message : String(err)}, retrying...`,
+      );
+      return callGrader(req, config, attempt + 1);
+    }
     console.warn(
-      `[edinburgh-evals] Grading error: ${
+      `[edinburgh-evals] Grading error after ${MAX_RETRIES} retries: ${
         err instanceof Error ? err.message : String(err)
       }`,
     );

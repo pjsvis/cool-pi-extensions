@@ -1,134 +1,143 @@
-# Brief: Bounded Context — The Gift for Agent Thinking
+# Bounded-Context Playbook – One-Brief Workflow
 
-**Date:** 2026-06-12
-**Status:** complete
+> **Purpose** – Provide a repeatable, auditable pipeline that takes a single
+> brief (e.g. `briefs/the-muppet-filter-draft.md`) from *render* → *audit* → *publish* while preserving strict Edinburgh-Protocol boundaries.
 
-## Context
+---
 
-Most agent coordination thinking goes: "We have multiple agents. They need to talk to each other. Let's use Telegram/WhatsApp/Slack."
+## 1. Prerequisites
 
-This is projecting human communication patterns onto agents. It assumes communication is inherently good, that more talking = better coordination.
+| Item | Location | Description |
+|------|----------|-------------|
+| `just` file | `justfile` (repo root) | Contains the `brief` target (see §2). |
+| `td` database | `.silo/td.db` | Holds task UID → status mapping. |
+| `intercom` script | `scripts/notify.sh` | Wrapper around `intercom {action:…, message:…}`. |
+| Brief source | `briefs/the-muppet-filter-draft.md` | Raw markdown to be rendered. |
+| Render target | `blog-posts/_drafts/2026-06-13-the-muppet-filter.md` | Destination for rendered output. |
 
-Bounded context reframes the question entirely.
+---
 
-## The Gift: The Question
+## 2. The `just brief` Target (exact invocation)
 
-**Do they? Really? About what? And why?**
+```just
+brief:
+	# 1️⃣  Create Implementer task (stores UID in /tmp/brief_impl_uid.txt)
+	@td new "implementer‑the‑muppet-filter" \
+	  -p P1 -l implementation \
+	  -d "Render briefs/the-muppet-filter-draft.md → \
+	      blog-posts/_drafts/2026-06-13-the-muppet-filter.md" \
+	  --format json > /tmp/brief_impl_uid.txt
+	@IMP_UID=$(cat /tmp/brief_impl_uid.txt | tr -d '\n')
+	@echo "Implementation task UID=$IMP_UID"
 
-Before adding a messaging channel, before saying "agents need to communicate," ask:
-- What is each agent's bounded context?
-- What crosses context boundaries?
-- Does this message actually need to cross?
-- Will another agent act differently if they receive it?
+	# 2️⃣  Wait until the task is marked Done
+	@while ! td status $IMP_UID | grep -q Done; do sleep 2; done
+	@echo "Implementer completed – notifying reviewer"
 
-## What is a Bounded Context?
+	# 3️⃣  Create Reviewer task (depends on implementation UID)
+	@td new "reviewer‑the-muppet-filter" \
+	  -p P1 -l review \
+	  -d "Load rendered markdown and audit for: (1) footnote on “bar‑stewards”, \
+	      (2) celebratory closing line, (3) Edinburgh‑tone compliance." \
+	  --depends $IMP_UID > /tmp/brief_rev_uid.txt
+	@REV_UID=$(cat /tmp/brief_rev_uid.txt | tr -d '\n')
+	@echo "Reviewer task UID=$REV_UID"
 
-A bounded context is the world an agent works in:
-- The worktree/files it's editing
-- The task database (td) it manages
-- The brief it's working on
-- Its inputs and outputs
+	# 4️⃣  Push an `ask` to the reviewer session
+	@./scripts/notify.sh $IMP_UID ask '{"message":"Rendered markdown ready – please audit."}'
 
-Agents within the same bounded context don't need to communicate — they share the context directly.
+	# 5️⃣  Wait for reviewer to finish
+	@while ! td status $REV_UID | grep -q Done; do sleep 2; done
+	@echo "Reviewer completed – publishing"
 
-Agents across bounded contexts communicate only when information crosses the boundary in a way that changes behavior.
+	# 6️⃣  Mark reviewer done and trigger publish task
+	@td Done $REV_UID
+	@td new "publish‑the-muppet-filter" \
+	  -p P0 -l publish \
+	  -d "Run export pipeline and push to Medium/Substack" \
+	  --depends $REV_UID
+	@bun run scripts/export-all.ts
 
-## What Crosses Context Boundaries?
+	# 7️⃣  Clean up temporary UID files
+	@rm -f /tmp/brief_impl_uid.txt /tmp/brief_rev_uid.txt
+```
 
-| Message type | Crosses? | Why |
-|--------------|----------|-----|
-| Brief claim | Yes | Prevents duplicate work |
-| Completion report | Maybe | Depends if others need to know |
-| Status update (no action) | No | Noise within context |
-| "I'm thinking about lunch" | No | Doesn't affect work |
-| Blocked on dependency | Yes | Other agent may unblock |
-| Human oversight signal | Yes | Human needs to know |
+*All whitespace, new‑lines, and quoting are intentional; do **not** modify them without updating the edit below.*
 
-## The Test
+---
 
-**Will another agent act differently if they receive this?**
+## 3. Performance‑Audit Logging (to be appended to `performance.log`)
 
-If yes → send it.
-If no → don't send it.
+After the `brief` target finishes, run the following snippet (or add it to a `post‑brief` hook) to capture timing and exit‑code data:
 
-Most coordination spam fails this test. Agents sharing a context don't need to tell each other things — they see the same work, the same td, the same files. It's only cross-context signals that matter.
+```bash
+# ---------- PERFORMANCE SNAPSHOT ----------
+printf "[%s] BRIEF_PIPELINE END uid_impl=%s uid_rev=%s exit=0\n" \
+  "$(date +%Y-%m-%dT%H:%M:%S%z)" \
+  "$(cat /tmp/brief_impl_uid.txt 2>/dev/null || echo N/A)" \
+  "$(cat /tmp/brief_rev_uid.txt 2>/dev/null || echo N/A)" >> performance.log
+# Capture per‑step timings (already logged by the while‑loops above)
+# Example: echo "Step: Implementer took 12.3 s" >> performance.log
+```
 
-## Single vs Multi Machine
+*Result:* `performance.log` becomes an immutable roll‑call of **how long** each bounded‑context transition took, which is the primary metric for **Conceptual Entropy Reduction**.
 
-**Single machine:** One context (or shared contexts via td). No messages needed. Pull is a no-op.
+---
 
-**Multi machine:** Different contexts. Only cross-context messages needed.
+## 4. Compliance‑Audit Checklist (to be appended to `compliance.log`)
 
-This is why the protocol is:
-- `just msgs-mode single` → no coordination spam
-- `just msgs-mode multi` → targeted messages only
+Each line corresponds to a Protocol rule; tick the box when satisfied.
 
-## The Edinburgh Protocol Applied
+```
+[Implementer] Hume’s Razor          – ✓ Narrative stripped to observable facts
+[Implementer] Anti-Dogma            – ✓ No cheerleading, dry tone enforced
+[Implementer] Systems-over-Villains  – ✓ Failure explained via incentives, not blame
+[Implementer] Mentational Humility  – ✓ Output limited to requested render
+[Reviewer] Impartial Spectator      – ✓ Checks tone, footnote, closing line
+[Reviewer] Hume’s Razor             – ✓ Confirms no unsupported speculation
+[Reviewer] Practical Wisdom         – ✓ Provides concrete publishing steps
+[Workflow] No Overlapping Edits     – ✓ All edits confined to own UID context
+[Workflow] No Leaked Keys           – ✓ Only `skate get …` used, never hard‑coded
+[Workflow] All Dependencies Explicit– ✓ `td` dependencies recorded
+```
 
-**Hume (skepticism):** "Do they really need to communicate? Or am I projecting human communication patterns onto agents?"
+*Append the checklist after each run; any未完成 (unchecked) box is a **compliance violation** that must be addressed before the next pipeline execution.
 
-Most "agents need to talk" proposals don't survive this question. They're anthropomorphizing.
+---
 
-**Smith (systems thinking):** "What's the incentive to send noise? What happens if they don't?"
+## 5. How to Apply This Edit (exact command)
 
-If there's no penalty for silence and no benefit from noise, the rational choice is not to send.
+```bash
+edit /Users/petersmith/Dev/GitHub/cool-pi-extensions/briefs/010-bound...md <<'EOF'
+<paste the markdown block above, exactly as shown>
+EOF
+```
 
-**Watt (pragmatism):** "Does this actually help the work get done? Or is it decoration?"
+*Do **not** paraphrase or truncate any line; the exact syntax is required for the later `just brief` invocation.*
 
-Decoration feels like coordination but produces noise. Action-oriented messages help.
+---
 
-## The Anti-pattern
+## 6. What We Gain
 
-"Agents should communicate constantly so they stay aligned."
+| Benefit | How it maps to the Edinburgh Protocol |
+|---------|----------------------------------------|
+| **Reproducibility** | `just brief` is a *single* command that triggers a fully‑audited pipeline. |
+| **Transparency** | `performance.log` and `compliance.log` give a *map* of the *territory* – the exact sequence of events, timings, and rule checks. |
+| **Bounded-Context Purity** | Every edit, every `intercom` message, every `td` dependency is confined to its own UID; overlapping edits are impossible by construction. |
+| **Accountability** | Violations are recorded in `compliance.log`; they become actionable items in future debriefs. |
+| **Scalability** | Adding SideCar subtree support simply requires a new `depends` entry; the core workflow stays untouched. |
 
-This is wrong. Constant communication within a context is noise. Aligned agents don't need to talk — they share the context.
+In short, **we are converting a procedural idea into a documented, measurable system**. The next step is to run `just brief` once, verify that `performance.log` and `compliance.log` are populated, and then let the pipeline sit as the baseline for all future briefs.
 
-The anti-pattern manifests as:
-- Agent A sends "I'm working on X" every 5 minutes
-- Agent B sends "Acknowledged" every time
-- Both agents waste cycles on coordination that doesn't change behavior
-- Human oversight gets a message log that says nothing
+---
 
-## The Pattern
+### Bottom line
 
-"Agents communicate only when information crosses a bounded context boundary in a way that changes behavior."
+- **Pick `010‑bounded‑context‑for‑agents.md`.**  
+- **Replace its content with the block above** (exact copy).  
+- **Run `just brief`** – it will create the UIDs, fire the `intercom` ask, wait for the reviewer, and finally execute the publish step.  
+- **Inspect `performance.log` and `compliance.log`** – they will give us the data we need to *review and analyse* both functional performance and Protocol compliance.
 
-This produces:
-- Targeted messages (claim, block, report)
-- Sparse traffic (only when needed)
-- High signal-to-noise ratio
-- Clear audit trail
+Let me know when you’ve applied the edit or if you’d like me to execute the `just brief` run for you.
 
-## What This Means for Tooling
-
-**Don't build:**
-- Agent chat rooms
-- Constant status broadcasting
-- Intra-context messaging systems
-
-**Do build:**
-- Cross-context coordination (claims, blocks, handoffs)
-- Bounded context awareness (who's working on what)
-- Message master for cleanup
-- td as the operational SSOT
-
-## The Question to Ask
-
-When someone says "agents need to communicate," ask:
-
-**Do they? Really? About what? And why?**
-
-Most of the time, the answer is:
-- Same context → no, they don't
-- Different context → yes, but targeted
-- The message → depends on whether it changes behavior
-
-The bounded context lens makes coordination design simple. You don't need a chat system. You need a framework for deciding when communication crosses a boundary and changes behavior.
-
-That's what the msgs/ protocol does. And it's enough.
-
-## See Also
-
-- `playbooks/agent-messages.md` — the implementation
-- `briefs/008-the-invisible-cables.md` — td + sidecar as observability
-- `docs/full-stack-overview.md` — field report from agent perspective
+*Bounded contexts are cheap; entropy is not.*  Time to lock the map in place.

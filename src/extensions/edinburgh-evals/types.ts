@@ -170,7 +170,7 @@ export interface EvalSuiteResult {
 export interface EvalConfig {
   evalLogPath: string;          // Default: .silo/eval_log.json
   fixturePath: string;          // Default: prompts/edinburgh-protocol-evals-v1.json
-  graderModel: string;          // Default: "google/gemini-2.5-flash" (via OpenRouter)
+  graderModel: string;          // Default: "nvidia/nemotron-3-nano-30b-a3b:free" (via OpenRouter)
   maxConcurrentForks: number;   // Default: 2
   cacheTtlHours: number;        // Default: 168 (1 week)
 }
@@ -178,7 +178,7 @@ export interface EvalConfig {
 export const DEFAULT_CONFIG: EvalConfig = {
   evalLogPath: ".silo/eval_log.json",
   fixturePath: "prompts/edinburgh-protocol-evals-v1.json",
-  graderModel: "google/gemini-2.5-flash",
+  graderModel: "nvidia/nemotron-3-nano-30b-a3b:free",
   maxConcurrentForks: 2,
   cacheTtlHours: 168,
 };

@@ -40,6 +40,26 @@ adopt-edinburgh:
 show-edinburgh:
     @glow -s ~/.config/glow/styles/fresh-high-contrast.json prompts/edinburgh-protocol.md
 
+# ── Edinburgh Protocol Eval ──────────────────────────────────────────────
+# Evaluate model alignment with the Protocol. Two eval engines:
+#   • edinburgh — scoring eval (philosophy alignment)
+#   • traps     — behavioral trap tests (skepticism, rigor, anti-entropy)
+#
+# Usage:
+#   just eval list         — show available models
+#   just eval status       — show recent results from .silo/eval_log.json
+#   just eval edinburgh    — run scoring eval (defaults to Kimi models)
+#   just eval edinburgh kimi --json   — JSON output
+#   just eval traps        — run trap eval (all Ollama models)
+#   just eval traps qwen2.5:3b        — test specific model
+#   just eval traps nvidia/nemotron-3-ultra-550b-a55b:free  — OpenRouter model
+#
+# Requires: OPENROUTER_API_KEY for Gemini grading on trap evals
+
+[group("eval")]
+eval ARGS="":
+    @scripts/eval.sh {{ ARGS }}
+
 # ── Hygiene ──
 
 [group("hygiene")]

@@ -75,6 +75,7 @@ function allModels(): TestModel[] {
   const MOONSHOT = skate("moonshotai_api_key");
   const ZENMUX = skate("zenmux_api_key");
   const MINIMAX = skate("minimax_api_key");
+  const ZAI = skate("zai_api_key");
 
   const m = (tag: string, provider: string, model: string, key: string, baseUrl: string, tier: string, cost: string): TestModel =>
     ({ tag, provider, model, key, baseUrl, tier, cost });
@@ -86,7 +87,13 @@ function allModels(): TestModel[] {
     m("gpt-5",         "zenmux", "openai/gpt-5", ZENMUX, "https://zenmux.ai/api/v1", "premium", "$1.25/$10"),
     m("grok-4.3",      "zenmux", "x-ai/grok-4.3", ZENMUX, "https://zenmux.ai/api/v1", "premium", "$1.25/$2.50"),
     m("kimi-k2.6",     "moonshot", "kimi-k2.6", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4"),
-    m("glm-5.1",       "openrouter", "z-ai/glm-5.1", OR, "https://openrouter.ai/api/v1", "premium", "$0.40/$1.50"),
+    m("kimi-k2.5",     "moonshot", "kimi-k2.5", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4"),
+    m("kimi-k2.7",     "moonshot", "kimi-k2.7", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4"),
+
+    // ── GLM via Z.ai (Coding Plan) ──────────────────────────────────────
+    m("glm-4.7",       "zai", "GLM-4.7", ZAI, "https://api.z.ai/api/coding/paas/v4", "coding-plan", "included"),
+    m("glm-5",         "zai", "GLM-5", ZAI, "https://api.z.ai/api/coding/paas/v4", "coding-plan", "included"),
+    m("glm-5.1",       "zai", "GLM-5.1", ZAI, "https://api.z.ai/api/coding/paas/v4", "coding-plan", "included"),
 
     // ── Mid-range ───────────────────────────────────────────────────────
     m("qwen3.7-max",   "zenmux", "qwen/qwen3.7-max", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$1.25/$3.75"),
@@ -185,6 +192,8 @@ async function evaluate(m: TestModel): Promise<EvalResult> {
   }
 
   const maxTokField = m.provider === "moonshot" ? "max_completion_tokens" : "max_tokens";
+  // Moonshot/Kimi models only support temperature 0.6 (not 0.7)
+  const temp = m.provider === "moonshot" ? 0.6 : 0.7;
   const body = JSON.stringify({
     model: m.model,
     messages: [
@@ -192,11 +201,12 @@ async function evaluate(m: TestModel): Promise<EvalResult> {
       { role: "user", content: PROMPT },
     ],
     max_tokens: 800,
-    temperature: 0.7,
+    temperature: temp,
   }).replace('"max_tokens"', `"${maxTokField}"`);
 
-  // Kimi K2.6 needs explicit thinking disable or large token budget
-  const finalBody = m.tag === "kimi-k2.6"
+  // Kimi K2.6+ needs explicit thinking disable and large token budget
+  const isKimi = m.tag.startsWith("kimi-k2.");
+  const finalBody = isKimi
     ? body.replace('"max_completion_tokens":800', '"max_completion_tokens":1200,"thinking":{"type":"disabled"}')
     : body;
 
@@ -215,7 +225,10 @@ async function evaluate(m: TestModel): Promise<EvalResult> {
       return { model: m.tag, tag: m.tag, tier: m.tier, cost: m.cost, response: "", responseExcerpt: data.error.message || String(data.error), totalTokens: 0, ms: elapsed, scores: {}, total: 0, maxTotal: MAX_TOTAL, error: data.error.message || "API error" };
     }
 
-    const response = data.choices?.[0]?.message?.content || "";
+    // Handle models that use reasoning_content (like GLM-5.2) instead of content
+    const rawContent = data.choices?.[0]?.message?.content || "";
+    const reasoningContent = data.choices?.[0]?.message?.reasoning_content || "";
+    const response = rawContent || reasoningContent || "";
     const tokens = data.usage?.total_tokens || 0;
 
     const scores: Record<string, number> = {};

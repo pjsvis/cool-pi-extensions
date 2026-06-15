@@ -2,8 +2,8 @@
 .flox/cache/
 .flox/run/
 
-# Runtime data
-.silo/
+# Runtime data (moved to data/ folder - tracked, visible)
+# .silo/ deleted - data is now in data/ directory
 
 # Node
 cli/pi-models/node_modules/
