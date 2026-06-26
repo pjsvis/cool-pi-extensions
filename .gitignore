@@ -22,3 +22,7 @@ cli/pi-check/node_modules/
 # Skate setup scripts (contain secrets)
 skate-omarchy-setup.sh
 skate-*-setup.sh
+
+# Tool-generated indexes (not source — rebuilt locally)
+.codegraph/
+.understand-anything/
