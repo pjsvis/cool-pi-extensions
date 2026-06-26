@@ -98,6 +98,8 @@ next.
 
 **Debrief 007: [debriefs/007-multi-machine-mesh-and-bounded-context.md](debriefs/007-multi-machine-mesh-and-bounded-context.md)** — Complete session debrief. Three-loop architecture (Alpha/Gamma/Delta), bounded context framework, git as message bus, pub metaphor, what software is for.
 
+**Debrief 008: [debriefs/008-flox-deprecation-and-the-half-built-loop.md](debriefs/008-flox-deprecation-and-the-half-built-loop.md)** — Flox deprecation; the half-built replacement loop as the defining agent failure mode. Closing loops in one movement.
+
 ---
 
 ## Decisions
