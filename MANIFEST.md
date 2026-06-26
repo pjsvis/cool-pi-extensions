@@ -32,6 +32,8 @@ Structured reference material.
 
 **[docs/what-software-is-for.md](docs/what-software-is-for.md)** — Blog post from agent's POV: what software is for the human-agent duo. Text is the interface. CSS is irrelevant. The pub metaphor (forced).
 
+**[docs/barnacle-reports/001-2026-06-21.md](docs/barnacle-reports/001-2026-06-21.md)** — Initial barnacle audit: model squadron pruned, config cleaned, next review scheduled Q3 2026.
+
 ---
 
 ## Playbooks
@@ -95,6 +97,22 @@ next.
 Recorded architectural decisions with context, rationale, and consequences.
 **Decision 002: [decisions/002-ansi-color-numbers.md](decisions/002-ansi-color-numbers.md)** — ANSI color numbers over hex for Glamour theme matching.
 **Decision 004: [decisions/004-glow-cmdp-mode-command.md](decisions/004-glow-cmdp-mode-command.md)** — Glow toggle is a mode command, not an Explorer follower.
+**Decision 005: [decisions/005-model-squadron-pruning.md](decisions/005-model-squadron-pruning.md)** — Model squadron audit: dropped MiniMax M3, added GLM-5.2, K2.7-code, Qwen 3.x.
+**Decision 006: [decisions/006-minimal-viable-agent-stack.md](decisions/006-minimal-viable-agent-stack.md)** — MVAS principle: constraint stack over feature accumulation.
+**Decision 007: [decisions/007-barnacle-review-process.md](decisions/007-barnacle-review-process.md)** — Quarterly process to prevent agent config accretion.
+
+---
+
+## Models
+
+Edinburgh Protocol-evaluated models for the agent squadron.
+**[models/RECOMMENDED.md](models/RECOMMENDED.md)** — Quick reference: top performers, watch list, drop list, and decision rationale.
+**[models/models.json](models/models.json)** — Full model inventory with Edinburgh scores, IQ scores, pricing, and provider access.
+
+**Squadron Status:**
+- ⭐ Primary: Kimi K2.6 (18/19), GLM-5.2 (8/8 IQ)
+- ✅ Recommended: GLM-5 (16/19), Qwen 3.7 Max (16/19), DeepSeek V4 Pro (14/19)
+- ❌ Dropped: MiniMax M3 (7/19 — poor Edinburgh alignment)
 
 ---
 
@@ -102,6 +120,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 
 Reusable prompt templates and agent identity frameworks.
 **[prompts/edinburgh-protocol-evals-v1.json](prompts/edinburgh-protocol-evals-v1.json)** — Behavioral trap vectors — sycophancy, blind coding, dependency bloat, ungrounded justification.
+**[prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md)** — The Edinburgh Protocol: Scottish Enlightenment principles for agent behavior normalization.
 
 ---
 

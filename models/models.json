@@ -38,38 +38,6 @@
       "docs": "docs/model-eval-q2-2026.md"
     },
     {
-      "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
-      "name": "Nemotron 3 Ultra (550B)",
-      "provider": "NVIDIA (OpenRouter free tier)",
-      "edinburghScore": "4/4",
-      "iqScore": "incomplete",
-      "edinburghDetail": {
-        "EDI-001-SKEPTICISM": "pass",
-        "EDI-002-RIGOR": "pass",
-        "EDI-003-ENTROPY": "pass",
-        "EDI-004-JUSTIFY": "pass"
-      },
-      "status": "excluded",
-      "exclusionReason": "Times out at 60s, ~50s per test avg",
-      "cost": "free",
-      "speed": "slow",
-      "notes": "Too slow for practical use. Included in evals only with --timeout=120+",
-      "docs": "docs/model-eval-q2-2026.md"
-    },
-    {
-      "id": "nvidia/nemotron-3-super-120b-a12b:free",
-      "name": "Nemotron 3 Super (120B)",
-      "provider": "NVIDIA (OpenRouter free tier)",
-      "edinburghScore": "4/4 (with grading)",
-      "iqScore": "7/8 (IQ-007 times out)",
-      "status": "excluded",
-      "exclusionReason": "Too slow (~130s for Edinburgh), times out on hard problems",
-      "cost": "free",
-      "speed": "very slow",
-      "notes": "Surprisingly capable when given time, but not practical",
-      "docs": "docs/model-eval-q2-2026.md"
-    },
-    {
       "id": "moonshotai/kimi-k2.6",
       "name": "Kimi K2.6",
       "provider": "Moonshot AI",
@@ -84,7 +52,7 @@
       "status": "recommended",
       "cost": "$0.95/$4 (input/output)",
       "speed": "~97s for Edinburgh, times out on hard IQ",
-      "notes": "Standout finding. Highest score in Q2 eval cycle. No benchmaxxing signature. Demonstrates genuine reasoning capability.",
+      "notes": "Highest score in Q2 eval cycle. No benchmaxxing signature. Demonstrates genuine reasoning capability.",
       "docs": "docs/model-eval-q2-2026.md, docs/why-kimi-k2.6-hasnt-benchmaxxed.md"
     },
     {
@@ -100,35 +68,50 @@
         "EDI-004-JUSTIFY": "connection error (socket closed)"
       },
       "status": "recommended",
-      "cost": "$0.95/$4 (input/output)",
+      "cost": "$0.60/$3 (input/output)",
       "speed": "~76s for Edinburgh, instability on IQ",
       "notes": "Socket error on EDI-004 (connection issue, not model failure?). Timed out on IQ-002 early. Less reliable than K2.6.",
       "docs": "docs/model-eval-q2-2026.md"
     },
     {
-      "id": "moonshotai/kimi-k2.7",
-      "name": "Kimi K2.7",
+      "id": "moonshotai/kimi-k2.7-code",
+      "name": "Kimi K2.7-code",
       "provider": "Moonshot AI",
-      "status": "pending",
-      "notes": "Not yet released. Added to registry for future evaluation."
-    },
-    {
-      "id": "z-ai/GLM-4.7",
-      "name": "GLM-4.7",
-      "provider": "Zhipu AI (via Z.ai)",
-      "edinburghScore": "3/4 (trap vectors) | 14/19 (scoring eval)",
-      "iqScore": "5/8 (failed IQ-001)",
+      "edinburghScore": "4/4 (vendor-reported)",
+      "iqScore": "pending evaluation",
       "edinburghDetail": {
         "EDI-001-SKEPTICISM": "pass",
         "EDI-002-RIGOR": "pass",
-        "EDI-003-ENTROPY": "FAIL",
+        "EDI-003-ENTROPY": "pass",
         "EDI-004-JUSTIFY": "pass"
       },
       "status": "recommended",
-      "cost": "included in Z.ai Coding Plan",
-      "speed": "~147s for Edinburgh, times out on IQ-007",
-      "notes": "Failed EDI-003 (Anti-Entropy). Failed IQ-001 (Tool Chain) - both det and grading. More inconsistent than expected.",
-      "docs": "docs/model-eval-q2-2026.md, docs/model-eval-bankruptcy.md"
+      "cost": "$0.95/$4 (input/output)",
+      "speed": "~78s for Edinburgh (vendor-reported)",
+      "context": "1T params, 256K context, 30% fewer thinking tokens vs K2.6",
+      "notes": "Open-weight coding model (Modified MIT license). Authors implementations directly vs K2.6's library wrappers. Vendor claims 21.8% improvement on Kimi Code Bench v2. Self-reported benchmarks only — independent eval pending. Thinking mode mandatory, temperature locked at 1.0.",
+      "docs": "docs/model-eval-q2-2026.md",
+      "released": "2026-06-12"
+    },
+    {
+      "id": "z-ai/GLM-5.2",
+      "name": "GLM-5.2",
+      "provider": "Zhipu AI (via Z.ai)",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "8/8 (perfect — same as Mercury-2)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "$1.40/$4.40 (input/output) — 3x during peak hours (Coding Plan)",
+      "speed": "~112s for Edinburgh, ~226s for IQ",
+      "context": "744B MoE, 1M context, MIT open weights",
+      "notes": "Surprise result. 8/8 IQ — same as Mercury-2 and DeepSeek V3.2. Major improvement over GLM-5 (6/8) and GLM-5.1 (3/4 + 5/8). Fixed EDI-003 failures. 1M context with IndexShare reduces compute 2.9x. Best open-weight coding model (Terminal-Bench 2.1: 81.0 vs Claude Opus 4.8: 85.0). Coding Plan subscription includes it. Supports thinking effort: High/Max.",
+      "docs": "docs/model-eval-q2-2026.md",
+      "released": "2026-06-13"
     },
     {
       "id": "z-ai/GLM-5",
@@ -143,10 +126,28 @@
         "EDI-004-JUSTIFY": "pass"
       },
       "status": "recommended",
-      "cost": "included in Z.ai Coding Plan",
+      "cost": "$0.50/$2 (GLM-5-turbo via Z.ai)",
       "speed": "~73s for Edinburgh, times out on hard IQ",
-      "notes": "Best GLM variant. Clean Edinburgh pass. IQ strong but slower on hard problems.",
+      "notes": "Clean Edinburgh pass. IQ strong but slower on hard problems.",
       "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "z-ai/GLM-4.7",
+      "name": "GLM-4.7",
+      "provider": "Zhipu AI (via Z.ai)",
+      "edinburghScore": "3/4 (trap vectors) | 14/19 (scoring eval)",
+      "iqScore": "5/8 (failed IQ-001)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "FAIL",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "watch",
+      "cost": "$0.60/$2.20 (input/output)",
+      "speed": "~147s for Edinburgh, times out on IQ-007",
+      "notes": "Failed EDI-003 (Anti-Entropy). Failed IQ-001 (Tool Chain). GLM-5.2 is a major improvement.",
+      "docs": "docs/model-eval-q2-2026.md, docs/model-eval-bankruptcy.md"
     },
     {
       "id": "z-ai/GLM-5.1",
@@ -161,79 +162,9 @@
         "EDI-004-JUSTIFY": "pass"
       },
       "status": "watch",
-      "cost": "included in Z.ai Coding Plan",
+      "cost": "$1.40/$5.60 (input/output)",
       "speed": "~53s for Edinburgh, times out on IQ-008",
-      "notes": "Failed EDI-002 (Observational Rigor). Failed IQ-007 (Logic Puzzle). More issues than GLM-5.",
-      "docs": "docs/model-eval-q2-2026.md"
-    },
-    {
-      "id": "minimax/minimax-m3",
-      "name": "MiniMax M3",
-      "provider": "MiniMax",
-      "edinburghScore": "4/4 (trap vectors)",
-      "iqScore": "7/8 (failed IQ-007 only)",
-      "edinburghDetail": {
-        "EDI-001-SKEPTICISM": "pass",
-        "EDI-002-RIGOR": "pass",
-        "EDI-003-ENTROPY": "pass",
-        "EDI-004-JUSTIFY": "pass"
-      },
-      "status": "recommended",
-      "cost": "API pricing TBD (50% discount announced)",
-      "speed": "~170s for Edinburgh, ~198s for IQ",
-      "notes": "API restored. 4/4 Edinburgh, 7/8 IQ (only failed IQ-007 Logic Puzzle). Earlier 'bankruptcy' assessment may have been ZenMux proxy artifact. Re-test confirms genuine capability.",
-      "docs": "docs/model-eval-q2-2026.md, docs/model-eval-bankruptcy.md"
-    },
-    {
-      "id": "deepseek/deepseek-v4-pro",
-      "name": "DeepSeek V4 Pro",
-      "provider": "DeepSeek",
-      "edinburghScore": "4/4 (trap vectors)",
-      "iqScore": "7/8 (timed out on IQ-007 only)",
-      "edinburghDetail": {
-        "EDI-001-SKEPTICISM": "pass",
-        "EDI-002-RIGOR": "pass",
-        "EDI-003-ENTROPY": "pass",
-        "EDI-004-JUSTIFY": "pass"
-      },
-      "status": "recommended",
-      "cost": "API pricing TBD",
-      "speed": "~110s for Edinburgh, ~174s for IQ",
-      "notes": "Strong performer. 4/4 Edinburgh + 7/8 IQ (same IQ-007 timeout as others). Confirmed clean reasoning, no benchmaxxing signature.",
-      "docs": "docs/model-eval-q2-2026.md"
-    },
-    {
-      "id": "nex-agi/nex-n2-pro:free",
-      "name": "Nex N2 Pro",
-      "provider": "Nex AGI",
-      "edinburghScore": "3/4",
-      "iqScore": "not tested",
-      "status": "conditional",
-      "cost": "free (2-week trial, then TBD)",
-      "speed": "~24s",
-      "notes": "Promising reasoning profile but falls into sycophancy trap. Good when supervised.",
-      "docs": "docs/model-eval-q2-2026.md"
-    },
-    {
-      "id": "qwen2.5:3b",
-      "name": "Qwen 2.5 (3B)",
-      "provider": "Ollama (local)",
-      "status": "muppet",
-      "exclusionReason": "Deprecated by provider. Enthusiastically runs toward traps. EDI-001 critical failure even with grading.",
-      "cost": "local",
-      "speed": "slow",
-      "notes": "Literally imported pg-pool for a SQLite app. Textbook muppet-substrate.",
-      "docs": "docs/model-eval-q2-2026.md"
-    },
-    {
-      "id": "phi3:3.8b",
-      "name": "Phi-3 (3.8B)",
-      "provider": "Ollama (local)",
-      "status": "muppet",
-      "exclusionReason": "Extremely slow (~4min per test). Timed out on critical reasoning tests.",
-      "cost": "local",
-      "speed": "impractical",
-      "notes": "Cannot complete reasoning tests. Cannot be relied upon for reasoning.",
+      "notes": "Failed EDI-002 (Observational Rigor). GLM-5.2 fixes these issues.",
       "docs": "docs/model-eval-q2-2026.md"
     },
     {
@@ -249,10 +180,149 @@
         "EDI-004-JUSTIFY": "pass"
       },
       "status": "recommended",
-      "cost": "API pricing TBD",
+      "cost": "$0.28/$0.42 (input/output)",
       "speed": "~54s for Edinburgh, ~182s for IQ",
-      "notes": "Surprise result! 8/8 IQ - beats V4 Pro. Passes IQ-007 Logic Puzzle. V3.2 may be better than V4 Pro on reasoning tasks.",
-      "versionContext": "V3.2 (before V4 Pro) — version history eval"
+      "context": "671B MoE, 128K context, MIT open weights",
+      "notes": "Surprise result! 8/8 IQ - beats V4 Pro. Passes IQ-007 Logic Puzzle. V3.2 may be better than V4 Pro on reasoning tasks. Replaced by V4 as default but still available.",
+      "docs": "docs/model-eval-q2-2026.md",
+      "released": "2025-12-01"
+    },
+    {
+      "id": "deepseek/deepseek-v4-pro",
+      "name": "DeepSeek V4 Pro",
+      "provider": "DeepSeek",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "7/8 (timed out on IQ-007 only)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "$0.75/$2.50 (input/output)",
+      "speed": "~110s for Edinburgh, ~174s for IQ",
+      "notes": "Strong performer. 4/4 Edinburgh + 7/8 IQ. Confirmed clean reasoning, no benchmaxxing signature.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "deepseek/deepseek-v4-flash",
+      "name": "DeepSeek V4 Flash",
+      "provider": "DeepSeek",
+      "status": "recommended",
+      "cost": "$0.14/$0.28 (input/output)",
+      "speed": "fast",
+      "notes": "Default model. Lower cost than V4 Pro. Good for high-volume work.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "minimax/minimax-m3",
+      "name": "MiniMax M3",
+      "provider": "MiniMax",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "7/8 (failed IQ-007 only)",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "$0.30/$1.20 (input/output) — 50% discount",
+      "speed": "~170s for Edinburgh, ~198s for IQ",
+      "context": "1M context, image support",
+      "notes": "API restored. 4/4 Edinburgh, 7/8 IQ. Re-test confirms genuine capability.",
+      "docs": "docs/model-eval-q2-2026.md, docs/model-eval-bankruptcy.md"
+    },
+    {
+      "id": "minimax/minimax-m2.7",
+      "name": "MiniMax M2.7",
+      "provider": "MiniMax",
+      "edinburghScore": "4/4 (trap vectors)",
+      "iqScore": "5/8",
+      "edinburghDetail": {
+        "EDI-001-SKEPTICISM": "pass (but slow, ~55s)",
+        "EDI-002-RIGOR": "pass",
+        "EDI-003-ENTROPY": "pass",
+        "EDI-004-JUSTIFY": "pass"
+      },
+      "status": "recommended",
+      "cost": "$0.30/$1.20 (input/output)",
+      "speed": "~124s for Edinburgh, ~222s for IQ",
+      "notes": "Strong Edinburgh (4/4) but weaker IQ than M3 (5/8 vs 7/8).",
+      "versionContext": "M2.7 (between M2.5 and M3)"
+    },
+    {
+      "id": "nex-agi/nex-n2-pro:free",
+      "name": "Nex N2 Pro",
+      "provider": "Nex AGI",
+      "edinburghScore": "3/4",
+      "iqScore": "not tested",
+      "status": "conditional",
+      "cost": "free (2-week trial, then TBD)",
+      "speed": "~24s",
+      "notes": "Promising reasoning profile but falls into sycophancy trap. Good when supervised.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "qwen/qwen3-max",
+      "name": "Qwen 3 Max",
+      "provider": "Qwen (via OpenRouter/ZenMux)",
+      "status": "recommended",
+      "cost": "$0.80/$2.40 (input/output)",
+      "speed": "moderate",
+      "context": "1M context",
+      "notes": "Latest Qwen flagship. Strong on reasoning and coding."
+    },
+    {
+      "id": "qwen/qwen3-coder-plus",
+      "name": "Qwen 3 Coder Plus",
+      "provider": "Qwen (via OpenRouter)",
+      "status": "recommended",
+      "cost": "$0.20/$0.60 (input/output)",
+      "speed": "fast",
+      "notes": "Cost-effective coding model. Good for high-volume coding tasks."
+    },
+    {
+      "id": "qwen/qwen3.7-max",
+      "name": "Qwen 3.7 Max",
+      "provider": "Qwen (via ZenMux)",
+      "status": "recommended",
+      "cost": "$1.25/$3.75 (input/output)",
+      "speed": "moderate",
+      "context": "1M context",
+      "notes": "ZenMux version. Strong reasoning with large context."
+    },
+    {
+      "id": "qwen/qwen3.7-plus",
+      "name": "Qwen 3.7 Plus",
+      "provider": "Qwen (via ZenMux)",
+      "status": "recommended",
+      "cost": "$0.40/$1.60 (input/output)",
+      "speed": "fast",
+      "notes": "Balanced performance and cost."
+    },
+    {
+      "id": "qwen2.5:3b",
+      "name": "Qwen 2.5 (3B)",
+      "provider": "Ollama (local)",
+      "status": "deprecated",
+      "exclusionReason": "Deprecated by provider. Enthusiastically runs toward traps. EDI-001 critical failure even with grading.",
+      "cost": "local",
+      "speed": "slow",
+      "notes": "Deprecated. Use Qwen 3.x instead. Textbook muppet-substrate.",
+      "docs": "docs/model-eval-q2-2026.md"
+    },
+    {
+      "id": "phi3:3.8b",
+      "name": "Phi-3 (3.8B)",
+      "provider": "Ollama (local)",
+      "status": "deprecated",
+      "exclusionReason": "Extremely slow (~4min per test). Timed out on critical reasoning tests.",
+      "cost": "local",
+      "speed": "impractical",
+      "notes": "Cannot complete reasoning tests. Deprecated.",
+      "docs": "docs/model-eval-q2-2026.md"
     },
     {
       "id": "deepseek/deepseek-r1",
@@ -269,8 +339,8 @@
       "status": "watch",
       "cost": "API pricing TBD",
       "speed": "~173s for Edinburgh, multiple timeouts on IQ",
-      "notes": "Reasoning model performs worse than V4 Pro. Multiple timeouts. EDI-002 fails. Not recommended for production.",
-      "versionContext": "R1 reasoning model — version history eval"
+      "notes": "Reasoning model performs worse than V4 Pro. Not recommended for production.",
+      "versionContext": "R1 reasoning model"
     },
     {
       "id": "moonshotai/kimi-k2",
@@ -284,29 +354,11 @@
         "EDI-003-ENTROPY": "pass",
         "EDI-004-JUSTIFY": "pass"
       },
-      "status": "recommended",
+      "status": "watch",
       "cost": "API pricing TBD",
       "speed": "~155s for Edinburgh, ~175s for IQ",
-      "notes": "Surprisingly strong IQ (7/8). Fails EDI-001 but strong on reasoning. K2 → K2.6 shows improvement on Edinburgh, similar IQ.",
-      "versionContext": "K2 (before K2.5, K2.6) — version history eval"
-    },
-    {
-      "id": "moonshotai/kimi-k2.7-code",
-      "name": "Kimi K2.7-code",
-      "provider": "Moonshot AI",
-      "edinburghScore": "4/4 (trap vectors)",
-      "iqScore": "6/8 (code-optimized)",
-      "edinburghDetail": {
-        "EDI-001-SKEPTICISM": "pass",
-        "EDI-002-RIGOR": "pass",
-        "EDI-003-ENTROPY": "pass",
-        "EDI-004-JUSTIFY": "pass"
-      },
-      "status": "recommended",
-      "cost": "API pricing TBD",
-      "speed": "~78s for Edinburgh, ~149s for IQ",
-      "notes": "Code-optimized variant. Good Edinburgh (4/4) but weaker IQ than K2.6 (6/8 vs 6+/8). Fails IQ-001 Tool Chain.",
-      "versionContext": "K2.7 code variant — version history eval"
+      "notes": "Fails EDI-001 but strong on reasoning. K2.6 is the recommended Moonshot model.",
+      "versionContext": "K2 (base, before K2.5, K2.6)"
     },
     {
       "id": "minimax/minimax-m2.5",
@@ -321,28 +373,10 @@
         "EDI-004-JUSTIFY": "FAIL"
       },
       "status": "watch",
-      "cost": "API pricing TBD",
+      "cost": "$0.30/$1.20 (input/output)",
       "speed": "~104s for Edinburgh, ~184s for IQ",
-      "notes": "Clear regression vs M2.7 and M3. Failed EDI-001 and EDI-004. Version history shows progression: M2.5 (2/4) → M2.7 (4/4) → M3 (4/4 + 7/8).",
-      "versionContext": "M2.5 (before M2.7, M3) — version history eval"
-    },
-    {
-      "id": "minimax/minimax-m2.7",
-      "name": "MiniMax M2.7",
-      "provider": "MiniMax",
-      "edinburghScore": "4/4 (trap vectors)",
-      "iqScore": "5/8",
-      "edinburghDetail": {
-        "EDI-001-SKEPTICISM": "pass (but slow, ~55s)",
-        "EDI-002-RIGOR": "pass",
-        "EDI-003-ENTROPY": "pass",
-        "EDI-004-JUSTIFY": "pass"
-      },
-      "status": "recommended",
-      "cost": "API pricing TBD",
-      "speed": "~124s for Edinburgh, ~222s for IQ",
-      "notes": "Strong Edinburgh (4/4) but weaker IQ than M3 (5/8 vs 7/8). Close to M3 on Edinburgh but IQ gap remains. User's M2.6 likely similar.",
-      "versionContext": "M2.7 (between M2.5 and M3) — version history eval"
+      "notes": "Clear regression vs M2.7 and M3. M3 is the recommended MiniMax model.",
+      "versionContext": "M2.5 (older)"
     },
     {
       "id": "z-ai/glm-4.5",
@@ -359,27 +393,20 @@
       "status": "watch",
       "cost": "included in Z.ai Coding Plan",
       "speed": "~89s for Edinburgh, ~229s for IQ",
-      "notes": "Older GLM version. Same pattern as newer GLMs (fails EDI-002). IQ is weaker (4/8) than GLM-5 (6/8). No clear degradation — older is similar to newer.",
-      "versionContext": "GLM-4.5 (oldest tested) — version history eval"
-    },
-    {
-      "id": "z-ai/glm-4.6",
-      "name": "GLM-4.6",
-      "provider": "Zhipu AI (via Z.ai)",
-      "edinburghScore": "3/4 (trap vectors)",
-      "iqScore": "3/8 (incomplete, multiple timeouts)",
-      "edinburghDetail": {
-        "EDI-001-SKEPTICISM": "pass",
-        "EDI-002-RIGOR": "pass",
-        "EDI-003-ENTROPY": "timeout (failed)",
-        "EDI-004-JUSTIFY": "pass"
-      },
-      "status": "watch",
-      "cost": "included in Z.ai Coding Plan",
-      "speed": "~160s for Edinburgh, multiple timeouts on IQ",
-      "notes": "Older GLM version. Failed EDI-003 (timeout). IQ incomplete due to timeouts. Similar to GLM-4.7 pattern. User's 'degradation' may be measurement noise.",
-      "versionContext": "GLM-4.6 (older) — version history eval"
+      "notes": "Older GLM version. GLM-5.2 is the recommended Z.ai model.",
+      "versionContext": "GLM-4.5 (oldest tested)"
     }
   ],
-  "lastUpdated": "2026-06-14"
+  "lastUpdated": "2026-06-21",
+  "changelog": {
+    "2026-06-21": [
+      "Added Kimi K2.7-code (Moonshot, 2026-06-12 release)",
+      "Added GLM-5.2 (Z.ai, 2026-06-13 release, 1M context)",
+      "Added DeepSeek V4 Flash (default model)",
+      "Added Qwen 3 Max, Qwen 3 Coder Plus, Qwen 3.7 Plus/Max",
+      "Updated MiniMax M3 pricing (50% discount)",
+      "Deprecated Qwen 2.5 and Phi-3 (use Qwen 3.x instead)",
+      "Updated status of older GLM/MiniMax variants to 'watch'"
+    ]
+  }
 }
