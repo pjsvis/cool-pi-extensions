@@ -71,3 +71,7 @@ eval ARGS="":
 [group("hygiene")]
 check:
     @bun run scripts/check-manifest.ts
+
+[group("hygiene")]
+popper:
+    @bun run scripts/semantic-integrity.ts

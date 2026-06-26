@@ -93,6 +93,38 @@ No enforced structure. Length varies. Add as you go.
 
 ---
 
+### The Palimpsest Problem — old/new coexistence
+
+**What happened:** Every barnacle found in the td-96f35f session was a new
+direction that landed next to the old one with no delineation — a deprecated
+tool whose replacement was a phantom command, a renamed file whose old name
+the index still linked, a `just` recipe documented across six files but never
+defined. The docs merged old and new into a single incoherent asset, and work
+proceeded on a conflated thing. A *palimpsest* is a manuscript where the old
+writing was scraped off to make room for new writing but bleeds through,
+corrupting the reading. That is the mechanism.
+
+**Why it matters:** This is the mechanism behind "context rot," not the
+symptom. Redundant documentation exposes *some* of these inconsistencies, and
+investigating those *sometimes* reveals deeper deviations — running a
+Popper-Party on that very assertion exposed a phantom enforcement script
+referenced in a playbook but never built. "Sufficiently" is the wrong word:
+redundancy catches the surface, not the depth. The avoidance is structural —
+record direction changes in `decisions/` before landing them, and remove the
+old canonical references in the same atomic commit that establishes the new
+(decision 009).
+
+**What to do:** When a doc references something that doesn't exist,
+investigate but don't obsess — most hits are surface, a few are the tip of a
+palimpsest. Run `just popper` (`scripts/semantic-integrity.ts`) as the
+detector: it surfaces candidate phantom `just` recipes (warnings) and broken
+script references (failures). Hold a Popper-Party — a deliberate refutation
+session against the repo's own meta-assertions — when a claim collides with
+the records, not on a fixed schedule. Triggered parties beat scheduled ones;
+scheduled parties risk becoming the ceremony they were meant to prevent.
+
+---
+
 ## When to add to this playbook
 
 Add an insight when:
