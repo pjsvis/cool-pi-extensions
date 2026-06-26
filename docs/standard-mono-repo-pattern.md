@@ -8,6 +8,26 @@
 
 The **Standard Mono-Repo Pattern** is a directory-level organisational convention for repositories that contain multiple artifacts — code, documentation, configuration, and process records — under a single version control root. Its organising principle: **every top-level directory is a silo.**
 
+### The canonical four process folders
+
+Every repo running the Edinburgh Protocol carries these four folders. They
+are the organisational vocabulary — the process machinery that makes the
+loops and barnacle protocol operate. Everything else is a content silo
+that varies by repo; these four are structural:
+
+| Folder | Loop role | Purpose |
+|--------|-----------|---------|
+| `briefs/` | Alpha | What to build — imposed and induced requirements |
+| `decisions/` | Alpha | Why we chose X — the **delineation mechanism** for direction changes |
+| `debriefs/` | Delta | What we learned — post-project reflections |
+| `playbooks/` | Meta | How to use each silo — instructions for producing data |
+
+The process loop is `briefs → decisions → debriefs`, with `playbooks`
+providing the meta-instructions for all of them. A repo without all four
+is running a fragment of the system, not the system. Drop `decisions/` and
+there is nowhere to record a direction change — which is precisely how
+old/new coexistence (decision 009) takes hold.
+
 ## The silo
 
 A silo is a top-level directory with four properties:
@@ -30,16 +50,15 @@ cool-pi-extensions/
 │   ├── extensions/         ← pi extensions
 │   └── cli/                ← CLI tools
 │
-├── briefs/                 ← project specifications
-├── decisions/              ← architectural decision records
-├── debriefs/               ← post-project reflections
-├── playbooks/              ← how-to instructions for each silo
-├── writing/                ← long-form essays
+├── briefs/                 ← project specifications        ┐
+├── decisions/              ← architectural decision records  │ the canonical four
+├── debriefs/               ← post-project reflections        │ (see above)
+├── playbooks/              ← how-to instructions for each silo┘
 │
 ├── docs/                   ← human-readable translations of machine artifacts
 ├── prompts/                ← runtime data (fixtures, system prompts)
-├── canon/                  ← published HTML references
-├── config/                 ← generated registry snapshots
+├── data/                   ← runtime logs and generated data
+├── blog/                   ← long-form essays for publication
 │
 ├── README.md
 └── DEPENDENCIES.md

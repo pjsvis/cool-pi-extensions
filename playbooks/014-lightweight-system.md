@@ -18,8 +18,8 @@
 | # | Action | Command / File | Description |
 |---|--------|----------------|-------------|
 | 1 | **Clone the repo** | `git clone <repo‑url> && cd <repo>` | Work in a clean checkout. |
-| 2 | **Create required folders** | `mkdir -p briefs debriefs docs/barnacle-reports playbooks` | Align with the folder layout used by the source repo. |
-| 3 | **Copy core artefacts** | `cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/briefs/* briefs/`<br>`cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/debriefs/* debriefs/`<br>`cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/docs/barnacle-reports/* docs/barnacle-reports/`<br>`cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/playbooks/* playbooks/` | Bring over the template docs, briefs, debriefs, and existing playbooks. |
+| 2 | **Create required folders** | `mkdir -p briefs decisions debriefs docs/barnacle-reports playbooks` | The canonical four (`briefs decisions debriefs playbooks`) plus `docs/barnacle-reports` for the barnacle protocol. See `docs/standard-mono-repo-pattern.md`. |
+| 3 | **Copy core artefacts** | `cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/briefs/* briefs/`<br>`cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/decisions/* decisions/`<br>`cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/debriefs/* debriefs/`<br>`cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/docs/barnacle-reports/* docs/barnacle-reports/`<br>`cp -r /Users/petersmith/Dev/GitHub/cool-pi-extensions/playbooks/* playbooks/` | Bring over the template briefs, decisions, debriefs, and playbooks. |
 | 4 | **Add the Edinburgh Protocol prompt** | `ln -sf /Users/petersmith/Dev/GitHub/cool-pi-extensions/prompts/edinburgh-protocol.md AGENTS.md` | Guarantees the constraint stack is loaded for every session. |
 | 5 | **Install the `just` check** | `just install-deps && just check` | Verifies that the CI‑compatible `just check` script is present and passes. |
 | 6 | **Configure CI for semantic integrity** | Add the following step to your CI workflow (example for GitHub Actions):

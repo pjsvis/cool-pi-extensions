@@ -111,6 +111,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 **Decision 006: [decisions/006-minimal-viable-agent-stack.md](decisions/006-minimal-viable-agent-stack.md)** — MVAS principle: constraint stack over feature accumulation.
 **Decision 007: [decisions/007-barnacle-review-process.md](decisions/007-barnacle-review-process.md)** — Quarterly process to prevent agent config accretion.
 **Decision 008: [decisions/008-deprecate-flox.md](decisions/008-deprecate-flox.md)** — Deprecate Flox; DEPENDENCIES.md + `just install-deps` is the dependency surface.
+**Decision 009: [decisions/009-direction-change-delineation.md](decisions/009-direction-change-delineation.md)** — No old/new coexistence on direction changes; canonical four process folders (briefs/decisions/debriefs/playbooks).
 
 ---
 
