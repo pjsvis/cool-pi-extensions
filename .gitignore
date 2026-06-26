@@ -1,6 +1,5 @@
-# Flox runtime (manifest is committed, cache/run is not)
-.flox/cache/
-.flox/run/
+# Flox — deprecated (see decisions/008-deprecate-flox.md). Ignore all artifacts.
+.flox/
 
 # Runtime data (moved to data/ folder - tracked, visible)
 # .silo/ deleted - data is now in data/ directory

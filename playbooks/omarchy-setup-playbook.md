@@ -236,7 +236,7 @@ brew install glow  # if you have brew on Linux
 cd ~/cool-pi-extensions
 
 # Check what's installed
-just provision
+just install-deps
 
 # Install what's missing
 just dev  # or individual just tasks

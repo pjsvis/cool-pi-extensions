@@ -22,7 +22,7 @@ Omarchy was set up from scratch. We need to verify:
 ### 1. Provision check
 ```bash
 cd ~/cool-pi-extensions
-just provision
+just install-deps
 ```
 Verify all required tools are found.
 
@@ -63,7 +63,7 @@ git push
 
 ## Success criteria
 
-- `just provision` shows all required tools
+- `just install-deps` shows all required tools
 - `just dev` completes without errors
 - `pi --list-models` shows models
 - Skate secrets accessible via `source ~/.skate_env`

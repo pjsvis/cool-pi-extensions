@@ -32,7 +32,7 @@ Start here:
 ```bash
 just orient    # agent orientation
 just browse    # human doc browser
-just install-stack  # pull the full dev stack onto a fresh machine
+just install-deps  # check dev dependencies are present
 ```
 
 ---
@@ -233,7 +233,7 @@ See [pi's extension docs](https://github.com/earendil-works/pi-mono/blob/main/do
 
 ## Dependencies
 
-[Flox](https://flox.dev) provides `bun` for the CLI tools. Extensions run inside pi's runtime and don't need Flox.
+External dependencies are documented in [DEPENDENCIES.md](DEPENDENCIES.md). Run `just install-deps` to check what's installed. Extensions run inside pi's runtime and need nothing extra.
 
 **CLI tools:** [Bun](https://bun.sh) (runtime), [skate](https://github.com/charmbracelet/skate) (API key resolution).
 

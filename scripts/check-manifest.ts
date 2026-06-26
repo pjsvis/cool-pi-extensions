@@ -101,11 +101,6 @@ function checkLinks(): string[] {
 function checkPathDrift(): string[] {
   const checks: Array<[string, RegExp, string]> = [
     [
-      ".flox/env/manifest.toml",
-      /\$PWD\/cli\//,
-      "Flox hook still points at old cli/ path; use src/cli/ after repo reorg.",
-    ],
-    [
       "playbooks/terminal-stack.md",
       /src\/cli\/[^\n]*\bnpm install\b/,
       "CLI install playbook uses npm install; this project standard is bun install.",

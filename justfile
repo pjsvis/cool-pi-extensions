@@ -30,6 +30,12 @@ read FILE="":
 help:
     @glow -s ~/.config/glow/styles/fresh-high-contrast.json MANIFEST.md 2>/dev/null || cat MANIFEST.md
 
+# ── Setup ──
+
+[group("setup")]
+install-deps:
+    @scripts/install-deps.sh
+
 # ── Constraints ──
 
 [group("agent")]

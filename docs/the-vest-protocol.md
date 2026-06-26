@@ -79,7 +79,7 @@ But it's also a proof-of-concept for the VEST Protocol. Every design decision is
 
 **Agent-agnostic.** The VEST Protocol works with any agent, any context. `just orient` just outputs information. Whether a human reads it or an LLM parses it, the information is the same.
 
-**Idempotent.** `just provision` checks what's installed. Run it once, run it ten times — same result. No side effects, no state mutation.
+**Idempotent.** `just install-deps` checks what's installed. Run it once, run it ten times — same result. No side effects, no state mutation.
 
 **Restartable.** `td handoff` captures session state. An agent can stop mid-sprint, and the next agent resumes exactly where the previous one stopped. No debrief to read, no context to reconstruct.
 

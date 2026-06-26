@@ -18,7 +18,7 @@ echo "=== Agent tasks (td) ==="
 td current 2>/dev/null || echo "  (td not available)"
 echo ""
 echo "=== Provisioning ==="
-scripts/provision.sh 2>/dev/null | grep -E "^[ ✓✗]" || true
+scripts/install-deps.sh 2>/dev/null | grep -E "^[ ✓✗·]" || true
 echo ""
 echo "=== Entry points ==="
 echo "  just about   — what this project is"

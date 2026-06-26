@@ -108,6 +108,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 **Decision 005: [decisions/005-model-squadron-pruning.md](decisions/005-model-squadron-pruning.md)** — Model squadron audit: dropped MiniMax M3, added GLM-5.2, K2.7-code, Qwen 3.x.
 **Decision 006: [decisions/006-minimal-viable-agent-stack.md](decisions/006-minimal-viable-agent-stack.md)** — MVAS principle: constraint stack over feature accumulation.
 **Decision 007: [decisions/007-barnacle-review-process.md](decisions/007-barnacle-review-process.md)** — Quarterly process to prevent agent config accretion.
+**Decision 008: [decisions/008-deprecate-flox.md](decisions/008-deprecate-flox.md)** — Deprecate Flox; DEPENDENCIES.md + `just install-deps` is the dependency surface.
 
 ---
 
