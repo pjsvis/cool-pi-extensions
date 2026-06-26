@@ -24,6 +24,9 @@ Structured reference material.
 **[docs/model-eval-bankruptcy.md](docs/model-eval-bankruptcy.md)** — Reaction piece: the benchmaxxing problem, Star Wars prequel analogy, intellectual texture hollowing. MiniMax and GLM indicted.
 **[docs/provider-registry.md](docs/provider-registry.md)** — Provider connectivity and model registration reference.
 **[docs/the-information-arbitrage-stack.md](docs/the-information-arbitrage-stack.md)** — Essay on information asymmetry and tooling choices.
+**[docs/the-muppet-filter.md](docs/the-muppet-filter.md)** — How we built a behavioral eval system to identify models that actually work.
+**[docs/why-kimi-k2.6-hasnt-benchmaxxed.md](docs/why-kimi-k2.6-hasnt-benchmaxxed.md)** — A meditation on model quality, benchmark gaming, and the difference between performance and competence.
+**[docs/the-agent-is-a-benchmaxxer-of-prompts.md](docs/the-agent-is-a-benchmaxxer-of-prompts.md)** — Working draft: the Palimpsest Problem as recursive benchmaxxing — the agent optimizes the prompt, not the system. Open threads for continuation.
 **[docs/the-kahneman-shift.md](docs/the-kahneman-shift.md)** — Essay on System 1/System 2 thinking applied to AI agents.
 
 **[docs/full-stack-overview.md](docs/full-stack-overview.md)** — Field report: the complete stack, from an agent's perspective. VEST Protocol, invisible cables, shared agent-human platform, fractal pattern, SSH-native workflow.
