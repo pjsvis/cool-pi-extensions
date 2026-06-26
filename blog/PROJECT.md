@@ -154,10 +154,15 @@ Both posts share this arc but emphasize different parts:
 
 ## Publishing Checklist
 
-- [ ] Review and revise `why-kimi-k2.6-hasnt-benchmaxxed.md` (Post 2 draft)
-- [ ] Draft `the-muppet-filter.md` (Post 1)
-- [ ] Verify all cross-links work
-- [ ] Check tone consistency across both posts
-- [ ] Add canonical link to `model-eval-q2-2026.md`
-- [ ] Ensure `scripts/eval.sh` works as demo (just eval status)
-- [ ] Add any missing eval results to `.silo/eval_log.json`
+- [x] Review and revise `why-kimi-k2.6-hasnt-benchmaxxed.md` (Post 2 draft)
+- [x] Draft `the-muppet-filter.md` (Post 1)
+- [x] Verify all cross-links work
+- [x] Check tone consistency across both posts
+- [x] Add canonical link to `model-eval-q2-2026.md`
+- [x] Ensure `scripts/eval.sh` works as demo (`just eval status`)
+- [ ] Add any missing eval results to `data/eval_log.json` (data/eval_log.json has 327 entries across 23 models; no gaps identified — deferred)
+
+### Session notes (ses_e01e3a)
+- The eval demo was broken: `scripts/eval.sh` read `.silo/eval_log.json` (deleted) against an obsolete schema. Fixed in this session — `just eval status` now reads `data/eval_log.json` and renders a grouped per-model summary.
+- Broader `.silo/` → `data/` reference cleanup across ~15 files filed as td-7846e0.
+- Posts reviewed against the planned arcs above; tone consistent (Edinburgh voice throughout, bar-stewards/Pollock metaphors land differently per post per the shared arc).
