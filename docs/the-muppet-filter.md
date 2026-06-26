@@ -149,7 +149,7 @@ just eval traps qwen2.5:3b
 OPENROUTER_API_KEY=$KEY just eval traps nvidia/nemotron-3-ultra-550b-a55b:free
 ```
 
-Results are cached in `.silo/eval_log.json` for 168 hours. The eval costs less than a single bad session.
+Results are cached in `data/eval_log.json` for 168 hours. The eval costs less than a single bad session.
 
 ---
 

@@ -6,7 +6,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-LOG_PATH="$REPO_ROOT/.silo/eval_log.json"
+LOG_PATH="$REPO_ROOT/data/eval_log.json"
 
 # ── Color codes ─────────────────────────────────────────────────────────────
 CYAN='\033[0;36m'
@@ -27,7 +27,7 @@ usage() {
   echo "                         Defaults to kimi,kimi-k2.6"
   echo "  traps [model]         Run behavioral trap eval"
   echo "                         Defaults to all Ollama models"
-  echo "  status                Show recent eval results from .silo/"
+  echo "  status                Show recent eval results from data/"
   echo "  list                  Show models available in each eval system"
   echo "  help                  Show this help"
   echo ""
@@ -76,7 +76,7 @@ cmd_status() {
   echo ""
   
   if [[ ! -f "$LOG_PATH" ]]; then
-    echo -e "${YELLOW}No eval results found (no .silo/eval_log.json)${RESET}"
+    echo -e "${YELLOW}No eval results found (no data/eval_log.json)${RESET}"
     echo "Run: just eval edinburgh  or  just eval traps"
     return
   fi
@@ -87,25 +87,27 @@ cmd_status() {
   # Quick summary using grep and simple parsing
   if command -v jq &>/dev/null; then
     # Get unique model/test counts
-    local total_entries=$(wc -l < "$LOG_PATH")
-    local unique_models=$(jq -r '.modelId' "$LOG_PATH" 2>/dev/null | sort -u | wc -l)
-    local passed_count=$(jq -r 'select(.passed==true)' "$LOG_PATH" 2>/dev/null | wc -l)
+    local total_entries=$(jq -s 'length' "$LOG_PATH" 2>/dev/null)
+    local unique_models=$(jq -r '.modelId' "$LOG_PATH" 2>/dev/null | sort -u | wc -l | tr -d ' ')
+    local passed_count=$(jq -r 'select(.passed==true)' "$LOG_PATH" 2>/dev/null | wc -l | tr -d ' ')
     
     echo -e "  ${DIM}Total entries: $total_entries | Models: $unique_models | Passed: $passed_count${RESET}"
     echo ""
     
-    # Show latest per model using jq
-    jq -r '[(.modelId // .model) as $m | {model: $m, passed: .passed, ts: .timestamp}] | 
-           group_by(.model) | 
-           map({model: .[0].model, passed: ([.[].passed] | map(if . then 1 else 0 end) | add), total: length, ts: (.[-1].ts)}) | 
-           sort_by(.ts) | reverse | .[:10][] | "\(.model)\t\(.passed)/\(.total)\t\(.ts)"' "$LOG_PATH" 2>/dev/null | while IFS=$'\t' read -r model score ts; do
+    # Show latest per model using jq. Data is JSONL; schema: modelId, testName, passed, timestamp (epoch-ms).
+    jq -s -r '[.[] | {model: .modelId, passed: .passed, ts: .timestamp}] |
+           group_by(.model) |
+           map({model: .[0].model, passed: ([.[].passed] | map(if . then 1 else 0 end) | add), total: length, ts: (map(.ts) | max)}) |
+           sort_by(.ts) | reverse | .[:15][] | "\(.model)\t\(.passed)/\(.total)\t\(.ts)"' "$LOG_PATH" 2>/dev/null | while IFS=$'\t' read -r model score ts; do
       if [[ -n "$model" && "$model" != "null" ]]; then
-        if [[ "$ts" -gt 0 ]]; then
+        # timestamp is epoch-millis; convert to date+minute
+        if [[ "$ts" =~ ^[0-9]+$ ]]; then
           date=$(date -r "$((ts/1000))" "+%Y-%m-%d %H:%M" 2>/dev/null || echo "$ts")
         else
-          date="unknown"
+          date="${ts:0:16}"
+          [[ -z "$date" ]] && date="unknown"
         fi
-        printf "  %-24s %s  %s\n" "$model" "$score" "$date"
+        printf "  %-30s %-6s %s\n" "$model" "$score" "$date"
       fi
     done
   else
