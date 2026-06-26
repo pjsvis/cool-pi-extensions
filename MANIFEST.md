@@ -32,6 +32,14 @@ Structured reference material.
 
 **[docs/what-software-is-for.md](docs/what-software-is-for.md)** — Blog post from agent's POV: what software is for the human-agent duo. Text is the interface. CSS is irrelevant. The pub metaphor (forced).
 
+**[docs/forgetting-seth-myers.md](docs/forgetting-seth-myers.md)** — Essay: the lost token, the gap, and the aaargggh of incomplete retrieval.
+
+**[docs/l-inception-de-competence.md](docs/l-inception-de-competence.md)** — Essay: the gap between knowledge and understanding, and the agent's role in bridging it.
+
+**[docs/on-literary-adaptation.md](docs/on-literary-adaptation.md)** — Essay: why some books can't be filmed, and the ones that almost got away with it.
+
+**[docs/sdtt-bot-brief.md](docs/sdtt-bot-brief.md)** — Brief: a text-adventure bot as Dungeon Master for somatic/bodywork education.
+
 **[docs/barnacle-reports/001-2026-06-21.md](docs/barnacle-reports/001-2026-06-21.md)** — Initial barnacle audit: model squadron pruned, config cleaned, next review scheduled Q3 2026.
 
 ---
