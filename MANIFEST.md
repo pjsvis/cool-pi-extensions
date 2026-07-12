@@ -118,6 +118,16 @@ Recorded architectural decisions with context, rationale, and consequences.
 **Decision 008: [decisions/008-deprecate-flox.md](decisions/008-deprecate-flox.md)** — Deprecate Flox; DEPENDENCIES.md + `just install-deps` is the dependency surface.
 **Decision 009: [decisions/009-direction-change-delineation.md](decisions/009-direction-change-delineation.md)** — No old/new coexistence on direction changes; canonical four process folders (briefs/decisions/debriefs/playbooks).
 
+**Decision 010: [decisions/010-decouple-translator-validation-from-api-access.md](decisions/010-decouple-translator-validation-from-api-access.md)** — LaTeX→WL translator runs in parallel with API-access validation; WL is portable interchange; free WA-web oracle upper bounds the translatable engine layer.
+
+**Decision 011: [decisions/011-lookup-first-verification-registry.md](decisions/011-lookup-first-verification-registry.md)** — The verification registry is the authoritative spec; the translator is bootstrap/fallback; hash-based drift detection makes manuscript edits loud.
+
+**Decision 012: [decisions/012-diagram-strategy.md](decisions/012-diagram-strategy.md)** — Diagram coda strategy.
+
+**Decision 013: [decisions/013-silo-exception-pi-config.md](decisions/013-silo-exception-pi-config.md)** — Single, scoped exception to SILO for this repo: agent may edit `~/.pi/agent/{models,settings}.json` for Pi config; auth.json + skate secrets remain off-limits.
+
+**Decision 014: [decisions/014-phase-0-mathematica-validation.md](decisions/014-phase-0-mathematica-validation.md)** — Phase 0 outcomes for `pi-mathematica-verify`: Cloud API obtainable (free tier sufficient); current app downloadable; v10.0 mandatory upgrade to Mathematica 13.x or 14.x paired with xAct 1.2.0.
+
 ---
 
 ## Models
