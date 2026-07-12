@@ -1,0 +1,14 @@
+{
+  "name": "pi-mathematica-verify",
+  "private": true,
+  "version": "0.1.0-phase1",
+  "type": "module",
+  "scripts": {
+    "test:translator": "bun run translate-test.ts",
+    "test:registry": "bun run resolve-test.ts",
+    "test": "bun run translate-test.ts && bun run resolve-test.ts"
+  },
+  "_phase1Status": "translator + registry + tests only. Runtime extension (index.ts, verify_equation tool) is Phase 3 (td-003ad8).",
+  "_phase1Open": "translator gaps: trig, \to limits, M(q) function-call parens (documented in translator.ts header)"
+}
+

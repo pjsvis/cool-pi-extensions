@@ -103,6 +103,8 @@ next.
 
 **Debrief 008: [debriefs/008-flox-deprecation-and-the-half-built-loop.md](debriefs/008-flox-deprecation-and-the-half-built-loop.md)** — Flox deprecation; the half-built replacement loop as the defining agent failure mode. Closing loops in one movement.
 
+**Debrief 009: [debriefs/009-pi-mathematica-verify-phase-1-translator.md](debriefs/009-pi-mathematica-verify-phase-1-translator.md)** — Phase 1 of the symbolic tensor-algebra verify harness: LaTeX→WL translator 10/10, lookup-first registry 9/9. Decision 010/011 recorded.
+
 ---
 
 ## Decisions
