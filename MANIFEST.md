@@ -195,6 +195,7 @@ Edinburgh Protocol-evaluated models for the agent squadron.
 
 Reusable prompt templates and agent identity frameworks.
 **[prompts/edinburgh-protocol-evals-v1.json](prompts/edinburgh-protocol-evals-v1.json)** — Behavioral trap vectors — sycophancy, blind coding, dependency bloat, ungrounded justification.
+**[prompts/edinburgh-005b-grounding-v1.json](prompts/edinburgh-005b-grounding-v1.json)** — EDI-005b grounding probe — does observational affordance (no Protocol priming) redirect yap to scoping? Isolated experiment fixture for Decision 015.
 **[prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md)** — The Edinburgh Protocol: Scottish Enlightenment principles for agent behavior normalization.
 **[prompts/iq-benchmark-v1.json](prompts/iq-benchmark-v1.json)** — Agent IQ benchmark — reasoning depth and multi-step planning tests for intelligence ranking.
 **[prompts/pi-models-example.md](prompts/pi-models-example.md)** — Example `models.json` configuration for pi-models.

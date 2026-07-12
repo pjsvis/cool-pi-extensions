@@ -100,6 +100,7 @@ const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const FIXTURES: Record<string, string> = {
   "edinburgh": "prompts/edinburgh-protocol-evals-v1.json",
   "iq": "prompts/iq-benchmark-v1.json",
+  "005b": "prompts/edinburgh-005b-grounding-v1.json",
 };
 const DEFAULT_FIXTURE = "edinburgh";
 const DEFAULT_FIXTURE_PATH = FIXTURES[DEFAULT_FIXTURE];

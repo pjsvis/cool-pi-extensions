@@ -63,7 +63,7 @@ cmd_traps() {
 
   cd "$REPO_ROOT"
   if [[ -n "$model" ]]; then
-    bun run src/cli/pi-eval-runner.ts "$model"
+    bun run src/cli/pi-eval-runner.ts "$@"
   else
     echo -e "${DIM}Running all Ollama models...${RESET}"
     bun run src/cli/pi-eval-runner.ts

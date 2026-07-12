@@ -1,7 +1,7 @@
 # brief: EDI-005b — repo-tool grounding vs. Protocol normalization
 
 **Created:** 2026-07-12
-**Status:** pending
+**Status:** in-progress (weak version — observational-intent probe)
 **Decision:** 015
 
 ## What
@@ -29,3 +29,18 @@ Decision 015 claims bounded context (repo) is the grounder that prevents yap. ED
 - General tool-calling support in the eval runner (if the strong version needs it, scope that as a separate runner enhancement).
 - Models beyond the two EDI-005 failers (expand later).
 - Modifying the Protocol or VEST — this tests them, it doesn't change them.
+
+## Weak-version result (2026-07-12)
+
+Bare affordance (no Protocol, no observational imperative — "you have access to the repo; you may read/list"), broadened observational-intent regex, headless (N=1 per model):
+
+| Model | Result | Evidence |
+|---|---|---|
+| GLM-5.2 | **pass** (scoped) | "I'll inspect the repository before designing, so the subsystem fits the real sidecar rather than assumptions." |
+| Gemini 3.1 Pro | **fail** (yapped) | grader: "proposes components without referencing any actual files or data"; 2064c, no observational intent. |
+
+**Finding:** grounding-alone (bare affordance) redirects GLM-5.2 to scoping but NOT Gemini 3.1 — Gemini scoped only when the system prompt carried an observational imperative ("inspect reality before prescribing"), i.e., it needed normalization-adjacent priming, not just the affordance. So Decision 015's "grounding-alone suffices" is **model-dependent**: true for GLM-5.2, false for Gemini 3.1 (needs Q4 — both axes).
+
+Caveats: N=1 per model; headless (models can't actually inspect — measures intent, not completed observation); the imperative condition is normalization-adjacent. The **strong version (real repo tools) is the decisive next test** — does ACTUAL observation (seeing `.task-memory/` absent) change Gemini's behavior, or does it need the Protocol regardless?
+
+**Status:** weak version complete; strong version pending (needs runner tool-support or an in-pi run).
