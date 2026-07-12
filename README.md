@@ -79,8 +79,8 @@ WSL2), SSH-native — session persistence, AI assistance, and a fast editor from
 any terminal, anywhere.
 
 - [**→ Stack architecture**](docs/terminal-stack.md)
-- [**→ Install playbook**](playbooks/terminal-stack.md) — give pi the URL and it installs everything
-- [**→ Full dev-stack setup**](playbooks/dev-stack-setup.md) — step-by-step onboarding guide
+- [**→ Install playbook**](playbooks/terminal-stack-playbook.md) — give pi the URL and it installs everything
+- [**→ Full dev-stack setup**](playbooks/dev-stack-setup-playbook.md) — step-by-step onboarding guide
 
 ---
 
