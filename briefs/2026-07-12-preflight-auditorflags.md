@@ -3,7 +3,8 @@
 type: brief
 id: architectural-preflight-auditor-flags
 upstream: briefs/architectural-token-compaction-hook
-status: approved
+status: parked
+note: Parked 2026-07-12. Drafted by Gemini 3.1 (unaudited). Entropy inflation + duplicates just-check/git/td as a "4-bit agent." Kernel retained for salvage: a deterministic pre-flight script (no LLM) emitting a compact verdict before main-thread tokens are spent.
 ---
 
 # Brief: System-2 Pre-Flight Audit & Flag Vector Compression

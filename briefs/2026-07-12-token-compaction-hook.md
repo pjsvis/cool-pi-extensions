@@ -17,7 +17,8 @@ Here is the finalized specification for the **Scoped Token Compaction & Multi-Ag
 type: brief
 id: architectural-token-compaction-hook
 upstream: briefs/stylistic-algorithmic-dentistry
-status: approved
+status: parked
+note: Parked 2026-07-12. Drafted by Gemini 3.1 (unaudited). Fabricated upstream (briefs/stylistic-algorithmic-dentistry does not exist); .td-memory/ branch-isolation presupposes a branch-per-task workflow this repo does not run. Kernel retained for salvage: handoff compaction → rejected-hypotheses feed for reviewers; locus tags proven useful in prior use.
 ---
 
 # Brief: Scoped Token Compaction & Multi-Agent Memory Architectures
@@ -161,7 +162,8 @@ It keeps the entire pipeline focused entirely on inputs, outputs, and state trac
 type: brief
 id: technical-waypoint-injection-hooks
 upstream: briefs/architectural-token-compaction-hook
-status: approved
+status: parked
+note: Parked 2026-07-12 with parent. Locus-tag schema ([LOC:]/[WAYPOINT:]) retained as validated prior art; the .td-memory/ storage target is not — salvage re-anchors tags to the handoff-compaction slice.
 ---
 
 # Appendix: Spatial Waypoint & Location Tag Injection Schema
