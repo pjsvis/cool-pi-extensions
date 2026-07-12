@@ -127,6 +127,7 @@ work starts.
 **[briefs/2026-07-09-brief-upgrade-verify-gate.md](briefs/2026-07-09-brief-upgrade-verify-gate.md)** — `upgrade-verify` — the friction gate.
 **[briefs/2026-07-12-preflight-auditorflags.md](briefs/2026-07-12-preflight-auditorflags.md)** — System-2 pre-flight audit + flag-vector compression for the Orient phase.
 **[briefs/2026-07-12-token-compaction-hook.md](briefs/2026-07-12-token-compaction-hook.md)** — Token-compaction hook — branch isolation + squash-merge to keep `main` low-entropy.
+**[briefs/2026-07-12-brief-edi-005b-grounding-test.md](briefs/2026-07-12-brief-edi-005b-grounding-test.md)** — EDI-005b: test whether repo-tool grounding alone (no Protocol priming) stops yap — falsifies/quantifies Decision 015.
 
 ---
 
@@ -173,6 +174,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 **Decision 013: [decisions/013-silo-exception-pi-config.md](decisions/013-silo-exception-pi-config.md)** — Single, scoped exception to SILO for this repo: agent may edit `~/.pi/agent/{models,settings}.json` for Pi config; auth.json + skate secrets remain off-limits.
 
 **Decision 014: [decisions/014-phase-0-mathematica-validation.md](decisions/014-phase-0-mathematica-validation.md)** — Phase 0 outcomes for `pi-mathematica-verify`: Cloud API obtainable (free tier sufficient); current app downloadable; v10.0 mandatory upgrade to Mathematica **13.x or 14.x with xAct 1.2.0** (1.3.0 has documented 14.3+ collision; 1.2.0 is the safe pairing).
+**Decision 015: [decisions/015-bounded-context-entry.md](decisions/015-bounded-context-entry.md)** — Bounded-context entry as default: never start a model unconstrained — repo context (VEST/`just orient`) for repo work, a frozen brief for non-repo work. Protocol normalizes the substrate (manner); the bound grounds it (matter). EDI-005 proved Protocol-alone still yaps.
 
 ---
 
