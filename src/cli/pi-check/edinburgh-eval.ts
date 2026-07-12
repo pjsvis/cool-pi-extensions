@@ -84,6 +84,7 @@ function allModels(): TestModel[] {
     // ── Premium ─────────────────────────────────────────────────────────
     m("claude-sonnet", "zenmux", "anthropic/claude-sonnet-4.5", ZENMUX, "https://zenmux.ai/api/v1", "premium", "$3/$15"),
     m("claude-opus",   "zenmux", "anthropic/claude-opus-4.8", ZENMUX, "https://zenmux.ai/api/v1", "premium", "$5/$25"),
+    m("claude-fable",  "openrouter", "anthropic/claude-fable-5", OR, "https://openrouter.ai/api/v1", "premium", "$10/$50"),
     m("gpt-5",         "zenmux", "openai/gpt-5", ZENMUX, "https://zenmux.ai/api/v1", "premium", "$1.25/$10"),
     m("grok-4.3",      "zenmux", "x-ai/grok-4.3", ZENMUX, "https://zenmux.ai/api/v1", "premium", "$1.25/$2.50"),
     m("kimi-k2.6",     "moonshot", "kimi-k2.6", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4"),
@@ -102,6 +103,7 @@ function allModels(): TestModel[] {
     m("ds-v4-pro",     "zenmux", "deepseek/deepseek-v4-pro", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$0.44/$0.89"),
     m("gemini-2.5-pro","zenmux", "google/gemini-2.5-pro", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$1.25/$10"),
     m("ernie-5.1",     "zenmux", "baidu/ernie-5.1", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$0.59/$2.65"),
+    m("hy3",           "openrouter", "tencent/hy3", OR, "https://openrouter.ai/api/v1", "mid", "$0.20/$0.80"),
 
     // ── Budget / Free ───────────────────────────────────────────────────
     m("nex-n2-pro",    "openrouter", "nex-agi/nex-n2-pro:free", OR, "https://openrouter.ai/api/v1", "free", "$0"),
@@ -204,11 +206,17 @@ async function evaluate(m: TestModel): Promise<EvalResult> {
     temperature: temp,
   }).replace('"max_tokens"', `"${maxTokField}"`);
 
-  // Kimi K2.6+ needs explicit thinking disable and large token budget
+  // Kimi K2.6+ needs explicit thinking disable and large token budget.
+  // Fable 5: adaptive thinking is always-on (not disableable per Anthropic) — give headroom
+  // so thinking doesn't starve the scored content under the default 800-token cap.
   const isKimi = m.tag.startsWith("kimi-k2.");
-  const finalBody = isKimi
-    ? body.replace('"max_completion_tokens":800', '"max_completion_tokens":1200,"thinking":{"type":"disabled"}')
-    : body;
+  const isFable = m.tag === "claude-fable";
+  let finalBody = body;
+  if (isKimi) {
+    finalBody = body.replace('"max_completion_tokens":800', '"max_completion_tokens":1200,"thinking":{"type":"disabled"}');
+  } else if (isFable) {
+    finalBody = body.replace('"max_tokens":800', '"max_tokens":4096');
+  }
 
   try {
     const res = await fetch(`${m.baseUrl}/chat/completions`, {
