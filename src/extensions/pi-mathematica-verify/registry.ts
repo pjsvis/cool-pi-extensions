@@ -34,7 +34,12 @@ export interface Equation {
 const REGISTRY_PATH = new URL("./equations.jsonl", import.meta.url);
 
 export function normalizeLatex(s: string): string {
-  return s.replace(/^\${1,2}/, "").replace(/\${1,2}$/, "").replace(/\s+/g, " ").trim();
+  return s
+    .replace(/^\${1,2}/, "")
+    .replace(/\${1,2}$/, "")
+    .replace(/\\,/g, " ")      // thin space — same normalization as the translator
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 export function hashLatex(s: string): string {
@@ -49,10 +54,27 @@ interface RawEntry {
 
 export function loadRegistry(path: string = REGISTRY_PATH.pathname): Equation[] {
   const text = readFileSync(path, "utf-8");
-  return text.split("\n").filter((l) => l.trim()).map((l) => {
-    const r = JSON.parse(l) as RawEntry;
-    return { ...r, nth: r.nth ?? 0, latexHash: hashLatex(r.latex) };
+  const lines = text.split("\n");
+  const entries: Equation[] = [];
+  const seenKeys = new Map<string, string>(); // (file,line,nth) -> id; collisions are loud
+  lines.forEach((rawLine, idx) => {
+    const trimmed = rawLine.trim();
+    if (!trimmed) return;
+    let r: RawEntry;
+    try {
+      r = JSON.parse(trimmed) as RawEntry;
+    } catch (e) {
+      throw new Error(`${path} line ${idx + 1}: invalid JSON: ${(e as Error).message}`);
+    }
+    const e: Equation = { ...r, nth: r.nth ?? 0, latexHash: hashLatex(r.latex) };
+    const key = `${e.file}#${e.line}#${e.nth}`;
+    if (seenKeys.has(key)) {
+      throw new Error(`${path}: duplicate registry key ${key} (${seenKeys.get(key)} vs ${e.id})`);
+    }
+    seenKeys.set(key, e.id);
+    entries.push(e);
   });
+  return entries;
 }
 
 export interface ResolveResult {

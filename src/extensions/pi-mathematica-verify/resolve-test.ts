@@ -26,7 +26,7 @@ for (const nth of [0, 1, 2]) {
 }
 console.log();
 
-console.log("--- 3. Drift simulation: author edits tensor-algebra#1 (x^i -> y^i), same loc ---");
+console.log("--- 3. Drift simulation: author edits tensor-algebra#1 (ε -> ψ in C_{ijkl}ε_{kl}), same locator ---");
 const e1 = reg.find((e) => e.id === "tensor-algebra#1")!;
 const drifted = "\\sigma_{ij} = C_{ijkl}\\,\\varepsilon_{kl}"; // unchanged — control
 const driftedBad = "\\sigma_{ij} = C_{ijkl}\\,\\psi_{kl}"; // eps -> psi: drift

@@ -2,7 +2,7 @@
 
 **Date:** 2026-07-12
 **Status:** Accepted (research findings) — *user verification gate remains open*
-**Review:** 2026-09-21 (quarterly barnacle review)
+**Review:** 2026-10-12 (quarterly barnacle review — 90 days from decision date)
 **TD:** td-77403f
 
 ---
@@ -28,11 +28,11 @@ Each of the three questions was researched against current Wolfram documentation
 Multiple confirmed paths:
 
 - **Wolfram Cloud Basic** — *free*. 5,000 Cloud Credits/month, 200 MB cloud storage, temporary deployments (60-day expiry on each cloud object). Restricted to **non-organizational use** (personal study, hobby, your own book). Source: <https://support.wolfram.com/53990>.
-- **Cloud Credits purchase** — credits don't expire *as long as you maintain an eligible subscription*. 50,000 credits = $15 (≈ 13.3 hours of Instant API use at 100 ms billing). Source: <https://www.wolfram.com/cloud-credits/>.
+- **Cloud Credits purchase** — credits don't expire *as long as you maintain an eligible subscription*. Pricing tiers per <https://www.wolfram.com/cloud-credits/>: 50,000 = $15, 100,000 = $25, 1,000,000 = $180. *Caveat:* the per-call unit is "1 credit per 100 ms of computation", so the credit cost of a verification depends on the assertion's compute time — budget empirically, do not extrapolate from this table.
 - **Wolfram|One Personal** — paid desktop + cloud combo ($/year, exact price obscured by marketing scrape but in the literature; requires Personal-Edition eligibility — hobbyist/non-professional).
-- **`APIFunction` + `PermissionsKey`** — both documented and supported; minimum Wolfram Language 10.0. Permissions-key auth was *introduced in 2016 (11.0)*, so a v10.0 desktop could in principle `CloudDeploy[…]Permissions -> PermissionsKey["k"] -> "Execute"` against a current cloud *without* upgrading — if the user already has a current desktop Wolfram account. Source: ref.wolfram.com/language/ref/PermissionsKey.html, ref.wolfram.com/language/workflow/DeployAnAPIThatUsesAPermissionsKey.html.
+- **`APIFunction` + `PermissionsKey`** — both documented and supported. *Important:* `PermissionsKey` is a Wolfram Language 11.0+ symbol (introduced 2016). A v10.0 desktop cannot parse `CloudDeploy[…, Permissions -> PermissionsKey["k"]…]` and cannot be the deployment host. Q1 is still "yes, obtainable" — the user upgrades the desktop (per Q3) and uses the modern symbol. Source: ref.wolfram.com/language/ref/PermissionsKey.html, ref.wolfram.com/language/workflow/DeployAnAPIThatUsesAPermissionsKey.html.
 
-**Outcome for Q1:** yes, obtainable. Free tier is sufficient for an MVP of Phase 2; sustained use justifies a $15-$180 credit purchase, or a Wolfram|One Personal subscription. **The harness value (one verification per curated assertion) is well within 5K credits/month** for a 60-equation book sweep.
+**Outcome for Q1:** yes, obtainable. Free tier (5K credits/month) is sufficient for an MVP of Phase 2; sustained use justifies credit purchase or a Wolfram|One Personal subscription. **The harness value (one verification per curated assertion) is well within 5K credits/month** for a 60-equation book sweep (≈ 300 verifications for a 60-equation × 5-assertion sweep).
 
 ### Q2 — Current Mathematica desktop app: downloadable ✅
 
@@ -60,9 +60,9 @@ The decisive points:
 
 | Target | Cost | xAct pairing | Notes |
 |--------|------|--------------|-------|
-| **Mathematica 14.x + xAct 1.2.0** | Personal subscription $/$year | Pair-reported stable | Best risk-adjusted choice. Modern enough for wolframscript and the current Cloud tooling. Old enough to avoid the 14.3+ xAct collision. |
-| **Mathematica 13.x + xAct 1.2.0** | Same | Stable | Older but bulletproof. Fine if the user wants zero xAct risk. |
-| **Mathematica 15.x + xAct 1.3.0** | Same | Workaround required | Bleeding edge. The `Unprotect` shim is documented but ugly. Reserve for users who need the very latest Language features. |
+| **Mathematica 14.x + xAct 1.2.0** | Personal subscription $/$year | Stable | Best risk-adjusted choice. Modern enough for wolframscript and the current Cloud tooling. The 14.3+ collision is xAct-1.3.0-specific (a `Commutator`/`Anticommutator` symbol-collision when 1.3.0 is loaded on 14.3+); sticking with **xAct 1.2.0** sidesteps it on any 14.x. |
+| **Mathematica 13.x + xAct 1.2.0** | Same | Stable | Conservative. Fine if the user wants zero xAct risk. |
+| **Mathematica 15.x + xAct 1.3.0** | Same | Workaround required | Bleeding edge. The `Unprotect[Commutator, Anticommutator]; ClearAll[…]; Remove[…]` shim is documented but ugly. Reserve for users who need the very latest Language features. |
 | **Stay on v10.0** | $0 | n/a (no xAct pairing mission) | **REJECTED** — no `wolframscript`, no script-as-API pattern, Phase 5 dead-ends. |
 
 ## Recommendation matrix
@@ -74,8 +74,8 @@ The decisive points:
 | 3. v10.0 → upgrade | **mandatory** | Upgrade to **Mathematica 14.x** OR **13.x**; pair with **xAct 1.2.0** (not 1.3.0) | user |
 | 4. APIFunction + PermissionsKey | documented in current docs | Phase 2 build can use `CloudDeploy[APIFunction[…], Permissions -> PermissionsKey["k"] -> "Execute"]` exactly as the brief specifies | implementer |
 | 5. wolframscript on Mac | comes with workbook install or standalone | Download `WolframScript_<ver>_MAC.dmg` from `wolfram.com/wolframscript/` if `Extras.pkg` doesn't surface the binary | user |
-| 6. xAct git source | free, `xact.es/download.html` | `xact.es/download/xAct_1.2.0.tgz` (Unix/Mac) — unzip into `~/Library/Mathematica/Applications/` | user |
-| 7. Cloud Credits baseline | 5,000/month is fine for MVP | If a 60-equation sweep × ~5 assertions each consistently hits the cap, purchase additional 100,000 credits at $25 | user |
+| 6. xAct download | free, `xact.es/download.html` | `tar xzf xAct_1.2.0.tgz -C ~/Library/Mathematica/Applications/` (creates `~/Library/Mathematica/Applications/xAct/`) | user |
+| 7. Cloud Credits baseline | 5,000/month is fine for MVP | Calibrate empirically — log actual credit usage during the first book sweep before committing to a paid tier | user |
 | 8. Bridge from v10.0 to Cloud | NOT recommended | Skip it — upgrade is mandatory anyway | n/a |
 
 ## Phase gate status
@@ -86,7 +86,7 @@ The decisive points:
 
 **Phase 5 (`td-1ef78c`):** can begin once the user confirms:
 - Desktop Mathematica **13.x or 14.x** is installed and `wolframscript -code 1+1` returns `2`.
-- `xAct 1.2.0` is unpacked into `~/Library/Mathematica/Applications/xAct/` and `<|"xAct`xTensor`|; <|"xAct`xCoba`|; <<…` works in a fresh kernel.
+- `xAct 1.2.0` is unpacked into `~/Library/Mathematica/Applications/xAct/` and `<< xAct\`xTensor\`; << xAct\`xCoba\`` (in a fresh kernel; backticks inside the package names are required) loads cleanly without `Commutator`/`Anticommutator` symbol errors.
 
 Both gates are *user-side provisioning*. There is no implementation work left in Phase 0 — the decision encodes the answers. Recommend the user tick the boxes; the implementation work can start immediately on confirmation.
 

@@ -126,7 +126,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 
 **Decision 013: [decisions/013-silo-exception-pi-config.md](decisions/013-silo-exception-pi-config.md)** — Single, scoped exception to SILO for this repo: agent may edit `~/.pi/agent/{models,settings}.json` for Pi config; auth.json + skate secrets remain off-limits.
 
-**Decision 014: [decisions/014-phase-0-mathematica-validation.md](decisions/014-phase-0-mathematica-validation.md)** — Phase 0 outcomes for `pi-mathematica-verify`: Cloud API obtainable (free tier sufficient); current app downloadable; v10.0 mandatory upgrade to Mathematica 13.x or 14.x paired with xAct 1.2.0.
+**Decision 014: [decisions/014-phase-0-mathematica-validation.md](decisions/014-phase-0-mathematica-validation.md)** — Phase 0 outcomes for `pi-mathematica-verify`: Cloud API obtainable (free tier sufficient); current app downloadable; v10.0 mandatory upgrade to Mathematica **13.x or 14.x with xAct 1.2.0** (1.3.0 has documented 14.3+ collision; 1.2.0 is the safe pairing).
 
 ---
 
