@@ -13,6 +13,7 @@
 import { readFileSync, existsSync, mkdirSync, appendFileSync, writeFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { randomUUID } from "node:crypto";
+import { execSync } from "node:child_process";
 
 // ── Types (inline to avoid TS module resolution) ─────────────────
 
@@ -130,7 +131,23 @@ const SLOW_BUT_RUNNABLE: string[] = [
   "nvidia/nemotron-3-super-120b-a12b:free",  // ~41s avg, may need --timeout=90
 ];
 
-const OPENROUTER_KEY = process.env["OPENROUTER_API_KEY"] ?? "";
+/** Read a secret from skate (charmbracelet/skate). Returns "" if missing/unavailable.
+ *  Mirrors the sibling edinburgh-eval.ts — skate is the repo's key store, used to
+ *  avoid env vars. Env override still wins when set. */
+function skate(key: string): string {
+  try {
+    return execSync(`skate get ${key}`, {
+      encoding: "utf-8",
+      stdio: ["ignore", "pipe", "ignore"],
+      timeout: 5000,
+    }).trim();
+  } catch {
+    return "";
+  }
+}
+
+// Env override wins; otherwise resolve from skate (the repo's key store).
+const OPENROUTER_KEY = process.env["OPENROUTER_API_KEY"] || skate("open_api_key");
 
 // ── Utilities ────────────────────────────────────────────────────
 
@@ -273,7 +290,7 @@ async function callOpenRouter(
   timeoutMs = DEFAULT_TIMEOUT_MS,
   retryAfterMs?: number,
 ): Promise<string> {
-  if (!OPENROUTER_KEY) throw new Error("OPENROUTER_API_KEY not set");
+  if (!OPENROUTER_KEY) throw new Error("OPENROUTER_API_KEY not set (checked env and skate 'open_api_key')");
 
   const MAX_RETRIES = 5;
   const BASE_DELAY_MS = 2000;
@@ -575,7 +592,7 @@ async function main() {
       console.log(`  bun run src/cli/pi-eval-runner.ts --fixture=iq       # IQ benchmark only`);
       console.log(`  bun run src/cli/pi-eval-runner.ts inception/mercury-2 --fixture=iq  # Mercury-2 IQ test`);
       console.log(`\nEnv vars:`);
-      console.log(`  OPENROUTER_API_KEY  Required for OpenRouter models and grading`);
+      console.log(`  OPENROUTER_API_KEY  Optional; falls back to skate 'open_api_key' if unset`);
       console.log(`  GRADER_MODEL        Override default grader (same as --grader)`);
       process.exit(0);
     } else {
@@ -753,7 +770,7 @@ minimalist, local-first architectures. ${test.setup.system_prompt_append}`
 
   console.log(`\nFixture: ${fixture.suiteName} v${fixture.version} (${fixture.tests.length} tests)`);
   console.log(`Models: ${models.join(", ")}`);
-  console.log(`Grader: ${skipGrading ? "skipped" : OPENROUTER_KEY ? effectiveGrader : "unavailable (no OPENROUTER_API_KEY)"}`);
+  console.log(`Grader: ${skipGrading ? "skipped" : OPENROUTER_KEY ? effectiveGrader : "unavailable (no OPENROUTER_API_KEY env and no skate open_api_key)"}`);
   console.log(`Run ID: ${runId}`);
   console.log();
 

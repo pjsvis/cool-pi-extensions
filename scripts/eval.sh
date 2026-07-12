@@ -54,11 +54,11 @@ cmd_edinburgh() {
 cmd_traps() {
   local model="${1:-}"
 
-  # Check for OpenRouter key
-  if [[ -n "${OPENROUTER_API_KEY:-}" ]]; then
-    echo -e "${CYAN}Grading: enabled (OPENROUTER_API_KEY set)${RESET}"
+  # Check for OpenRouter key (env override, else skate — the runner resolves the same way)
+  if [[ -n "${OPENROUTER_API_KEY:-}" ]] || skate get open_api_key >/dev/null 2>&1; then
+    echo -e "${CYAN}Grading: enabled (OpenRouter key via env or skate)${RESET}"
   else
-    echo -e "${YELLOW}Grading: skipped (no OPENROUTER_API_KEY)${RESET}"
+    echo -e "${YELLOW}Grading: unavailable (no OPENROUTER_API_KEY env and no skate open_api_key)${RESET}"
   fi
 
   cd "$REPO_ROOT"
