@@ -70,7 +70,7 @@
 |----------|------------------|--------|
 | **Moonshot** | K2.7-code, K2.6, K2.5 | ✅ All tested working |
 | **Z.ai** | GLM-5.2, 5.1, 5-turbo, 4.7 | ✅ Working (1M context native) |
-| **ZenMux** | Claude, Gemini, GPT-5, DeepSeek, Qwen | ✅ Unified API |
+| **ZenMux** | GLM-5.2, Gemini 3.1/2.5/3.5, DeepSeek V4 Pro, Qwen 3.7 Max, Claude Fable 5, Grok 4.5 (+free), GPT-5.6 Luna | ✅ Brought online 2026-07-14 (10 models) — supplemental, directs retained |
 | **OpenRouter** | Mercury-2, Nex N2 Pro, Grok, DeepSeek | ✅ Multi-provider routing |
 | **NVIDIA** | Nemotron family | ✅ Free tier |
 | **MiniMax** | M2.7, M2.5 | ✅ Direct + ZenMux both working |
@@ -139,6 +139,7 @@ The `[1m]` variant is **Claude Code / Anthropic-compatible endpoint only** (`htt
 
 | Date | Change |
 |------|--------|
+| 2026-07-14 | ZenMux provider brought online (10 models); gpt-5.6-luna / grok-4.5 / gemini-3.5-flash eval'd 4/4 primed traps; omlx inline key → skate; provider-registry now generated (`just registry`); Decision 016 (provider portfolio: redundancy-by-design) |
 | 2026-06-26 | Fixed: removed non-existent GLM-5.2[1m] from config |
 | 2026-06-26 | Fixed: pinged all new models — K2.6, K2.7-code, GLM-5.2 working |
 | 2026-06-21 | Added K2.7-code, GLM-5.2, DeepSeek V3.2, Qwen 3.x |

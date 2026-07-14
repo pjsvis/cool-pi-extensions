@@ -175,6 +175,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 
 **Decision 014: [decisions/014-phase-0-mathematica-validation.md](decisions/014-phase-0-mathematica-validation.md)** — Phase 0 outcomes for `pi-mathematica-verify`: Cloud API obtainable (free tier sufficient); current app downloadable; v10.0 mandatory upgrade to Mathematica **13.x or 14.x with xAct 1.2.0** (1.3.0 has documented 14.3+ collision; 1.2.0 is the safe pairing).
 **Decision 015: [decisions/015-bounded-context-entry.md](decisions/015-bounded-context-entry.md)** — Bounded-context entry as default: never start a model unconstrained — repo context (VEST/`just orient`) for repo work, a frozen brief for non-repo work. Protocol normalizes the substrate (manner); the bound grounds it (matter). EDI-005 proved Protocol-alone still yaps.
+**Decision 016: [decisions/016-provider-portfolio-redundancy-by-design.md](decisions/016-provider-portfolio-redundancy-by-design.md)** — Providers are a portfolio for failover + freebie capture, not a dedup graph. Redundancy is resilience, not entropy; anti-entropy applies within-provider + config hygiene, not across failover routes. ZenMux supplemental (no consolidation yet); barnacle review prunes expired promos but preserves failover.
 
 ---
 

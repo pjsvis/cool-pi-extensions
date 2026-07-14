@@ -75,3 +75,7 @@ check:
 [group("hygiene")]
 popper:
     @bun run scripts/semantic-integrity.ts
+
+[group("hygiene")]
+registry:
+    @bun run scripts/gen-provider-registry.ts
