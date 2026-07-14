@@ -125,7 +125,13 @@ scheduled parties risk becoming the ceremony they were meant to prevent.
 
 ---
 
-## When to add to this playbook
+### Flue — watching brief (a deployed/sandboxed-agent framework)
+
+**What happened:** Reviewed [withastro/flue](https://github.com/withastro/flue) — "the sandbox agent framework," a TypeScript agent *harness* (explicitly "not another SDK"). Distinct niche: deployed, event-driven, sandboxed autonomous agents — the Claude Code/Codex model made deployable. Features: sandbox (secure fs/container for real work), durable execution (survive restarts), channels (Slack/Teams/Discord/GitHub events), subagents, skills (`SKILL.md`), MCP, observability (OTel/Braintrust/Sentry), deploy to Workers/CI/Daytona/Render.
+
+**Why it matters:** It overlaps our primary harness, pi (skills, sessions, tools, silo are the same concepts), and does *not* cover Mastra's role (RAG, evals, app/UI integration, model-routing breadth) — so it neither replaces pi nor substitutes for Mastra. Its genuine value is on an axis we don't currently operate: **deployed, event-driven, sandboxed agents.** Notably, Flue's sandbox *is* a structured bounded context — the territory of Decision 015 — so it aligns philosophically (real tools ground the agent; the strong EDI-005b result argues *for* the sandbox model), but only on the deployed axis. The sharpest reframe: Flue's feature list is *verbatim* an enterprise/corporate deployed-agent checklist (sandbox for safety, durable for restarts, channels for ticketing/chat, observability for audit, deploy to controlled compute). In a personal/terminal-native stack (`alacritty→herdr→pi`) none of that is needed; in a corporate setting all of it is. No immediate application presents itself; adopting speculatively is entropy (Decision 006).
+
+**What to do:** Watching brief — track, don't adopt. The revisit trigger is a concrete corporate/deployed-agent need: a silo-style agent that must be *deployed and event-driven* (e.g., GitHub/Slack-triggered, working in a bounded sandbox, surviving restarts). Locally, pi+silo already does bounded-context agents; Flue is the deployed version of that pattern. Revisit at barnacle reviews (next: Q3 2026). Maturity caveat: brand-new (withastro), expect churn; README is marketing-grade — verify sandbox/durable mechanics before betting. If ever evaluated seriously, run a Flue-harness agent through the Edinburgh trap suite (EDI-005/005b) — the eval can grade the framework's own agent behavior.
 
 Add an insight when:
 - It's a lesson learned that could easily be forgotten
