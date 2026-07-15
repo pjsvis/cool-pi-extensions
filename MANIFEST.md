@@ -128,6 +128,7 @@ work starts.
 **[briefs/2026-07-12-preflight-auditorflags.md](briefs/2026-07-12-preflight-auditorflags.md)** — System-2 pre-flight audit + flag-vector compression for the Orient phase.
 **[briefs/2026-07-12-token-compaction-hook.md](briefs/2026-07-12-token-compaction-hook.md)** — Token-compaction hook — branch isolation + squash-merge to keep `main` low-entropy.
 **[briefs/2026-07-12-brief-edi-005b-grounding-test.md](briefs/2026-07-12-brief-edi-005b-grounding-test.md)** — EDI-005b: test whether repo-tool grounding alone (no Protocol priming) stops yap — falsifies/quantifies Decision 015.
+**[briefs/2026-07-14-brief-locus-tag-consumer.md](briefs/2026-07-14-brief-locus-tag-consumer.md)** — The locus-tag consumer: per-section compaction at `td handoff` — the missing half of the Protocol v1.1.0 locus-tag loop. Salvages the parked brief's §4.1 rejected-hypotheses kernel (no `.td-memory/` substrate).
 
 ---
 
