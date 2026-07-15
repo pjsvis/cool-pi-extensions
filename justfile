@@ -79,3 +79,7 @@ popper:
 [group("hygiene")]
 registry:
     @bun run scripts/gen-provider-registry.ts
+
+[group("hygiene")]
+sync-config:
+    @bun run scripts/sync-config.ts

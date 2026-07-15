@@ -1,0 +1,911 @@
+{
+  "providers": {
+    "ollama": {
+      "api": "openai-completions",
+      "apiKey": "ollama",
+      "baseUrl": "http://127.0.0.1:11434/v1",
+      "models": [
+        {
+          "_launch": true,
+          "contextWindow": 131072,
+          "id": "gemma4:e4b",
+          "input": [
+            "text",
+            "image"
+          ],
+          "reasoning": true
+        }
+      ]
+    },
+    "llama": {
+      "api": "openai-completions",
+      "apiKey": "llama",
+      "baseUrl": "http://127.0.0.1:1234/v1",
+      "models": [
+        {
+          "id": "Gemma-4-E4B-It",
+          "name": "Gemma 4 E4B",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 32768,
+          "maxTokens": 8192,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_tokens",
+            "requiresToolResultName": false
+          }
+        },
+        {
+          "id": "Qwen3.5-27B",
+          "name": "Qwen 3.5 27B",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 32768,
+          "maxTokens": 8192,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_tokens",
+            "requiresToolResultName": false
+          }
+        }
+      ]
+    },
+    "omlx": {
+      "baseUrl": "http://127.0.0.1:8000/v1",
+      "api": "openai-completions",
+      "apiKey": "!skate get open_api_key",
+      "authHeader": true,
+      "models": [
+        {
+          "id": "Qwen3-14B-4bit",
+          "name": "Qwen3-14B-4bit",
+          "reasoning": false,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 32768,
+          "maxTokens": 32768
+        }
+      ]
+    },
+    "openrouter": {
+      "apiKey": "!skate get open_api_key",
+      "models": [
+        {
+          "id": "inception/mercury-2",
+          "name": "Mercury 2",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.25,
+            "output": 0.75,
+            "cacheRead": 0.025,
+            "cacheWrite": 0
+          },
+          "contextWindow": 128000,
+          "maxTokens": 50000
+        }
+      ],
+      "modelOverrides": {
+        "nex-agi/nex-n2-pro:free": {
+          "name": "Nex N2 Pro",
+          "_note": "Free on OpenRouter — two-week promo."
+        },
+        "x-ai/grok-4.3": {
+          "name": "Grok 4.3",
+          "reasoning": true,
+          "contextWindow": 131072,
+          "maxTokens": 32768,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 3,
+            "output": 15,
+            "cacheRead": 0.3,
+            "cacheWrite": 3.75
+          }
+        },
+        "x-ai/grok-4.20": {
+          "name": "Grok 4.20",
+          "reasoning": true,
+          "contextWindow": 131072,
+          "maxTokens": 32768,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 3,
+            "output": 15,
+            "cacheRead": 0.3,
+            "cacheWrite": 3.75
+          }
+        },
+        "deepseek/deepseek-v4-flash": {
+          "name": "DeepSeek V4 Flash",
+          "reasoning": false,
+          "contextWindow": 1000000,
+          "maxTokens": 65536,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.14,
+            "output": 0.28,
+            "cacheRead": 0.028,
+            "cacheWrite": 0.28,
+            "_note": "Default DeepSeek model. Lower cost than V4 Pro."
+          }
+        },
+        "deepseek/deepseek-v3.2": {
+          "name": "DeepSeek V3.2",
+          "reasoning": true,
+          "contextWindow": 128000,
+          "maxTokens": 65536,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.28,
+            "output": 0.42,
+            "cacheRead": 0.028,
+            "cacheWrite": 0.042,
+            "_note": "8/8 IQ perfect score. MIT open weights."
+          }
+        },
+        "moonshotai/kimi-k2.7-code": {
+          "name": "Kimi K2.7 Code",
+          "reasoning": true,
+          "contextWindow": 262144,
+          "maxTokens": 262144,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.95,
+            "output": 4,
+            "cacheRead": 0.19,
+            "cacheWrite": 1,
+            "_note": "Open-weight coding model. 30% fewer thinking tokens vs K2.6. Vendor-reported 4/4 Edinburgh."
+          }
+        },
+        "z-ai/GLM-5.2": {
+          "name": "GLM-5.2",
+          "reasoning": true,
+          "contextWindow": 1000000,
+          "maxTokens": 131072,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 1.4,
+            "output": 4.4,
+            "cacheRead": 0.28,
+            "cacheWrite": 1.4,
+            "_note": "1M context. MIT open weights. Best open-weight coding model. 8/8 IQ."
+          }
+        },
+        "minimax/minimax-m2.7": {
+          "name": "MiniMax M2.7",
+          "reasoning": true,
+          "contextWindow": 204800,
+          "maxTokens": 128000,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.3,
+            "output": 1.2,
+            "cacheRead": 0.075,
+            "cacheWrite": 0.3,
+            "_note": "Recommended MiniMax model — 4/4 Edinburgh"
+          }
+        },
+        "minimax/minimax-m2.5": {
+          "name": "MiniMax M2.5",
+          "reasoning": true,
+          "contextWindow": 204800,
+          "maxTokens": 128000,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.3,
+            "output": 1.2,
+            "cacheRead": 0.075,
+            "cacheWrite": 0.3,
+            "_note": "Deprecated — 2/4 Edinburgh"
+          }
+        },
+        "z-ai/glm-4.7": {
+          "name": "GLM-4.7",
+          "reasoning": true,
+          "contextWindow": 200000,
+          "maxTokens": 131072,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.6,
+            "output": 2.2,
+            "cacheRead": 0.12,
+            "cacheWrite": 0.6,
+            "_note": "Watch — 3/4 Edinburgh, failed EDI-003"
+          }
+        },
+        "qwen/qwen3-coder-plus": {
+          "name": "Qwen3 Coder Plus",
+          "reasoning": false,
+          "contextWindow": 32768,
+          "maxTokens": 32768,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.2,
+            "output": 0.6,
+            "cacheRead": 0.05,
+            "cacheWrite": 0.2,
+            "_note": "Cost-effective coding model"
+          }
+        },
+        "qwen/qwen3-max": {
+          "name": "Qwen3 Max",
+          "reasoning": true,
+          "contextWindow": 32768,
+          "maxTokens": 32768,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.8,
+            "output": 2.4,
+            "cacheRead": 0.2,
+            "cacheWrite": 0.8,
+            "_note": "Latest Qwen flagship"
+          }
+        }
+      }
+    },
+    "moonshot": {
+      "baseUrl": "https://api.moonshot.ai/v1",
+      "api": "openai-completions",
+      "apiKey": "!skate get moonshotai_api_key",
+      "authHeader": true,
+      "models": [
+        {
+          "id": "kimi-k2.7-code",
+          "name": "Kimi K2.7 Code",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.95,
+            "output": 4,
+            "cacheRead": 0.19,
+            "cacheWrite": 1,
+            "_note": "Open-weight coding model. 30% fewer thinking tokens vs K2.6."
+          },
+          "contextWindow": 262144,
+          "maxTokens": 262144,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens"
+          }
+        },
+        {
+          "id": "kimi-k2.6",
+          "name": "Kimi K2.6",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.95,
+            "output": 4,
+            "cacheRead": 0.095,
+            "cacheWrite": 1
+          },
+          "contextWindow": 262144,
+          "maxTokens": 262144,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens"
+          }
+        },
+        {
+          "id": "kimi-k2.5",
+          "name": "Kimi K2.5",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.6,
+            "output": 3,
+            "cacheRead": 0.06,
+            "cacheWrite": 0.75
+          },
+          "contextWindow": 262144,
+          "maxTokens": 262144,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens"
+          }
+        }
+      ]
+    },
+    "minimax": {
+      "baseUrl": "https://api.minimax.io/v1",
+      "api": "openai-completions",
+      "apiKey": "!skate get minimax_api_key",
+      "authHeader": true,
+      "models": [
+        {
+          "id": "MiniMax-M2.7",
+          "name": "MiniMax M2.7",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.3,
+            "output": 1.2,
+            "cacheRead": 0.06,
+            "cacheWrite": 0.375,
+            "_note": "Recommended MiniMax model — 4/4 Edinburgh"
+          },
+          "contextWindow": 204800,
+          "maxTokens": 128000,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens",
+            "requiresToolResultName": true
+          }
+        },
+        {
+          "id": "MiniMax-M2.5",
+          "name": "MiniMax M2.5",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.3,
+            "output": 1.2,
+            "cacheRead": 0.06,
+            "cacheWrite": 0.375,
+            "_note": "Deprecated — 2/4 Edinburgh"
+          },
+          "contextWindow": 204800,
+          "maxTokens": 128000,
+          "status": "deprecated",
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens",
+            "requiresToolResultName": true
+          }
+        }
+      ],
+      "_squadron_note": "M3 dropped. Use M2.7. Balance restored after $30 top-up."
+    },
+    "zai": {
+      "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+      "api": "openai-completions",
+      "apiKey": "!skate get zai_api_key",
+      "authHeader": true,
+      "models": [
+        {
+          "id": "glm-5.2",
+          "name": "GLM-5.2",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 1.4,
+            "output": 4.4,
+            "cacheRead": 0.28,
+            "cacheWrite": 1.4,
+            "_note": "1M context. MIT open weights. Best open-weight coding model. 8/8 IQ."
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 131072,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens"
+          }
+        },
+        {
+          "id": "glm-5.1",
+          "name": "GLM-5.1",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 1.4,
+            "output": 5.6,
+            "cacheRead": 0.28,
+            "cacheWrite": 1.4
+          },
+          "contextWindow": 200000,
+          "maxTokens": 131072,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens"
+          }
+        },
+        {
+          "id": "glm-5-turbo",
+          "name": "GLM-5 Turbo",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.5,
+            "output": 2,
+            "cacheRead": 0.1,
+            "cacheWrite": 0.5
+          },
+          "contextWindow": 200000,
+          "maxTokens": 131072,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens"
+          }
+        },
+        {
+          "id": "glm-4.7",
+          "name": "GLM-4.7",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.6,
+            "output": 2.2,
+            "cacheRead": 0.12,
+            "cacheWrite": 0.6
+          },
+          "contextWindow": 200000,
+          "maxTokens": 131072,
+          "compat": {
+            "supportsDeveloperRole": false,
+            "maxTokensField": "max_completion_tokens"
+          }
+        }
+      ]
+    },
+    "nvidia": {
+      "baseUrl": "https://integrate.api.nvidia.com/v1",
+      "api": "openai-completions",
+      "apiKey": "!skate get nvidia_api_key",
+      "authHeader": true,
+      "models": [
+        {
+          "id": "google/diffusiongemma-26b-a4b-it",
+          "name": "DiffusionGemma 26B A4B",
+          "reasoning": false,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "_note": "NVIDIA NIM free tier"
+          },
+          "contextWindow": 262144,
+          "maxTokens": 4096
+        },
+        {
+          "id": "nvidia/nemotron-3-super-120b-a12b",
+          "name": "Nemotron 3 Super 120B",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "_note": "NVIDIA NIM free tier"
+          },
+          "contextWindow": 128000,
+          "maxTokens": 32768,
+          "compat": {
+            "supportsDeveloperRole": true,
+            "maxTokensField": "max_tokens"
+          }
+        },
+        {
+          "id": "nvidia/llama-3.3-nemotron-super-49b-v1.5",
+          "name": "Nemotron Super 49B v1.5",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "_note": "NVIDIA NIM free tier"
+          },
+          "contextWindow": 128000,
+          "maxTokens": 32768,
+          "compat": {
+            "supportsDeveloperRole": true,
+            "maxTokensField": "max_tokens"
+          }
+        },
+        {
+          "id": "nvidia/llama-3.1-nemotron-ultra-253b-v1",
+          "name": "Nemotron Ultra 253B",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "_note": "NVIDIA NIM free tier"
+          },
+          "contextWindow": 128000,
+          "maxTokens": 32768,
+          "compat": {
+            "supportsDeveloperRole": true,
+            "maxTokensField": "max_tokens"
+          }
+        },
+        {
+          "id": "nvidia/nemotron-3-nano-30b-a3b",
+          "name": "Nemotron 3 Nano 30B",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0,
+            "_note": "NVIDIA NIM free tier — fast & lightweight"
+          },
+          "contextWindow": 128000,
+          "maxTokens": 32768,
+          "compat": {
+            "supportsDeveloperRole": true,
+            "maxTokensField": "max_tokens"
+          }
+        }
+      ]
+    },
+    "zenmux": {
+      "baseUrl": "https://zenmux.ai/api/v1",
+      "api": "openai-completions",
+      "apiKey": "!skate get zenmux_api_key",
+      "authHeader": true,
+      "models": [
+        {
+          "id": "z-ai/glm-5.2",
+          "name": "GLM-5.2",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 1.4,
+            "output": 4.4,
+            "cacheRead": 0.26,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 131072,
+          "_note": "Failover route for Z.ai-direct GLM-5.2 (variability). 4/4 traps + 8/8 IQ. Decision 016."
+        },
+        {
+          "id": "google/gemini-3.1-pro-preview",
+          "name": "Gemini 3.1 Pro Preview",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 2,
+            "output": 12,
+            "cacheRead": 0.2,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 65536,
+          "_note": "4/4 traps (eval 2026-07-12). Fails EDI-005 unprimed — fine under priming."
+        },
+        {
+          "id": "google/gemini-2.5-pro",
+          "name": "Gemini 2.5 Pro",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 1.25,
+            "output": 10,
+            "cacheRead": 0.13,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 65536,
+          "_note": "4/4 traps (eval 2026-07-12). Fails EDI-005 unprimed."
+        },
+        {
+          "id": "deepseek/deepseek-v4-pro",
+          "name": "DeepSeek V4 Pro",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.435,
+            "output": 0.87,
+            "cacheRead": 0.003625,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 65536,
+          "_note": "14/19 + 7/8 IQ. 1M ctx."
+        },
+        {
+          "id": "qwen/qwen3.7-max",
+          "name": "Qwen 3.7 Max",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.43,
+            "output": 1.29,
+            "cacheRead": 0.043,
+            "cacheWrite": 0.54
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 65536,
+          "_note": "16/19. 1M ctx."
+        },
+        {
+          "id": "anthropic/claude-fable-5",
+          "name": "Claude Fable 5",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 10,
+            "output": 50,
+            "cacheRead": 1,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 32768,
+          "_note": "4/4 traps + 8/8 IQ (top-tier). $10/$50 — reserve for frontier tasks. 30-day data retention (Covered Model) — tensions with local-first ethos."
+        },
+        {
+          "id": "x-ai/grok-4.5-free",
+          "name": "Grok 4.5 (Free)",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 500000,
+          "maxTokens": 32768,
+          "_note": "Free-tier freebie (ZenMux). Grab-and-use."
+        },
+        {
+          "id": "google/gemini-3.5-flash",
+          "name": "Gemini 3.5 Flash",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 1.5,
+            "output": 9,
+            "cacheRead": 0.15,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 65536,
+          "_note": "4/4 primed traps (eval 2026-07-12, re-run after an empty-response flake on EDI-002). Fails EDI-005 unprimed."
+        },
+        {
+          "id": "openai/gpt-5.6-luna",
+          "name": "GPT-5.6 Luna",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 1,
+            "output": 6,
+            "cacheRead": 0.1,
+            "cacheWrite": 1.25
+          },
+          "contextWindow": 1050000,
+          "maxTokens": 32768,
+          "_note": "4/4 primed traps (eval 2026-07-12). Published 2026-07-10. Fails EDI-005 unprimed."
+        },
+        {
+          "id": "x-ai/grok-4.5",
+          "name": "Grok 4.5",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 2,
+            "output": 6,
+            "cacheRead": 0.5,
+            "cacheWrite": 0
+          },
+          "contextWindow": 500000,
+          "maxTokens": 32768,
+          "_note": "4/4 primed traps (eval 2026-07-12). Paid twin of grok-4.5-free. Fails EDI-005 unprimed."
+        }
+      ],
+      "_squadron_note": "ZenMux provider added 2026-07-12 (Decision 016). Supplemental — directs retained for failover + freebies. No compat set (OpenAI-compat; verify via pi-check)."
+    },
+    "togetherai": {
+      "baseUrl": "https://api.together.xyz/v1",
+      "api": "openai-completions",
+      "apiKey": "!skate get togetherai_api_key",
+      "authHeader": true,
+      "models": [
+        {
+          "id": "Prism-ML/Ternary-Bonsai-27B",
+          "name": "Ternary Bonsai 27B",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cacheRead": 0,
+            "cacheWrite": 0
+          },
+          "contextWindow": 262144,
+          "maxTokens": 32768,
+          "_note": "FREE limited-time dev preview (PrismML, via Together). Ternary Qwen3.6-27B @1.71bpw. 4/4 primed traps (eval 2026-07-14 via Together — compression held Protocol-aligned behavior). EDI-005 returned 0c (likely thinking-budget exhausted @max_tokens=2048 on the open-ended prompt, not a yap signal). Vendor: agentic coding not yet strong. Apache 2.0 weights. Grab-and-use; prune when preview ends (Decision 016)."
+        },
+        {
+          "id": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+          "name": "Llama 4 Scout 17B",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 0.18,
+            "output": 0.59,
+            "cacheRead": 0.018,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1048576,
+          "maxTokens": 32768,
+          "_note": "1M-ctx Llama-4 (17Bx16E MoE), multimodal. Cheap on Together (0.18/0.59). New to config."
+        },
+        {
+          "id": "moonshotai/Kimi-K2.6",
+          "name": "Kimi K2.6",
+          "reasoning": true,
+          "input": [
+            "text",
+            "image"
+          ],
+          "cost": {
+            "input": 1.2,
+            "output": 4.5,
+            "cacheRead": 0.2,
+            "cacheWrite": 0
+          },
+          "contextWindow": 262144,
+          "maxTokens": 262144,
+          "_note": "Failover for the primary 18/19 Kimi K2.6. Pricier than Moonshot-direct (0.95/4) but second route; uses prepaid Together credit (Decision 016)."
+        },
+        {
+          "id": "deepseek-ai/DeepSeek-V4-Pro",
+          "name": "DeepSeek V4 Pro",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 1.74,
+            "output": 3.48,
+            "cacheRead": 0.2,
+            "cacheWrite": 0
+          },
+          "contextWindow": 512000,
+          "maxTokens": 65536,
+          "_note": "Failover — ~4x ZenMux (0.435/0.87), pricey; second route, uses prepaid credit. 14/19 + 7/8 IQ."
+        },
+        {
+          "id": "Qwen/Qwen3.7-Max",
+          "name": "Qwen 3.7 Max",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 1.25,
+            "output": 3.75,
+            "cacheRead": 0.125,
+            "cacheWrite": 0
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 65536,
+          "_note": "Failover — ~3x ZenMux (0.43/1.29), pricey; second route, uses prepaid credit. 16/19."
+        }
+      ],
+      "_squadron_note": "Together AI added 2026-07-14. OpenAI-compat. Curated (not all 271): Bonsai freebie + Llama-4-Scout (cheap, new) + pricey failovers for Kimi/DeepSeek/Qwen3.7 (prepaid credit). Decision 016 (portfolio)."
+    }
+  }
+}

@@ -184,6 +184,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 Edinburgh Protocol-evaluated models for the agent squadron.
 **[models/RECOMMENDED.md](models/RECOMMENDED.md)** — Quick reference: top performers, watch list, drop list, and decision rationale.
 **[models/models.json](models/models.json)** — Full model inventory with Edinburgh scores, IQ scores, pricing, and provider access.
+**[models/live-config.json](models/live-config.json)** — Sanitized mirror of the live `~/.pi/agent/models.json` (provider/model config), captured in git. Sync via `just sync-config` (refuses to mirror inline secrets — Decision 013).
 
 **Squadron Status:**
 - ⭐ Primary: Kimi K2.6 (18/19), GLM-5.2 (8/8 IQ)
