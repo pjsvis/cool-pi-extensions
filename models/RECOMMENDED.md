@@ -74,6 +74,7 @@
 | **OpenRouter** | Mercury-2, Nex N2 Pro, Grok, DeepSeek | ✅ Multi-provider routing |
 | **NVIDIA** | Nemotron family | ✅ Free tier |
 | **MiniMax** | M2.7, M2.5 | ✅ Direct + ZenMux both working |
+| **Together AI** | Ternary Bonsai 27B (free preview), Llama-4-Scout, Kimi K2.6, DeepSeek V4 Pro, Qwen 3.7 Max | ✅ Online 2026-07-14 (271 catalog; 5 curated — Bonsai free + Llama-4-Scout new + 3 pricey failovers on prepaid credit) |
 
 ---
 
@@ -140,6 +141,7 @@ The `[1m]` variant is **Claude Code / Anthropic-compatible endpoint only** (`htt
 | Date | Change |
 |------|--------|
 | 2026-07-14 | ZenMux provider brought online (10 models); gpt-5.6-luna / grok-4.5 / gemini-3.5-flash eval'd 4/4 primed traps; omlx inline key → skate; provider-registry now generated (`just registry`); Decision 016 (provider portfolio: redundancy-by-design) |
+| 2026-07-14 | Together AI provider added (5 curated of 271): Ternary Bonsai 27B (free dev preview) + Llama-4-Scout (cheap, 1M, new) + pricey failovers for Kimi K2.6 / DeepSeek V4 Pro / Qwen 3.7 Max (prepaid credit). Together NOT cheaper than ZenMux/Moonshot for those (~3–4×) — failover-only. Bonsai behavioral eval pending. |
 | 2026-06-26 | Fixed: removed non-existent GLM-5.2[1m] from config |
 | 2026-06-26 | Fixed: pinged all new models — K2.6, K2.7-code, GLM-5.2 working |
 | 2026-06-21 | Added K2.7-code, GLM-5.2, DeepSeek V3.2, Qwen 3.x |

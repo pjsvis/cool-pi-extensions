@@ -1,7 +1,7 @@
 # Pi Provider Registry
-**Generated:** 2026-07-14
+**Generated:** 2026-07-15
 **Source:** `~/.pi/agent/models.json`
-**Providers:** 9  ·  **Total models:** 41
+**Providers:** 10  ·  **Total models:** 46
 
 _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 
@@ -172,4 +172,23 @@ _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 | `google/gemini-3.5-flash` | ✓ | text, image | 1048576 | 65536 | $1.5/$9 | 4/4 primed traps (eval 2026-07-12, re-run after an empty-response flake on EDI-002). Fails EDI-005 unprimed. |
 | `openai/gpt-5.6-luna` | ✓ | text, image | 1050000 | 32768 | $1/$6 | 4/4 primed traps (eval 2026-07-12). Published 2026-07-10. Fails EDI-005 unprimed. |
 | `x-ai/grok-4.5` | ✓ | text, image | 500000 | 32768 | $2/$6 | 4/4 primed traps (eval 2026-07-12). Paid twin of grok-4.5-free. Fails EDI-005 unprimed. |
+
+## togetherai
+
+| Property | Value |
+|---|---|
+| Base URL | `https://api.together.xyz/v1` |
+| API | `openai-completions` |
+| Auth | Bearer |
+| Key source | `!skate get togetherai_api_key` |
+
+### Models (5)
+
+| Model | Reasoning | Input | Context | MaxTok | Cost (in/out) | Notes |
+|---|---|---|---|---|---|---|
+| `Prism-ML/Ternary-Bonsai-27B` | ✓ | text, image | 262144 | 32768 | $0/$0 | FREE limited-time dev preview (PrismML, via Together). Ternary Qwen3.6-27B @1.71bpw, ~95% FP16 retention (vendor-reported). Apache 2.0 weights. Vendor: agentic coding not yet strong. Grab-and-use; prune when preview ends (Decision 016). Behavioral eval pending (not on OpenRouter/ZenMux). |
+| `meta-llama/Llama-4-Scout-17B-16E-Instruct` | ✓ | text, image | 1048576 | 32768 | $0.18/$0.59 | 1M-ctx Llama-4 (17Bx16E MoE), multimodal. Cheap on Together (0.18/0.59). New to config. |
+| `moonshotai/Kimi-K2.6` | ✓ | text, image | 262144 | 262144 | $1.2/$4.5 | Failover for the primary 18/19 Kimi K2.6. Pricier than Moonshot-direct (0.95/4) but second route; uses prepaid Together credit (Decision 016). |
+| `deepseek-ai/DeepSeek-V4-Pro` | ✓ | text | 512000 | 65536 | $1.74/$3.48 | Failover — ~4x ZenMux (0.435/0.87), pricey; second route, uses prepaid credit. 14/19 + 7/8 IQ. |
+| `Qwen/Qwen3.7-Max` | ✓ | text | 1000000 | 65536 | $1.25/$3.75 | Failover — ~3x ZenMux (0.43/1.29), pricey; second route, uses prepaid credit. 16/19. |
 
