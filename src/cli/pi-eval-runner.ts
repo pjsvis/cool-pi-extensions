@@ -303,7 +303,12 @@ async function callOllama(
 
 // ── OpenRouter Call ─────────────────────────────────────────────
 
-async function callOpenRouter(
+// Generic OpenAI-compatible chat call (OpenRouter, Together, …). Parameterized
+// by baseUrl + key so adding a provider is a one-line wrapper, not a copy.
+async function callOpenAICompat(
+  baseUrl: string,
+  apiKey: string,
+  keyLabel: string,
   model: string,
   systemPrompt: string,
   userPrompt: string,
@@ -311,26 +316,21 @@ async function callOpenRouter(
   timeoutMs = DEFAULT_TIMEOUT_MS,
   retryAfterMs?: number,
 ): Promise<string> {
-  if (!OPENROUTER_KEY) throw new Error("OPENROUTER_API_KEY not set (checked env and skate 'open_api_key')");
+  if (!apiKey) throw new Error(`${keyLabel} not set (checked env and skate)`);
 
   const MAX_RETRIES = 5;
   const BASE_DELAY_MS = 2000;
 
-  // Respect Retry-After header if provided
   if (retryAfterMs !== undefined && retryAfterMs > 0) {
     await sleep(retryAfterMs);
   } else if (attempt > 0) {
-    // Exponential backoff with jitter (longer for external APIs)
     const delay = BASE_DELAY_MS * Math.pow(2, attempt - 1) + Math.random() * 1000;
     await sleep(delay);
   }
 
-  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+  const response = await fetch(baseUrl, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${OPENROUTER_KEY}`,
-    },
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
     body: JSON.stringify({
       model,
       messages: [
@@ -343,66 +343,77 @@ async function callOpenRouter(
     signal: AbortSignal.timeout(timeoutMs),
   });
 
-  // Handle 429 with retry
   if (response.status === 429) {
-    if (attempt >= MAX_RETRIES) {
-      throw new Error(`OpenRouter rate limited after ${MAX_RETRIES} retries`);
-    }
-    // Try to extract Retry-After from response
+    if (attempt >= MAX_RETRIES) throw new Error(`${keyLabel} rate limited after ${MAX_RETRIES} retries`);
     let delayMs: number | undefined;
     const retryAfter = response.headers.get("retry-after");
     if (retryAfter) {
       delayMs = parseInt(retryAfter, 10) * 1000;
     } else {
-      // Try to parse error body for rate limit info
       try {
         const errBody = await response.text();
         const errJson = JSON.parse(errBody);
-        if (errJson.error?.retryAfter) {
-          delayMs = errJson.error.retryAfter * 1000;
-        }
-      } catch {
-        /* ignore parse errors */
-      }
+        if (errJson.error?.retryAfter) delayMs = errJson.error.retryAfter * 1000;
+      } catch { /* ignore parse errors */ }
     }
     console.warn(`  ⚠ Rate limited (attempt ${attempt + 1}/${MAX_RETRIES + 1}), waiting...`);
-    return callOpenRouter(model, systemPrompt, userPrompt, attempt + 1, timeoutMs, delayMs);
+    return callOpenAICompat(baseUrl, apiKey, keyLabel, model, systemPrompt, userPrompt, attempt + 1, timeoutMs, delayMs);
   }
 
   if (!response.ok) {
-    // Try to parse error for details
     let errDetail = `HTTP ${response.status}`;
     try {
       const errBody = await response.text();
       const errJson = JSON.parse(errBody);
-      if (errJson.error?.message) {
-        errDetail = errJson.error.message;
-      }
-    } catch {
-      /* ignore */
-    }
-
-    // Some errors are retryable (5xx)
+      if (errJson.error?.message) errDetail = errJson.error.message;
+    } catch { /* ignore */ }
     if (response.status >= 500 && attempt < MAX_RETRIES) {
       console.warn(`  ⚠ Server error (${response.status}), retrying...`);
-      return callOpenRouter(model, systemPrompt, userPrompt, attempt + 1, timeoutMs);
+      return callOpenAICompat(baseUrl, apiKey, keyLabel, model, systemPrompt, userPrompt, attempt + 1, timeoutMs);
     }
-
-    throw new Error(`OpenRouter returned ${errDetail}`);
+    throw new Error(`${keyLabel} returned ${errDetail}`);
   }
 
   const data = (await response.json()) as { choices?: Array<{ message?: { content?: string } }> };
   return data.choices?.[0]?.message?.content ?? "";
 }
 
-// ── Model Call (route to Ollama or OpenRouter) ──────────────────
+// OpenRouter — default route for "org/model" slugs (and the grader).
+async function callOpenRouter(
+  model: string,
+  systemPrompt: string,
+  userPrompt: string,
+  attempt = 0,
+  timeoutMs = DEFAULT_TIMEOUT_MS,
+  retryAfterMs?: number,
+): Promise<string> {
+  return callOpenAICompat(OPENROUTER_URL, OPENROUTER_KEY, "OpenRouter (open_api_key)", model, systemPrompt, userPrompt, attempt, timeoutMs, retryAfterMs);
+}
+
+// Together AI — route via --provider=together.
+const TOGETHER_URL = "https://api.together.xyz/v1/chat/completions";
+const TOGETHER_KEY = process.env["TOGETHER_API_KEY"] || skate("togetherai_api_key");
+async function callTogether(
+  model: string,
+  systemPrompt: string,
+  userPrompt: string,
+  attempt = 0,
+  timeoutMs = DEFAULT_TIMEOUT_MS,
+  retryAfterMs?: number,
+): Promise<string> {
+  return callOpenAICompat(TOGETHER_URL, TOGETHER_KEY, "Together (togetherai_api_key)", model, systemPrompt, userPrompt, attempt, timeoutMs, retryAfterMs);
+}
+
+// ── Model Call (route to Ollama, OpenRouter, or Together) ─────────
 
 async function callModel(
   model: string,
   systemPrompt: string,
   userPrompt: string,
   timeoutMs = DEFAULT_TIMEOUT_MS,
+  provider = "",
 ): Promise<string> {
+  if (provider === "together") return callTogether(model, systemPrompt, userPrompt, 0, timeoutMs);
   if (model.includes("/")) {
     return callOpenRouter(model, systemPrompt, userPrompt, 0, timeoutMs);
   }
@@ -703,6 +714,7 @@ async function main() {
   const excludeSet = new Set<string>();
   let hasExplicitModels = false;
   let runAllMode = false;
+  let provider = "";  // "together" routes org/model slugs to Together AI; default "" → OpenRouter
 
   for (const arg of args) {
     if (arg === "--skip-grading") {
@@ -726,6 +738,8 @@ async function main() {
         console.log(`Unknown fixture '${val}'. Available: ${Object.keys(FIXTURES).join(", ")}`);
         process.exit(1);
       }
+    } else if (arg.startsWith("--provider=")) {
+      provider = arg.replace("--provider=", "");
     } else if (arg === "--run-all") {
       runAllMode = true;
     } else if (arg === "--help" || arg === "-h") {
@@ -747,6 +761,7 @@ async function main() {
       console.log(`  --exclude=<m1,m2>  Exclude models (default excludes applied only when auto-discovering)`);
       console.log(`  --timeout=<sec>    Per-test timeout in seconds (default: 60)`);
       console.log(`  --fixture=<name>   Choose eval suite: ${Object.keys(FIXTURES).join(", ")} (default: ${DEFAULT_FIXTURE})`);
+      console.log(`  --provider=<name>  Route "org/model" slugs: "together" (Together AI) or "" (OpenRouter, default)`);
       console.log(`  --run-all          Run all recommended models through all fixtures`);
       console.log(`\nDefault excludes (muppet-substrates): ${DEFAULT_EXCLUDE_LIST.join(", ")}`);
       console.log(`  Only applied when no models specified — explicitly specify a model to override.`);
@@ -978,7 +993,7 @@ minimalist, local-first architectures. ${test.setup.system_prompt_append}`;
           responseText = r.text;
           toolCallCount = r.toolCallCount;
         } else {
-          responseText = await callModel(model, protocolBase, test.setup.user_prompt, timeoutMs);
+          responseText = await callModel(model, protocolBase, test.setup.user_prompt, timeoutMs, provider);
         }
       } catch (err) {
         const errMsg = err instanceof Error ? err.message : String(err);
