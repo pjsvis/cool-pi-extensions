@@ -1,5 +1,11 @@
 # Playbook 014 - Propagating the Lightweight System to New Repositories
 
+> **Retired 2026-07-18.** Superseded by `playbooks/repo-setup-retrofit-playbook.md`,
+> which replaces the copy-wholesale approach with a review → propose → execute
+> retrofit procedure. This playbook referenced structures (barnacle-reports,
+> Popper Party, skepticism budget) that are no longer part of the system. Kept
+> for historical context — do not follow these steps.
+
 **Audience** - Engineers, AI agents, and maintainers who want to adopt the low-overhead, high-integrity workflow described in Brief 013.
 
 ---

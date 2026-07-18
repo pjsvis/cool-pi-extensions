@@ -53,14 +53,40 @@ just check
 
 ---
 
-## Ending Work
+## Ending Work — or Newing Up
 
-Capture context before closing:
+Capture context before closing **or newing up**:
 
 ```bash
 td handoff td-abc123 --done "post drafted and reviewed" --remaining "export and distribute"
 td review td-abc123           # submit for review
 ```
+
+### When to new up instead of ending
+
+A newup is a phase boundary, not a session end. The work continues — the
+transcript doesn't. New up when:
+
+- You've completed a logical unit of work and the context is heavy.
+- The meter is climbing faster than the work is progressing (*O(n²)* cost).
+- The task is **intractable** — persist state, new up, attack with a clean
+  slate. A fresh context solves problems a stale one can't, because it isn't
+  anchored to its own discarded attempts.
+
+```bash
+td handoff td-abc123 --done "phase 1 complete" --remaining "phase 2: integration"
+# /clear or new session
+td usage --new-session
+td context td-abc123    # resume from compressed handoff
+```
+
+The handoff is the lossy compression. The raw transcript is the entropy.
+Locus tags (`[LOC:]` / `[WAYPOINT:]`) in the handoff tell the fresh session
+which files and milestones matter. Half a dozen newups in a long session is
+not excessive — it is the difference between *O(n²)* and *O(n)*.
+
+See `briefs/2026-07-18-brief-session-newup-discipline.md` and
+`blog/2026-07-18-token-minimisation.md`.
 
 ---
 
