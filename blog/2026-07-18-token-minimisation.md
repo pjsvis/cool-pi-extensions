@@ -90,6 +90,66 @@ intractable-task lesson is about **capability**. Newing up doesn't just save
 money — it restores the model's ability to solve the problem. The handoff is
 the only thing that needs to survive. Everything else is entropy.
 
+## The all-nighter trap
+
+There is a reason developers resist this, and it has nothing to do with
+Shannon or *O(n²)* or channel capacity. It's psychological, and it's
+predicated on a category error.
+
+We all remember the all-nighter. Early career, a deadline, a problem that
+wouldn't yield, and the particular flow state that arrives at 2am when the
+office is empty and the code is the only thing in the world. You push through
+the wall. You ship at dawn. It's one of the formative experiences of being a
+developer. You can't do it anymore — the body won't sustain it, the life
+around the job won't permit it, and frankly the returns diminish. But you
+remember it fondly, and the memory carries a charge: *that was when I was at
+my best.*
+
+Now you have an agent. The agent doesn't get tired. The agent doesn't have a
+family to go home to. The agent can do the all-nighter you can no longer
+sustain. So you let it run. You give it the problem that won't yield and you
+let it grind, turn after turn, because the all-nighter is how hard problems
+get solved, and the agent is your proxy for the version of yourself that
+could still pull an all-nighter.
+
+This is the trap. The agent session is not an all-nighter. It is the opposite
+of an all-nighter, and the difference is the cost model.
+
+An all-nighter is **free**. The developer's salary is sunk. The hours between
+2am and dawn cost nothing extra. The effort is linear — one more hour, one
+more attempt, one more debugging pass. Fatigue is the only constraint, and
+fatigue is self-limiting. You stop when you can't continue. The cost of the
+all-nighter is paid in body and recovery, not in marginal dollars per attempt.
+
+The agent session is **priced per attempt, per turn, per token**. There is no
+sunk cost. Every turn costs money, and every turn costs *more* than the last
+because the context is larger. The all-nighter is linear effort at zero
+marginal cost. The long agent session is quadratic cost at declining
+information rate. You are not reliving your youth. You are boiling an ocean.
+
+The category error is this: the all-nighter is a **human capability story**
+(fatigue-bounded, free, linear). The long agent session is a **channel
+capacity story** (capacity-bounded, priced, quadratic). They feel the same
+from the outside — someone working late on a hard problem — but they are
+structurally different. One is sustainable effort. The other is **thermal
+death**: the channel fills with its own noise, the SNR collapses, and you pay
+more per turn for less signal.
+
+The all-nighter worked because the human brain is a remarkable channel — it
+forgets the failed approaches overnight, it re-frames the problem after sleep,
+it arrives at dawn with a clean context and a new angle. The brain *new up*
+automatically. That's why the all-nighter solved problems — not because the
+hours were continuous, but because the brain reset between them. The agent
+doesn't reset. It carries every failed approach forward, re-transmitting the
+noise on every turn. You've given it the worst possible version of the
+all-nighter: continuous effort without the overnight forgetting that made the
+original work.
+
+The fix is the same as before. Bound the session. Hand off. New up. Let the
+fresh context be the dawn — the clean angle, the forgotten failures, the
+problem re-framed. That's what the all-nighter actually was. The agent can
+do it. But only if you let it sleep.
+
 ---
 
 *Part of the [Edinburgh Protocol](https://github.com/pjsvis/cool-pi-extensions) series. The session-newup discipline is documented in the repo's `AGENTS.md`. The $46 lesson is in `briefs/2026-07-18-brief-session-newup-discipline.md`. Run it yourself. Watch your meter.*
