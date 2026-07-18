@@ -59,6 +59,14 @@ Half a dozen newups in a long session is not excessive — it is the difference
 - You've completed a logical unit of work, **and** the context is feeling heavy.
 - The meter in Pi is climbing faster than the work is progressing.
 - You're about to shift to a different file or concern (a `[LOC:]` boundary).
+- **The task is intractable.** A single task that won't yield is the strongest
+  signal to new up — not to abandon it, but to attack it with a clean slate.
+  Persist state with `td handoff`, new up, resume from `td context`. The new
+  session gets the relevant history (compressed) without the barnacles. The
+  locus tags (`[LOC:]` / `[WAYPOINT:]`) in the handoff tell it exactly which
+  files and milestones matter. A fresh context solves problems a stale one
+  can't — not because the model is smarter, but because it isn't drowning in
+  its own discarded attempts.
 
 The agent cannot feel the cost — it has no skin in the game. The human watches
 the meter. This is a management function, not a memory test: identify cost

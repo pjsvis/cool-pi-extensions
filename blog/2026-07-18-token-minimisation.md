@@ -58,6 +58,38 @@ This is the honest version of the pitch: **the manager exists to turn chip pan f
 - Cost spikes are not problems. They are the manager's reason for existing.
 - $46 is tuition. The next session costs $4.
 
+## Newup as problem-solving, not just cost control
+
+There is a second reason to new up that has nothing to do with the meter, and
+it is in some ways the stronger one.
+
+A task that won't yield — the bug that reproduces in one session and not
+another, the translator that passes every unit test but fails the integration,
+the model that agrees with every correction and still produces the wrong
+output — is the clearest signal to new up. Not to abandon the task. To attack
+it with a clean slate.
+
+The mechanism is simple: persist state with `td handoff`, new up, resume from
+`td context`. The new session gets the relevant history in compressed form —
+ground truth, rejected hypotheses, remaining debt — without the barnacles. The
+locus tags in the handoff (`[LOC: file]` / `[WAYPOINT: milestone]`) tell the
+fresh agent exactly which files and milestones matter, so it doesn't have to
+re-derive the map from a wall of transcript.
+
+A fresh context solves problems a stale one can't — not because the model is
+smarter, but because it isn't drowning in its own discarded attempts. A
+long-running agent accumulates dead ends. Every failed hypothesis it tried,
+every wrong turn it took, is still in the context window, weighting the
+attention mechanism toward the approaches that already didn't work. The model
+literally can't forget what it already tried. A new session can. It starts
+clean, reads the handoff (which records what was tried and rejected), and
+approaches the problem from a direction that isn't anchored to the failures.
+
+This is the win that's easy to miss. The $46 lesson is about cost. The
+intractable-task lesson is about **capability**. Newing up doesn't just save
+money — it restores the model's ability to solve the problem. The handoff is
+the only thing that needs to survive. Everything else is entropy.
+
 ---
 
 *Part of the [Edinburgh Protocol](https://github.com/pjsvis/cool-pi-extensions) series. The session-newup discipline is documented in the repo's `AGENTS.md`. The $46 lesson is in `briefs/2026-07-18-brief-session-newup-discipline.md`. Run it yourself. Watch your meter.*
