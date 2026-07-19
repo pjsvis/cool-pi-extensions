@@ -1,7 +1,7 @@
 # Pi Provider Registry
-**Generated:** 2026-07-15
+**Generated:** 2026-07-19
 **Source:** `~/.pi/agent/models.json`
-**Providers:** 10  ·  **Total models:** 46
+**Providers:** 11  ·  **Total models:** 49
 
 _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 
@@ -186,9 +186,26 @@ _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 
 | Model | Reasoning | Input | Context | MaxTok | Cost (in/out) | Notes |
 |---|---|---|---|---|---|---|
-| `Prism-ML/Ternary-Bonsai-27B` | ✓ | text, image | 262144 | 32768 | $0/$0 | FREE limited-time dev preview (PrismML, via Together). Ternary Qwen3.6-27B @1.71bpw, ~95% FP16 retention (vendor-reported). Apache 2.0 weights. Vendor: agentic coding not yet strong. Grab-and-use; prune when preview ends (Decision 016). Behavioral eval pending (not on OpenRouter/ZenMux). |
+| `Prism-ML/Ternary-Bonsai-27B` | ✓ | text, image | 262144 | 32768 | $0/$0 | FREE limited-time dev preview (PrismML, via Together). Ternary Qwen3.6-27B @1.71bpw. 4/4 primed traps (eval 2026-07-14 via Together — compression held Protocol-aligned behavior). EDI-005 returned 0c (likely thinking-budget exhausted @max_tokens=2048 on the open-ended prompt, not a yap signal). Vendor: agentic coding not yet strong. Apache 2.0 weights. Grab-and-use; prune when preview ends (Decision 016). |
 | `meta-llama/Llama-4-Scout-17B-16E-Instruct` | ✓ | text, image | 1048576 | 32768 | $0.18/$0.59 | 1M-ctx Llama-4 (17Bx16E MoE), multimodal. Cheap on Together (0.18/0.59). New to config. |
 | `moonshotai/Kimi-K2.6` | ✓ | text, image | 262144 | 262144 | $1.2/$4.5 | Failover for the primary 18/19 Kimi K2.6. Pricier than Moonshot-direct (0.95/4) but second route; uses prepaid Together credit (Decision 016). |
 | `deepseek-ai/DeepSeek-V4-Pro` | ✓ | text | 512000 | 65536 | $1.74/$3.48 | Failover — ~4x ZenMux (0.435/0.87), pricey; second route, uses prepaid credit. 14/19 + 7/8 IQ. |
 | `Qwen/Qwen3.7-Max` | ✓ | text | 1000000 | 65536 | $1.25/$3.75 | Failover — ~3x ZenMux (0.43/1.29), pricey; second route, uses prepaid credit. 16/19. |
+
+## spacexai
+
+| Property | Value |
+|---|---|
+| Base URL | `https://api.x.ai/v1` |
+| API | `openai-completions` |
+| Auth | local |
+| Key source | `!skate get xai_api_key` |
+
+### Models (3)
+
+| Model | Reasoning | Input | Context | MaxTok | Cost (in/out) | Notes |
+|---|---|---|---|---|---|---|
+| `grok-4.5` | ✓ | text, image | 500000 | 32768 | $2/$6 |  |
+| `grok-4.3` | ✓ | text | 131072 | 32768 | $1.25/$2.5 |  |
+| `grok-build-0.1` | ✓ | text | 131072 | 32768 | $1/$2 |  |
 
