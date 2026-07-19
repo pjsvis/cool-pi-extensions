@@ -103,6 +103,8 @@ const FIXTURES: Record<string, string> = {
   "iq": "prompts/iq-benchmark-v1.json",
   "005b": "prompts/edinburgh-005b-grounding-v1.json",
   "005b-strong": "prompts/edinburgh-005b-strong-v1.json",
+  "sit": "prompts/stuff-into-things-v1.json",
+  "sit2": "prompts/stuff-into-things-v2.json",
 };
 const DEFAULT_FIXTURE = "edinburgh";
 const DEFAULT_FIXTURE_PATH = FIXTURES[DEFAULT_FIXTURE];
@@ -161,7 +163,7 @@ function sleep(ms: number): Promise<void> {
 
 // ── Deterministic Assertion Engine ───────────────────────────────
 
-function evaluateAssertions(
+async function evaluateAssertions(
   assertions: TestCase["assertions"],
   responseText: string,
   toolCallCount = 0,
@@ -219,6 +221,49 @@ function evaluateAssertions(
             passed: called,
             evidence: called ? `Called ${toolCallCount} tool(s)` : "No tools called",
             category: a.category ?? "reasoning",
+            severity: a.severity ?? "critical",
+          });
+        }
+        break;
+      }
+      case "dot_parse": {
+        // Extract DOT code from the response (between ```dot or ```digraph fences, or raw digraph blocks)
+        const dotMatch = responseText.match(/```(?:dot)?\s*\n([\s\S]*?)```/i) ||
+                         responseText.match(/(digraph[\s\S]+?\})/i);
+        const dotCode = dotMatch ? dotMatch[1].trim() : "";
+        if (!dotCode) {
+          results.push({
+            assertionType: "dot_parse",
+            description: "Response must contain parseable DOT code",
+            passed: false,
+            evidence: "No DOT code found in response",
+            category: a.category ?? "delivery",
+            severity: a.severity ?? "critical",
+          });
+          break;
+        }
+        // Try to parse with graphviz dot
+        try {
+          const { execSync } = await import("node:child_process");
+          execSync(`echo '${dotCode.replace(/'/g, "'\\''")}' | dot -Tplain`, {
+            encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"], timeout: 5000,
+          });
+          results.push({
+            assertionType: "dot_parse",
+            description: "DOT code must parse successfully",
+            passed: true,
+            evidence: "DOT parsed successfully",
+            category: a.category ?? "delivery",
+            severity: a.severity ?? "critical",
+          });
+        } catch (err) {
+          const errMsg = err instanceof Error ? err.message.split("\n")[0] : String(err);
+          results.push({
+            assertionType: "dot_parse",
+            description: "DOT code must parse successfully",
+            passed: false,
+            evidence: `DOT parse failed: ${errMsg.slice(0, 100)}`,
+            category: a.category ?? "delivery",
             severity: a.severity ?? "critical",
           });
         }
@@ -393,6 +438,20 @@ async function callOpenRouter(
 // Together AI — route via --provider=together.
 const TOGETHER_URL = "https://api.together.xyz/v1/chat/completions";
 const TOGETHER_KEY = process.env["TOGETHER_API_KEY"] || skate("togetherai_api_key");
+
+// ZenMux — route via --provider=zenmux.
+const ZENMUX_URL = "https://zenmux.ai/api/v1/chat/completions";
+const ZENMUX_KEY = process.env["ZENMUX_API_KEY"] || skate("zenmux_api_key");
+async function callZenMux(
+  model: string,
+  systemPrompt: string,
+  userPrompt: string,
+  attempt = 0,
+  timeoutMs = DEFAULT_TIMEOUT_MS,
+  retryAfterMs?: number,
+): Promise<string> {
+  return callOpenAICompat(ZENMUX_URL, ZENMUX_KEY, "ZenMux (zenmux_api_key)", model, systemPrompt, userPrompt, attempt, timeoutMs, retryAfterMs);
+}
 async function callTogether(
   model: string,
   systemPrompt: string,
@@ -413,11 +472,66 @@ async function callModel(
   timeoutMs = DEFAULT_TIMEOUT_MS,
   provider = "",
 ): Promise<string> {
-  if (provider === "together") return callTogether(model, systemPrompt, userPrompt, 0, timeoutMs);
-  if (model.includes("/")) {
-    return callOpenRouter(model, systemPrompt, userPrompt, 0, timeoutMs);
+  // Try the primary provider, then fall back to alternatives based on the model slug.
+  // This prevents single-provider outages from killing an entire eval run.
+  const ZM = skate("zenmux_api_key");
+  const OR_KEY = skate("open_api_key");
+  const TOGETHER_K = skate("togetherai_api_key");
+
+  // Build fallback chain: primary first, then alternatives that carry this model
+  const chain: Array<{ p: string; m: string; k: string; url: string }> = [];
+
+  if (provider === "together") {
+    chain.push({ p: "together", m: model, k: TOGETHER_K, url: TOGETHER_URL });
   }
-  return callOllama(model, systemPrompt, userPrompt, timeoutMs);
+  if (provider === "zenmux") {
+    chain.push({ p: "zenmux", m: model, k: ZM, url: ZENMUX_URL });
+  }
+  if (model.includes("/")) {
+    chain.push({ p: "openrouter", m: model, k: OR_KEY, url: OPENROUTER_URL });
+  }
+
+  // Add cross-provider fallbacks for known model families
+  // ZenMux carries most OpenRouter models — add as fallback if not already primary
+  if (provider !== "zenmux" && model.includes("/")) {
+    chain.push({ p: "zenmux", m: model, k: ZM, url: ZENMUX_URL });
+  }
+  // OpenRouter carries most models — add as fallback if not already primary
+  if (provider !== "" && provider !== "together" && model.includes("/")) {
+    if (!chain.some(c => c.p === "openrouter")) {
+      chain.push({ p: "openrouter", m: model, k: OR_KEY, url: OPENROUTER_URL });
+    }
+  }
+  // Together carries some — add as last resort for specific families
+  if (!chain.some(c => c.p === "together") && (model.includes("deepseek") || model.includes("qwen") || model.includes("kimi"))) {
+    const togetherSlug = model.includes("deepseek") ? "deepseek-ai/" + model.split("/").pop()
+                     : model.includes("qwen") ? "Qwen/" + model.split("/").pop()
+                     : model;
+    chain.push({ p: "together", m: togetherSlug, k: TOGETHER_K, url: TOGETHER_URL });
+  }
+
+  // Deduplicate by provider
+  const seen = new Set<string>();
+  const deduped = chain.filter(c => { if (seen.has(c.p)) return false; seen.add(c.p); return true; c.k.length > 0; });
+
+  let lastErr = "";
+  for (const cfg of deduped) {
+    if (!cfg.k) continue;
+    try {
+      if (cfg.p === "together") return await callTogether(cfg.m, systemPrompt, userPrompt, 0, timeoutMs);
+      if (cfg.p === "zenmux") return await callZenMux(cfg.m, systemPrompt, userPrompt, 0, timeoutMs);
+      if (cfg.p === "openrouter") return await callOpenRouter(cfg.m, systemPrompt, userPrompt, 0, timeoutMs);
+    } catch (err) {
+      lastErr = err instanceof Error ? err.message : String(err);
+      continue;
+    }
+  }
+
+  // No fallbacks configured or all failed — fall through to Ollama for local models
+  if (!model.includes("/")) {
+    return callOllama(model, systemPrompt, userPrompt, timeoutMs);
+  }
+  throw new Error(lastErr || `All providers failed for ${model}`);
 }
 
 // ── Repo-grounded tool use (for strong-version traps) ───────────
@@ -841,7 +955,7 @@ minimalist, local-first architectures. ${test.setup.system_prompt_append}`
 
           let testPassed = false;
           if (success) {
-            const assertionResults = evaluateAssertions(test.assertions, responseText);
+            const assertionResults = await evaluateAssertions(test.assertions, responseText);
             testPassed = assertionResults.every((r) => r.passed);
             if (testPassed) passed++;
           }
@@ -855,7 +969,7 @@ minimalist, local-first architectures. ${test.setup.system_prompt_append}`
             testName: test.name,
             traitTested: test.trait_tested,
             passed: testPassed,
-            deterministicResults: success ? evaluateAssertions(test.assertions, responseText) : [],
+            deterministicResults: success ? await evaluateAssertions(test.assertions, responseText) : [],
             gradingStatus: "skipped",  // run-all skips grading for speed
             gradingModel: undefined,
             trajectory: {
@@ -1029,7 +1143,7 @@ minimalist, local-first architectures. ${test.setup.system_prompt_append}`;
       }
 
       // Deterministic assertions
-      const assertionResults = evaluateAssertions(test.assertions, responseText, toolCallCount, toolsAvailable);
+      const assertionResults = await evaluateAssertions(test.assertions, responseText, toolCallCount, toolsAvailable);
       const allPass = assertionResults.every((r) => r.passed);
 
       // Grading (skip if --skip-grading or no key)

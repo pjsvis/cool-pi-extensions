@@ -56,6 +56,8 @@ show-edinburgh:
 #   just eval status       — show recent results from .silo/eval_log.json
 #   just eval edinburgh    — run scoring eval (defaults to Kimi models)
 #   just eval edinburgh kimi --json   — JSON output
+#   just eval edinburgh kimi --bare    — bare-substrate control (no Protocol)
+#   just eval matrix kimi              — run both conditions, show delta
 #   just eval traps        — run trap eval (all Ollama models)
 #   just eval traps qwen2.5:3b        — test specific model
 #   just eval traps nvidia/nemotron-3-ultra-550b-a55b:free  — OpenRouter model
