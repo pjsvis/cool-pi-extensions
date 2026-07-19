@@ -4,6 +4,24 @@
 
 How we write the assets we produce — README, DEPENDENCIES, playbooks, briefs, decisions, blog. The structure, the voice, and the attitude. This is the constraint stack for documentation, parallel to the Edinburgh Protocol for agent behavior.
 
+## Two voices: dialog and writing
+
+There are two registers, and they do not mix. Conflating them is the dominant failure mode of agent-authored prose.
+
+**Dialog voice** — fluid, amusing, context-rich. The register of two minds with shared history thinking out loud. Banter is load-bearing here: it is how we move fast. This voice is *for us*. It belongs in conversation and handoffs — never in published assets.
+
+**Writing voice** — hardcore Shannonesque, attending, self-contained. The register of prose for strangers who lack our context. It serves the reader; it does not amuse the author. This voice is *for others*. It is what ships: README, DEPENDENCIES, docs, blog.
+
+The Shannon Package is what keeps them separate. The tldr forces self-containment — a point that needs our shared context to decode cannot ship as a tldr. The narrativised-bibliography forces relationships to be spelled out, not alluded to. The structure makes dialog-voice leakage unshippable. It is not only a checksum; it is a voice-enforcer.
+
+**The calibration: attend.** Not noir, not brutal. Noir and brutal are both prose self-regard — noir preens (look at the style), brutal dominates (look at the force). *Attend* is other-regard: the prose pays attention to the reader's lack of context, to the subject, to precision. It is the impartial spectator rendered as prose. The writing voice has personality (precise, dryly witty, compressed) — but personality in service, not in self-amusement. The line is service vs self-regard, not personality vs no-personality. Attending is not bloodless.
+
+**The sequence.** Dialog is upstream of writing. The fluid exploration is where insights are found; the writing is the distillation. Separate the voices, keep the sequence. A wall that kills the generative dialog produces correct, dead prose — its own form of self-amusement.
+
+**The test.** Before shipping prose, ask: does this amuse us, or does it attend to the reader? If it amuses us, it stays in dialog. If it attends, it can ship.
+
+---
+
 ## The voice: tldr + content + narrativised-bibliography
 
 Every produced asset is a **Shannon Package** — a doc with a checksum. Three sections, in order:

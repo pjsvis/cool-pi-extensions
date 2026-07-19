@@ -80,6 +80,8 @@ Ctrl+B v  — split vertically
 Ctrl+B s  — split horizontally
 ```
 
+**Use case — running agent-produced commands by hand.** When the agent emits a bash command meant for the human to run (an uninstall, a verification, a change outside the agent's silo), split the pane and paste it into the adjacent shell. The agent's output stays visible in one pane while the command runs in the other — no tab-switching, no losing the reasoning behind the command. This is the manual handoff for anything outside the agent's boundary: the agent advises, the human executes, both stay on screen.
+
 ---
 
 ## Session persistence
