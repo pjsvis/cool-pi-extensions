@@ -1,4 +1,4 @@
-# Decision 019: Failover ordering — freebie → cheapest → direct → expensive
+# Decision 020: Failover ordering — freebie → cheapest → direct → expensive
 
 **Date:** 2026-07-19
 **Status:** Accepted

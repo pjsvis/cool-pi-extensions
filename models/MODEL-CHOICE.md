@@ -34,4 +34,4 @@ new model per session; that's how Ring 2.6 and DeepSeek V4 Pro got found.
 
 ---
 
-Full eval table + provider routes: [RECOMMENDED.md](RECOMMENDED.md) · Failover ordering: [Decision 019](../decisions/019-failover-ordering-policy.md).
+Full eval table + provider routes: [RECOMMENDED.md](RECOMMENDED.md) · Failover ordering: [Decision 020](../decisions/020-failover-ordering-policy.md).
