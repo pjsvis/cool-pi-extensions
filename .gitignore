@@ -10,6 +10,9 @@ cli/pi-check/node_modules/
 
 # macOS
 .DS_Store
+
+# Binary PDF clippings (kept local; .md is the repo's clipping convention)
+*.pdf
 .todos/
 .sidecar/
 .sidecar-agent
