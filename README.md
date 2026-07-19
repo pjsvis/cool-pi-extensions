@@ -229,8 +229,6 @@ External dependencies are documented in [DEPENDENCIES.md](DEPENDENCIES.md). Run 
 
 **Fresh plugins:** [Glow](https://github.com/charmbracelet/glow) (markdown renderer), [Fresh](https://sinelaw.github.io/fresh/) (editor).
 
-Optional: `rtk` (token compression). See [DEPENDENCIES.md](DEPENDENCIES.md).
-
 ---
 
 ## License

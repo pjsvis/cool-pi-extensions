@@ -76,17 +76,17 @@ npm install -g @earendil-works/pi-coding-agent
 - macOS: `brew install sidecar` (from `marcus/homebrew-tap`)
 - Arch: untested
 
+**`skate`** (secret management — resolves API keys for evals + pi-check) — macOS: `brew install skate` · Arch: `pacman -S skate`
+
+**`glow`** (markdown viewer — the human-agent control plane) — macOS: `brew install glow` · Arch: `pacman -S glow`
+
 ## Required — extensions
 
 *None — all extensions use only pi's built-in runtime.*
 
 ## Optional — integrations
 
-**`rtk`** (token compression) — `brew install rtk`
-
-**`skate`** (secret management) — macOS: `brew install skate` · Arch: `pacman -S skate`
-
-**`glow`** (markdown preview / `just help`) — macOS: `brew install glow` · Arch: `pacman -S glow`
+*None currently.*
 
 ## Adding a new dependency
 
@@ -97,7 +97,7 @@ npm install -g @earendil-works/pi-coding-agent
    "Required — extensions" list above and update `scripts/install-deps.sh`
    (the script is what `just install-deps` runs; the doc and script mirror
    each other).
-3. **Opt-in** (like rtk, skate, glow) → list under "Optional — integrations";
+3. **Opt-in** (rare — currently none) → list under "Optional — integrations";
    `just install-deps` flags it as optional and won't fail.
 
 ## Stack overview
