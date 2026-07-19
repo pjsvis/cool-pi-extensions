@@ -1,71 +1,104 @@
 # External dependencies
 
-Extensions run inside pi's runtime and only need what pi provides.
-CLI tools and optional integrations may need additional binaries on `PATH`.
+Extensions run inside pi's runtime and need nothing extra. The CLI tools and
+optional integrations need a few binaries on `PATH`.
+
+## Quick check
+
+```bash
+just install-deps
+```
+
+Run from the repo root. **This checks, it doesn't install** — it reports each
+required and optional binary as present (✓) or missing (✗) with a per-binary
+install hint, and exits non-zero if anything required is absent.
+
+## Platform status
+
+| Platform | Status |
+|---|---|
+| **macOS** | Known-good. Everything installs via `brew` (+ `marcus/homebrew-tap` for `td`/`sidecar`). |
+| **Arch / Omarchy** | Partial. `pacman` covers `bun just gum skate glow`; `pi` via curl. **`td` and `sidecar` are brew-tap-only and untested on Arch** — try, fix, file a PR. |
+| **Windows / WSL2** | Untested. Run `just install-deps`, install what it reports missing, file a PR for what breaks. |
+
+**If you're on macOS, this is the path. If you're elsewhere, give it a try and
+fix up what goes wrong — PRs welcome.**
+
+## macOS install (known-good)
+
+```bash
+brew install bun just gum skate glow
+brew tap marcus/homebrew-tap
+brew install td sidecar
+curl -fsSL https://pi.dev/install.sh | sh   # pi coding agent
+just install-deps                             # verify
+```
+
+## Arch / Omarchy install (untested)
+
+```bash
+pacman -S bun just gum skate glow
+curl -fsSL https://pi.dev/install.sh | sh
+# td, sidecar — brew-tap-only in the checker; untested on Arch
+just install-deps
+```
 
 ## Required — CLI tools
 
-**`pi-models`** — Needs: `bun` ≥1.3. Install: `bun` is available via most package managers:
-- Arch: `pacman -S bun`
+Per-tool install lines, for when `just install-deps` reports something missing.
+
+**`pi-models`** — needs `bun` ≥1.3.
 - macOS: `brew install bun`
+- Arch: `pacman -S bun`
 - Other: `curl -fsSL https://bun.sh/install | bash`
 
-**`just` (task runner)** — Needs: `just`. Install:
-- Arch: `pacman -S just`
+**`just`** (task runner) — needs `just`.
 - macOS: `brew install just`
-- Other: `cargo install just` or see https://github.com/casey/just
+- Arch: `pacman -S just`
+- Other: `cargo install just` or https://github.com/casey/just
 
-**`gum` (CLI prompts)** — Needs: `gum`. Install:
-- Arch: `pacman -S gum`
+**`gum`** (CLI prompts) — needs `gum`.
 - macOS: `brew install gum`
+- Arch: `pacman -S gum`
 
-**`pi` (coding agent)** — Needs: `pi`. Install:
+**`pi`** (coding agent) — needs `pi`.
 ```bash
 curl -fsSL https://pi.dev/install.sh | sh
 # or
 npm install -g @earendil-works/pi-coding-agent
 ```
 
-**`td` (agent task memory)** — Needs: `td`. Install: `brew install td` (from `marcus/homebrew-tap`)
+**`td`** (agent task memory) — needs `td`.
+- macOS: `brew install td` (from `marcus/homebrew-tap`)
+- Arch: untested
 
-**`sidecar` (user monitor)** — Needs: `sidecar`. Install: `brew install sidecar` (from `marcus/homebrew-tap`)
+**`sidecar`** (user monitor) — needs `sidecar`.
+- macOS: `brew install sidecar` (from `marcus/homebrew-tap`)
+- Arch: untested
 
 ## Required — extensions
 
-**Extensions:** *none — all extensions use only pi's built-in runtime*
+*None — all extensions use only pi's built-in runtime.*
 
 ## Optional — integrations
 
-**rtk (token compression)** — Needs: `rtk` binary. Install: `brew install rtk`
+**`rtk`** (token compression) — `brew install rtk`
 
-**skate (secret management)** — Needs: `skate` binary. Install:
-- Arch: `pacman -S skate`
-- macOS: `brew install skate`
+**`skate`** (secret management) — macOS: `brew install skate` · Arch: `pacman -S skate`
 
-**glow (markdown preview / `just help`)** — Needs: `glow` binary. Install:
-- Arch: `pacman -S glow`
-- macOS: `brew install glow`
-
-## One-command setup
-
-```bash
-just install-deps
-```
-
-Checks each required and optional binary, reports what's missing, and provides
-platform-specific install instructions. Run from the repo root.
+**`glow`** (markdown preview / `just help`) — macOS: `brew install glow` · Arch: `pacman -S glow`
 
 ## Adding a new dependency
 
-1. If it's a **runtime dependency for an extension** (npm package, etc.), add it
-   to that extension's `package.json` and run `bun install` in that directory.
-   Pi resolves `node_modules/` next to extension files automatically.
-
-2. If it's a **system binary needed by an extension at runtime**, add it to the
-   "Required — extensions" table above and update `just install-deps` to check for it.
-
-3. If it's **opt-in** (like rtk, skate, or glow), list it under "Optional — integrations"
-   and `just install-deps` will flag it as optional but won't fail.
+1. **Runtime dependency for an extension** (npm package) → add it to that
+   extension's `package.json`, run `bun install` there. Pi resolves
+   `node_modules/` next to extension files automatically.
+2. **System binary needed by an extension at runtime** → add it to the
+   "Required — extensions" list above and update `scripts/install-deps.sh`
+   (the script is what `just install-deps` runs; the doc and script mirror
+   each other).
+3. **Opt-in** (like rtk, skate, glow) → list under "Optional — integrations";
+   `just install-deps` flags it as optional and won't fail.
 
 ## Stack overview
 
@@ -73,13 +106,12 @@ platform-specific install instructions. Run from the repo root.
 alacritty → herdr → pi → [new tab] → fresh → [new tab] → sidecar
 ```
 
-- **td** runs per-session for agents. It captures session identity, issue state,
+- **td** runs per-session for agents — captures session identity, issue state,
   and handoff context so the next agent session resumes exactly where the
   previous one stopped.
-- **sidecar** runs alongside the agent for human supervisors. It shows active
-  worktrees, td session state, agent conversation history, and merge workflow
-  in a TUI.
-- Both are installed via `marcus/homebrew-tap`:
+- **sidecar** runs alongside the agent for human supervisors — active
+  worktrees, td session state, agent conversation history, merge workflow.
+- Both via `marcus/homebrew-tap`:
   ```bash
   brew install td sidecar
   ```

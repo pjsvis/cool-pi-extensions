@@ -2,38 +2,30 @@
 
 A curated collection of extensions, CLI tooling, and prompts for the [Pi Coding Agent](https://github.com/earendil-works/pi-mono). Batteries included, entropy-free.
 
-## The API
+## Quick start
 
-This repo has a discoverable API for both agents and humans:
+**macOS (known-good):**
 
-**Agents**
-Full orientation — branch, git state, active tasks, entry points
-
-**Humans**
-List all docs with descriptions, preview with glow
-
-**Both**
-Interactive markdown browser — type `glow` alone for file picker
-
-**Visiting agents**
-`just adopt-edinburgh` → `just orient` — add constraint-stack, then context-initialization
-
-**Visiting agent workflow:**
 ```bash
-just adopt-edinburgh   # Apply Edinburgh Protocol (normalize behavior)
-just orient            # Context-initialization
+git clone https://github.com/pjsvis/cool-pi-extensions.git ~/.pi/extensions
+cd ~/.pi/extensions
+brew install bun just gum skate glow
+brew tap marcus/homebrew-tap && brew install td sidecar
+curl -fsSL https://pi.dev/install.sh | sh   # pi coding agent
+just install-deps     # verify everything's present
+just orient           # agent orientation
+just browse           # human doc browser
 ```
 
-The Edinburgh Protocol is a constraint stack that normalizes agent behavior
-across different models. Hume's skepticism, Smith's systems thinking, Watt's
-pragmatism. Consistent results, less variance.
+**Other platforms (Linux/Arch, WSL2 — untested):** clone, run `just install-deps`,
+install what it reports missing, and file a PR for anything that breaks.
+Per-tool install lines: [DEPENDENCIES.md](DEPENDENCIES.md).
 
-Start here:
-```bash
-just orient    # agent orientation
-just browse    # human doc browser
-just install-deps  # check dev dependencies are present
-```
+---
+
+The **Edinburgh Protocol** is the constraint stack that normalizes agent behavior
+across models — Hume's skepticism, Smith's systems thinking, Watt's pragmatism.
+Consistent results, less variance. See [prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md).
 
 ---
 
@@ -103,23 +95,25 @@ merge workflow. Watch your agent work without interfering.
 
 ---
 
-## Quick start
+## Discoverable interface
+
+A small surface for agents and humans:
+
+- **Agents:** `just orient` — full orientation (branch, git state, active tasks, entry points).
+- **Humans:** `just browse` — list all docs with descriptions, preview with glow.
+- **Both:** type `glow` alone for an interactive markdown file picker.
+- **Visiting agents:** `just adopt-edinburgh` applies the Protocol's constraint stack, then `just orient` initialises context:
 
 ```bash
-git clone https://github.com/pjsvis/cool-pi-extensions.git ~/.pi/extensions
-cd ~/.pi/extensions
-just install-deps
-
-# Agent: orient yourself
-just orient
-
-# Human: browse docs
-just browse
+just adopt-edinburgh   # apply Edinburgh Protocol (normalize behavior)
+just orient            # context-initialization
 ```
 
 ---
 
-## Install CLI tools globally
+## Detailed setup
+
+### Install CLI tools globally
 
 ```bash
 # pi-check — provider connectivity checker
@@ -129,9 +123,7 @@ cd src/cli/pi-check && bun install && bun link
 cd src/cli/pi-models && bun install
 ```
 
----
-
-## Activate extensions
+### Activate extensions
 
 ```bash
 mkdir -p ~/.pi/agent/extensions
@@ -139,9 +131,7 @@ ln -sf ~/.pi/extensions/src/extensions/defuddle/defuddle.ts ~/.pi/agent/extensio
 cp -r ~/.pi/extensions/src/extensions/silo ~/.pi/agent/extensions/silo
 ```
 
----
-
-## Set the system-prompt (optional)
+### Set the system-prompt (optional)
 
 ```bash
 ln -sf ~/.pi/extensions/prompts/edinburgh-protocol.md ~/.pi/agent/AGENTS.md
