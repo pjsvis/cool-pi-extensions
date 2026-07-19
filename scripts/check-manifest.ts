@@ -1,156 +1,163 @@
 #!/usr/bin/env bun
 
 /**
- * Lightweight manifest consistency checker.
+ * scripts/check-manifest.ts — register & manifest consistency gate.
  *
- * Checks that the human-facing documentation index stays aligned with reality:
- * - MANIFEST.md lists every file in docs/, playbooks/, briefs/, debriefs/,
- *   decisions/, and prompts/.
- * - MANIFEST.md does not list missing files.
- * - Markdown links within checked docs resolve to real files.
- * - Known path migrations are not reintroduced.
+ * Refactored from the hand-MANIFEST checker. Now verifies the generated
+ * register system:
+ *   1. Each registered folder's register.jsonl path-set == filesystem path-set
+ *      (missing / stale = entropy, exit 1).
+ *   2. MANIFEST.md marked block lists exactly the registered files (missing /
+ *      stale = stale roll-up, exit 1).
+ *   3. Retained advisory checks: internal markdown links resolve; known path
+ *      migrations are not reintroduced.
  *
- * This intentionally stays small. It is a barnacle scraper for the repo's
- * documentation surface, not a second build system.
+ * v1 is BLOCKING on presence (1, 2). sha/content staleness is informational in
+ * v1 (visible in `git diff`); promote to blocking later if wanted — same
+ * non-blocking→blocking pattern as semantic-integrity.ts.
  */
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { resolve, extname, relative, join } from "node:path";
+import { REGISTERED, BEGIN, END, listFiles, extractManifestBlock } from "./register-lib.ts";
 
-import { existsSync, readdirSync, readFileSync } from "node:fs"
-import { extname, join, relative, resolve } from "node:path"
+const ROOT = process.cwd();
 
-const ROOT = process.cwd()
-const MANIFEST = "MANIFEST.md"
-const INDEXED_DIRS = ["docs", "playbooks", "briefs", "debriefs", "decisions", "prompts"]
-const CHECKED_DOCS = [
-  "README.md",
-  "MANIFEST.md",
-  ...INDEXED_DIRS.flatMap((dir) => walk(join(ROOT, dir)).filter((p) => extname(p) === ".md")),
-]
-
-function rel(path: string): string {
-  return relative(ROOT, path).replaceAll("\\", "/")
+function parseRegisterPaths(dir: string): Set<string> {
+  const path = `${dir}/register.jsonl`;
+  const set = new Set<string>();
+  if (!existsSync(path)) return set;
+  for (const line of readFileSync(path, "utf-8").split("\n")) {
+    if (!line.trim()) continue;
+    try {
+      const j = JSON.parse(line) as { path?: string };
+      if (typeof j.path === "string") set.add(j.path);
+    } catch {
+      set.add(`__unparseable:${dir}__`);
+    }
+  }
+  return set;
 }
+
+function manifestListedPaths(block: string): Set<string> {
+  const set = new Set<string>();
+  const re = /\*\*\[([^\]]+)\]\([^)]+\)\*\*/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(block)) !== null) set.add(m[1]);
+  return set;
+}
+
+function checkRegisters(): string[] {
+  const errors: string[] = [];
+  const allFsPaths = new Set<string>();
+  for (const spec of REGISTERED) {
+    const reg = parseRegisterPaths(spec.dir);
+    const fs = new Set(listFiles(spec.dir).map((p) => relative(ROOT, p).replace(/\\/g, "/")));
+    fs.forEach((p) => allFsPaths.add(p));
+
+    if (reg.size === 0 && fs.size === 0) continue;
+
+    if (!existsSync(`${spec.dir}/register.jsonl`)) {
+      errors.push(`${spec.dir}/register.jsonl missing — run \`just registers\``);
+      continue;
+    }
+
+    const missing = [...fs].filter((p) => !reg.has(p)).sort();
+    const stale = [...reg].filter((p) => !fs.has(p)).sort();
+    if (missing.length) errors.push(`${spec.dir}: ${missing.length} file(s) not in register — run \`just registers\`:\n${missing.map((p) => `    - ${p}`).join("\n")}`);
+    if (stale.length) errors.push(`${spec.dir}: register lists ${stale.length} missing file(s) — run \`just registers\`:\n${stale.map((p) => `    - ${p}`).join("\n")}`);
+  }
+  return errors;
+}
+
+function checkManifest(): string[] {
+  const errors: string[] = [];
+  const text = existsSync("MANIFEST.md") ? readFileSync("MANIFEST.md", "utf-8") : "";
+  const block = extractManifestBlock(text);
+  if (!block) {
+    errors.push(`MANIFEST.md missing ${BEGIN}/${END} markers — run \`just registers\` (or add markers)`);
+    return errors;
+  }
+  const listed = manifestListedPaths(block);
+  const expected = new Set<string>();
+  for (const spec of REGISTERED) {
+    for (const p of listFiles(spec.dir)) expected.add(relative(ROOT, p).replace(/\\/g, "/"));
+  }
+  const missing = [...expected].filter((p) => !listed.has(p)).sort();
+  const stale = [...listed].filter((p) => !expected.has(p)).sort();
+  if (missing.length) errors.push(`MANIFEST.md missing ${missing.length} file(s) — run \`just registers\`:\n${missing.map((p) => `    - ${p}`).join("\n")}`);
+  if (stale.length) errors.push(`MANIFEST.md lists ${stale.length} non-registered file(s) — run \`just registers\`:\n${stale.map((p) => `    - ${p}`).join("\n")}`);
+  return errors;
+}
+
+// ── Retained advisory checks (from the original checker) ──────────────────────
+
+const INDEXED_DIRS = REGISTERED.map((s) => s.dir);
 
 function walk(dir: string): string[] {
-  if (!existsSync(dir)) return []
-
-  const files: string[] = []
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = join(dir, entry.name)
-    if (entry.isDirectory()) {
-      files.push(...walk(fullPath))
-    } else if (entry.isFile()) {
-      files.push(rel(fullPath))
-    }
+  if (!existsSync(dir)) return [];
+  const out: string[] = [];
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, e.name);
+    if (e.isDirectory()) out.push(...walk(full));
+    else if (e.isFile() && extname(e.name) === ".md") out.push(full);
   }
-  return files
-}
-
-function manifestLinks(): Set<string> {
-  const text = readFileSync(MANIFEST, "utf-8")
-  const links = new Set<string>()
-  const re = /\((docs|playbooks|briefs|debriefs|decisions|prompts)\/[^)\s]+\)/g
-  let match: RegExpExecArray | null
-  while ((match = re.exec(text)) !== null) {
-    links.add(match[0].slice(1, -1))
-  }
-  return links
-}
-
-function indexedFiles(): Set<string> {
-  const files = new Set<string>()
-  for (const dir of INDEXED_DIRS) {
-    for (const file of walk(join(ROOT, dir))) {
-      if (file.endsWith(".md") || file.endsWith(".json")) files.add(file)
-    }
-  }
-  return files
+  return out;
 }
 
 function markdownLinks(file: string): string[] {
-  const text = readFileSync(file, "utf-8")
-  const links: string[] = []
-  const re = /\[[^\]]*\]\(([^)]+)\)/g
-  let match: RegExpExecArray | null
-  while ((match = re.exec(text)) !== null) {
-    links.push(match[1])
-  }
-  return links
+  const text = readFileSync(file, "utf-8");
+  const links: string[] = [];
+  const re = /\[[^\]]*\]\(([^)]+)\)/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text)) !== null) links.push(m[1]);
+  return links;
 }
 
 function checkLinks(): string[] {
-  const errors: string[] = []
-
-  for (const file of CHECKED_DOCS) {
-    const base = resolve(ROOT, file, "..")
+  const errors: string[] = [];
+  const checked = ["README.md", "MANIFEST.md", ...INDEXED_DIRS.flatMap((d) => walk(resolve(ROOT, d)))];
+  for (const file of checked) {
+    if (!existsSync(file)) continue;
+    const base = resolve(file, "..");
     for (const raw of markdownLinks(file)) {
-      if (/^(https?:|mailto:|#|\/)/.test(raw)) continue
-
-      const [withoutAnchor] = raw.split("#")
-      if (!withoutAnchor) continue
-
-      const target = resolve(base, withoutAnchor)
-      if (!existsSync(target)) {
-        errors.push(`${file}: missing link → ${raw}`)
+      if (/^(https?:|mailto:|#|\/)/.test(raw)) continue;
+      const [withoutAnchor] = raw.split("#");
+      if (!withoutAnchor) continue;
+      if (!existsSync(resolve(base, withoutAnchor))) {
+        errors.push(`${file}: missing link → ${raw}`);
       }
     }
   }
-
-  return errors
+  return errors;
 }
 
 function checkPathDrift(): string[] {
   const checks: Array<[string, RegExp, string]> = [
-    [
-      "playbooks/terminal-stack.md",
-      /src\/cli\/[^\n]*\bnpm install\b/,
-      "CLI install playbook uses npm install; this project standard is bun install.",
-    ],
-    [
-      "docs/edinburgh-protocol-eval.md",
-      /(?<!src\/)cli\/pi-check\/edinburgh-eval\.ts/,
-      "Doc references old cli/pi-check path; use src/cli/pi-check.",
-    ],
-  ]
-
-  const errors: string[] = []
+    ["docs/edinburgh-protocol-eval.md", /(?<!src\/)cli\/pi-check\/edinburgh-eval\.ts/, "Doc references old cli/pi-check path; use src/cli/pi-check."],
+  ];
+  const errors: string[] = [];
   for (const [file, pattern, message] of checks) {
-    if (!existsSync(file)) continue
-    const text = readFileSync(file, "utf-8")
-    if (pattern.test(text)) errors.push(`${file}: ${message}`)
+    if (!existsSync(file)) continue;
+    if (pattern.test(readFileSync(file, "utf-8"))) errors.push(`${file}: ${message}`);
   }
-  return errors
+  return errors;
 }
 
 function main(): number {
-  const errors: string[] = []
-
-  const manifest = manifestLinks()
-  const actual = indexedFiles()
-
-  const missingFromManifest = [...actual].filter((file) => !manifest.has(file)).sort()
-  const staleInManifest = [...manifest].filter((file) => !actual.has(file)).sort()
-
-  if (missingFromManifest.length > 0) {
-    errors.push(`MANIFEST.md missing ${missingFromManifest.length} file(s):`)
-    for (const file of missingFromManifest) errors.push(`  - ${file}`)
-  }
-
-  if (staleInManifest.length > 0) {
-    errors.push(`MANIFEST.md lists ${staleInManifest.length} missing file(s):`)
-    for (const file of staleInManifest) errors.push(`  - ${file}`)
-  }
-
-  errors.push(...checkLinks())
-  errors.push(...checkPathDrift())
+  const errors: string[] = [];
+  errors.push(...checkRegisters());
+  errors.push(...checkManifest());
+  errors.push(...checkLinks());
+  errors.push(...checkPathDrift());
 
   if (errors.length === 0) {
-    console.log("✓ Manifest checks passed")
-    return 0
+    console.log("✓ Register & manifest checks passed");
+    return 0;
   }
-
-  console.error("✗ Manifest checks failed")
-  for (const error of errors) console.error(`  ${error}`)
-  return 1
+  console.error("✗ Register & manifest checks failed");
+  for (const error of errors) console.error(`  ${error}`);
+  console.error(`\n  Fix: \`just registers\` then re-commit.`);
+  return 1;
 }
 
-process.exit(main())
+process.exit(main());

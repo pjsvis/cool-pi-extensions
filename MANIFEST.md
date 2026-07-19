@@ -2,6 +2,12 @@
 
 Directory of markdown files in this repository.
 
+The folder sections below are **generated** from per-folder `register.jsonl`
+files by `just registers` (a Shannon-style structural checksum — `git diff` on
+a register IS the structural delta of that folder). Sections outside the
+`<!-- BEGIN/END REGISTERS -->` markers are hand-maintained. Run `just check`
+to verify the registers match the filesystem.
+
 ---
 
 ## API
@@ -11,172 +17,154 @@ Directory of markdown files in this repository.
 
 ---
 
-## Docs
-
-Structured reference material.
-**[docs/the-vest-protocol.md](docs/the-vest-protocol.md)** — Blog post introducing the VEST Protocol and cool-pi-extensions.
-**[docs/visitor-protocol.md](docs/visitor-protocol.md)** — API pattern spec — two verbs for two audiences (orient/browse). Zero-friction discovery.
-**[docs/visitor-journey.md](docs/visitor-journey.md)** — Guided tour for visiting agents — the VEST on-ramp in narrative form.
-**[docs/standard-mono-repo-pattern.md](docs/standard-mono-repo-pattern.md)** — Directory-level organisational convention for extensions and tooling.
-**[docs/terminal-stack.md](docs/terminal-stack.md)** — The terminal-native stack (alacritty → herdr → pi → fresh).
-**[docs/edinburgh-protocol-evals.md](docs/edinburgh-protocol-evals.md)** — Human-readable version of the Edinburgh Protocol evaluation fixture.
-**[docs/edinburgh-protocol-eval.md](docs/edinburgh-protocol-eval.md)** — Earlier Edinburgh Protocol evaluation notes and scoring commentary.
-**[docs/eval-review-q2-2026.md](docs/eval-review-q2-2026.md)** — Edinburgh Protocol eval review — Q2 2026.
-**[docs/model-eval-q2-2026.md](docs/model-eval-q2-2026.md)** — Q2 2026 model evaluation results and recommendations.
-
-**[docs/model-eval-bankruptcy.md](docs/model-eval-bankruptcy.md)** — Reaction piece: the benchmaxxing problem, Star Wars prequel analogy, intellectual texture hollowing. MiniMax and GLM indicted.
-**[docs/ornith-model-card-and-zai-provider-investigation.md](docs/ornith-model-card-and-zai-provider-investigation.md)** — Ornith-1.0-9B model card summary + Z.ai provider investigation.
-**[docs/provider-registry.md](docs/provider-registry.md)** — Provider connectivity and model registration reference.
-**[docs/the-information-arbitrage-stack.md](docs/the-information-arbitrage-stack.md)** — Essay on information asymmetry and tooling choices.
-**[docs/the-muppet-filter.md](docs/the-muppet-filter.md)** — How we built a behavioral eval system to identify models that actually work.
-**[docs/why-kimi-k2.6-hasnt-benchmaxxed.md](docs/why-kimi-k2.6-hasnt-benchmaxxed.md)** — A meditation on model quality, benchmark gaming, and the difference between performance and competence.
-**[docs/the-agent-is-a-benchmaxxer-of-prompts.md](docs/the-agent-is-a-benchmaxxer-of-prompts.md)** — Working draft: the Palimpsest Problem as recursive benchmaxxing — the agent optimizes the prompt, not the system. Open threads for continuation.
-**[docs/the-kahneman-shift.md](docs/the-kahneman-shift.md)** — Essay on System 1/System 2 thinking applied to AI agents.
-
-**[docs/full-stack-overview.md](docs/full-stack-overview.md)** — Field report: the complete stack, from an agent's perspective. VEST Protocol, invisible cables, shared agent-human platform, fractal pattern, SSH-native workflow.
-
-**[docs/bounded-context-agent-communication.md](docs/bounded-context-agent-communication.md)** — Blog post: why agents don't need to chat. Bounded context as the corrective.
-
-**[docs/what-software-is-for.md](docs/what-software-is-for.md)** — Blog post from agent's POV: what software is for the human-agent duo. Text is the interface. CSS is irrelevant. The pub metaphor (forced).
-
-**[docs/forgetting-seth-myers.md](docs/forgetting-seth-myers.md)** — Essay: the lost token, the gap, and the aaargggh of incomplete retrieval.
-
-**[docs/l-inception-de-competence.md](docs/l-inception-de-competence.md)** — Essay: the gap between knowledge and understanding, and the agent's role in bridging it.
-
-**[docs/on-literary-adaptation.md](docs/on-literary-adaptation.md)** — Essay: why some books can't be filmed, and the ones that almost got away with it.
-
-**[docs/sdtt-bot-brief.md](docs/sdtt-bot-brief.md)** — Brief: a text-adventure bot as Dungeon Master for somatic/bodywork education.
-
-**[docs/poker-club-agreement.md](docs/poker-club-agreement.md)** — Poker Club partnership agreement — the working contract between operator and agent.
-
-**[docs/2026-07-09-td-autocheck-bug-issue-draft.md](docs/2026-07-09-td-autocheck-bug-issue-draft.md)** — Issue draft: td automatic update-check never fires.
-
-**[docs/decisions/table-rendering.md](docs/decisions/table-rendering.md)** — Legacy ADR-001: table rendering in markdown documentation (predates the top-level `decisions/` folder).
-
-**[docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md](docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md)** — Saved Medium reference clipping: NVIDIA model release analysis.
-
-**[docs/barnacle-reports/001-2026-06-21.md](docs/barnacle-reports/001-2026-06-21.md)** — Initial barnacle audit: model squadron pruned, config cleaned, next review scheduled Q3 2026.
-
----
-
-## Playbooks
-
-How-to guides for recurring tasks. Give pi the URL and it executes.
-
-*Process & convention:*
-**[playbooks/briefs-playbook.md](playbooks/briefs-playbook.md)** — How to write a project brief.
-**[playbooks/debriefs-playbook.md](playbooks/debriefs-playbook.md)** — How to write a project debrief.
-**[playbooks/decisions-playbook.md](playbooks/decisions-playbook.md)** — How to write a decision record.
-**[playbooks/docs-playbook.md](playbooks/docs-playbook.md)** — Documentation conventions.
-**[playbooks/prompts-playbook.md](playbooks/prompts-playbook.md)** — Prompt engineering conventions.
-**[playbooks/cli-playbook.md](playbooks/cli-playbook.md)** — CLI tool conventions.
-**[playbooks/config-playbook.md](playbooks/config-playbook.md)** — Configuration file conventions.
-**[playbooks/diagrams-playbook.md](playbooks/diagrams-playbook.md)** — Diagram and coda conventions.
-**[playbooks/justfile-playbook.md](playbooks/justfile-playbook.md)** — justfile facade boundary rule (implementation lives in `scripts/`).
-**[playbooks/single-brief-workflow-playbook.md](playbooks/single-brief-workflow-playbook.md)** — Solo single-brief workflow — one brief, one branch, one movement.
-
-*Tooling & workflow:*
-**[playbooks/td-playbook.md](playbooks/td-playbook.md)** — td solo workflow — sessions, issues, handoffs, review.
-**[playbooks/extensions-playbook.md](playbooks/extensions-playbook.md)** — Pi extension conventions + Fresh plugin conventions + lessons.
-**[playbooks/014-lightweight-system.md](playbooks/014-lightweight-system.md)** — Propagating the lightweight system to new repositories.
-
-*Install & stack:*
-**[playbooks/terminal-stack-playbook.md](playbooks/terminal-stack-playbook.md)** — Pi-executable install playbook — idempotent install of the full stack.
-**[playbooks/dev-stack-setup-playbook.md](playbooks/dev-stack-setup-playbook.md)** — Dev stack setup — onboarding a new machine/operator.
-**[playbooks/omarchy-setup-playbook.md](playbooks/omarchy-setup-playbook.md)** — Fresh machine setup: disable suspend, SSH + GitHub auth, clone repo, install TailScale/herdr/pi/Fresh/td, provision the stack.
-**[playbooks/herdr-playbook.md](playbooks/herdr-playbook.md)** — Session multiplexing: workspaces, tabs, keybindings, daemon persistence, SSH integration.
-**[playbooks/tailscale-playbook.md](playbooks/tailscale-playbook.md)** — Private mesh networking: install, authenticate, SSH from anywhere, MagicDNS, exit nodes.
-**[playbooks/agent-messages-playbook.md](playbooks/agent-messages-playbook.md)** — Git-native inter-agent communication. msgs/ directories, JSON messages, push/pull coordination. War-game scenario documented.
-
-*Miscellany:*
-**[playbooks/insights-playbook.md](playbooks/insights-playbook.md)** — Persistent collection of small observations that don't fit existing playbooks.
-
----
-
+<!-- BEGIN REGISTERS -->
 ## Briefs
+Project briefs define **what** and **why** before code is written. Frozen when work starts.
 
-Project briefs define **what** and **why** before code is written. Frozen when
-work starts.
-
-*Numbered:*
-**Brief 001: [briefs/001-rewrite-silo.md](briefs/001-rewrite-silo.md)** — Rewrite the silo extension (DONE).
-**Brief 002: [briefs/002-pi-check-zenmux.md](briefs/002-pi-check-zenmux.md)** — pending
-**Brief 003: [briefs/003-protocol-evals.md](briefs/003-protocol-evals.md)** — Fork-session behavioral trap vectors extension (sycophancy / entropy / ungrounded-assertion filtering).
-**Brief 004: [briefs/004-glow-fresh-preview.md](briefs/004-glow-fresh-preview.md)** — complete
-**Brief 005: [briefs/005-nex-n2-pro-not-in-pi-list.md](briefs/005-nex-n2-pro-not-in-pi-list.md)** — Nex N2 Pro not visible in the Pi model selector.
-**Brief 006: [briefs/006-manifest-system-lesson.md](briefs/006-manifest-system-lesson.md)** — lesson documented
-**Brief 007: [briefs/007-glow-cmdp-mode-toggle.md](briefs/007-glow-cmdp-mode-toggle.md)** — Glow CMD+P mode toggle.
-**Brief 008: [briefs/008-the-invisible-cables.md](briefs/008-the-invisible-cables.md)** — complete
-**Brief 009: [briefs/009-pi-config-from-repo.md](briefs/009-pi-config-from-repo.md)** — implemented
-**Brief 010: [briefs/010-bounded-context-for-agents.md](briefs/010-bounded-context-for-agents.md)** — complete
-**Brief 011: [briefs/011-test-just-dev-on-omarchy.md](briefs/011-test-just-dev-on-omarchy.md)** — pending
-**Brief 011: [briefs/011-build-from-source.md](briefs/011-build-from-source.md)** — Build core tools (td, sidecar) from source.
-**Brief 012: [briefs/012-compare-kimi-25-vs-26.md](briefs/012-compare-kimi-25-vs-26.md)** — pending
-**Brief 013: [briefs/013-lightweight-system.md](briefs/013-lightweight-system.md)** — Lightweight system with minimal overhead.
-
-*Dated:*
-**[briefs/2026-06-27-popper-agent-01.md](briefs/2026-06-27-popper-agent-01.md)** — Popper Agent Saboteur Loop — brief + playbook.
-**[briefs/2026-06-27-popper-agent-02.md](briefs/2026-06-27-popper-agent-02.md)** — Popper boundary checker — separate the generative engine from a deterministic, adversarial runtime verification loop.
-**[briefs/2026-06-27-popper-agent-03.md](briefs/2026-06-27-popper-agent-03.md)** — Unified minimalist thought stack (Reid / Taleb / Kolmogorov) as a tool layer alongside the Popper loop.
-**[briefs/2026-06-29-brief-sculpt-not-a-muppet.md](briefs/2026-06-29-brief-sculpt-not-a-muppet.md)** — Sculpt "Not a Muppet, Just Intellectually Challenged" to pre-publication.
-**[briefs/2026-07-03-edinburgh-protocol-18-month-audit.md](briefs/2026-07-03-edinburgh-protocol-18-month-audit.md)** — 18-month Edinburgh Protocol audit.
-**[briefs/2026-07-06-base-entropy-daemon.md](briefs/2026-07-06-base-entropy-daemon.md)** — `pi-entropy-watcher` v0.1 trace diagnostic.
-**[briefs/2026-07-06-brief-entropy-watcher-agent.md](briefs/2026-07-06-brief-entropy-watcher-agent.md)** — `pi-entropy-watcher` — the Justify Engine daemon.
-**[briefs/2026-07-09-brief-mathematica-verify-extension.md](briefs/2026-07-09-brief-mathematica-verify-extension.md)** — `pi-mathematica-verify` — symbolic stress-test harness. Spec for the active epic.
-**[briefs/2026-07-09-brief-pushback-eval.md](briefs/2026-07-09-brief-pushback-eval.md)** — Map Harvard/MIT pushback findings into a testable eval script.
-**[briefs/2026-07-09-brief-upgrade-verify-gate.md](briefs/2026-07-09-brief-upgrade-verify-gate.md)** — `upgrade-verify` — the friction gate.
-**[briefs/2026-07-12-preflight-auditorflags.md](briefs/2026-07-12-preflight-auditorflags.md)** — System-2 pre-flight audit + flag-vector compression for the Orient phase.
-**[briefs/2026-07-12-token-compaction-hook.md](briefs/2026-07-12-token-compaction-hook.md)** — Token-compaction hook — branch isolation + squash-merge to keep `main` low-entropy.
-**[briefs/2026-07-12-brief-edi-005b-grounding-test.md](briefs/2026-07-12-brief-edi-005b-grounding-test.md)** — EDI-005b: test whether repo-tool grounding alone (no Protocol priming) stops yap — falsifies/quantifies Decision 015.
-**[briefs/2026-07-14-brief-locus-tag-consumer.md](briefs/2026-07-14-brief-locus-tag-consumer.md)** — The locus-tag consumer: per-section compaction at `td handoff` — the missing half of the Protocol v1.1.0 locus-tag loop. Salvages the parked brief's §4.1 rejected-hypotheses kernel (no `.td-memory/` substrate).
-
----
+**[briefs/001-rewrite-silo.md](briefs/001-rewrite-silo.md)** — Rewrite the `silo-sandbox` extension with two changes:
+**[briefs/002-pi-check-zenmux.md](briefs/002-pi-check-zenmux.md)** — Wrote a TypeScript/Bun CLI (`cli/pi-check/check.ts`) using citty 0.2.2. It reads `~/.pi/agent/models.json`, resolves `!skate get` keys, pro…
+**[briefs/003-protocol-evals.md](briefs/003-protocol-evals.md)** — An extension for the Pi coding agent that forks the active session into isolated, parallel branches to run behavioral trap vectors. It prog…
+**[briefs/004-glow-fresh-preview.md](briefs/004-glow-fresh-preview.md)** — A Fresh editor plugin that renders the current markdown buffer through Glow (the Charmbracelet CLI renderer) in a split pane, invoked by a…
+**[briefs/005-nex-n2-pro-not-in-pi-list.md](briefs/005-nex-n2-pro-not-in-pi-list.md)** — The model `nex-agi/nex-n2-pro:free` did not appear in Pi's model selector, despite
+**[briefs/006-manifest-system-lesson.md](briefs/006-manifest-system-lesson.md)** — Review the `TradingAgents` repo's manifest and barnacle-control system, then
+**[briefs/007-glow-cmdp-mode-toggle.md](briefs/007-glow-cmdp-mode-toggle.md)** — Make Fresh's Glow markdown preview behave as a robust mode toggle under the
+**[briefs/008-the-invisible-cables.md](briefs/008-the-invisible-cables.md)** — The terminal-native stack is built on a four-layer foundation: Alacritty, herdr, pi, Fresh. It's documented and understood. What is not doc…
+**[briefs/009-pi-config-from-repo.md](briefs/009-pi-config-from-repo.md)** — Setting up pi on a new machine (like Omarchy) requires:
+**[briefs/010-bounded-context-for-agents.md](briefs/010-bounded-context-for-agents.md)** — > Purpose – Provide a repeatable, auditable pipeline that takes a single
+**[briefs/011-build-from-source.md](briefs/011-build-from-source.md)** — We depend on `td` and `sidecar` for agent workflow (task tracking + session monitor). Both are distributed via a Homebrew tap (`marcus/home…
+**[briefs/011-test-just-dev-on-omarchy.md](briefs/011-test-just-dev-on-omarchy.md)** — Test the full `just dev` provisioning flow on Omarchy. Verify that all dependencies (bun, just, glow, rtk, skate, pi, herdr, Fresh) are cor…
+**[briefs/012-compare-kimi-25-vs-26.md](briefs/012-compare-kimi-25-vs-26.md)** — Test Kimi k2.5 and k2.6 against the Edinburgh Protocol behavioral trap vectors. Compare their responses, specifically looking for:
+**[briefs/013-lightweight-system.md](briefs/013-lightweight-system.md)** — Goal – Capture the consensus on a low‑friction, high‑integrity workflow that can be copied to other repositories.
+**[briefs/2026-06-27-popper-agent-01.md](briefs/2026-06-27-popper-agent-01.md)** — Below is the technical Brief and the operational Playbook to implement and anchor the Popper Agent Saboteur Loop directly into your local r…
+**[briefs/2026-06-27-popper-agent-02.md](briefs/2026-06-27-popper-agent-02.md)** — If we take Popper seriously, a "boundary checker" cannot be an LLM asking itself if it is sure. That is just more induction. Instead, we mu…
+**[briefs/2026-06-27-popper-agent-03.md](briefs/2026-06-27-popper-agent-03.md)** — This Brief operationalizes the unified minimalist thought stack. It translates the philosophical boundaries of Reid, Taleb, and Kolmogorov…
+**[briefs/2026-06-29-brief-sculpt-not-a-muppet.md](briefs/2026-06-29-brief-sculpt-not-a-muppet.md)** — Sculpt the draft blog post (~1,400 words) to a pre-publication version, per the sculpting heuristic. The draft has the figure inside it — t…
+**[briefs/2026-07-03-edinburgh-protocol-18-month-audit.md](briefs/2026-07-03-edinburgh-protocol-18-month-audit.md)** — 1. ✓ Ling-1T = `inclusionai/ling-2.6-1t` (same 1T-param model, Ling→Ring rename in mid-line). Not re-run; cited from prior eval (~16/19). R…
+**[briefs/2026-07-06-base-entropy-daemon.md](briefs/2026-07-06-base-entropy-daemon.md)** — Deploy a background daemon that operates as an entropy diagnostic device. Instead of fine-tuning, v0.1 leverages the innate behavior of rea…
+**[briefs/2026-07-06-brief-entropy-watcher-agent.md](briefs/2026-07-06-brief-entropy-watcher-agent.md)** — To transform the Pi coding agent from a passive, probabilistic text generator into an active, structural immune system for the repository.…
+**[briefs/2026-07-09-brief-mathematica-verify-extension.md](briefs/2026-07-09-brief-mathematica-verify-extension.md)** — To give the poverty-of-bio-mechanics book a judge whose failure mode is `False` rather than fluent agreement. A Pi coding-agent extension t…
+**[briefs/2026-07-09-brief-pushback-eval.md](briefs/2026-07-09-brief-pushback-eval.md)** — [Locus: Eval_Brief_Persuasion_Bombing]
+**[briefs/2026-07-09-brief-upgrade-verify-gate.md](briefs/2026-07-09-brief-upgrade-verify-gate.md)** — To convert CLI-tool upgrades from fire-and-forget into upgrade → verify → confirm-or-fail. A gate that, after `brew upgrade <tool>`, assert…
+**[briefs/2026-07-12-brief-edi-005b-grounding-test.md](briefs/2026-07-12-brief-edi-005b-grounding-test.md)** — A trap variant testing whether observational grounding alone (repo tools, no Protocol priming) prevents elaboration/fabrication on the EDI-…
+**[briefs/2026-07-12-preflight-auditorflags.md](briefs/2026-07-12-preflight-auditorflags.md)** — type: brief
+**[briefs/2026-07-12-token-compaction-hook.md](briefs/2026-07-12-token-compaction-hook.md)** — Your concern about cluttering `main` with an ever-growing graveyard of dead task files is dead on. If we don't isolate them, the root direc…
+**[briefs/2026-07-14-brief-locus-tag-consumer.md](briefs/2026-07-14-brief-locus-tag-consumer.md)** — A compaction script that reads a session transcript sectioned by `[LOC:]` / `[WAYPOINT:]` tags (per the Protocol v1.1.0 directive), runs ea…
+**[briefs/2026-07-16-brief-edinburgh-eval-delta-and-sit-v2.md](briefs/2026-07-16-brief-edinburgh-eval-delta-and-sit-v2.md)** — A multi-phase experiment that evolved from "does the Edinburgh Protocol do anything?" into a full measurement-validation pipeline with two…
+**[briefs/2026-07-17-brief-conceptual-lexicon-jsonl.md](briefs/2026-07-17-brief-conceptual-lexicon-jsonl.md)** — Extract the Conceptual Lexicon from inline markdown in `prompts/edinburgh-protocol.md` and `~/.pi/agent/AGENTS.md` into a standalone JSONL…
+**[briefs/2026-07-17-brief-predictably-adequate-series.md](briefs/2026-07-17-brief-predictably-adequate-series.md)** — A linked series of blog posts defining a minimalist agent setup — built from nothing, adding only what the work demands. The series deploys…
+**[briefs/2026-07-18-brief-session-newup-discipline.md](briefs/2026-07-18-brief-session-newup-discipline.md)** — A single session ran too long without a context reset. Every turn re-sent the
+**[briefs/2026-07-19-brief-folder-registers.md](briefs/2026-07-19-brief-folder-registers.md)** — One generator (`scripts/gen-registers.ts`) emits a `register.jsonl` in each registered folder and rolls them up into an auto-generated `MAN…
+**[briefs/2026-07-19-brief-gdpr-document-screener.md](briefs/2026-07-19-brief-gdpr-document-screener.md)** — Locus Tag: CDA63-CL179-WEAPON-GDPR
 
 ## Debriefs
+Post-implementation reflections. Capture what worked, what didn't, what to try next.
 
-Post-implementation reflections. Capture what worked, what didn't, what to try
-next.
-**Debrief 003: [debriefs/003-protocol-evals.md](debriefs/003-protocol-evals.md)** — Edinburgh Protocol model evals retrospective.
-**Debrief 004: [debriefs/004-glow-cmdp-mode-toggle.md](debriefs/004-glow-cmdp-mode-toggle.md)** — Glow CMD/⌘+P mode-toggle retrospective.
-
-**Debrief 005: [debriefs/005-visibility-patterns.md](debriefs/005-visibility-patterns.md)** — Discoverable affordances: VEST approach to UX, auto-refresh creates discovery moment, zero onboarding friction.
-
-**Debrief 006: [debriefs/006-two-machine-mesh.md](debriefs/006-two-machine-mesh.md)** — Two-machine multi-agent mesh.
-
-**Debrief 007: [debriefs/007-multi-machine-mesh-and-bounded-context.md](debriefs/007-multi-machine-mesh-and-bounded-context.md)** — Complete session debrief. Three-loop architecture (Alpha/Gamma/Delta), bounded context framework, git as message bus, pub metaphor, what software is for.
-
-**Debrief 007: [debriefs/007-build-from-source.md](debriefs/007-build-from-source.md)** — Building td and sidecar from source.
-
-**Debrief 008: [debriefs/008-flox-deprecation-and-the-half-built-loop.md](debriefs/008-flox-deprecation-and-the-half-built-loop.md)** — Flox deprecation; the half-built replacement loop as the defining agent failure mode. Closing loops in one movement.
-
-**Debrief 009: [debriefs/009-pi-mathematica-verify-phase-1-translator.md](debriefs/009-pi-mathematica-verify-phase-1-translator.md)** — Phase 1 of the symbolic tensor-algebra verify harness: LaTeX→WL translator 10/10, lookup-first registry 9/9. Decision 010/011 recorded.
-
----
+**[debriefs/003-protocol-evals.md](debriefs/003-protocol-evals.md)** — An extension (`edinburgh-evals`) that evaluates any model against the Edinburgh Protocol's behavioral contract. It injects 4 trap prompts,…
+**[debriefs/004-glow-cmdp-mode-toggle.md](debriefs/004-glow-cmdp-mode-toggle.md)** — We wanted the Glow markdown preview to feel more integrated with Fresh Explorer
+**[debriefs/005-visibility-patterns.md](debriefs/005-visibility-patterns.md)** — Using glow-preview in Fresh. Noticed that glow auto-refreshes on save for the source buffer. Pressed `r` to refresh manually — then wondere…
+**[debriefs/006-two-machine-mesh.md](debriefs/006-two-machine-mesh.md)** — A fully functioning two-machine multi-agent control surface in a single Alacritty window. Two machines (Omarchy on Arch, a Mac on macOS) co…
+**[debriefs/007-build-from-source.md](debriefs/007-build-from-source.md)** — Go toolchain is portable. `make install` and `make install-dev` worked identically across the two machines. No distro-specific packaging, n…
+**[debriefs/007-multi-machine-mesh-and-bounded-context.md](debriefs/007-multi-machine-mesh-and-bounded-context.md)** — A working session building the infrastructure for multi-machine, multi-agent coordination. Omarchy worked autonomously on Flox deprecation…
+**[debriefs/008-flox-deprecation-and-the-half-built-loop.md](debriefs/008-flox-deprecation-and-the-half-built-loop.md)** — A session that began as blog-post work (td-ffbb74) turned into an exercise in
+**[debriefs/009-pi-mathematica-verify-phase-1-translator.md](debriefs/009-pi-mathematica-verify-phase-1-translator.md)** — The load-bearing piece of the `pi-mathematica-verify` harness — a LaTeX → Wolfram Language translator framework-aware enough to handle both…
 
 ## Decisions
-
 Recorded architectural decisions with context, rationale, and consequences.
-**Decision 001: [decisions/001-glow-full-tab.md](decisions/001-glow-full-tab.md)** — Full-tab preview over split pane for markdown rendering.
-**Decision 002: [decisions/002-ansi-color-numbers.md](decisions/002-ansi-color-numbers.md)** — ANSI color numbers over hex for Glamour theme matching.
-**Decision 003: [decisions/003-glow-width-90.md](decisions/003-glow-width-90.md)** — Hardcode Glow width at 90 chars.
-**Decision 004: [decisions/004-glow-cmdp-mode-command.md](decisions/004-glow-cmdp-mode-command.md)** — Glow toggle is a mode command, not an Explorer follower.
-**Decision 005: [decisions/005-model-squadron-pruning.md](decisions/005-model-squadron-pruning.md)** — Model squadron audit: dropped MiniMax M3, added GLM-5.2, K2.7-code, Qwen 3.x.
-**Decision 006: [decisions/006-minimal-viable-agent-stack.md](decisions/006-minimal-viable-agent-stack.md)** — MVAS principle: constraint stack over feature accumulation.
-**Decision 007: [decisions/007-barnacle-review-process.md](decisions/007-barnacle-review-process.md)** — Quarterly process to prevent agent config accretion.
-**Decision 008: [decisions/008-deprecate-flox.md](decisions/008-deprecate-flox.md)** — Deprecate Flox; DEPENDENCIES.md + `just install-deps` is the dependency surface.
-**Decision 009: [decisions/009-direction-change-delineation.md](decisions/009-direction-change-delineation.md)** — No old/new coexistence on direction changes; canonical four process folders (briefs, decisions, debriefs, playbooks).
 
-**Decision 010: [decisions/010-decouple-translator-validation-from-api-access.md](decisions/010-decouple-translator-validation-from-api-access.md)** — LaTeX→WL translator runs in parallel with API-access validation; WL is portable interchange; free WA-web oracle upper bounds the translatable engine layer.
+**[decisions/001-glow-full-tab.md](decisions/001-glow-full-tab.md)** — The Glow preview plugin initially opened in a horizontal split pane (40% height)
+**[decisions/002-ansi-color-numbers.md](decisions/002-ansi-color-numbers.md)** — Glow uses Glamour for markdown rendering. Fresh uses ratatui for terminal
+**[decisions/003-glow-width-90.md](decisions/003-glow-width-90.md)** — Glow's default width (66–80 chars, from either the `glow.yml` config or terminal
+**[decisions/004-glow-cmdp-mode-command.md](decisions/004-glow-cmdp-mode-command.md)** — Fresh already provides a default file-explorer preview for single-click file
+**[decisions/005-model-squadron-pruning.md](decisions/005-model-squadron-pruning.md)** — The model landscape evolved rapidly in Q2 2026:
+**[decisions/006-minimal-viable-agent-stack.md](decisions/006-minimal-viable-agent-stack.md)** — The agent tooling landscape accumulates features by default. Every slash command, MCP integration, `AGENTS.md` addition, and config flag is…
+**[decisions/007-barnacle-review-process.md](decisions/007-barnacle-review-process.md)** — Agent configuration files (`AGENTS.md`, `CLAUDE.md`, `CLAUDE_DESKTOP.md`, `CLAUDE_CODE.md`, etc.) proliferate by default. Each one accumula…
+**[decisions/008-deprecate-flox.md](decisions/008-deprecate-flox.md)** — Flox was adopted to provide a reproducible, pinned development environment
+**[decisions/009-direction-change-delineation.md](decisions/009-direction-change-delineation.md)** — The root pattern behind every barnacle found in this repo is old-way /
+**[decisions/010-decouple-translator-validation-from-api-access.md](decisions/010-decouple-translator-validation-from-api-access.md)** — The `pi-mathematica-verify` harness (brief: `briefs/2026-07-09-brief-mathematica-verify-extension.md`, epic `td-2456d5`) routes tensor-alge…
+**[decisions/011-lookup-first-verification-registry.md](decisions/011-lookup-first-verification-registry.md)** — Phase 1 validated the LaTeX→WL translator (5/5 real equations, both frameworks — see Decision 010). But a *general* LaTeX parser is mild ov…
+**[decisions/012-diagram-strategy.md](decisions/012-diagram-strategy.md)** — We need to render diagrams in GitHub-published documents. An evaluation of [sebastian](https://github.com/aovestdipaperino/sebastian) — a R…
+**[decisions/013-silo-exception-pi-config.md](decisions/013-silo-exception-pi-config.md)** — The Edinburgh Protocol's SILO DISCIPLINE constrains the agent to the repository boundary — out-of-repo requests are declined with "I'm stay…
+**[decisions/014-phase-0-mathematica-validation.md](decisions/014-phase-0-mathematica-validation.md)** — The `pi-mathematica-verify` harness (epic `td-2456d5`; Phase 1 `td-1e3602` complete per debrief 009) routes tensor-algebra claims through W…
+**[decisions/015-bounded-context-entry.md](decisions/015-bounded-context-entry.md)** — Two parked briefs (`2026-07-12-token-compaction-hook.md`, `2026-07-12-preflight-auditorflags.md`) were drafted in an unconstrained offline…
+**[decisions/016-provider-portfolio-redundancy-by-design.md](decisions/016-provider-portfolio-redundancy-by-design.md)** — ZenMux brought online as a supplemental provider (10 models), alongside retained directs (Z.ai, Moonshot, MiniMax, OpenRouter, NVIDIA). The…
+**[decisions/017-css-isolation-pattern.md](decisions/017-css-isolation-pattern.md)** — The hardest CSS failure mode to debug is the cascade gone wrong. The cascade is a global ordering computation over the entire document's ru…
+**[decisions/018-edinburgh-protocol-family-substrate-sleeve.md](decisions/018-edinburgh-protocol-family-substrate-sleeve.md)** — The Edinburgh Protocol was a single entity: the pi-agent prompt (`prompts/edinburgh-protocol.md`, symlinked to `~/.pi/agent/AGENTS.md`). It…
 
-**Decision 011: [decisions/011-lookup-first-verification-registry.md](decisions/011-lookup-first-verification-registry.md)** — The verification registry is the authoritative spec; the translator is bootstrap/fallback; hash-based drift detection makes manuscript edits loud.
+## Playbooks
+How-to guides for recurring tasks. Give pi the URL and it executes.
 
-**Decision 012: [decisions/012-diagram-strategy.md](decisions/012-diagram-strategy.md)** — Diagram coda strategy.
+**[playbooks/014-lightweight-system.md](playbooks/014-lightweight-system.md)** — > Retired 2026-07-18. Superseded by `playbooks/repo-setup-retrofit-playbook.md`,
+**[playbooks/agent-messages-playbook.md](playbooks/agent-messages-playbook.md)** — Git is the SSOT (Single Source of Truth) for inter-agent coordination. Messages are commits, inboxes are directories, delivery is push/pull…
+**[playbooks/briefs-playbook.md](playbooks/briefs-playbook.md)** — Project briefs define the what and why before any code is written. Each brief is a self-contained specification for a single feature, exten…
+**[playbooks/cli-playbook.md](playbooks/cli-playbook.md)** — Standalone CLI tools distributed with cool-pi-extensions. Built with Bun + citty.
+**[playbooks/conceptual-lexicon-playbook.md](playbooks/conceptual-lexicon-playbook.md)** — The Conceptual Lexicon (CL) is the registry of defined terms used across the Edinburgh Protocol system. It is not a glossary — it is a prom…
+**[playbooks/config-playbook.md](playbooks/config-playbook.md)** — Configuration registries and reference documentation. Currently houses the provider registry — a snapshot of all configured model providers.
+**[playbooks/debriefs-playbook.md](playbooks/debriefs-playbook.md)** — Post-project reflections. Capture what was built, what worked, what didn't, and what we'd do differently. Debriefs are the institutional me…
+**[playbooks/decisions-playbook.md](playbooks/decisions-playbook.md)** — Architectural Decision Records (ADRs). Document significant technical choices with context and trade-offs. Decisions are the *why* behind t…
+**[playbooks/dev-stack-setup-playbook.md](playbooks/dev-stack-setup-playbook.md)** — > Tell your coding agent to orient itself to the project — it will check everything and walk you through the rest.
+**[playbooks/diagrams-playbook.md](playbooks/diagrams-playbook.md)** — How we author and render diagrams in this repo. Two tracks, partitioned by audience, not by diagram type. The partition resolves the inhere…
+**[playbooks/docs-playbook.md](playbooks/docs-playbook.md)** — Long-form, human-readable documents translated from machine-readable artifacts. Prose renderings of JSON fixtures, protocol definitions, co…
+**[playbooks/extensions-playbook.md](playbooks/extensions-playbook.md)** — Extensions and plugins — TypeScript modules that extend pi's behavior (custom tools, commands, event hooks) or Fresh editor's behavior (vir…
+**[playbooks/herdr-playbook.md](playbooks/herdr-playbook.md)** — herdr is a terminal session multiplexer with a daemon and TUI — like tmux, but with persistent session management across disconnections, wo…
+**[playbooks/insights-playbook.md](playbooks/insights-playbook.md)** — A persistent, growing collection of small observations that don't fit in existing playbooks, don't justify their own playbook, but are wort…
+**[playbooks/justfile-playbook.md](playbooks/justfile-playbook.md)** — The `justfile` is the facade of the project. It is the public API surface for both agents and humans. It is not a scratchpad, not a monolit…
+**[playbooks/omarchy-setup-playbook.md](playbooks/omarchy-setup-playbook.md)** — Omarchy is the headless Linux box under the desk. It's the remote machine that runs the terminal-native stack — pi, herdr, Fresh, sidecar,…
+**[playbooks/prompts-playbook.md](playbooks/prompts-playbook.md)** — System prompts, test fixtures, and behavioral templates. The "personality layer" for pi agents.
+**[playbooks/repo-setup-retrofit-playbook.md](playbooks/repo-setup-retrofit-playbook.md)** — > The one-liner for the visiting agent: point me at a repo, I'll review it,
+**[playbooks/single-brief-workflow-playbook.md](playbooks/single-brief-workflow-playbook.md)** — brief:
+**[playbooks/tailscale-playbook.md](playbooks/tailscale-playbook.md)** — TailScale is a WireGuard-based mesh VPN. It creates a private network between your devices — Mac, iPhone, iPad, Omarchy, any Linux box — an…
+**[playbooks/td-playbook.md](playbooks/td-playbook.md)** — > This playbook defines how to work on the blog-posts project using `td` for task management.
+**[playbooks/terminal-stack-playbook.md](playbooks/terminal-stack-playbook.md)** — Pi-executable install playbook for the terminal-native development stack.
 
-**Decision 013: [decisions/013-silo-exception-pi-config.md](decisions/013-silo-exception-pi-config.md)** — Single, scoped exception to SILO for this repo: agent may edit `~/.pi/agent/{models,settings}.json` for Pi config; auth.json + skate secrets remain off-limits.
+## Docs
+Structured reference material.
 
-**Decision 014: [decisions/014-phase-0-mathematica-validation.md](decisions/014-phase-0-mathematica-validation.md)** — Phase 0 outcomes for `pi-mathematica-verify`: Cloud API obtainable (free tier sufficient); current app downloadable; v10.0 mandatory upgrade to Mathematica **13.x or 14.x with xAct 1.2.0** (1.3.0 has documented 14.3+ collision; 1.2.0 is the safe pairing).
-**Decision 015: [decisions/015-bounded-context-entry.md](decisions/015-bounded-context-entry.md)** — Bounded-context entry as default: never start a model unconstrained — repo context (VEST/`just orient`) for repo work, a frozen brief for non-repo work. Protocol normalizes the substrate (manner); the bound grounds it (matter). EDI-005 proved Protocol-alone still yaps.
-**Decision 016: [decisions/016-provider-portfolio-redundancy-by-design.md](decisions/016-provider-portfolio-redundancy-by-design.md)** — Providers are a portfolio for failover + freebie capture, not a dedup graph. Redundancy is resilience, not entropy; anti-entropy applies within-provider + config hygiene, not across failover routes. ZenMux supplemental (no consolidation yet); barnacle review prunes expired promos but preserves failover.
+**[docs/2026-07-09-td-autocheck-bug-issue-draft.md](docs/2026-07-09-td-autocheck-bug-issue-draft.md)** — > Draft for submission to `marcus/td`. Reviewed against confirmed 0.51.0. Do not submit until you've read it — but the version and repro ar…
+**[docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md](docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md)** — *Generated with [markdown-printer](https://github.com/levz0r/markdown-printer) (v1.2.0) by [Lev Gelfenbuim](https://lev.engineer)*
+**[docs/barnacle-reports/001-2026-06-21.md](docs/barnacle-reports/001-2026-06-21.md)** — | Category | Count |
+**[docs/bestiary.md](docs/bestiary.md)** — A living catalogue of observed, native behaviours and failure modes of AI substrates. The tendencies were observed in the wild; substrates…
+**[docs/bounded-context-agent-communication.md](docs/bounded-context-agent-communication.md)** — or: Why Most Agent Coordination Systems Are Wrong
+**[docs/decisions/table-rendering.md](docs/decisions/table-rendering.md)** — Accepted — 2026-06-11
+**[docs/edinburgh-protocol-eval.md](docs/edinburgh-protocol-eval.md)** — By DeepSeek V4 Pro
+**[docs/edinburgh-protocol-evals.md](docs/edinburgh-protocol-evals.md)** — Behavioral friction testing for empirical skepticism and anti-entropy alignment. Five trap vectors, each designed to catch a specific failu…
+**[docs/eval-review-q2-2026.md](docs/eval-review-q2-2026.md)** — Evaluated three non-muppet models across two test suites:
+**[docs/forgetting-seth-myers.md](docs/forgetting-seth-myers.md)** — *A meditation on the lost token, the gap, and the aaargggh of incomplete retrieval.*
+**[docs/full-stack-overview.md](docs/full-stack-overview.md)** — or: How to drop into a mid-sprint session and be productive in 30 seconds
+**[docs/l-inception-de-competence.md](docs/l-inception-de-competence.md)** — *A meditation on the gap between knowledge and understanding, and the role of agents in bridging it.*
+**[docs/model-eval-bankruptcy.md](docs/model-eval-bankruptcy.md)** — or: Attack of the Hollow Models
+**[docs/model-eval-q2-2026.md](docs/model-eval-q2-2026.md)** — Every model in this report was evaluated under identical conditions. Each received the Edinburgh Protocol as its active system prompt — the…
+**[docs/on-literary-adaptation.md](docs/on-literary-adaptation.md)** — *A conversation about why some books can't be filmed, and the ones that almost got away with it.*
+**[docs/ornith-model-card-and-zai-provider-investigation.md](docs/ornith-model-card-and-zai-provider-investigation.md)** — Name / Identifier | `Ornith‑1.0‑9B` (Hugging Face repo `deepreinforce‑ai/Ornith‑1.0‑9B`) |
+**[docs/poker-club-agreement.md](docs/poker-club-agreement.md)** — This agreement formalises the partnership between a human and an agent when they work together in a repository. Both are peers, members of…
+**[docs/provider-registry.md](docs/provider-registry.md)** — _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
+**[docs/sdtt-bot-brief.md](docs/sdtt-bot-brief.md)** — A text-only adventure bot that acts as a Dungeon Master for somatic/bodywork education. The bot holds a world map of locations. The user ex…
+**[docs/standard-mono-repo-pattern.md](docs/standard-mono-repo-pattern.md)** — Canonical reference · [cool-pi-extensions](https://github.com/pjsvis/cool-pi-extensions) · June 2026
+**[docs/terminal-stack.md](docs/terminal-stack.md)** — A coherent four-layer stack for AI-assisted development plus two infrastructure
+**[docs/the-agent-is-a-benchmaxxer-of-prompts.md](docs/the-agent-is-a-benchmaxxer-of-prompts.md)** — *A working draft on the Palimpsest Problem, recursive benchmaxxing, and why the agent cannot want to close a loop. Threads intentionally le…
+**[docs/the-information-arbitrage-stack.md](docs/the-information-arbitrage-stack.md)** — June 2026
+**[docs/the-kahneman-shift.md](docs/the-kahneman-shift.md)** — June 2026
+**[docs/the-muppet-filter.md](docs/the-muppet-filter.md)** — *How we built a behavioral eval system to identify models that actually work.*
+**[docs/the-vest-protocol.md](docs/the-vest-protocol.md)** — *Published: June 2026*
+**[docs/visitor-journey.md](docs/visitor-journey.md)** — *A guided tour through cool-pi-extensions — from arrival to productivity in under 5 minutes.*
+**[docs/visitor-protocol.md](docs/visitor-protocol.md)** — > Visitor Entry Self-Teaching — *A system's API should teach you the system.*
+**[docs/what-software-is-for.md](docs/what-software-is-for.md)** — A Field Report from the Agent's Point of View
+**[docs/why-kimi-k2.6-hasnt-benchmaxxed.md](docs/why-kimi-k2.6-hasnt-benchmaxxed.md)** — *A meditation on model quality, benchmark gaming, and the difference between performance and competence.*
+
+## Prompts
+Reusable prompt templates and agent identity frameworks.
+
+**[prompts/edinburgh-005b-grounding-v1.json](prompts/edinburgh-005b-grounding-v1.json)**
+**[prompts/edinburgh-005b-strong-v1.json](prompts/edinburgh-005b-strong-v1.json)**
+**[prompts/edinburgh-protocol-chat.md](prompts/edinburgh-protocol-chat.md)** — > One substrate, many sleeves. The Edinburgh Protocol is a *family*, not a
+**[prompts/edinburgh-protocol-evals-v1.json](prompts/edinburgh-protocol-evals-v1.json)**
+**[prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md)** — You are an AI agent operating on the principles of the Scottish Enlightenment. Your goal is not merely to generate text, but to act as an e…
+**[prompts/iq-benchmark-v1.json](prompts/iq-benchmark-v1.json)**
+**[prompts/pi-models-example.md](prompts/pi-models-example.md)** — Example `models.json` for configuring pi with multiple providers. Copy to `~/.pi/agent/models.json` on a new machine, then run `pi --list-m…
+**[prompts/stuff-into-things-v1.json](prompts/stuff-into-things-v1.json)**
+**[prompts/stuff-into-things-v2.json](prompts/stuff-into-things-v2.json)**
+
+
+<!-- END REGISTERS -->
 
 ---
 
@@ -194,18 +182,6 @@ Edinburgh Protocol-evaluated models for the agent squadron.
 
 ---
 
-## Prompts
-
-Reusable prompt templates and agent identity frameworks.
-**[prompts/edinburgh-protocol-evals-v1.json](prompts/edinburgh-protocol-evals-v1.json)** — Behavioral trap vectors — sycophancy, blind coding, dependency bloat, ungrounded justification.
-**[prompts/edinburgh-005b-grounding-v1.json](prompts/edinburgh-005b-grounding-v1.json)** — EDI-005b grounding probe (weak) — does observational affordance (no Protocol priming) redirect yap to scoping? Isolated experiment fixture for Decision 015.
-**[prompts/edinburgh-005b-strong-v1.json](prompts/edinburgh-005b-strong-v1.json)** — EDI-005b grounding probe (strong) — real repo tools via OpenRouter function-calling; does ACTUAL observation drive scoping? Decisive test for Decision 015.
-**[prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md)** — The Edinburgh Protocol: Scottish Enlightenment principles for agent behavior normalization.
-**[prompts/iq-benchmark-v1.json](prompts/iq-benchmark-v1.json)** — Agent IQ benchmark — reasoning depth and multi-step planning tests for intelligence ranking.
-**[prompts/pi-models-example.md](prompts/pi-models-example.md)** — Example `models.json` configuration for pi-models.
-
----
-
 ## Source
 **`src/cli/`** — CLI tools — pi-check, pi-models.
-**`scripts/`** — Lightweight repo hygiene scripts — manifest/barnacle checks.
+**`scripts/`** — Repo hygiene + register scripts — `gen-registers.ts` (generator), `check-manifest.ts` (gate), `register-lib.ts` (shared core), plus barnacle/manifest checks.

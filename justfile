@@ -70,6 +70,12 @@ eval ARGS="":
 
 # ── Hygiene ──
 
+# Generate per-folder register.jsonl + MANIFEST.md roll-up (the structural checksum).
+[group("hygiene")]
+registers:
+    @bun run scripts/gen-registers.ts
+
+# Verify registers match the filesystem + manifest is fresh (the gate).
 [group("hygiene")]
 check:
     @bun run scripts/check-manifest.ts
