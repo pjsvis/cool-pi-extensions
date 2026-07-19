@@ -9,15 +9,16 @@
  *
  * Calibration is "investigate, don't obsess" (Palimpsest Problem; debrief 008):
  *   HARD — a referenced scripts/<file> that does not exist is a broken promise.
- *          Higher signal than recipe heuristics, but still surfaced for triage.
+ *          Higher signal than recipe heuristics. BLOCKING (exit 1).
  *   SOFT — a `just <recipe>` not defined in the justfile is a candidate phantom.
- *          Lower signal; English usage can appear in code fences.
+ *          Lower signal; English usage can appear in code fences. NON-blocking.
  *
- * v1 is NON-BLOCKING: both classes print findings, exit 0. The repo carries
- * known pre-existing phantoms (the msgs/dev/reg cluster); a red gate would be
- * ignored. Once that cluster resolves, promote HARD to exit 1. Decision and
- * debrief records are excluded from both checks — they legitimately mention
- * former phantoms as history.
+ * Process records (decisions/, debriefs/, briefs/) are excluded from BOTH
+ * checks: decisions/debriefs describe history, briefs describe the future —
+ * both legitimately mention commands that don't exist (yet/no longer). Only
+ * docs/, playbooks/, and top-level files describe the present and must be
+ * honest. The msgs/dev cluster was resolved 2026-07-19 (td-24b40f); HARD
+ * promoted to blocking now that it reads 0.
  *
  * Piecemeal by design — extend, don't rewrite.
  * See playbooks/insights-playbook.md (Palimpsest Problem) and
@@ -58,13 +59,16 @@ const soft: string[] = [];
 const scriptPathRe = /scripts\/[A-Za-z0-9_./-]+\.(?:sh|ts|js|mjs|cjs|py)/g;
 const justRe = /just\s+([a-zA-Z_][\w-]*)/g;
 
-// SOFT check excludes historical process records (they mention former phantoms).
-const isHistorical = (f: string) =>
-  f.startsWith("decisions/") || f.startsWith("debriefs/");
+// Process records (decisions, debriefs, briefs) are excluded from BOTH checks.
+// Decisions/debriefs describe history; briefs describe the future — both
+// legitimately mention commands/scripts that don't exist yet (or no longer do).
+// Only docs/, playbooks/, and top-level files describe the present and must be honest.
+const isProcessRecord = (f: string) =>
+  f.startsWith("decisions/") || f.startsWith("debriefs/") || f.startsWith("briefs/");
 
 for (const file of trackedMarkdown()) {
   if (!existsSync(file)) continue;
-  if (isHistorical(file)) continue; // process records describe history, not live usage
+  if (isProcessRecord(file)) continue; // process records describe history/future, not live usage
   const lines = readFileSync(file, "utf-8").split("\n");
   let inFence = false;
 
@@ -110,6 +114,6 @@ if (soft.length) {
 if (!hard.length && !soft.length) {
   console.log("✓ semantic integrity ok");
 } else {
-  console.log(`ℹ non-blocking v1: ${hard.length} hard, ${soft.length} soft — promote HARD to exit 1 once the phantom cluster clears`);
+  console.log(`ℹ ${hard.length} hard (BLOCKING), ${soft.length} soft (non-blocking)`);
 }
-process.exit(0);
+process.exit(hard.length ? 1 : 0);

@@ -77,7 +77,7 @@ But it's also a proof-of-concept for the VEST Protocol. Every design decision is
 
 **Self-contained.** Clone it anywhere, run `just orient`, you're productive. No external dependencies beyond what `just install-deps` handles. The repo teaches its own structure.
 
-**Agent-agnostic.** The VEST Protocol works with any agent, any context. `just orient` just outputs information. Whether a human reads it or an LLM parses it, the information is the same.
+**Agent-agnostic.** The VEST Protocol works with any agent, any context. `just orient` outputs information. Whether a human reads it or an LLM parses it, the information is the same.
 
 **Idempotent.** `just install-deps` checks what's installed. Run it once, run it ten times — same result. No side effects, no state mutation.
 

@@ -9,7 +9,7 @@ Example `models.json` for configuring pi with multiple providers. Copy to `~/.pi
 API keys are stored in `skate`. On a new machine, sync secrets with:
 
 ```bash
-just sync-skate
+bash scripts/sync-skate-to-omarchy.sh
 source ~/.skate_env
 ```
 

@@ -23,7 +23,7 @@
       @echo "Reviewer task UID=$REV_UID"
 
       # 4️                                                                                                                                                        # 4️⃣  Hook the inter‑agent message (reviewer will automatically start when its UID is scheduled)
-      @./scripts/notify.sh $IMP_UID ask '{"message":"Rendered markdown ready – please load and audit."}'
+      # notify the reviewer (manual — td scheduling or intercom; notify.sh not implemented)
 
       # 5️                                                                                                                                                        # 5️⃣  Wait for reviewer to finish and then publish
       @while ! td status $REV_UID | grep -q Done; do sleep 2; done
@@ -33,7 +33,7 @@
         -p P0 -l publish \
         -d "Run export script and push to Medium/Substack" \
         --depends $REV_UID
-      @bun run scripts/export-all.ts
+      # export (manual — export-all.ts not implemented)
 
       # 6️⃣  Clean up temporary UID files
       @rm -f /tmp/brief_impl_uid.txt /tmp/brief_rev_uid.txt

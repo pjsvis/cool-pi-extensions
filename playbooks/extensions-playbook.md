@@ -263,9 +263,9 @@ referenced old `cli/` paths, and one playbook still said `npm install`.
 - `SILO_MANIFEST.md` — agent orientation and asset map.
 - `*/INDEX.jsonl` registries for briefs, debriefs, decisions, docs, playbooks,
   code, scripts, and lexicon.
-- `scripts/reg.ts` — unified registry CLI (`list`, `sync`, `check`, `enrich`,
+- `reg.ts` — unified registry CLI (`list`, `sync`, `check`, `enrich`,
   `mine`, `import`, `promote`, `state`, `scripts`).
-- `scripts/barnacle-scrubber.ts` — mechanical + optional LLM scan for stale
+- `barnacle-scrubber.ts` — mechanical + optional LLM scan for stale
   docs, path rewrites, redundant prose, and drydock quarantine.
 
 That system is appropriate for a large, evolving codebase with many agents and
@@ -276,7 +276,7 @@ many generated artifacts. It is overkill for this repo.
 Use a **bounded manifest checker**, not a full registry framework:
 
 ```bash
-just check-manifest
+just check
 ```
 
 `scripts/check-manifest.ts` checks:

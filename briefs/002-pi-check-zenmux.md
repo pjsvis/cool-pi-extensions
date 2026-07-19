@@ -1,4 +1,4 @@
-# debrief: pi-check CLI + ZenMux provider
+# brief: pi-check CLI + ZenMux provider
 
 **Session:** 2026-06-09
 **TD:** (untracked — infrastructure session)

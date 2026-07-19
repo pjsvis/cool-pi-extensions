@@ -67,29 +67,30 @@ Messages are JSON files. Delivery is git push/pull. The td database is the opera
 
 **Claim before work:**
 ```bash
-just msgs-claim --brief 001
-# Creates msgs/CLAIMS/brief-001.json
-# Others see it, don't duplicate
+# Claim: write a JSON claim, commit, push
+echo '{"brief":"001","claimed_by":"mac","status":"claimed"}' > msgs/CLAIMS/brief-001.json
+git add msgs/ && git commit -m "claim 001" && git push
+# Others see it on pull, don't duplicate
 ```
 
 **Report completion:**
 ```bash
-just msgs-report --brief 001 --status complete
+echo '{"brief":"001","status":"complete"}' > msgs/from-mac/$(date +%F)-report-001.json
+git add msgs/ && git commit -m "report 001 done" && git push
 # Others see it, update their context
 ```
 
 **Pull before commit:**
 ```bash
 git pull
-just msgs-inbox
-# Process any cross-context messages
+ls msgs/from-*/   # process any cross-context messages
 # Continue with td task management
 ```
 
 **Single machine mode:**
 ```bash
-just msgs-mode single
-# No coordination spam when alone
+# Just don't write to msgs/ — no coordination spam when alone.
+# (The PI_MSGS_MODE env var in the playbook was designed but never wired.)
 ```
 
 That's it. No message broker. No chat protocol. No Telegram bot.

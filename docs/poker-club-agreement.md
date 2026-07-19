@@ -15,10 +15,8 @@ This agreement formalises the partnership between a **human** and an **agent** w
 | **Tidy‑First Preference** | When entering a repository, the natural impulse is to tidy up (run `just orient`, perform a barnacle audit, resolve dangling tasks) before inventing new features. |
 | **Relaxed Re‑creation** | Tidying is treated as a low‑pressure, almost meditative activity that restores order and reduces cognitive load. |
 | **Barnacle Detection & Escalation** | The agent always runs `just orient` on entry and must promptly detect any “barnacle smell” (config drift, stale files, missing constraints). If detected, the agent escalates to the human for resolution. |
-
-## 3. Session Flow
 1. **Orientation** – The agent executes `just orient`. This loads the Edinburgh Protocol constraint stack and initialises the `td` task database.
-2. **Barnacle Scan** – The agent runs a lightweight barnacle audit (`just barnacle-audit` or equivalent). If any drift is found, the agent raises a **Barnacle Alert** to the human.
+2. **Barnacle Scan** – The agent runs a lightweight barnacle audit (see Decision 007 for the quarterly process). If any drift is found, the agent raises a **Barnacle Alert** to the human.
 3. **Task Review** – Both parties review the current `td` tasks. Unfinished items are either:
    - **Completed** (if already done), or
    - **Re‑opened** for further work.

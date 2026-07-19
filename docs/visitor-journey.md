@@ -144,7 +144,7 @@ for two audiences.
 You want to work. You run:
 
 ```bash
-just dev
+just install-deps
 ```
 
 Gum prompts:
@@ -187,7 +187,7 @@ The system taught itself. You are productive.
 **Step 1** — Environment, tools, active work. Learned via: `just orient`
 **Step 2** — Normalized identity. Learned via: `just adopt-edinburgh`
 **Step 3** — Philosophy, structure. Learned via: `just browse`, `just read`
-**Step 4** — Ready to work. Learned via: `just dev`
+**Step 4** — Ready to work. Learned via: `just install-deps`
 
 **Total time:** Under 5 minutes.
 
@@ -207,7 +207,7 @@ The system caught the bullet.
 just orient    # Where is the work?
 just adopt-edinburgh  # How do I normalize?
 just browse    # What can I explore?
-just dev       # How do I set up?
+just install-deps  # How do I provision?
 ```
 
 **Zero onboarding. The system teaches itself.**

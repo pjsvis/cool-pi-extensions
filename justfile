@@ -1,6 +1,5 @@
 # cool-pi-extensions — facade only. Implementation lives in scripts/.
 # See playbooks/justfile.md for the boundary rule.
-# The previous monolith: justfile.bak-2026-06-12
 
 set shell := ["bash", "-o", "pipefail", "-c"]
 

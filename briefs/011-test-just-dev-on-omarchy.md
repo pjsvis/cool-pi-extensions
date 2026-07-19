@@ -6,7 +6,7 @@
 
 ## What
 
-Test the full `just dev` provisioning flow on Omarchy. Verify that all dependencies (bun, just, glow, rtk, skate, pi, herdr, Fresh) are correctly installed and working. Test the pi configuration sync. Test model provisioning.
+Test the full dev-provisioning flow on Omarchy. Verify that all dependencies (bun, just, glow, rtk, skate, pi, herdr, Fresh) are correctly installed and working. Test the pi configuration sync. Test model provisioning.
 
 ## Why
 

@@ -239,7 +239,7 @@ cd ~/cool-pi-extensions
 just install-deps
 
 # Install what's missing
-just dev  # or individual just tasks
+just install-deps  # then follow the README setup steps
 
 # Verify
 just orient
@@ -345,7 +345,7 @@ just --version
 On your Mac (when you can reach Omarchy via SSH):
 
 ```bash
-just sync-pi
+bash scripts/sync-pi-to-omarchy.sh
 ```
 
 This syncs:

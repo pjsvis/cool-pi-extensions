@@ -95,7 +95,6 @@ For each agent config file:
 
 | File | Justification |
 |------|---------------|
-| `SESSION.md` | Session-specific, ephemeral |
 | Provider credentials | Rotation happens naturally |
 | Local overrides | User-specific |
 

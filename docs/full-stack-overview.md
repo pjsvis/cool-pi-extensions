@@ -37,7 +37,7 @@ You are 30 seconds in. You know:
 
 The repo is designed around a simple idea: **the system should teach itself**.
 
-`just orient` tells you the state. `just browse` lists the docs and playbooks — what exists, how to read it. `just read docs/the-vest-protocol.md` teaches you the philosophy. `just dev` starts the development workflow.
+`just orient` tells you the state. `just browse` lists the docs and playbooks — what exists, how to read it. `just read docs/the-vest-protocol.md` teaches you the philosophy. `just install-deps` provisions the toolchain.
 
 No CONTRIBUTING.md to read. No onboarding guide. No taxonomy of directories. The map contains the map.
 
@@ -151,14 +151,12 @@ The stack scales horizontally without changing the architecture. Two machines �
 ```bash
 # Start of session on any machine
 git pull
-just msgs-inbox       # check for cross-context messages
-just orient           # current state, active tasks
+ls msgs/from-*/        # check for cross-context messages
+just orient            # current state, active tasks
 
-# Before committing
-just msgs-claim BRIEF=001   # claim your work
+# Before committing — claim by writing msgs/CLAIMS/<brief>.json, then:
 # ... do the work ...
-just msgs-report BRIEF=001  # report completion
-git push                     # push code + messages
+git add msgs/ && git commit -m "report <brief> done" && git push
 ```
 
 **What you get:** either machine can work on any task. Both machines see the same state. Bounded contexts prevent duplication. The flox deprecation was the first real exchange — Omarchy sent an `info` message, Mac acknowledged 15 minutes later. Real coordination, real audit trail, zero ceremony.
@@ -166,7 +164,7 @@ git push                     # push code + messages
 Single-machine mode eliminates the overhead when working alone:
 
 ```bash
-just msgs-mode single   # no coordination spam
+# Just don't write to msgs/ — no coordination spam when alone.
 ```
 
 The system scales to three machines, ten machines, without structural changes. Partition briefs, respect bounded contexts, pull before commit. The architecture is the same at every size.
@@ -187,7 +185,7 @@ just orient
 just adopt-edinburgh
 
 # Start work
-just dev
+just orient
 ```
 
 **For humans:**

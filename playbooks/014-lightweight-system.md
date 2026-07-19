@@ -68,7 +68,7 @@ Your agents can read this file and decrement the counter after each “question-
 
 ## Ongoing Maintenance
 
-- **Barnacle audit** - Run `just barnacle-audit` (or the script in `scripts/barnacle-audit.sh`) at least once per sprint.
+- **Barnacle audit** - Run a barnacle audit at least once per sprint (see Decision 007 for the quarterly process).
 - **Popper Party updates** - When a new claim is added, ensure the corresponding experiment section is present; the CI will enforce this.
 - **Skepticism budget reset** - Reset the counter at the start of each sprint (e.g., via a CI job or a manual `td reset` command).
 

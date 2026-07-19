@@ -63,27 +63,19 @@ There are no `.dot` files in the repo yet. Per MVAS (Decision 006), the scaffold
 docs/diagrams/*.svg
 ```
 
-`justfile` targets (facade only — implementation in `scripts/`, per the justfile boundary rule):
-```make
-# Render a DOT file to SVG for local inspection (ephemeral, gitignored)
-inspect-dot file:
-    @scripts/inspect-dot.sh {{ file }}
+Render and validate DOT with graphviz directly — no justfile recipe is wired (DOT is rare here; the `inspect-dot`/`check-dot` recipes were proposed but never built):
 
-# Validate all committed DOT files parse (guard against silent rot)
-check-dot:
-    @scripts/check-dot.sh
-```
-
-`scripts/check-dot.sh` (the one thing worth wiring early once DOT exists — committed DOT has no renderer checking it, unlike mermaid blocks):
 ```bash
-#!/usr/bin/env bash
-set -euo pipefail
-# Fail if any committed .dot file does not parse.
+# Render a DOT file to SVG for local inspection (ephemeral, gitignored)
+dot -Tsvg file.dot -o /tmp/file.svg
+
+# Validate all committed DOT files parse (guard against silent rot —
+# committed DOT has no renderer checking it, unlike mermaid blocks)
 find . -name '*.dot' -not -path './.git/*' -print0 \
   | xargs -0 -I{} dot -Tsvg {} -o /dev/null
 ```
 
-Slot `check-dot` into the `check` aggregate so CI catches DOT syntax errors GitHub won't.
+Wire the validation into a script invoked by `just check` so CI catches DOT syntax errors GitHub won't.
 
 ## The exception boundary
 

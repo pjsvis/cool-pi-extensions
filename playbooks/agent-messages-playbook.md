@@ -1,5 +1,7 @@
 # Playbook: Agent-to-Agent Communication via Git
 
+> **Status: Dormant design record.** This documents the June 2026 two-machine experiment (see debrief 007). The `msgs-*` recipe facade below was specified in detail but **never wired** — the real mechanism is git operations on `msgs/` plus the `sync-*-to-omarchy.sh` scripts. Where a `msgs-*` recipe appears, the equivalent is direct git: write a JSON file, commit, push.
+
 ## Concept
 
 Git is the SSOT (Single Source of Truth) for inter-agent coordination. Messages are commits, inboxes are directories, delivery is push/pull. No third-party messaging system required.
@@ -21,13 +23,7 @@ Git is the SSOT (Single Source of Truth) for inter-agent coordination. Messages 
 
 **How to set:**
 ```bash
-# On this machine, set mode
-just msgs-mode single   # No coordination messages
-just msgs-mode multi    # Full coordination (default)
-```
-
-Or via environment:
-```bash
+# On this machine, set mode (env var — the facade was never wired)
 export PI_MSGS_MODE=single  # No coordination
 export PI_MSGS_MODE=multi   # Full coordination
 ```
@@ -86,11 +82,10 @@ Each message is a JSON file with clear sender identification:
 This prevents duplicate effort. If someone else claims it first, you know not to work on it.
 
 ```bash
-# Claim a brief
-just msgs-claim --brief 001 --by omarchy-main
-
-# This creates msgs/CLAIMS/brief-001.json
-# If already claimed, it tells you who has it
+# Claim a brief (write the claim JSON, commit, push)
+echo '{"brief":"001","claimed_by":"omarchy-main","status":"claimed"}' > msgs/CLAIMS/brief-001.json
+git add msgs/ && git commit -m "claim 001" && git push
+# If already claimed, git pull shows who has it
 ```
 
 ```json
@@ -106,8 +101,9 @@ just msgs-claim --brief 001 --by omarchy-main
 ### 2. Report Completion
 
 ```bash
-# Done with the brief
-just msgs-report --brief 001 --status complete --summary "Silo rewritten. All tests pass."
+# Done with the brief (write the report JSON, commit, push)
+echo '{"brief":"001","status":"complete","summary":"Silo rewritten. All tests pass."}' > msgs/from-omarchy/$(date +%F)-report-001.json
+git add msgs/ && git commit -m "report 001 complete" && git push
 ```
 
 ### 3. Back to Sender
@@ -115,8 +111,9 @@ just msgs-report --brief 001 --status complete --summary "Silo rewritten. All te
 If someone claims a brief and doesn't complete it by the deadline:
 
 ```bash
-# Message master reassigns
-just msgs-reclaim --brief 001 --from omarchy-main --to mac-session
+# Message master reassigns (overwrite the claim JSON, push)
+echo '{"brief":"001","claimed_by":"mac-session","status":"claimed","reclaimed_from":"omarchy-main"}' > msgs/CLAIMS/brief-001.json
+git add msgs/ && git commit -m "reclaim 001 -> mac-session" && git push
 ```
 
 The offender gets notified:
@@ -153,31 +150,28 @@ One machine is appointed **message master**. Responsibilities:
 4. **Notify offenders** — "Foxtrot Oscar" when someone misses deadline
 
 ```bash
-# Run on message master (e.g., mac)
-just msgs-master
-
-# Checks:
-# - Expired claims in msgs/CLAIMS/
-# - Stale messages in msgs/from-*/
-# - Sends notifications
+# Run on message master (e.g., mac) — manual checks (the msgs-master recipe was never wired):
+# - Expired claims in msgs/CLAIMS/  (jq '.deadline' msgs/CLAIMS/*.json)
+# - Stale messages in msgs/from-*/  (ls -lt msgs/from-*/)
+# - Notify offenders via a new message JSON
 ```
 
 ---
 
-## Just Commands
+## Commands (design — never wired; use git directly)
+
+The `msgs-*` recipe facade was specified but never implemented. The real mechanism is git on `msgs/`:
 
 ```bash
-just msgs-mode single   # Single machine (no coordination)
-just msgs-mode multi    # Multi machine (full coordination)
-just msgs-mode          # Show current mode
+# Mode (env var, not a recipe)
+export PI_MSGS_MODE=single   # Single machine (no coordination)
+export PI_MSGS_MODE=multi    # Multi machine (full coordination)
 
-just msgs-inbox         # Show unacknowledged messages
-just msgs-read          # Read all recent messages
+# Inbox / read (git pull, then list)
+git pull && ls msgs/from-*/
 
-just msgs-claim --brief 001  # Claim a brief
-just msgs-report --brief 001 --status complete  # Report completion
-
-just msgs-master        # Run message master duties
+# Claim / report (write JSON, commit, push — see examples above)
+# Master duties (manual — inspect msgs/CLAIMS/ and msgs/from-*/)
 ```
 
 ---
@@ -187,8 +181,8 @@ just msgs-master        # Run message master duties
 ```bash
 # At start of EVERY session
 git pull                    # Always pull first
-just msgs-inbox             # Check for messages
-just td next                # Get tasks from td
+ls msgs/from-*/             # Check for messages
+td next                     # Get tasks from td
 
 # Single machine: inbox empty → continue
 # Multi machine: process messages → acknowledge → continue
@@ -212,7 +206,7 @@ Other machines send messages. You pull. Those messages become td tasks. After pr
 git pull
 
 # 2. Check inbox
-just msgs-inbox
+ls msgs/from-*/
 
 # 3. Process open messages into td
 for msg in $(grep -l '\"status\": \"open\"' msgs/from-*/$(date +%Y-%m-%d)*.json 2>/dev/null); do
@@ -241,13 +235,13 @@ td next
 ### Omarchy sends (in multi mode)
 
 ```bash
-# On Omarchy
-just msgs-mode multi
-just msgs-claim --brief flox-deprecation
-
-# Creates CLAIMS/flox-deprecation.json
-# Then reports status
-just msgs-report --brief flox-deprecation --status info --summary "Flox deprecated. No code impact. cool-pi-extensions unaffected."
+# On Omarchy (git directly — the facade was never wired)
+export PI_MSGS_MODE=multi
+echo '{"brief":"flox-deprecation","claimed_by":"omarchy","status":"claimed"}' > msgs/CLAIMS/flox-deprecation.json
+git add msgs/ && git commit -m "claim flox-deprecation" && git push
+# Then report status
+echo '{"brief":"flox-deprecation","status":"info","summary":"Flox deprecated. No code impact. cool-pi-extensions unaffected."}' > msgs/from-omarchy/$(date +%F)-flox-info.json
+git add msgs/ && git commit -m "report flox info" && git push
 ```
 
 ### Mac reads and acknowledges
@@ -255,11 +249,12 @@ just msgs-report --brief flox-deprecation --status info --summary "Flox deprecat
 ```bash
 # On Mac
 git pull
-just msgs-inbox  # sees the report
+ls msgs/from-*/  # sees the report
 
 # No td task needed (no action required)
 # Acknowledge
-just msgs-report --brief flox-deprecation --status acknowledged --summary "Mac aware. No action needed."
+echo '{"brief":"flox-deprecation","status":"acknowledged","summary":"Mac aware. No action needed."}' > msgs/from-mac/$(date +%F)-flox-ack.json
+git add msgs/ && git commit -m "ack flox" && git push
 ```
 
 ### Result
@@ -282,7 +277,7 @@ just msgs-report --brief flox-deprecation --status acknowledged --summary "Mac a
 - Message master rotates monthly
 
 ### Stage 3: Team (humans + agents)
-- Humans use `just msgs-send` for coordination
+- Humans write message JSON to `msgs/from-<name>/` for coordination
 - Agents use CLAIMS/ for work coordination
 - Audit trail via `git log -- msgs/`
 
@@ -293,7 +288,7 @@ just msgs-report --brief flox-deprecation --status acknowledged --summary "Mac a
 | Latency (30-60s) | Not real-time | Accept for coordination; urgent = direct |
 | Volume | Noisy git log | Archive monthly |
 | No push notifications | Agent might miss message | Poll on pull; human monitors |
-| Claim enforcement | relies on message master | Automate with `just msgs-master` |
+| Claim enforcement | relies on message master | Automate with a script on the message master |
 
 **The discipline argument:** Teams use Slack. We use Git. Same coordination, better audit trail, no vendor dependency. The limitations are acceptable if the team maintains discipline.
 

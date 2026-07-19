@@ -32,10 +32,9 @@ herdr session: cool-pi-extensions
 
 ```bash
 just install-deps
-just dev
 ```
 
-`just install-deps` checks and installs the toolchain. `just dev` handles the rest — symlinks, config, extensions.
+`just install-deps` checks and installs the toolchain. Then activate extensions per the README (symlinks under `~/.pi/agent/extensions/`) and `just adopt-edinburgh` to apply the Protocol.
 
 ---
 

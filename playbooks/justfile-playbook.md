@@ -67,11 +67,11 @@ playbooks/        ← documentation and how-to guides
 | Bad | Why | Fix |
 |-----|-----|-----|
 | Inlining a 50-line bash block | Facade becomes implementation | Move to `scripts/`, justfile calls it |
-| `just td-new`, `just td-status` | Wrapper around existing CLI | Use `td` directly |
-| `just msgs-claim BRIEF=001` | Prototype never extracted | Move to `scripts/msgr` or delete |
+| `td-new` / `td-status` wrappers | Wrapper around existing CLI | Use `td` directly |
+| `msgs-claim BRIEF=001` prototype | Prototype never extracted | Move to `scripts/msgr` or delete |
 | Adding every operational need | Justfile bloat | Use scripts, document in playbooks |
 
 ## See also
 
-- `justfile.bak-2026-06-12` — the monolith (study at your peril)
+- git history (pre-2026-06-12 monolith) — study at your peril
 - `playbooks/cli.md` — CLI tool conventions

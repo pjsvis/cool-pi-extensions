@@ -5,8 +5,7 @@
 # .silo/ deleted - data is now in data/ directory
 
 # Node
-cli/pi-models/node_modules/
-cli/pi-check/node_modules/
+node_modules/
 
 # macOS
 .DS_Store
@@ -28,3 +27,4 @@ skate-*-setup.sh
 # Tool-generated indexes (not source — rebuilt locally)
 .codegraph/
 .understand-anything/
+.crush/
