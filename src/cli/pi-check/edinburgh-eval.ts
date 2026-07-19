@@ -254,6 +254,9 @@ function allModels(): TestModel[] {
 
   const TOGETHER = skate("togetherai_api_key");
   const INCEPTION = skate("inception_api_key");
+  const XAI = skate("xai_api_key");
+  const QWEN = skate("qwen_api_key");
+  const DEEPSEEK = skate("deepseek_api_key");
 
   return [
     // ── Premium ─────────────────────────────────────────────────────────
@@ -265,8 +268,8 @@ function allModels(): TestModel[] {
       [fb("zenmux", "anthropic/claude-fable-5", ZENMUX, "https://zenmux.ai/api/v1")]),
     m("gpt-5",         "zenmux", "openai/gpt-5", ZENMUX, "https://zenmux.ai/api/v1", "premium", "$1.25/$10",
       [fb("openrouter", "openai/gpt-5", OR, "https://openrouter.ai/api/v1")]),
-    m("grok-4.3",      "zenmux", "x-ai/grok-4.3", ZENMUX, "https://zenmux.ai/api/v1", "premium", "$1.25/$2.50",
-      [fb("openrouter", "x-ai/grok-4.3", OR, "https://openrouter.ai/api/v1")]),
+    m("grok-4.3",      "spacexai", "grok-4.3", XAI, "https://api.x.ai/v1", "premium", "$1.25/$2.50",
+      [fb("zenmux", "x-ai/grok-4.3", ZENMUX, "https://zenmux.ai/api/v1")]),
     m("kimi-k2.6",     "moonshot", "kimi-k2.6", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4",
       [fb("zenmux", "moonshotai/kimi-k2.6", ZENMUX, "https://zenmux.ai/api/v1"),
        fb("openrouter", "moonshotai/kimi-k2.6", OR, "https://openrouter.ai/api/v1")]),
@@ -292,6 +295,7 @@ function allModels(): TestModel[] {
        fb("openrouter", "z-ai/glm-5.1", OR, "https://openrouter.ai/api/v1")]),
     m("glm-5.2",       "zai", "GLM-5.2", ZAI, "https://api.z.ai/api/coding/paas/v4", "coding-plan", "included",
       [fb("zenmux", "z-ai/glm-5.2", ZENMUX, "https://zenmux.ai/api/v1"),
+       fb("qwen", "glm-5.2", QWEN, "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"),
        fb("openrouter", "z-ai/glm-5.2", OR, "https://openrouter.ai/api/v1")]),
 
     // ── Mercury-2 (diffusion model) via OpenRouter — fallback to Inception direct ──
@@ -301,13 +305,16 @@ function allModels(): TestModel[] {
     // ── Mid-range ───────────────────────────────────────────────────────
     m("qwen3.7-max",   "zenmux", "qwen/qwen3.7-max", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$1.25/$3.75",
       [fb("together", "Qwen/Qwen3.7-Max", TOGETHER, "https://api.together.xyz/v1"),
+       fb("qwen", "qwen3.7-max", QWEN, "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"),
        fb("openrouter", "qwen/qwen3.7-max", OR, "https://openrouter.ai/api/v1")]),
     m("qwen3.7-plus",  "zenmux", "qwen/qwen3.7-plus", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$0.40/$1.60",
-      [fb("openrouter", "qwen/qwen3.7-plus", OR, "https://openrouter.ai/api/v1")]),
+      [fb("qwen", "qwen3.7-plus", QWEN, "https://dashscope-intl.aliyuncs.com/compatible-mode/v1"),
+       fb("openrouter", "qwen/qwen3.7-plus", OR, "https://openrouter.ai/api/v1")]),
     m("minimax-m3",    "zenmux", "minimax/minimax-m3", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$0.30/$1.20",
       [fb("openrouter", "minimax/minimax-m3", OR, "https://openrouter.ai/api/v1")]),
     m("ds-v4-pro",     "zenmux", "deepseek/deepseek-v4-pro", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$0.44/$0.89",
-      [fb("together", "deepseek-ai/deepseek-v4-pro", TOGETHER, "https://api.together.xyz/v1"),
+      [fb("deepseek", "deepseek-v4-pro", DEEPSEEK, "https://api.deepseek.com/v1"),
+       fb("together", "deepseek-ai/deepseek-v4-pro", TOGETHER, "https://api.together.xyz/v1"),
        fb("openrouter", "deepseek/deepseek-v4-pro", OR, "https://openrouter.ai/api/v1")]),
     m("gemini-2.5-pro","zenmux", "google/gemini-2.5-pro", ZENMUX, "https://zenmux.ai/api/v1", "mid", "$1.25/$10",
       [fb("openrouter", "google/gemini-2.5-pro", OR, "https://openrouter.ai/api/v1")]),
@@ -330,7 +337,8 @@ function allModels(): TestModel[] {
     m("ring-2.6",      "zenmux", "inclusionai/ring-2.6-1t", ZENMUX, "https://zenmux.ai/api/v1", "budget", "$0.30/$2.50",
       [fb("openrouter", "inclusionai/ring-2.6-1t", OR, "https://openrouter.ai/api/v1")]),
     m("grok-build",    "zenmux", "x-ai/grok-build-0.1", ZENMUX, "https://zenmux.ai/api/v1", "budget", "$1/$2",
-      [fb("openrouter", "x-ai/grok-build-0.1", OR, "https://openrouter.ai/api/v1")]),
+      [fb("spacexai", "grok-build-0.1", XAI, "https://api.x.ai/v1"),
+       fb("openrouter", "x-ai/grok-build-0.1", OR, "https://openrouter.ai/api/v1")]),
   ];
 }
 
