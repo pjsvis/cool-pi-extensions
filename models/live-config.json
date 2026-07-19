@@ -1087,6 +1087,45 @@
       "baseUrl": "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
       "apiKey": "!skate get qwen_api_key",
       "api": "openai-completions"
+    },
+    "deepseek": {
+      "models": [
+        {
+          "id": "deepseek-v4-pro",
+          "name": "DeepSeek V4 Pro",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.44,
+            "output": 0.89,
+            "cacheRead": 0.044000000000000004,
+            "cacheWrite": 0.11
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 65536
+        },
+        {
+          "id": "deepseek-v4-flash",
+          "name": "DeepSeek V4 Flash",
+          "reasoning": true,
+          "input": [
+            "text"
+          ],
+          "cost": {
+            "input": 0.14,
+            "output": 0.28,
+            "cacheRead": 0.014000000000000002,
+            "cacheWrite": 0.035
+          },
+          "contextWindow": 1000000,
+          "maxTokens": 65536
+        }
+      ],
+      "baseUrl": "https://api.deepseek.com/v1",
+      "apiKey": "!skate get deepseek_api_key",
+      "api": "openai-completions"
     }
   }
 }

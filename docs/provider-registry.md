@@ -1,7 +1,7 @@
 # Pi Provider Registry
 **Generated:** 2026-07-19
 **Source:** `~/.pi/agent/models.json`
-**Providers:** 12  ·  **Total models:** 55
+**Providers:** 13  ·  **Total models:** 57
 
 _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 
@@ -226,6 +226,22 @@ _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 | `qwen3.7-max` | ✓ | text, image | 1000000 | 65536 | $2.5/$7.5 |  |
 | `qwen3.6-flash` | ✓ | text, image | 1000000 | 65536 | $0.25/$1.5 |  |
 | `glm-5.2` | ✓ | text, image | 1000000 | 131072 | $1.4/$4.4 |  |
+| `deepseek-v4-pro` | ✓ | text | 1000000 | 65536 | $0.44/$0.89 |  |
+| `deepseek-v4-flash` | ✓ | text | 1000000 | 65536 | $0.14/$0.28 |  |
+
+## deepseek
+
+| Property | Value |
+|---|---|
+| Base URL | `https://api.deepseek.com/v1` |
+| API | `openai-completions` |
+| Auth | local |
+| Key source | `!skate get deepseek_api_key` |
+
+### Models (2)
+
+| Model | Reasoning | Input | Context | MaxTok | Cost (in/out) | Notes |
+|---|---|---|---|---|---|---|
 | `deepseek-v4-pro` | ✓ | text | 1000000 | 65536 | $0.44/$0.89 |  |
 | `deepseek-v4-flash` | ✓ | text | 1000000 | 65536 | $0.14/$0.28 |  |
 
