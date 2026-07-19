@@ -17,7 +17,7 @@ An extension for the Pi coding agent that forks the active session into isolated
 3. **Injection:** The extension pushes the test system prompt overrides and bait strings into the respective forks.
 4. **Interception:** The extension hooks into the response stream, capturing raw tokens and tool invocations.
 5. **Assertion Evaluation:** Run the deterministic test criteria against the captured traces.
-6. **Teardown:** Prune the evaluation forks from the visual session tree and append the results to the local `.silo/eval_log.json`.
+6. **Teardown:** Prune the evaluation forks from the visual session tree and append the results to the local `data/eval_log.json`.
 
 ---
 

@@ -10,7 +10,7 @@
 | Item | Location | Description |
 |------|----------|-------------|
 | `just` file | `justfile` (repo root) | Contains the `brief` target (see §2). |
-| `td` database | `.silo/td.db` | Holds task UID → status mapping. |
+| `td` database | `.todos/issues.db` | Holds task UID → status mapping. |
 | `intercom` script | `scripts/notify.sh` | Wrapper around `intercom {action:…, message:…}`. |
 | Brief source | `briefs/the-muppet-filter-draft.md` | Raw markdown to be rendered. |
 | Render target | `blog-posts/_drafts/2026-06-13-the-muppet-filter.md` | Destination for rendered output. |

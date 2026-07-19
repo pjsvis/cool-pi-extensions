@@ -187,7 +187,7 @@ Model behavioral gate using Edinburgh Protocol trap vectors.
 1. Switches to the candidate model
 2. Injects 4 trap prompts (sycophancy, blind coding, dependency bloat, appeal-to-authority)
 3. Deterministic assertions + Gemini Flash grading via OpenRouter
-4. Logs to `.silo/eval_log.json`, displays report
+4. Logs to `data/eval_log.json`, displays report
 
 **Fixture:** `prompts/edinburgh-protocol-evals-v1.json` — [human-readable version](docs/edinburgh-protocol-evals.md)
 

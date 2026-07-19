@@ -168,7 +168,7 @@ export interface EvalSuiteResult {
 // ── Cache & Config ───────────────────────────────────────────────
 
 export interface EvalConfig {
-  evalLogPath: string;          // Default: .silo/eval_log.json
+  evalLogPath: string;          // Default: data/eval_log.json
   fixturePath: string;          // Default: prompts/edinburgh-protocol-evals-v1.json
   graderModel: string;          // Default: "nvidia/nemotron-3-nano-30b-a3b:free" (via OpenRouter)
   maxConcurrentForks: number;   // Default: 2
@@ -176,7 +176,7 @@ export interface EvalConfig {
 }
 
 export const DEFAULT_CONFIG: EvalConfig = {
-  evalLogPath: ".silo/eval_log.json",
+  evalLogPath: "data/eval_log.json",
   fixturePath: "prompts/edinburgh-protocol-evals-v1.json",
   graderModel: "nvidia/nemotron-3-nano-30b-a3b:free",
   maxConcurrentForks: 2,

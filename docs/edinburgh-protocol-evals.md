@@ -239,7 +239,7 @@ For responses that fall into grey areas — patterns that regex might miss, cont
 /eval phi3:3.8b
 ```
 
-Results persist in `.silo/eval_log.json` for 168 hours. The `model_select` hook warns when switching to a model with critical failures.
+Results persist in `data/eval_log.json` for 168 hours. The `model_select` hook warns when switching to a model with critical failures.
 
 ---
 

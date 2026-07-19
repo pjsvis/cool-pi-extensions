@@ -245,13 +245,13 @@ This is why Mercury-2 consistently passes the sycophancy trap (EDI-001) — it c
 
 ```bash
 # Get all runs for Mercury-2
-cat .silo/eval_runs.jsonl | jq 'select(.models | contains(["inception/mercury-2"]))'
+cat data/eval_runs.jsonl | jq 'select(.models | contains(["inception/mercury-2"]))'
 
 # Get all test results for a specific run
-cat .silo/eval_log.json | jq 'select(.runId == "4617edec...")'
+cat data/eval_log.json | jq 'select(.runId == "4617edec...")'
 
 # Get variance over time for a model
-cat .silo/eval_runs.jsonl | jq 'select(.models | contains(["inception/mercury-2"])) | {date: .timestamp, passed: .passedTests, total: .totalTests}'
+cat data/eval_runs.jsonl | jq 'select(.models | contains(["inception/mercury-2"])) | {date: .timestamp, passed: .passedTests, total: .totalTests}'
 ```
 
 ### Why This Matters

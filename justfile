@@ -52,7 +52,7 @@ show-edinburgh:
 #
 # Usage:
 #   just eval list         — show available models
-#   just eval status       — show recent results from .silo/eval_log.json
+#   just eval status       — show recent results from data/eval_log.json
 #   just eval edinburgh    — run scoring eval (defaults to Kimi models)
 #   just eval edinburgh kimi --json   — JSON output
 #   just eval edinburgh kimi --bare    — bare-substrate control (no Protocol)

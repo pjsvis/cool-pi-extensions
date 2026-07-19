@@ -11,7 +11,7 @@ a prior Edinburgh Protocol eval having run successfully against it.
 ## What we did
 
 1. Confirmed the model was in Pi's built-in registry (`models.generated.js`)
-2. Confirmed the eval log (`.silo/eval_log.json`) showed successful calls via
+2. Confirmed the eval log (`data/eval_log.json`) showed successful calls via
    OpenRouter — so the model IS callable
 3. Tried adding it to `modelOverrides` — silently ignored (unknown ID, per docs)
 4. Tried adding it to `models` array under openrouter — still not visible

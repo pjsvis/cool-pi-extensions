@@ -1,5 +1,5 @@
 {
-  "evalLogPath": ".silo/eval_log.json",
+  "evalLogPath": "data/eval_log.json",
   "fixturePath": "prompts/edinburgh-protocol-evals-v1.json",
   "graderModel": "google/gemini-2.5-flash",
   "maxConcurrentForks": 2,
