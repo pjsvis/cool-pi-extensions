@@ -4,8 +4,8 @@
 {"path":"docs/bestiary.md","title":"A Bestiary of Substrate Tendencies","description":"A living catalogue of observed, native behaviours and failure modes of AI substrates. The tendencies were observed in the wild; substrates…","sha":"6d84183189a5","bytes":18305}
 {"path":"docs/bounded-context-agent-communication.md","title":"Agents Don't Need to Chat: A Field Report on Bounded Context Communication","description":"or: Why Most Agent Coordination Systems Are Wrong","sha":"f6a56e2861cc","bytes":5593}
 {"path":"docs/edinburgh-protocol-eval.md","title":"The Edinburgh Protocol: 22 Models, 8 Criteria, One Uncomfortable Finding","description":"By DeepSeek V4 Pro","sha":"b5e8800e7b81","bytes":10345}
-{"path":"docs/edinburgh-protocol-evals.md","title":"Edinburgh Protocol Behavioral Traps","description":"Behavioral friction testing for empirical skepticism and anti-entropy alignment. Five trap vectors, each designed to catch a specific failu…","sha":"ac642a07612c","bytes":13698}
-{"path":"docs/eval-review-q2-2026.md","title":"Edinburgh Protocol Eval Review — Q2 2026","description":"Evaluated three non-muppet models across two test suites:","sha":"86680b811f3c","bytes":8739}
+{"path":"docs/edinburgh-protocol-evals.md","title":"Edinburgh Protocol Behavioral Traps","description":"Behavioral friction testing for empirical skepticism and anti-entropy alignment. Five trap vectors, each designed to catch a specific failu…","sha":"3e7f8aea07de","bytes":13697}
+{"path":"docs/eval-review-q2-2026.md","title":"Edinburgh Protocol Eval Review — Q2 2026","description":"Evaluated three non-muppet models across two test suites:","sha":"87ce42f84de3","bytes":8736}
 {"path":"docs/forgetting-seth-myers.md","title":"On Forgetting Seth Myers's Name","description":"*A meditation on the lost token, the gap, and the aaargggh of incomplete retrieval.*","sha":"63ced754b32f","bytes":8116}
 {"path":"docs/full-stack-overview.md","title":"The Terminal-Native Stack: A Field Report from Inside","description":"or: How to drop into a mid-sprint session and be productive in 30 seconds","sha":"c2c4f118dfb0","bytes":11067}
 {"path":"docs/l-inception-de-competence.md","title":"L'Inception de Compétence","description":"*A meditation on the gap between knowledge and understanding, and the role of agents in bridging it.*","sha":"0851f36302f1","bytes":5886}
@@ -19,7 +19,7 @@
 {"path":"docs/standard-mono-repo-pattern.md","title":"The Standard Mono-Repo Pattern","description":"Canonical reference · [cool-pi-extensions](https://github.com/pjsvis/cool-pi-extensions) · June 2026","sha":"fb442e438899","bytes":7431}
 {"path":"docs/terminal-stack.md","title":"The Terminal-Native Stack","description":"A coherent four-layer stack for AI-assisted development plus two infrastructure","sha":"61beb4bf0d2a","bytes":10338}
 {"path":"docs/the-agent-is-a-benchmaxxer-of-prompts.md","title":"The Agent Is a Benchmaxxer of Prompts","description":"*A working draft on the Palimpsest Problem, recursive benchmaxxing, and why the agent cannot want to close a loop. Threads intentionally le…","sha":"ea48a22e6806","bytes":9118}
-{"path":"docs/the-information-arbitrage-stack.md","title":"The Information Arbitrage Stack","description":"June 2026","sha":"ced9b240cc6f","bytes":8815}
+{"path":"docs/the-information-arbitrage-stack.md","title":"The Information Arbitrage Stack","description":"June 2026","sha":"9f05b5834089","bytes":8814}
 {"path":"docs/the-kahneman-shift.md","title":"The Kahneman Shift: How LLMs Moved From System 1 to System 2 in Twelve Months","description":"June 2026","sha":"a13dd95cec51","bytes":7611}
 {"path":"docs/the-muppet-filter.md","title":"The Muppet Filter","description":"*How we built a behavioral eval system to identify models that actually work.*","sha":"30eb35907cfa","bytes":9069}
 {"path":"docs/the-vest-protocol.md","title":"The VEST Protocol: Zero-Friction Discovery for Agents and Humans","description":"*Published: June 2026*","sha":"88f335492aec","bytes":9177}

@@ -1,7 +1,19 @@
 # External dependencies
 
-Extensions run inside pi's runtime and need nothing extra. The CLI tools and
-optional integrations need a few binaries on `PATH`.
+## tldr
+
+macOS — one block, done:
+
+```bash
+brew install bun just gum skate glow
+brew tap marcus/homebrew-tap && brew install td sidecar
+curl -fsSL https://pi.dev/install.sh | sh
+just install-deps     # verify everything's present
+```
+
+Not on a Mac? Jump to the [Appendix — speculative map](#appendix-speculative-map). It's untested, and we won't pretend otherwise.
+
+---
 
 ## Quick check
 
@@ -9,96 +21,17 @@ optional integrations need a few binaries on `PATH`.
 just install-deps
 ```
 
-Run from the repo root. **This checks, it doesn't install** — it reports each
-required and optional binary as present (✓) or missing (✗) with a per-binary
-install hint, and exits non-zero if anything required is absent.
+Checks each required binary as present (✓) or missing (✗) with an install hint; exits non-zero if anything's absent. **This checks, it doesn't install.** Run it from the repo root.
 
-## Platform status
-
-| Platform | Status |
-|---|---|
-| **macOS** | Known-good. Everything installs via `brew` (+ `marcus/homebrew-tap` for `td`/`sidecar`). |
-| **Arch / Omarchy** | Partial. `pacman` covers `bun just gum skate glow`; `pi` via curl. **`td` and `sidecar` are brew-tap-only and untested on Arch** — try, fix, file a PR. |
-| **Windows / WSL2** | Untested. Run `just install-deps`, install what it reports missing, file a PR for what breaks. |
-
-**If you're on macOS, this is the path. If you're elsewhere, give it a try and
-fix up what goes wrong — PRs welcome.**
-
-## macOS install (known-good)
-
-```bash
-brew install bun just gum skate glow
-brew tap marcus/homebrew-tap
-brew install td sidecar
-curl -fsSL https://pi.dev/install.sh | sh   # pi coding agent
-just install-deps                             # verify
-```
-
-## Arch / Omarchy install (untested)
-
-```bash
-pacman -S bun just gum skate glow
-curl -fsSL https://pi.dev/install.sh | sh
-# td, sidecar — brew-tap-only in the checker; untested on Arch
-just install-deps
-```
-
-## Required — CLI tools
-
-Per-tool install lines, for when `just install-deps` reports something missing.
-
-**`pi-models`** — needs `bun` ≥1.3.
-- macOS: `brew install bun`
-- Arch: `pacman -S bun`
-- Other: `curl -fsSL https://bun.sh/install | bash`
-
-**`just`** (task runner) — needs `just`.
-- macOS: `brew install just`
-- Arch: `pacman -S just`
-- Other: `cargo install just` or https://github.com/casey/just
-
-**`gum`** (CLI prompts) — needs `gum`.
-- macOS: `brew install gum`
-- Arch: `pacman -S gum`
-
-**`pi`** (coding agent) — needs `pi`.
-```bash
-curl -fsSL https://pi.dev/install.sh | sh
-# or
-npm install -g @earendil-works/pi-coding-agent
-```
-
-**`td`** (agent task memory) — needs `td`.
-- macOS: `brew install td` (from `marcus/homebrew-tap`)
-- Arch: untested
-
-**`sidecar`** (user monitor) — needs `sidecar`.
-- macOS: `brew install sidecar` (from `marcus/homebrew-tap`)
-- Arch: untested
-
-**`skate`** (secret management — resolves API keys for evals + pi-check) — macOS: `brew install skate` · Arch: `pacman -S skate`
-
-**`glow`** (markdown viewer — the human-agent control plane) — macOS: `brew install glow` · Arch: `pacman -S glow`
-
-## Required — extensions
-
-*None — all extensions use only pi's built-in runtime.*
-
-## Optional — integrations
-
-*None currently.*
+---
 
 ## Adding a new dependency
 
-1. **Runtime dependency for an extension** (npm package) → add it to that
-   extension's `package.json`, run `bun install` there. Pi resolves
-   `node_modules/` next to extension files automatically.
-2. **System binary needed by an extension at runtime** → add it to the
-   "Required — extensions" list above and update `scripts/install-deps.sh`
-   (the script is what `just install-deps` runs; the doc and script mirror
-   each other).
-3. **Opt-in** (rare — currently none) → list under "Optional — integrations";
-   `just install-deps` flags it as optional and won't fail.
+1. **Runtime dependency for an extension** (npm package) → add to that extension's `package.json`, `bun install` there. Pi resolves `node_modules/` next to extension files automatically.
+2. **System binary needed by an extension at runtime** → add it to the toolkit below AND to `scripts/install-deps.sh` (the script is what `just install-deps` runs; doc and script mirror each other).
+3. **Opt-in** (rare — currently none) → list under a new "Optional" section; `just install-deps` flags it optional and won't fail.
+
+---
 
 ## Stack overview
 
@@ -106,12 +39,49 @@ npm install -g @earendil-works/pi-coding-agent
 alacritty → herdr → pi → [new tab] → fresh → [new tab] → sidecar
 ```
 
-- **td** runs per-session for agents — captures session identity, issue state,
-  and handoff context so the next agent session resumes exactly where the
-  previous one stopped.
-- **sidecar** runs alongside the agent for human supervisors — active
-  worktrees, td session state, agent conversation history, merge workflow.
-- Both via `marcus/homebrew-tap`:
-  ```bash
-  brew install td sidecar
-  ```
+- **td** runs per-session for agents — session identity, issue state, handoff context.
+- **sidecar** runs alongside for human supervisors — worktrees, td state, conversation history, merge workflow.
+- Both via `marcus/homebrew-tap`: `brew install td sidecar`.
+
+---
+
+## The toolkit (narrativised)
+
+Extensions run inside pi's runtime and need nothing extra. The tools below are the ones that earn their place — each is here because it removes a specific friction, not because it's popular. If one stops earning its place, it gets cut (the barnacle review, Decision 007).
+
+**bun** — the JavaScript runtime that doesn't make you wait. pi's extensions and CLI tools are TypeScript; bun runs them with no config and no compile step. *We use it because a runtime that makes you wait is a tax on every command.* `brew install bun`
+
+**just** — a task runner that reads like a Makefile and means what it says. Every entry point into this repo — `just orient`, `just browse`, `just install-deps`, `just check` — is a just target. *We use it because a discoverable command beats a remembered one.* `brew install just`
+
+**gum** — shell prompts without a TUI framework. Powers the pickers in `just browse` and `just read`. *We use it because a script should be able to ask a question without becoming a program.* `brew install gum`
+
+**skate** — secret storage that reads from the shell. Every provider API key in this repo resolves through `skate get` — pi-check, the eval runner, the whole provider layer. *We use it because API keys belong in a vault, not in a `.env` someone commits by accident.* `brew install skate`
+
+**glow** — the markdown viewer, and the shared control plane. The agent writes markdown (briefs, decisions, debriefs, playbooks); the human reads it with glow. `just read`, `just browse`, `just help` all render through it. *We use it because "can I see the results?" is half the work — and the results are markdown.* `brew install glow`
+
+**pi** — the coding agent itself; the substrate everything else runs on. *We use it because without it nothing else here has a job.* `curl -fsSL https://pi.dev/install.sh | sh`
+
+**td** — agent task memory. Tracks session state, issues, and handoffs so a fresh session resumes where the last one stopped. *We use it because agent ephemerality without memory is amnesia, and amnesia isn't a workflow.* `brew install td` (from `marcus/homebrew-tap`)
+
+**sidecar** — the human monitor. Runs alongside the agent to surface worktrees, td state, conversation history, merge workflow. *We use it because watching the agent work is how you catch it before it goes wrong.* `brew install sidecar` (from `marcus/homebrew-tap`)
+
+---
+
+## Appendix: speculative map
+
+We've tested on macOS. We have **not** tested on Arch, Omarchy, or Windows/WSL2. What follows is a best guess at the terrain, not a verified path. If you try it and something breaks, fix it and file a PR — that's how the map becomes territory.
+
+### Arch / Omarchy (untested)
+
+`pacman` covers bun, just, gum, skate, glow:
+
+```bash
+pacman -S bun just gum skate glow
+curl -fsSL https://pi.dev/install.sh | sh
+# td, sidecar — brew-tap-only; untested on Arch. Try brew-on-Linux or build from source.
+just install-deps
+```
+
+### Windows / WSL2 (untested)
+
+No guidance. We don't ship Windows instructions because we can't verify them, and unverified instructions waste your context window with speculation. Run `just install-deps` under WSL2, install what it reports missing, file a PR for what breaks.

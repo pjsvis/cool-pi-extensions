@@ -129,26 +129,6 @@ sudo apt install -y glow
 
 Verify: `which glow` returns a path. Run `glow --version` to confirm.
 
-### Step 6b: rtk (token killer — optional)
-
-```bash
-# macOS
-brew install rtk
-
-# macOS / Linux — installer script
-curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
-```
-
-After install, integrate with pi:
-```bash
-rtk init -g --agent pi
-```
-
-This installs a pi extension that auto-rewrites shell commands through rtk's
-filter, saving 60-90% of token consumption on common dev commands.
-
-Verify: `which rtk` returns a path. Run `rtk --version` to confirm.
-
 ---
 
 ## Step 7: cool-pi-extensions

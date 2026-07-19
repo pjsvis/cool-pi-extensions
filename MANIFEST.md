@@ -118,6 +118,7 @@ How-to guides for recurring tasks. Give pi the URL and it executes.
 **[playbooks/tailscale-playbook.md](playbooks/tailscale-playbook.md)** — TailScale is a WireGuard-based mesh VPN. It creates a private network between your devices — Mac, iPhone, iPad, Omarchy, any Linux box — an…
 **[playbooks/td-playbook.md](playbooks/td-playbook.md)** — > This playbook defines how to work on the blog-posts project using `td` for task management.
 **[playbooks/terminal-stack-playbook.md](playbooks/terminal-stack-playbook.md)** — Pi-executable install playbook for the terminal-native development stack.
+**[playbooks/writing-playbook.md](playbooks/writing-playbook.md)** — How we write the assets we produce — README, DEPENDENCIES, playbooks, briefs, decisions, blog. The structure, the voice, and the attitude.…
 
 ## Docs
 Structured reference material.

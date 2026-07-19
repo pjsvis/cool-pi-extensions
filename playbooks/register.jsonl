@@ -19,4 +19,5 @@
 {"path":"playbooks/single-brief-workflow-playbook.md","title":"single-brief-workflow-playbook","description":"brief:","sha":"510e64f4b6e2","bytes":2512}
 {"path":"playbooks/tailscale-playbook.md","title":"Playbook: TailScale — Private Mesh Networking","description":"TailScale is a WireGuard-based mesh VPN. It creates a private network between your devices — Mac, iPhone, iPad, Omarchy, any Linux box — an…","sha":"2d1c30f7378a","bytes":5050}
 {"path":"playbooks/td-playbook.md","title":"TD Playbook — Solo Workflow","description":"> This playbook defines how to work on the blog-posts project using `td` for task management.","sha":"4bbea0d477e9","bytes":3195}
-{"path":"playbooks/terminal-stack-playbook.md","title":"Playbook: terminal-stack","description":"Pi-executable install playbook for the terminal-native development stack.","sha":"44a41ff73ba9","bytes":8541}
+{"path":"playbooks/terminal-stack-playbook.md","title":"Playbook: terminal-stack","description":"Pi-executable install playbook for the terminal-native development stack.","sha":"4bc311c2c2e0","bytes":8045}
+{"path":"playbooks/writing-playbook.md","title":"Playbook: writing (the Shannon Package)","description":"How we write the assets we produce — README, DEPENDENCIES, playbooks, briefs, decisions, blog. The structure, the voice, and the attitude.…","sha":"2ffd40eaa272","bytes":4757}
