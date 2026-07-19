@@ -40,7 +40,6 @@
 |-------|-------|-----------|-------|
 | **DeepSeek V3.2** | 8/8 IQ | 4/4 ✓ | Still strong, but V4 Pro available |
 | **Nemotron 3 Super** | 4/4+ | 4/4 ✓ | Slow but capable |
-| **Nex N2 Pro** | 3/4 | partial | Good when supervised |
 
 ### ❌ DROP / DEPRECATED
 
@@ -143,6 +142,7 @@ The `[1m]` variant is **Claude Code / Anthropic-compatible endpoint only** (`htt
 
 | Date | Change |
 |------|--------|
+| 2026-07-19 | Pruned nex-n2-pro (free tier ended — Decision 016) from eval registry + live config. Fixed kimi-k2.7-code eval (wrong slug + the eval's kimi handling broke it: thinking-disabled rejected, temp must be 1). After the fix, kimi-k2.7-code scored 16/16 (was 1/16 broken). Eval `buildRequestBody` now special-cases kimi-k2.7-code (thinking on, temp 1, 4096 budget). |
 | 2026-07-19 | Failover ordering policy codified (Decision 019): freebie → cheapest → direct → expensive. Direct ≠ cheapest (Qwen 3.7 Max: ZenMux proxy 5× cheaper than direct). Eval fallback chains rewired to include spacexai/qwen/deepseek; grok-4.3 primary → spacexai direct. Dropped the openrouter grok-4.3 $3/$15 override (superseded by spacexai $1.25/$2.50). |
 | 2026-07-19 | DeepSeek provider added (direct `api.deepseek.com/v1`): deepseek-v4-pro ($0.44/$0.89 est), deepseek-v4-flash ($0.14/$0.28 est). Key verified via pi-check + usage test. Closes the direct-route gap (DeepSeek was proxy-only). Decision 016. |
 | 2026-07-19 | Qwen (DashScope) provider added (direct `dashscope-intl` route): qwen3.7-max ($2.50/$7.50, 1M), qwen3.7-plus ($0.40/$1.60), qwen3.6-flash ($0.25/$1.50) + free-tier GLM-5.2 / DeepSeek V4 Pro/Flash (freebie capture — failover routes for z.ai/ZenMux). Key verified via `pi-check` (149 models) + usage test. qwen-3.8 announced today but not yet on the -intl API — add when the slug appears. Decision 016. |

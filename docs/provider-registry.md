@@ -1,7 +1,7 @@
 # Pi Provider Registry
 **Generated:** 2026-07-19
 **Source:** `~/.pi/agent/models.json`
-**Providers:** 13  ·  **Total models:** 56
+**Providers:** 13  ·  **Total models:** 55
 
 _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 
@@ -61,12 +61,11 @@ _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 | Auth | local |
 | Key source | `!skate get open_api_key` |
 
-### Models (12)
+### Models (11)
 
 | Model | Reasoning | Input | Context | MaxTok | Cost (in/out) | Notes |
 |---|---|---|---|---|---|---|
 | `inception/mercury-2` | ✓ | text, image | 128000 | 50000 | $0.25/$0.75 |  |
-| `nex-agi/nex-n2-pro:free` | — | ? | ? | ? | ?/? | Free on OpenRouter — two-week promo. |
 | `x-ai/grok-4.20` | ✓ | text | 131072 | 32768 | $3/$15 |  |
 | `deepseek/deepseek-v4-flash` | — | text | 1000000 | 65536 | $0.14/$0.28 |  |
 | `deepseek/deepseek-v3.2` | ✓ | text | 128000 | 65536 | $0.28/$0.42 |  |

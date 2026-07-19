@@ -276,9 +276,9 @@ function allModels(): TestModel[] {
     m("kimi-k2.5",     "moonshot", "kimi-k2.5", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4",
       [fb("zenmux", "moonshotai/kimi-k2.5", ZENMUX, "https://zenmux.ai/api/v1"),
        fb("openrouter", "moonshotai/kimi-k2.5", OR, "https://openrouter.ai/api/v1")]),
-    m("kimi-k2.7",     "moonshot", "kimi-k2.7", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4",
-      [fb("zenmux", "moonshotai/kimi-k2.7", ZENMUX, "https://zenmux.ai/api/v1"),
-       fb("openrouter", "moonshotai/kimi-k2.7", OR, "https://openrouter.ai/api/v1")]),
+    m("kimi-k2.7-code","moonshot", "kimi-k2.7-code", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4",
+      [fb("zenmux", "moonshotai/kimi-k2.7-code", ZENMUX, "https://zenmux.ai/api/v1"),
+       fb("openrouter", "moonshotai/kimi-k2.7-code", OR, "https://openrouter.ai/api/v1")]),
     m("kimi-k3",       "moonshot", "kimi-k3", MOONSHOT, "https://api.moonshot.ai/v1", "premium", "$0.95/$4",
       [fb("zenmux", "moonshotai/kimi-k3", ZENMUX, "https://zenmux.ai/api/v1"),
        fb("openrouter", "moonshotai/kimi-k3", OR, "https://openrouter.ai/api/v1")]),
@@ -324,8 +324,6 @@ function allModels(): TestModel[] {
       [fb("zenmux", "tencent/hy3", ZENMUX, "https://zenmux.ai/api/v1")]),
 
     // ── Budget / Free ───────────────────────────────────────────────────
-    m("nex-n2-pro",    "openrouter", "nex-agi/nex-n2-pro:free", OR, "https://openrouter.ai/api/v1", "free", "$0",
-      []),
     m("nemotron-120b", "nvidia", "nvidia/nemotron-3-super-120b-a12b", NVIDIA, "https://integrate.api.nvidia.com/v1", "free", "$0",
       [fb("openrouter", "nvidia/nemotron-3-super-120b-a12b:free", OR, "https://openrouter.ai/api/v1")]),
     m("nemotron-49b",  "nvidia", "nvidia/llama-3.3-nemotron-super-49b-v1.5", NVIDIA, "https://integrate.api.nvidia.com/v1", "free", "$0",
@@ -435,10 +433,13 @@ function buildRequestBody(
   // GLM-5.2 and Kimi-K3 are reasoning models — need larger budgets so thinking
   // doesn't starve the scored content.
   const isKimi = tag.startsWith("kimi-k2.") || tag === "kimi-k3";
+  const isKimiCode = tag === "kimi-k2.7-code"; // coding model — thinking always-on, can't disable
   const isFable = tag === "claude-fable";
   const isReasoning = tag === "glm-5.2" || tag === "kimi-k3";
   let finalBody = body;
-  if (isKimi) {
+  if (isKimiCode) {
+    finalBody = body.replace('"max_completion_tokens":800', '"max_completion_tokens":4096').replace('"temperature":0.6', '"temperature":1');
+  } else if (isKimi) {
     finalBody = body.replace('"max_completion_tokens":800', '"max_completion_tokens":1200,"thinking":{"type":"disabled"}');
   } else if (isFable) {
     finalBody = body.replace('"max_tokens":800', '"max_tokens":4096');

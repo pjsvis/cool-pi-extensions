@@ -1,6 +1,6 @@
 # Model Choice
 
-Use-case map. The graded eval clusters **11 models at 16/16** — it's a "no muppets"
+Use-case map. The graded eval clusters **12 models at 16/16** — it's a "no muppets"
 gate, not a fine rank. Among graduates, choose by **task + cost + experience**,
 not by score alone.
 
@@ -17,7 +17,7 @@ not by score alone.
 | Cheap volume / batch | **DeepSeek V4 Flash** | $0.14/$0.28 |
 | Cheap + strong (surprise) | **Ring 2.6** | $0.30/$2.50 |
 | Underrated workhorse | **DeepSeek V4 Pro** | $0.44/$0.89 |
-| Coding (open-weight) | **Grok Build 0.1** | $1/$2 |
+| Coding | **Grok Build 0.1** · kimi-k2.7-code | $1/$2 · $0.95/$4 |
 | Hardest frontier | **Claude Opus** | $5/$25 |
 | Vision / multimodal | **Grok 4.5** / Qwen 3.7 Plus | $2/$6 · $0.40/$1.60 |
 | Free tier (grab-and-use) | **Grok 4.5 Free** (zenmux) / qwen free-tier GLM·DeepSeek | $0 |
