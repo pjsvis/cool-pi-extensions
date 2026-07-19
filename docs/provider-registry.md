@@ -1,7 +1,7 @@
 # Pi Provider Registry
 **Generated:** 2026-07-19
 **Source:** `~/.pi/agent/models.json`
-**Providers:** 11  ·  **Total models:** 49
+**Providers:** 12  ·  **Total models:** 55
 
 _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 
@@ -208,4 +208,24 @@ _Regenerate with `just registry` (scripts/gen-provider-registry.ts)._
 | `grok-4.5` | ✓ | text, image | 500000 | 32768 | $2/$6 |  |
 | `grok-4.3` | ✓ | text | 131072 | 32768 | $1.25/$2.5 |  |
 | `grok-build-0.1` | ✓ | text | 131072 | 32768 | $1/$2 |  |
+
+## qwen
+
+| Property | Value |
+|---|---|
+| Base URL | `https://dashscope-intl.aliyuncs.com/compatible-mode/v1` |
+| API | `openai-completions` |
+| Auth | local |
+| Key source | `!skate get qwen_api_key` |
+
+### Models (6)
+
+| Model | Reasoning | Input | Context | MaxTok | Cost (in/out) | Notes |
+|---|---|---|---|---|---|---|
+| `qwen3.7-plus` | ✓ | text, image | 1000000 | 65536 | $0.4/$1.6 |  |
+| `qwen3.7-max` | ✓ | text, image | 1000000 | 65536 | $2.5/$7.5 |  |
+| `qwen3.6-flash` | ✓ | text, image | 1000000 | 65536 | $0.25/$1.5 |  |
+| `glm-5.2` | ✓ | text, image | 1000000 | 131072 | $1.4/$4.4 |  |
+| `deepseek-v4-pro` | ✓ | text | 1000000 | 65536 | $0.44/$0.89 |  |
+| `deepseek-v4-flash` | ✓ | text | 1000000 | 65536 | $0.14/$0.28 |  |
 

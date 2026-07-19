@@ -76,6 +76,7 @@
 | **MiniMax** | M2.7, M2.5 | ✅ Direct + ZenMux both working |
 | **Together AI** | Ternary Bonsai 27B (free preview), Llama-4-Scout, Kimi K2.6, DeepSeek V4 Pro, Qwen 3.7 Max | ✅ Online 2026-07-14 (271 catalog; 5 curated — Bonsai free + Llama-4-Scout new + 3 pricey failovers on prepaid credit) |
 | **SpaceXAI** | Grok 4.5, Grok 4.3, Grok Build 0.1 | ✅ Online 2026-07-19 — direct first-party route at `api.x.ai` (xAI→SpaceXAI is branding; endpoint unchanged). Cheaper than ZenMux for grok-4.3 ($1.25/$2.50 vs $3/$15). Failover for the ZenMux grok route. Decision 016. |
+| **Qwen (DashScope)** | Qwen 3.7 Max/Plus, Qwen 3.6 Flash, GLM-5.2, DeepSeek V4 Pro/Flash | ✅ Online 2026-07-19 — direct Alibaba DashScope route (`dashscope-intl.aliyuncs.com/compatible-mode/v1`). New-user free quota (90d) covers GLM + DeepSeek — free-tier freebie capture for models we already pay for via z.ai/ZenMux. qwen-3.8 announced but not yet on the -intl API. Decision 016. |
 
 ---
 
@@ -141,6 +142,7 @@ The `[1m]` variant is **Claude Code / Anthropic-compatible endpoint only** (`htt
 
 | Date | Change |
 |------|--------|
+| 2026-07-19 | Qwen (DashScope) provider added (direct `dashscope-intl` route): qwen3.7-max ($2.50/$7.50, 1M), qwen3.7-plus ($0.40/$1.60), qwen3.6-flash ($0.25/$1.50) + free-tier GLM-5.2 / DeepSeek V4 Pro/Flash (freebie capture — failover routes for z.ai/ZenMux). Key verified via `pi-check` (149 models) + usage test. qwen-3.8 announced today but not yet on the -intl API — add when the slug appears. Decision 016. |
 | 2026-07-19 | SpaceXAI provider added (direct `api.x.ai` route): grok-4.5 ($2/$6, 500k ctx), grok-4.3 ($1.25/$2.50), grok-build-0.1 ($1/$2 est). Key verified via `pi-check` + a usage test. xAI→SpaceXAI is a branding move — endpoint still `api.x.ai` (12+ month migration window). grok-4.5/4.3 already 4/4 primed via ZenMux; the direct route is failover + a cost win (esp. grok-4.3). grok-build-0.1 (coding, open-sourced 2026-07-15) is the new one — worth a look. Decision 016. |
 | 2026-07-14 | ZenMux provider brought online (10 models); gpt-5.6-luna / grok-4.5 / gemini-3.5-flash eval'd 4/4 primed traps; omlx inline key → skate; provider-registry now generated (`just registry`); Decision 016 (provider portfolio: redundancy-by-design) |
 | 2026-07-14 | Together AI provider added (5 curated of 271): Ternary Bonsai 27B (free dev preview) + Llama-4-Scout (cheap, 1M, new) + pricey failovers for Kimi K2.6 / DeepSeek V4 Pro / Qwen 3.7 Max (prepaid credit). Together NOT cheaper than ZenMux/Moonshot for those (~3–4×) — failover-only. Bonsai behavioral eval pending. |
