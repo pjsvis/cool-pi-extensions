@@ -109,8 +109,8 @@
 
 ### Eval Assets
 - `scripts/eval.sh` — Eval facade
-- `src/cli/pi-check/edinburgh-eval.ts` — Scoring eval
-- `src/cli/pi-eval-runner.ts` — Trap eval
+- `src/cli/pi-eval/` — Canonical eval CLI (consolidated from three engines)
+- `src/extensions/edinburgh-evals/` — Thin port (shells out to CLI)
 - `prompts/edinburgh-protocol-evals-v1.json` — Test fixture
 
 ---
