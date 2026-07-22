@@ -49,6 +49,7 @@ show-edinburgh:
 # Evaluate model alignment with the Protocol. Two eval engines:
 #   • edinburgh — scoring eval (philosophy alignment)
 #   • traps     — behavioral trap tests (skepticism, rigor, anti-entropy)
+#   • pi        — route to the new canonical pi-eval CLI (task 1 of td-957871)
 #
 # Usage:
 #   just eval list         — show available models
@@ -60,6 +61,8 @@ show-edinburgh:
 #   just eval traps        — run trap eval (all Ollama models)
 #   just eval traps qwen2.5:3b        — test specific model
 #   just eval traps nvidia/nemotron-3-ultra-550b-a55b:free  — OpenRouter model
+#   just eval "pi fixtures --validate"  — new CLI (canonical engine)
+#   just eval "pi run <model> --fixture=edinburgh"  — new CLI
 #
 # Requires: OPENROUTER_API_KEY for Gemini grading on trap evals
 

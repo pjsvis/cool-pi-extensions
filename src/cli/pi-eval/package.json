@@ -1,0 +1,17 @@
+{
+  "name": "pi-eval",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Edinburgh Protocol eval CLI — behavioral trap vectors + alignment scoring. Canonical eval engine.",
+  "bin": {
+    "pi-eval": "./main.ts"
+  },
+  "scripts": {
+    "dev": "bun run main.ts",
+    "eval": "bun run main.ts"
+  },
+  "dependencies": {
+    "citty": "^0.2.2"
+  }
+}

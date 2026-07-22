@@ -33,6 +33,7 @@ usage() {
   echo "  matrix-triangular [m] Run second grader (Gemini 2.5 Pro) and compare deltas with Qwen grader"
   echo "  list                  Show models available in each eval system"
   echo "  help                  Show this help"
+  echo "  pi <subcmd> [args]   Route to the new pi-eval CLI (run/status/list/fixtures/clear)"
   echo ""
   echo "Environment:"
   echo "  OPENROUTER_API_KEY    Required for trap evals with Gemini grading"
@@ -508,8 +509,18 @@ cmd_list() {
   echo -e "${DIM}Fixture: prompts/edinburgh-protocol-evals-v1.json${RESET}"
 }
 
+# ── Command: pi (route to new pi-eval CLI) ─────────────────────────────────
+cmd_pi() {
+  cd "$REPO_ROOT"
+  bun run src/cli/pi-eval/main.ts "$@"
+}
+
 # ── Dispatch ─────────────────────────────────────────────────────────────────
 case "${1:-help}" in
+  pi)
+    shift
+    cmd_pi "$@"
+    ;;
   edinburgh)
     shift
     cmd_edinburgh "$@"
