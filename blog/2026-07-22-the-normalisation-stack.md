@@ -14,14 +14,23 @@ that the cost is invisible until you notice its absence:
 1. **The Edinburgh Protocol** normalises the *model* — compresses behavioural
    variance, raises the floor, keeps the ceiling. Evidence: primed-vs-bare
    delta, two independent graders, 42% variance reduction across 25 models.
-2. **The silo process** (briefs, debriefs, decisions, playbooks) normalises
-   the *work* — freezes scope before code, audits changes after, makes debt
-   visible. Evidence: every epic in the repo has a brief, a commit, and a
-   debrief you can trace.
+2. **The silo process** (briefs, debriefs, decisions, playbooks, registers,
+   justfile) normalises the *work* — freezes scope before code, audits
+   changes after, makes debt visible, provides verified action paths.
+   Evidence: every epic in the repo has a brief, a commit, and a debrief you
+   can trace.
 3. **The bounded-context discipline** (handoff, newup, resume) normalises the
    *cost* — keeps token spend O(n) in turns, not O(n²). Evidence: the eval
    consolidation — 4 sessions, 4 commits, ~29 minutes, zero context overflow,
    better quality than a single session would have produced.
+
+Across all three sits a fourth gate — the **opinion/proceed** interaction
+pattern — that inserts a human decision point between analysis and action.
+
+The meta-pattern: every component is a cheap gate providing one or more of
+decision points, action paths, and structured information. They compose
+because they cover different points in the workflow timeline. The cost is
+invisible. The absence is expensive.
 
 Each layer is "predictably adequate" on its own. Together they're the
 difference between a $46 session that produces decorated Stuff and a $4
@@ -191,14 +200,69 @@ normalises per-epic — every piece of work is scoped and audited. The
 bounded-context discipline normalises per-session — every phase boundary is
 a reset. Together they cover the full temporal stack: token, task, session.
 
-And the empirical evidence is concrete: the eval consolidation that produced
-this stack ran under all three layers simultaneously. A normalised model
-(Kimi K2.6, 18/19 on the Protocol eval) did the work. The silo process
-produced the brief, the four task definitions with acceptance criteria, the
-decision, and the debrief. The bounded-context discipline kept the cost
-linear across four sessions. The result was −920 LOC net, one canonical
-engine replacing three duplicated ones, and a blog post you can verify by
-reading the commits.
+### The interaction layer: opinion, then proceed
+
+There is a fourth gate that sits across the whole stack, and it is not a
+layer — it is the *interaction pattern* between human and agent. The
+opinion/proceed protocol is a two-phase gate: "opinion" asks for analysis
+without action; "proceed" gates the implementation behind a human decision.
+The cost of a wrong opinion is one turn. The cost of a wrong implementation
+is ten or more. This is the same principle as brief-before-code, applied to
+the interaction itself: freeze the approach, then execute.
+
+It is also the Impartial Spectator made operational. The Protocol says
+"simulate an impartial spectator to check your biases." The opinion/proceed
+pattern makes the *human* the impartial spectator — they review the agent's
+assessment before it becomes action. The opinion phase is cheap because the
+agent isn't carrying implementation context yet — it's reading and
+assessing, not building. The implementation is gated behind a human
+decision, so the only guaranteed token cost is the opinion itself.
+
+Most agent interaction is single-phase: "do X" (command, no gate) or "what
+do you think about X?" (open question, no action path). The opinion/proceed
+pattern is structured deliberation — a decision point inserted between
+analysis and action. It works because it gives both parties a chance to
+redirect before the expensive tokens are spent.
+
+### The meta-pattern: decision points, action paths, structured information
+
+Step back from the layers and a simpler shape emerges. Every component in
+the stack is a cheap gate that provides one or more of three things:
+
+- **Decision points** — opinion/proceed, brief/code, eval/deploy,
+  handoff/newup, `just check`. Each forces a deliberate choice at a phase
+  boundary.
+- **Action paths** — the justfile recipes, the playbooks, the `pi-eval` CLI
+  commands, the `td` workflow. Each is a tested path that avoids discovery
+  cost.
+- **Structured information access** — `td context` gives compressed state,
+  `just orient` gives current state, the registers give structural state, the
+  briefs give frozen specs. Each provides the right granularity at the right
+  time.
+
+Every component is one or more of these. The Protocol is a decision point
+(impartial spectator) plus structured information (system prompt). The
+briefs are decision points (freeze scope) plus structured information (the
+spec). The justfile is action paths. The registers are decision points (the
+`just check` gate) plus structured information (the MANIFEST). The handoff
+is structured information (compressed state) plus a decision point (the
+newup boundary). The opinion/proceed pattern is a decision point.
+
+None is expensive. Each prevents an expensive failure mode. They compose
+because they operate at different points in the workflow: before work
+(brief, opinion), during work (Protocol, justfile), between phases (handoff,
+newup), after work (debrief, register check). The full temporal coverage is
+what makes the stack robust.
+
+### The empirical evidence
+
+The eval consolidation that produced this stack ran under all three layers
+simultaneously. A normalised model (Kimi K2.6, 18/19 on the Protocol eval)
+did the work. The silo process produced the brief, the four task definitions
+with acceptance criteria, the decision, and the debrief. The
+bounded-context discipline kept the cost linear across four sessions. The
+result was −920 LOC net, one canonical engine replacing three duplicated
+ones, and a blog post you can verify by reading the commits.
 
 That's the stack. The cost is invisible. The absence is expensive. And the
 only way to see the composition is to run all three at once — which is what
