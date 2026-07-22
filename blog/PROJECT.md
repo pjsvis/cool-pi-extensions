@@ -220,3 +220,20 @@ proactive pattern: design the newup boundaries into the epic decomposition.
    that threshold faster, but both substrates can cross the line. The
    bounded-context discipline generalises — it's about signal and noise, not
    about chat vs. coding.
+
+5. **The justfile is a token-saving layer (the operational facade).** The
+   justfile saves tokens in three ways: (1) command compression — `just eval
+   "pi run <model>"` is one turn instead of 2-3 turns discovering the entry
+   point, flags, and working directory; (2) error elimination — the justfile
+   encodes the correct paths and flags, so the first attempt works, avoiding
+   the error-diagnose-retry cycle (each retry = tokens); (3) self-documenting
+   discovery — the recipe names and comments ARE the API surface, so the agent
+   reads commands that are their own documentation instead of reading prose to
+   find commands. `just orient` is the canonical example: one recipe bundles
+   git status, git log, td usage, and directory listing into one call — 4-5
+   commands collapsed to 1 turn. The justfile is the facade pattern applied to
+   agent operations: a thin public API over a complex backend. It sits in both
+   layer 2 (normalise the work — codifies repeatable commands) and layer 3
+   (normalise the cost — fewer discovery and retry turns). The cost is
+   ~2-3K tokens to read the justfile once during orientation; the saving is
+   10-20K tokens across the session in avoided discovery and retries.
