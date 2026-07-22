@@ -40,7 +40,7 @@ Fetch any webpage as clean Markdown. Domain allow/block lists, telemetry logging
 Soft filesystem boundary — blocks commands with literal paths outside the repo root. Catches accidental excursions; not hard isolation (see extension docs). "I'm staying in."
 
 **edinburgh-evals**
-Model behavioral gate. Forks sessions, runs Protocol trap vectors, deterministic assertions + Gemini secondary grading via OpenRouter. `/eval <model>` command.
+Model behavioral gate. Thin port over the `pi-eval` CLI — `/eval <model>` command, `run_edinburgh_eval` LLM tool, `model_select` advisory hook. The CLI is the canonical eval engine (`src/cli/pi-eval/`).
 
 ---
 
@@ -157,22 +157,31 @@ Escape hatch: `pi --no-silo`. Status: `/silo-status`.
 
 **edinburgh-evals**
 
-Model behavioral gate using Edinburgh Protocol trap vectors.
+Model behavioral gate — thin port over the `pi-eval` CLI. The extension provides in-session ergonomics; the CLI is the canonical eval engine.
 
-**Command:** `/eval <model-id>` — runs 4 behavioral trap tests.
+**Command:** `/eval <model-id>` — runs behavioral trap tests.
 
 **Subcommands:**
-`/eval <model>` — Run full eval suite (4 tests)
+`/eval <model>` — Run full eval suite
 `/eval status [model]` — Show cached results
 `/eval clear <model>` — Invalidate cache, force re-eval
 
 **How it works:**
-1. Switches to the candidate model
-2. Injects 4 trap prompts (sycophancy, blind coding, dependency bloat, appeal-to-authority)
-3. Deterministic assertions + Gemini Flash grading via OpenRouter
-4. Logs to `data/eval_log.json`, displays report
+The extension shells out to `pi-eval run <model>`, which calls the model via OpenRouter/Ollama, runs deterministic assertions + optional Gemini grading, logs to `data/eval_log.json`, and renders the report. No session hijacking — the CLI does the work.
 
 **Fixture:** `prompts/edinburgh-protocol-evals-v1.json` — [human-readable version](docs/edinburgh-protocol-evals.md)
+
+**pi-eval CLI** (canonical eval engine):
+
+```bash
+just eval "pi run <model> --fixture=edinburgh"          # behavioral trap eval
+just eval "pi score <model> --grade"                    # alignment scoring
+just eval "pi matrix <model> --grade --triangular"      # primed/bare delta
+just eval "pi status [model]"                           # cached results
+just eval "pi fixtures --validate"                      # list + validate fixtures
+```
+
+See [CLI tools](#cli-tools) below for the full `just eval` facade.
 
 ---
 
@@ -184,6 +193,22 @@ pi-check openrouter         # check a specific provider
 pi-check --json             # machine-readable output
 pi-check --zenmux-mgmt      # include ZenMux account metrics
 ```
+
+---
+
+**pi-eval CLI**
+
+```bash
+just eval "pi run <model> --fixture=edinburgh"      # behavioral trap eval
+just eval "pi score <model> --grade"                # alignment scoring + reasoning grader
+just eval "pi matrix <model> --triangular"          # primed/bare delta (two graders)
+just eval "pi status [model]"                       # cached results
+just eval "pi fixtures --validate"                  # list + validate fixtures
+just eval "pi list"                                 # available models
+just eval "pi clear <model>"                        # invalidate cache
+```
+
+Canonical eval engine at `src/cli/pi-eval/` — one assertion engine, one grading path, one JSONL log. The `edinburgh-evals` extension is a thin port over this CLI.
 
 ---
 

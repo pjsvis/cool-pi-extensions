@@ -69,6 +69,7 @@ Post-implementation reflections. Capture what worked, what didn't, what to try n
 **[debriefs/009-pi-mathematica-verify-phase-1-translator.md](debriefs/009-pi-mathematica-verify-phase-1-translator.md)** — The load-bearing piece of the `pi-mathematica-verify` harness — a LaTeX → Wolfram Language translator framework-aware enough to handle both…
 **[debriefs/010-folder-registers.md](debriefs/010-folder-registers.md)** — A generator (`scripts/gen-registers.ts` + shared `scripts/register-lib.ts`) emits a `register.jsonl` in each of the six process/content fol…
 **[debriefs/011-build-from-source.md](debriefs/011-build-from-source.md)** — Go toolchain is portable. `make install` and `make install-dev` worked identically across the two machines. No distro-specific packaging, n…
+**[debriefs/012-pi-eval-cli-consolidation.md](debriefs/012-pi-eval-cli-consolidation.md)** — Consolidated three eval engines (extension state machine, `pi-eval-runner.ts`, `edinburgh-eval.ts`) into one canonical `pi-eval` CLI at `sr…
 
 ## Decisions
 Recorded architectural decisions with context, rationale, and consequences.
@@ -184,5 +185,5 @@ Edinburgh Protocol-evaluated models for the agent squadron.
 ---
 
 ## Source
-**`src/cli/`** — CLI tools — pi-check, pi-models.
+**`src/cli/`** — CLI tools — pi-check, pi-models, pi-eval (canonical eval engine).
 **`scripts/`** — Repo hygiene + register scripts — `gen-registers.ts` (generator), `check-manifest.ts` (gate), `register-lib.ts` (shared core), plus barnacle/manifest checks.
