@@ -166,3 +166,42 @@ Both posts share this arc but emphasize different parts:
 - The eval demo was broken: `scripts/eval.sh` read `.silo/eval_log.json` (deleted) against an obsolete schema. Fixed in this session — `just eval status` now reads `data/eval_log.json` and renders a grouped per-model summary.
 - Broader `.silo/` → `data/` reference cleanup across ~15 files filed as td-7846e0.
 - Posts reviewed against the planned arcs above; tone consistent (Edinburgh voice throughout, bar-stewards/Pollock metaphors land differently per post per the shared arc).
+
+### Session notes (ses_e4c0fa) — the newup-discipline riff
+
+Three insights from the eval consolidation epic (td-957871), which was the first
+epic run under the session-newup discipline from start to finish:
+
+1. **Proactive newup > reactive newup.** The $46 lesson said "watch the meter,
+   new up when it hurts." The eval consolidation showed a better pattern:
+   decompose the epic into phases *before work starts*, each phase is a newup
+   boundary by design. The boundaries are structural, not behavioural. You
+   can't forget to new up because the task definition *is* the newup schedule.
+   This eliminates the "remember to new up" problem — the weakest enforcement
+   mechanism (human vigilance) is replaced by the strongest (structural design).
+
+2. **The asymmetry favours over-newup.** Too many newups = 1-2 turns of
+   overhead per boundary (handoff + context load). Too few = O(n²) token
+   compounding, SNR collapse, the $46. The ratio is roughly 1000:1 (a
+   unnecessary newup costs ~2K tokens; a missed one costs ~$46). When the
+   downside of one direction is "mild overhead" and the other is "expensive
+   failure," the optimal strategy is to err hard toward more boundaries.
+   Worst case is we new up too often. No biggie.
+
+3. **Bounded context improves quality, not just cost.** Session 3 rewrote the
+   extension from 532 to 116 LOC — a clean rewrite, not a patch. That rewrite
+   was clean *because* the model wasn't carrying the 1,243 + 748 LOC of source
+   files from session 1, or the 14 files it built, or the scoring eval from
+   session 2. It had the brief (spec), the handoff (state), and the one file
+   it was rewriting. A single session would have *patched* the extension —
+   modifying the state machine, deleting hooks one at a time — because the old
+   structure was still in context. Instead it *replaced* the extension, because
+   the old implementation wasn't in context. Bounded context produced a better
+   architectural outcome, not just a cheaper one. Less token cost, better
+   quality results, lower risk. The triple win.
+
+These insights are documented in `blog/2026-07-22-four-sessions-four-commits.md`
+and codified in `decisions/021-eval-engine-cli-first-thin-extension-port.md`.
+The theory posts (`Shannon, the Session, and the $46` + `Token Minimisation`)
+established the reactive discipline. The eval consolidation established the
+proactive pattern: design the newup boundaries into the epic decomposition.
