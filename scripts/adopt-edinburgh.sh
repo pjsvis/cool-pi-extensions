@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SOURCE="$(pwd)/prompts/edinburgh-protocol.md"
+SOURCE="$(pwd)/SYSTEM.md"
 TARGET="$HOME/.pi/agent/AGENTS.md"
 
 if [[ ! -f "$SOURCE" ]]; then
-  echo "Error: prompts/edinburgh-protocol.md not found."
+  echo "Error: SYSTEM.md not found."
   exit 1
 fi
 

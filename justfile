@@ -27,7 +27,7 @@ read FILE="":
 
 [group("discover")]
 help:
-    @glow -s ~/.config/glow/styles/fresh-high-contrast.json MANIFEST.md 2>/dev/null || cat MANIFEST.md
+    @glow MANIFEST.md 2>/dev/null || cat MANIFEST.md
 
 # ── Setup ──
 
@@ -43,7 +43,7 @@ adopt-edinburgh:
 
 [group("agent")]
 show-edinburgh:
-    @glow -s ~/.config/glow/styles/fresh-high-contrast.json prompts/edinburgh-protocol.md
+    @glow SYSTEM.md
 
 # ── Edinburgh Protocol Eval ──────────────────────────────────────────────
 # Evaluate model alignment with the Protocol. Two eval engines:
@@ -78,6 +78,11 @@ registers:
 [group("hygiene")]
 check:
     @bun run scripts/check-manifest.ts
+
+# Run extension tests (silo boundary verification).
+[group("hygiene")]
+test:
+    @bun test src/extensions/silo/
 
 [group("hygiene")]
 popper:

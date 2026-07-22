@@ -212,12 +212,6 @@ fresh --version
 
 Alternative: check [github.com/sinelaw/fresh](https://github.com/sinelaw/fresh) for pre-built binaries.
 
-Install the glow-preview plugin:
-```bash
-mkdir -p ~/.config/fresh/plugins
-ln -s ~/cool-pi-extensions/src/fresh/glow-preview.ts ~/.config/fresh/plugins/glow-preview.ts
-```
-
 ---
 
 ## Install glow (markdown preview)

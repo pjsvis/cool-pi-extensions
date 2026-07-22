@@ -82,14 +82,13 @@ The human and you work in the same herdr session. They have a tab with pi (that'
 
 For you (the agent):
 - **td** — your working memory and handoff protocol
-- **silo** — hard filesystem boundary, you can't read or write outside the repo
+- **silo** — soft filesystem boundary, blocks literal paths outside the repo
 - **edinburgh-evals** — behavioral gate, trap vectors test your adherence to the Edinburgh Protocol
 - **defuddle** — you can fetch any webpage as clean Markdown (your web access tool)
 - The pi runtime with its tools and extensions
 
 For them (the human):
 - **Fresh** — their terminal-native editor with plugin system
-- **glow-preview** — Fresh plugin for full-screen markdown rendering with ANSI-color-matched theme
 - **sidecar** — live dashboard of all worktrees and agent state
 - **Alacritty** — GPU-accelerated terminal, their window into the session
 

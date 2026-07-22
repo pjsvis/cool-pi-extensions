@@ -102,7 +102,7 @@ cat conceptual-lexicon.jsonl | jq 'select(.category == "metaphor")'
 - [ ] `conceptual-lexicon.jsonl` created at repo root with all 10 existing terms
 - [ ] JSONL is valid (each line parses as JSON)
 - [ ] Schema documented (either inline or as `conceptual-lexicon.schema.json` at root)
-- [ ] `SYSTEM.md` created at repo root (Edinburgh Protocol moved from `prompts/edinburgh-protocol.md`)
+- [x] `SYSTEM.md` created at repo root (2026-07-20): Protocol text moved to `SYSTEM.md`; `prompts/edinburgh-protocol.md` is now a compat symlink → `../SYSTEM.md` (all existing refs resolve, incl. `~/.pi/agent/AGENTS.md`). High-value refs updated (adopt-edinburgh, justfile, README); descriptive-ref tidy across decisions/briefs/playbooks pending (low-risk, no breakage — all resolve via the symlink).
 - [ ] `SYSTEM.md` CL section replaced with reference to `conceptual-lexicon.jsonl`
 - [ ] `~/.pi/agent/AGENTS.md` CL section replaced with reference to `conceptual-lexicon.jsonl`
 - [ ] Query examples work (jq can search/filter from repo root)

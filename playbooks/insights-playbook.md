@@ -23,16 +23,6 @@ No enforced structure. Length varies. Add as you go.
 
 ## Insights
 
-### Discoverable affordances — found when needed, not pushed in the face
-
-**What happened:** glow-preview auto-refreshes on save. The `r` to force a refresh is discoverable exactly when needed — when auto-refresh doesn't fire, or when you're in a non-auto-refreshing buffer. The user learns it at the moment of need.
-
-**Why it matters:** The VEST Protocol's "Teach" principle means zero-friction discovery. An affordance should be found by exploring the interface, not by reading onboarding docs. The discovery moment is proportional to the need.
-
-**What to do:** Don't surface affordances that are covered by automation. Design the failure mode to teach the override. A new user should be able to use the basic features without reading anything.
-
----
-
 ### Infrastructure is invisible when it's working
 
 **What happened:** td and sidecar are used 90% by agents. The human doesn't notice them until they fail. This is the signal — good infrastructure is used by machines, not pushed at humans.
@@ -152,7 +142,6 @@ If in doubt: add it. We can sort it later.
 ## Related
 
 - `briefs/008-the-invisible-cables.md` — td, sidecar, fractal stack
-- `debriefs/005-visibility-patterns.md` — discoverable affordances lesson
 - `docs/decisions/table-rendering.md` — ADR-001
 - `docs/the-vest-protocol.md` — VEST Protocol philosophy
 - `docs/full-stack-overview.md` — field report from the agent's perspective

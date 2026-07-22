@@ -20,7 +20,7 @@ herdr session: cool-pi-extensions
 
 **pi** runs in the agent layer with Edinburgh Protocol identity. It reads `AGENTS.md` and `just orient` to understand the project context. It has td for session continuity and silo for filesystem boundaries.
 
-**fresh** is the editor. It opens files directly on the remote. It has a glow-preview plugin for full-screen markdown rendering.
+**fresh** is the editor. It opens files directly on the remote.
 
 **sidecar** is the human's view. It shows active worktrees, td state, agent conversation history, merge status. The human can watch the agent work without interfering.
 

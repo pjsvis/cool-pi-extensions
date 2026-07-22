@@ -25,7 +25,7 @@ Per-tool install lines: [DEPENDENCIES.md](DEPENDENCIES.md).
 
 The **Edinburgh Protocol** is the constraint stack that normalizes agent behavior
 across models — Hume's skepticism, Smith's systems thinking, Watt's pragmatism.
-Consistent results, less variance. See [prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md).
+Consistent results, less variance. See [SYSTEM.md](SYSTEM.md) — the Protocol is this repo's first-party operating prompt; third-party deps live in [DEPENDENCIES.md](DEPENDENCIES.md).
 
 ---
 
@@ -37,7 +37,7 @@ Consistent results, less variance. See [prompts/edinburgh-protocol.md](prompts/e
 Fetch any webpage as clean Markdown. Domain allow/block lists, telemetry logging, `/defuddle` slash command.
 
 **silo**
-Hard filesystem boundary — agent cannot read or write outside the repo root. "I'm staying in."
+Soft filesystem boundary — blocks commands with literal paths outside the repo root. Catches accidental excursions; not hard isolation (see extension docs). "I'm staying in."
 
 **edinburgh-evals**
 Model behavioral gate. Forks sessions, runs Protocol trap vectors, deterministic assertions + Gemini secondary grading via OpenRouter. `/eval <model>` command.
@@ -60,7 +60,7 @@ Agent task memory. Tracks session state, issues, and handoffs across agent conte
 ### Prompts
 
 **Edinburgh Protocol**
-Scottish Enlightenment principles — Hume's skepticism, Smith's systems thinking, Watt's pragmatism. See [prompts/edinburgh-protocol.md](prompts/edinburgh-protocol.md).
+Scottish Enlightenment principles — Hume's skepticism, Smith's systems thinking, Watt's pragmatism. See [SYSTEM.md](SYSTEM.md).
 
 ---
 
@@ -73,13 +73,6 @@ any terminal, anywhere.
 - [**→ Stack architecture**](docs/terminal-stack.md)
 - [**→ Install playbook**](playbooks/terminal-stack-playbook.md) — give pi the URL and it installs everything
 - [**→ Full dev-stack setup**](playbooks/dev-stack-setup-playbook.md) — step-by-step onboarding guide
-
----
-
-### Fresh plugins
-
-**glow-preview**
-Full-screen Glow-rendered markdown preview in a Fresh tab. Toggle with `CMD+P` (or `Ctrl+Shift+M`), auto-refresh on save, `q` to close.
 
 ---
 
@@ -134,7 +127,7 @@ cp -r ~/.pi/extensions/src/extensions/silo ~/.pi/agent/extensions/silo
 ### Set the system-prompt (optional)
 
 ```bash
-ln -sf ~/.pi/extensions/prompts/edinburgh-protocol.md ~/.pi/agent/AGENTS.md
+ln -sf ~/.pi/extensions/SYSTEM.md ~/.pi/agent/AGENTS.md
 ```
 
 ---
@@ -151,7 +144,7 @@ Fetch any webpage as clean Markdown via the [defuddle.md](https://defuddle.md) A
 
 **silo**
 
-Hard filesystem boundary. Uses pi's built-in local bash backend so the agent sees the same environment and MVFS overlay as a normal session.
+Soft filesystem boundary. Blocks commands whose literal arguments reference paths outside the repo root — catches the cooperative agent's accidental excursions. Does not withstand adversarial input (runtime-constructed paths, symlinks). Uses pi's built-in local bash backend so the agent sees the same environment and MVFS overlay as a normal session. Boundary behaviour verified by `bun test src/extensions/silo/`.
 
 **Config:** `~/.pi/agent/extensions/silo/config.json` or `.pi/silo.json` (project-local):
 ```json
@@ -226,8 +219,6 @@ See [pi's extension docs](https://github.com/earendil-works/pi-mono/blob/main/do
 External dependencies are documented in [DEPENDENCIES.md](DEPENDENCIES.md). Run `just install-deps` to check what's installed. Extensions run inside pi's runtime and need nothing extra.
 
 **CLI tools:** [Bun](https://bun.sh) (runtime), [skate](https://github.com/charmbracelet/skate) (API key resolution).
-
-**Fresh plugins:** [Glow](https://github.com/charmbracelet/glow) (markdown renderer), [Fresh](https://sinelaw.github.io/fresh/) (editor).
 
 ---
 

@@ -84,17 +84,9 @@ Run inside pi's Node.js runtime. Provide custom tools, slash commands, and
 lifecycle hooks for the AI agent.
 
 
-**silo** — Hard filesystem boundary: agent can't read/write outside the repo
+**silo** — Soft filesystem boundary: blocks commands with literal paths outside the repo
 **defuddle** — Fetch any webpage as clean Markdown (agent-accessible tool)
 **edinburgh-evals** — Model behavioral gate: Protocol trap vectors against candidate models
-
-### Fresh plugins (TypeScript, QuickJS)
-
-Run inside Fresh's sandboxed QuickJS runtime. Provide virtual buffers, overlays,
-and external tool integration for the human user.
-
-
-**glow-preview** — Full-screen Glow-rendered markdown preview. Toggle with keybind, auto-refresh on save, ANSI-color-matched to Fresh's theme.
 
 ### CLI tools
 
@@ -117,11 +109,10 @@ and external tool integration for the human user.
 > implement user auth middleware
 
 # 4. Pi writes code, runs tests, commits
-#    Silo keeps it inside the project boundary
+#    Silo catches accidental excursions outside the project boundary
 
 # 5. Review the output in Fresh
 #    (in herdr tab 2 — editor)
-#    Toggle glow-preview to read the updated README
 #    Check the new tests, make edits
 
 # 6. SSH drops — train tunnel, wifi blip, laptop lid
@@ -188,7 +179,7 @@ the CPU is.
 **Remote GUI needed:** This stack ✗ · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✗
 **Terminal-only:** This stack ✓ · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✓
 **Plugin system:** This stack ✓ (Fresh + pi) · VS Code Remote ✓ (VS Code) · JetBrains Gateway ✓ (IntelliJ) · tmux + vim ✓ (vim/neovim)
-**Markdown preview:** This stack ✓ (glow-preview) · VS Code Remote ✓ (built-in) · JetBrains Gateway ✓ (built-in) · tmux + vim ✗ (external)
+**Markdown preview:** This stack ✓ (glow) · VS Code Remote ✓ (built-in) · JetBrains Gateway ✓ (built-in) · tmux + vim ✗ (external)
 **Agent guardrails:** This stack ✓ (silo + evals) · VS Code Remote ✗ · JetBrains Gateway ✗ · tmux + vim ✗
 
 ## Future directions
@@ -197,8 +188,5 @@ the CPU is.
   manage agent lifecycle, and route user input between editor and agent tabs.
 - **Fresh compose mode + pi.** Fresh's markdown compose mode for long-form
   writing, pi for drafting and editing assistance.
-- **Additional Fresh plugins.** Git blame overlays, file diffs, LSP-aware
-  navigation — expanding the editor into IDE territory without leaving the
-  terminal.
 - **Mobile.** The entire stack works over SSH from a phone or tablet. No mobile
   app needed — just a terminal emulator.

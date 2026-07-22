@@ -1,6 +1,6 @@
 # cool-pi-extensions
 
-A curated collection of extensions, CLI tooling, prompts, and editor plugins for the terminal-native development stack.
+A curated collection of extensions, CLI tooling, and prompts for the terminal-native development stack.
 
 ## The one-liner
 
@@ -29,8 +29,6 @@ alacritty → herdr → pi → fresh (+ sidecar / td)
 **CLI tools** — Bun-powered utilities: pi-check, pi-models.
 
 **Prompts** — Edinburgh Protocol constraint stack for normalizing agent behavior.
-
-**Fresh plugins** — glow-preview for in-editor markdown rendering.
 
 **Playbooks** — How-to guides for recurring tasks. Give pi the URL and it executes.
 

@@ -157,120 +157,7 @@ ln -sf ~/.pi/extensions/prompts/edinburgh-protocol.md ~/.pi/agent/AGENTS.md
 
 ---
 
-## Step 8: Set up Glow preview plugin for Fresh
-
-```bash
-# Create Fresh plugin directory if missing
-mkdir -p ~/.config/fresh/plugins
-
-# Copy the glow-preview plugin from the repo
-cp ~/.pi/extensions/src/fresh/glow-preview.ts ~/.config/fresh/plugins/glow-preview.ts
-
-# Copy the ANSI-color-matched Glow style
-mkdir -p ~/.config/glow/styles
-cp ~/.pi/extensions/src/fresh/glow-preview.ts /dev/null  # placeholder, actual style is at:
-# The style file needs to be written by pi. Use the style JSON from:
-# https://raw.githubusercontent.com/pjsvis/cool-pi-extensions/main/src/fresh/glow-preview.ts
-# Actually, the style is embedded in the plugin — pi should write it:
-
-cat > ~/.config/glow/styles/fresh-high-contrast.json << 'STYLE_EOF'
-{
-  "document": {
-    "color": "15",
-    "background_color": "0",
-    "margin": 1
-  },
-  "heading": {
-    "color": "14",
-    "bold": true
-  },
-  "h1": {
-    "color": "11",
-    "bold": true,
-    "prefix": "\n",
-    "suffix": "\n"
-  },
-  "h2": {
-    "color": "14",
-    "bold": true,
-    "prefix": "\n"
-  },
-  "h3": {
-    "color": "14",
-    "bold": true,
-    "prefix": "\n"
-  },
-  "h4": {
-    "color": "12"
-  },
-  "h5": {
-    "color": "12"
-  },
-  "h6": {
-    "color": "8"
-  },
-  "block_quote": {
-    "indent": 1,
-    "indent_token": "│ ",
-    "color": "8"
-  },
-  "paragraph": {},
-  "text": {},
-  "strong": {
-    "bold": true
-  },
-  "emph": {
-    "italic": true
-  },
-  "strikethrough": {
-    "crossed_out": true,
-    "color": "8"
-  },
-  "hr": {
-    "color": "8",
-    "format": "\n──────────\n"
-  },
-  "link": {
-    "color": "12",
-    "underline": true
-  },
-  "link_text": {
-    "color": "14",
-    "bold": true
-  },
-  "code": {
-    "prefix": " ",
-    "suffix": " ",
-    "color": "10",
-    "background_color": "0"
-  },
-  "code_block": {
-    "color": "#FFFFFF",
-    "margin": 0,
-    "chroma": {
-      "text": { "color": "#FFFFFF" },
-      "comment": { "color": "#808080" },
-      "keyword": { "color": "#00FFFF" },
-      "keyword_type": { "color": "#FF00FF" },
-      "name_function": { "color": "#FFFF00" },
-      "name_class": { "color": "#00FFFF", "underline": true, "bold": true },
-      "name_builtin": { "color": "#FFFF00" },
-      "literal_string": { "color": "#00FF00" },
-      "literal_number": { "color": "#ADD8E6" },
-      "background": { "background_color": "#000000" }
-    }
-  }
-}
-STYLE_EOF
-```
-
-Note: the plugin references the style at an absolute path. If the user's
-home directory is not `/Users/petersmith`, pi must update the path in
-`glow-preview.ts` to match `$HOME/.config/glow/styles/fresh-high-contrast.json`.
-
----
-
-## Step 9: Smoke test
+## Step 8: Smoke test
 
 ```bash
 # Verify all tools are installed
@@ -285,18 +172,12 @@ ls ~/.pi/agent/extensions/defuddle.ts && echo "✓ defuddle extension"
 ls ~/.pi/agent/extensions/silo/index.ts && echo "✓ silo extension"
 ls ~/.pi/agent/extensions/edinburgh-evals/index.ts && echo "✓ edinburgh-evals extension"
 
-# Verify Fresh plugin is installed
-ls ~/.config/fresh/plugins/glow-preview.ts && echo "✓ glow-preview plugin"
-
-# Verify Glow style is installed
-ls ~/.config/glow/styles/fresh-high-contrast.json && echo "✓ glow style"
-
 echo "All checks passed. The terminal stack is installed."
 ```
 
 ---
 
-## Step 10: Instructions for the user
+## Step 9: Instructions for the user
 
 After installation, tell the user:
 
@@ -316,18 +197,11 @@ After installation, tell the user:
 > - Press `Ctrl+B` then `C` to create a new tab
 > - Type `fresh` and press Enter
 >
-> **Glow preview in Fresh**:
-> - Open a `.md` file in Fresh
-> - Press `Ctrl+P` and type "Glow Preview"
-> - Or bind it to a key: Edit → Keybinding Editor → search "Glow Preview"
->   → Add Binding → press `Ctrl+Shift+M`
->
 > **Keybindings:**
 > - `Ctrl+B Q` — detach herdr (everything keeps running)
 > - `Ctrl+B B` — toggle sidebar (see agent states)
 > - `Ctrl+B V` — split pane vertically
 > - `Ctrl+B C` — new tab
-> - In Fresh preview: `q` to close, `r` to refresh
 >
 > The entire stack works over SSH. Connect from anywhere and `herdr` will
 > restore your session.

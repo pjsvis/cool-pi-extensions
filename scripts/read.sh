@@ -19,27 +19,27 @@ if [[ "$FILE" == "vest" ]]; then
 fi
 
 if [[ -n "$FILE" && -f "$FILE" ]]; then
-  glow -s ~/.config/glow/styles/fresh-high-contrast.json "$FILE"
+  glow "$FILE"
   exit 0
 fi
 
 if [[ -n "$FILE" && "$FILE" == "docs/" ]]; then
-  find docs -name "*.md" 2>/dev/null | fzf --preview 'glow -s ~/.config/glow/styles/fresh-high-contrast.json {}' --preview-window=right:60% | xargs -r glow -s ~/.config/glow/styles/fresh-high-contrast.json
+  find docs -name "*.md" 2>/dev/null | fzf --preview 'glow {}' --preview-window=right:60% | xargs -r glow
   exit 0
 fi
 
 if [[ -n "$FILE" && "$FILE" == "playbooks/" ]]; then
-  find playbooks -name "*.md" 2>/dev/null | fzf --preview 'glow -s ~/.config/glow/styles/fresh-high-contrast.json {}' --preview-window=right:60% | xargs -r glow -s ~/.config/glow/styles/fresh-high-contrast.json
+  find playbooks -name "*.md" 2>/dev/null | fzf --preview 'glow {}' --preview-window=right:60% | xargs -r glow
   exit 0
 fi
 
 # No args or scoped — fzf picker
 echo "📖 pick a file to glow..."
 SELECTED=$(find . -name "*.md" ! -path "*/node_modules/*" ! -path "./.git/*" 2>/dev/null | \
-  fzf --preview 'glow -s ~/.config/glow/styles/fresh-high-contrast.json {}' \
+  fzf --preview 'glow {}' \
      --preview-window=right:60% \
      --height=80%)
 
 if [[ -n "$SELECTED" ]]; then
-  glow -s ~/.config/glow/styles/fresh-high-contrast.json "$SELECTED"
+  glow "$SELECTED"
 fi
