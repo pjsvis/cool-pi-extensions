@@ -205,3 +205,18 @@ and codified in `decisions/021-eval-engine-cli-first-thin-extension-port.md`.
 The theory posts (`Shannon, the Session, and the $46` + `Token Minimisation`)
 established the reactive discipline. The eval consolidation established the
 proactive pattern: design the newup boundaries into the epic decomposition.
+
+4. **Chat vs. coding is a proxy for signal-vs-noise, not the real distinction.**
+   A long context works for chat because chat is open-ended exploration — the
+   accumulated turns are *correlated signal* (the evolving thread), and the
+   session rarely runs long enough for O(n²) to bite. A long context is a
+   liability for coding because coding is a bounded task with a spec — the
+   accumulated turns are *correlated noise* (discarded attempts, stale tool
+   outputs, files read and discarded), and coding sessions run long enough
+   (50-200 turns) for the cost to compound. But the real distinction is task
+   structure, not substrate: a research chat accumulates noise like a coding
+   session; a 5-turn focused fix tolerates long context like a chat. The rule
+   is: new up when the accumulated context is noise, not signal. Coding hits
+   that threshold faster, but both substrates can cross the line. The
+   bounded-context discipline generalises — it's about signal and noise, not
+   about chat vs. coding.
