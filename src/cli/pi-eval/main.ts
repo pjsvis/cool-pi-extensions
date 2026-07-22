@@ -7,9 +7,10 @@
  *   pi-eval status [model] [--fixture=edinburgh]
  *   pi-eval list
  *   pi-eval fixtures [--validate]
+ *   pi-eval score [filter] [--bare] [--grade] [--grader=...] [--persist]
+ *   pi-eval matrix [filter] [--grade] [--triangular] [--persist]
+ *   pi-eval fixtures [--validate]
  *   pi-eval clear <model>
- *
- * Subcommands score + matrix arrive in task 2 (briefs/2026-07-22-brief-pi-eval-cli-consolidation.md).
  */
 
 import { defineCommand, runMain } from "citty";
@@ -18,6 +19,8 @@ import { statusCommand } from "./commands/status.js";
 import { listCommand } from "./commands/list.js";
 import { fixturesCommand } from "./commands/fixtures.js";
 import { clearCommand } from "./commands/clear.js";
+import { scoreCommand } from "./commands/score.js";
+import { matrixCommand } from "./commands/matrix.js";
 
 const main = defineCommand({
   meta: {
@@ -27,6 +30,8 @@ const main = defineCommand({
   },
   subCommands: {
     run: runCommand,
+    score: scoreCommand,
+    matrix: matrixCommand,
     status: statusCommand,
     list: listCommand,
     fixtures: fixturesCommand,

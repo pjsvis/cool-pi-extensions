@@ -64,6 +64,12 @@ show-edinburgh:
 #   just eval "pi fixtures --validate"  — new CLI (canonical engine)
 #   just eval "pi run <model> --fixture=edinburgh"  — new CLI
 #
+#   just eval "pi matrix kimi"           — new CLI: primed/bare delta
+#   just eval "pi matrix kimi --grade"   — new CLI: reasoning grader delta
+#   just eval "pi matrix kimi --triangular" — new CLI: two-grader triangulation
+#   just eval "pi score kimi"            — new CLI: keyword scoring
+#   just eval "pi score kimi --grade"    — new CLI: with reasoning grader
+#
 # Requires: OPENROUTER_API_KEY for Gemini grading on trap evals
 
 [group("eval")]

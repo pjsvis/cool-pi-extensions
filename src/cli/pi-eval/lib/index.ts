@@ -7,3 +7,4 @@ export * from "./providers.js";
 export * from "./assertions.js";
 export * from "./grading.js";
 export * from "./logging.js";
+export * from "./scoring.js";

@@ -531,15 +531,15 @@ case "${1:-help}" in
     ;;
   matrix-triangular)
     shift
-    cmd_matrix_triangular "$@"
+    cd "$REPO_ROOT" && bun run src/cli/pi-eval/main.ts matrix "$@" --triangular
     ;;
   matrix-grade)
     shift
-    cmd_matrix_grade "$@"
+    cd "$REPO_ROOT" && bun run src/cli/pi-eval/main.ts matrix "$@" --grade
     ;;
   matrix)
     shift
-    cmd_matrix "$@"
+    cd "$REPO_ROOT" && bun run src/cli/pi-eval/main.ts matrix "$@"
     ;;
   status)
     cmd_status

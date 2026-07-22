@@ -1,0 +1,9 @@
+{
+  "evalLogPath": "data/eval_log.json",
+  "runMetaPath": "data/eval_runs.jsonl",
+  "fixturePath": "prompts/edinburgh-protocol-evals-v1.json",
+  "graderModel": "google/gemini-2.5-flash",
+  "scoringGraderModel": "qwen/qwen3.7-plus",
+  "scoringGraderProvider": "zenmux",
+  "cacheTtlHours": 168
+}
