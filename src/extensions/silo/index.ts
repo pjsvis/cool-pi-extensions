@@ -1,8 +1,19 @@
 /**
  * Silo Extension
  *
- * Hard filesystem boundary for the Pi agent. Intercepts all bash execution and
- * enforces that every file path referenced stays inside the silo root.
+ * Soft filesystem boundary for the Pi agent. Intercepts bash execution and
+ * blocks commands whose literal arguments reference paths outside the silo
+ * root — catching the cooperative agent's accidental excursions. Returns
+ * "I'm staying in." for blocked commands; clean commands delegate to pi's
+ * built-in local bash backend (same environment + MVFS overlay as a normal
+ * session).
+ *
+ * This is a SOFT boundary, not hard isolation. It does NOT withstand
+ * adversarial input: runtime-constructed paths, symlinks, and tools that read
+ * implicit config (git, ssh) escape. Hard isolation needs OS-level containment
+ * (chroot/namespace/container), out of scope here. The layer is belt-and-braces
+ * over the Protocol's behavioural SILO DISCIPLINE. Boundary behaviour is
+ * verified by `check.test.ts` — run `bun test src/extensions/silo/`.
  *
  * Config (project overrides global):
  *   .pi/silo.json                      (project-local)
@@ -12,30 +23,22 @@
  * { "siloRoot": "/path/to/repo", "enabled": true }
  * ```
  *
- * Enforcement: commands with paths outside siloRoot return "I'm staying in."
- * Clean commands are delegated to pi's built-in local bash backend, so the
- * agent sees the same environment and filesystem overlay as a normal session.
- *
  * Usage:
  *   pi --no-silo            disable for this session
  *   /silo-status            show current state
  */
 
 import { existsSync, readFileSync } from "node:fs";
-import { join, resolve, isAbsolute } from "node:path";
+import { join } from "node:path";
 import {
   createBashTool,
   createLocalBashOperations,
   type BashOperations,
 } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { checkCommand, type SiloConfig } from "./check";
 
 // ── Config ────────────────────────────────────────────────────────
-
-interface SiloConfig {
-  siloRoot?: string;
-  enabled?: boolean;
-}
 
 function loadConfig(cwd: string): SiloConfig {
   const projectPath = join(cwd, ".pi", "silo.json");
@@ -80,64 +83,6 @@ function loadLegacyConfig(cwd: string): SiloConfig {
   return config;
 }
 
-// ── Path checking ─────────────────────────────────────────────────
-
-const SYSTEM_PREFIXES = [
-  "/dev/", "/proc/", "/sys/", "http://", "https://",
-];
-const SYSTEM_EXACT = ["/bin", "/usr", "/sbin", "/etc", "/tmp", "/var"];
-
-function extractPaths(command: string): string[] {
-  const paths: string[] = [];
-  const re = /(\/(?:[^\s/]+\/)*[^\s]*)|(~[^\s]*)/g;
-  for (const m of command.matchAll(re)) {
-    const p = m[0];
-    if (p.includes("://")) continue;
-    if (SYSTEM_PREFIXES.some((pfx) => p.startsWith(pfx))) continue;
-    if (SYSTEM_EXACT.includes(p)) continue;
-    paths.push(p);
-  }
-  return paths;
-}
-
-function resolvePath(p: string): string {
-  if (p.startsWith("~")) {
-    return join(process.env.HOME ?? "/tmp", p.slice(1));
-  }
-  return isAbsolute(p) ? p : p;
-}
-
-function isPathInSilo(resolvedPath: string, siloRoot: string): boolean {
-  const r = resolve(resolvedPath);
-  const root = resolve(siloRoot);
-  return r === root || r.startsWith(root + "/");
-}
-
-function checkCommand(
-  command: string,
-  siloRoot: string,
-): { blocked: boolean; reason: string } {
-  if (!command?.trim()) return { blocked: false, reason: "" };
-
-  // Check paths in command
-  for (const p of extractPaths(command)) {
-    if (!isPathInSilo(resolvePath(p), siloRoot)) {
-      return { blocked: true, reason: `Path outside silo: ${p}` };
-    }
-  }
-
-  // Check cd targets
-  const cdMatch = command.match(/^\s*cd\s+(\S+)/);
-  if (cdMatch) {
-    const target = resolvePath(cdMatch[1]);
-    if (!isPathInSilo(target, siloRoot)) {
-      return { blocked: true, reason: `cd outside silo: ${cdMatch[1]}` };
-    }
-  }
-
-  return { blocked: false, reason: "" };
-}
-
 // ── Sandboxed operations (wraps pi's built-in backend) ────────────
 
 function createSiloBashOps(
@@ -146,7 +91,7 @@ function createSiloBashOps(
 ): BashOperations {
   return {
     async exec(command, cwd, options) {
-      const blocked = checkCommand(command, siloRoot);
+      const blocked = checkCommand(command, siloRoot, cwd);
       if (blocked.blocked) {
         const msg = "I'm staying in.\n";
         options.onData(Buffer.from(msg));
