@@ -90,6 +90,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 **[decisions/018-edinburgh-protocol-family-substrate-sleeve.md](decisions/018-edinburgh-protocol-family-substrate-sleeve.md)** — The Edinburgh Protocol was a single entity: the pi-agent prompt (`prompts/edinburgh-protocol.md`, symlinked to `~/.pi/agent/AGENTS.md`). It…
 **[decisions/019-table-rendering.md](decisions/019-table-rendering.md)** — Accepted — 2026-06-11
 **[decisions/020-failover-ordering-policy.md](decisions/020-failover-ordering-policy.md)** — Decision 016 established that providers are a portfolio for failover + freebie capture, not a dedup graph — redundancy is resilience, not e…
+**[decisions/021-eval-engine-cli-first-thin-extension-port.md](decisions/021-eval-engine-cli-first-thin-extension-port.md)** — The eval surface had grown into three engines with duplicated logic:
 
 ## Playbooks
 How-to guides for recurring tasks. Give pi the URL and it executes.
