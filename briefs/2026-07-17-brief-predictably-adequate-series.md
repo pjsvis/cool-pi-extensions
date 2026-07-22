@@ -1,8 +1,8 @@
 # brief: Predictably Adequate — A Minimalist Agent Setup Series
 
 **Created:** 2026-07-17
-**Status:** pending
-**Task:** (to be created)
+**Status:** pending — **Posts 3–4 folded into the companion** per `briefs/2026-07-20-brief-publication-convergence.md` (Derrida cut, 2026-07-20). Post 1 exists; Post 2 (bridge) unchanged; the series is now a 4-layer reading order, not 4 independent drafts.
+**Task:** td-bb0986
 **Protocol:** Edinburgh Protocol v1.1.0
 **Repo:** Developed in cool-pi-extensions, lifted to blog-posts when ready
 
