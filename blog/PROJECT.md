@@ -237,3 +237,46 @@ proactive pattern: design the newup boundaries into the epic decomposition.
    (normalise the cost — fewer discovery and retry turns). The cost is
    ~2-3K tokens to read the justfile once during orientation; the saving is
    10-20K tokens across the session in avoided discovery and retries.
+
+6. **The prompt style (opinion/proceed) is a two-phase gate.** "Opinion" asks
+   for analysis without action; "proceed" gates the implementation behind a
+   human decision. The cost of a wrong opinion is 1 turn; the cost of a wrong
+   implementation is 10+ turns. This is the same principle as brief-before-code,
+   applied to the interaction itself: freeze the approach, then execute. It's
+   also the Impartial Spectator made operational — the human reviews the agent's
+   assessment before it becomes action. Most agent interaction is single-phase
+   ("do X" or "what do you think?"). The opinion/proceed pattern is structured
+   deliberation: a decision point inserted between analysis and action. The
+   opinion phase is cheap because the agent isn't carrying implementation
+   context yet — it's reading and assessing, not building. The implementation
+   is gated behind a human decision, so the only guaranteed token cost is the
+   opinion itself.
+
+7. **The register system is friction as drift detection.** The register.jsonl
+   files + `just check` gate deliberately add a small amount of friction: you
+   can't add a file to `briefs/` without regenerating the register, and you
+   can't commit without the gate passing. That friction is the feature. Without
+   it, files accumulate silently and the MANIFEST drifts from the filesystem.
+   The register makes every structural change a deliberate act with a visible
+   diff — `git diff on a register IS the structural delta of that folder`. This
+   is the same principle as the eval gate and the silo process: a small cost
+   upfront (one command per change) prevents an expensive failure mode
+   (structural drift, invisible debt). It also provides structured information
+   access: `just browse` reads the MANIFEST, not the filesystem — curated
+   descriptions, not raw `ls`.
+
+8. **The meta-pattern: decision points, action paths, structured information.**
+   The whole stack is a set of cheap gates, each providing one or more of:
+   decision points (opinion/proceed, brief/code, eval/deploy, handoff/newup),
+   action paths (justfile recipes, playbooks, CLI commands), and structured
+   information access (td context, just orient, registers, briefs). Every
+   component is one or more of these. The Protocol is a decision point
+   (impartial spectator) + structured information (system prompt). The briefs
+   are decision points (freeze scope) + structured information (spec). The
+   justfile is action paths. The registers are decision points (gate) +
+   structured information (MANIFEST). The handoff is structured information
+   (compressed state) + decision point (newup boundary). None is expensive.
+   Each prevents an expensive failure mode. They compose because they operate
+   at different points in the workflow: before work (brief), during work
+   (Protocol, justfile), between phases (handoff, newup), after work (debrief,
+   register check). The full temporal coverage is what makes the stack robust.
