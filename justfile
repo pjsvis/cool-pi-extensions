@@ -104,3 +104,15 @@ registry:
 [group("hygiene")]
 sync-config:
     @bun run scripts/sync-config.ts
+
+# ── Mermaid TUI ───────────────────────────────────────────────────────────
+# Render ```mermaid blocks from markdown files in the terminal.
+# Requires: src/cli/mermaid-tui/target/release/mermaid-tui (cargo build --release)
+#
+# Usage:
+#   just mermaid docs/architecture.md        — render all mermaid blocks
+#   just mermaid docs/architecture.md 2       — render only the 2nd block
+
+[group("mermaid")]
+mermaid FILE BLOCK="":
+    @scripts/mermaid-extract.sh {{ FILE }} {{ BLOCK }}
