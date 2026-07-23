@@ -42,9 +42,15 @@ Soft filesystem boundary — blocks commands with literal paths outside the repo
 **edinburgh-evals**
 Model behavioral gate. Thin port over the `pi-eval` CLI — `/eval <model>` command, `run_edinburgh_eval` LLM tool, `model_select` advisory hook. The CLI is the canonical eval engine (`src/cli/pi-eval/`).
 
+**mermaid-tui**
+Terminal Mermaid renderer. `/mermaid <source>` slash command, `render_mermaid` LLM tool, and `just mermaid <file>` CLI for rendering ```mermaid blocks from any markdown file. Same source renders on GitHub (web) and in the terminal (box-drawing art). The extractor script emits the diagram *and* its numbered-box key list — a coupled pair in the source, kept coupled at render time.
+
 ---
 
 ### CLI tools
+
+**mermaid-tui**
+Terminal Mermaid renderer. Renders ```mermaid blocks from markdown as Unicode box-drawing art. `just mermaid <file>` renders all blocks; `just mermaid <file> 2` renders only the second. Emits the diagram plus any numbered-box key list that follows it.
 
 **pi-check**
 Provider connectivity checker. Probes `/models` endpoint, resolves API keys via skate, reports pass/fail with timing.
@@ -182,6 +188,27 @@ just eval "pi fixtures --validate"                      # list + validate fixtur
 ```
 
 See [CLI tools](#cli-tools) below for the full `just eval` facade.
+
+---
+
+**mermaid-tui**
+
+Terminal Mermaid renderer — thin port over the `mermaid-tui` Rust binary (`src/cli/mermaid-tui/`). The binary is the canonical renderer; the extension provides:
+
+**Commands:** `/mermaid <source>` — render Mermaid diagram in the terminal
+
+**LLM tool:** `render_mermaid` — agent-callable, renders inline during a session
+
+**CLI:** `just mermaid <file> [block-number]` — render ```mermaid blocks from any markdown file. The extractor (`scripts/mermaid-extract.sh`) also emits the numbered-box key list when present — the diagram and key are a coupled pair.
+
+```bash
+just mermaid docs/terminal-stack.md        # render all mermaid blocks
+just mermaid docs/terminal-stack.md 2       # render only the 2nd block
+```
+
+Requires: `cd src/cli/mermaid-tui && cargo build --release` (only dependency: `unicode-width`).
+
+**Conventions:** see [playbooks/diagrams-playbook.md](playbooks/diagrams-playbook.md) — numbered-box+token convention for >4 nodes, descriptive labels for ≤4, monochrome, same source for GitHub and terminal.
 
 ---
 

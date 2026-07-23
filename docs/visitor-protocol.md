@@ -17,6 +17,13 @@ The entry point is the documentation. No manual, no index, no onboarding doc. Ju
 
 ## The VEST Acronym
 
+```mermaid
+flowchart LR
+  V["Visitor\n(knows nothing)"] --> E["Entry\n(teaches the system)"]
+  E --> S["Self\n(references itself)"]
+  S --> T["Teach\n(zero-friction discovery)"]
+```
+
 | Letter | Principle | What it means |
 |---|---|---|
 | **V** | Visitor | Design for visitors, not just users. A visitor knows nothing. A user knows something. |

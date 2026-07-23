@@ -64,10 +64,10 @@ below the diagram:
 ````md
 ```mermaid
 flowchart TD
-  G["①"]
-  L1["②"]
-  L2["③"]
-  L3["④"]
+  G["① Opinion"]
+  L1["② Protocol"]
+  L2["③ Silo"]
+  L3["④ Context"]
   G --> L1 --> L2 --> L3
 ```
 
@@ -82,15 +82,26 @@ moves between them — the diagram gives the shape, the list gives the
 substance. This is the figure-and-caption pattern from print, applied to
 terminal-native docs.
 
-When to use:
-- **Numbered:** complex diagrams (>3 nodes) where descriptive labels would
-  make boxes too wide for the terminal.
-- **Descriptive:** simple diagrams (≤3 nodes) where the label is short
-  enough to be self-explanatory.
+**Put a short text token alongside the number** ("① Opinion", not bare
+"①"). A bare glyph is a cipher — meaningful only with the key. A
+token+number is legible in isolation and still compact. The key then
+glosses the token rather than decoding it.
 
-The tradeoff: numbered boxes are less self-explanatory in isolation. That's
-acceptable when the diagram and list are always co-located, which they are
-in a markdown file.
+**The renderer emits the key.** `just mermaid` looks for the ordered list
+immediately following the mermaid block and prints it after the diagram.
+The diagram and key are a coupled pair in the source; the renderer keeps
+them coupled in the terminal. No need to scroll up to find the decoder.
+
+When to use:
+- **Numbered+token:** complex diagrams (>4 nodes) where descriptive labels
+  would make boxes too wide for the terminal. The token keeps each box
+  self-explanatory; the key carries the full gloss.
+- **Descriptive:** simple diagrams (≤4 nodes) where the label is short
+  enough to be self-explanatory. No key needed.
+
+The tradeoff: numbered boxes are less self-explanatory in isolation. The
+text-token convention narrows that gap — the number gives the order, the
+token gives the hook, the key gives the detail.
 
 ## Track 2 — Analysis (DOT, ephemeral SVG)
 

@@ -22,6 +22,16 @@ that varies by repo; these four are structural:
 | `debriefs/` | Delta | What we learned — post-project reflections |
 | `playbooks/` | Meta | How to use each silo — instructions for producing data |
 
+```mermaid
+flowchart LR
+  P["Playbooks\n(how)"] -.-> B
+  P -.-> D
+  P -.-> R
+  B["Briefs\n(what to build)"] --> D["Decisions\n(why we chose X)"]
+  D --> R["Debriefs\n(what we learned)"]
+  R --> B
+```
+
 The process loop is `briefs → decisions → debriefs`, with `playbooks`
 providing the meta-instructions for all of them. A repo without all four
 is running a fragment of the system, not the system. Drop `decisions/` and
@@ -94,6 +104,13 @@ Three silos form a lifecycle:
 3. `debriefs/` — **Reflection.** What we learned. Post-project analysis: what worked, what didn't, what we'd do differently.
 
 Each feeds the next. A brief triggers decisions. Decisions produce outcomes. Outcomes produce debriefs. Debriefs inform future briefs. The loop is the repository's institutional memory.
+
+```mermaid
+flowchart LR
+  B["Briefs\n(what to build)"] --> D["Decisions\n(why we chose X)"]
+  D --> R["Debriefs\n(what we learned)"]
+  R --> B
+```
 
 ## Relationship to the Edinburgh Protocol
 

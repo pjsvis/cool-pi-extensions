@@ -1,7 +1,7 @@
 # brief: Add Mermaid diagrams to documentation — prose-to-diagram conversion
 
 **Created:** 2026-07-23
-**Status:** pending
+**Status:** complete
 **Depends on:** `mermaid-tui` binary (epic td-076e0a), `mermaid-extract.sh`
 **Playbook:** `playbooks/diagrams-playbook.md`
 
@@ -62,14 +62,16 @@ The VEST protocol (Visitor, Entry, Self, Teach) — four concepts with relations
 
 ## Acceptance criteria
 
-- [ ] `docs/terminal-stack.md` has a mermaid flowchart (numbered-box, ~6 nodes + key list)
-- [ ] `docs/standard-mono-repo-pattern.md` has a mermaid flowchart (circular, 4 nodes, descriptive labels)
-- [ ] `playbooks/briefs-playbook.md` has a mermaid state diagram (4 states)
-- [ ] `docs/visitor-protocol.md` has a mermaid flowchart (4 nodes, descriptive labels)
-- [ ] Each diagram renders cleanly with `just mermaid <file>`
-- [ ] Each diagram renders on GitHub (mermaid block is valid syntax)
-- [ ] No prose is deleted — the diagram is additive, the prose carries the *why*
-- [ ] Diagrams follow the conventions in `playbooks/diagrams-playbook.md` (numbered vs descriptive, monochrome)
+- [x] `docs/terminal-stack.md` has a mermaid flowchart (numbered-box+token, 6 nodes + key list)
+- [x] `docs/standard-mono-repo-pattern.md` has a mermaid flowchart (circular, 4 nodes, descriptive labels) — two instances
+- [x] `playbooks/briefs-playbook.md` has a mermaid state diagram (4 states + back-edge)
+- [x] `docs/visitor-protocol.md` has a mermaid flowchart (4 nodes, descriptive labels)
+- [x] Each diagram renders cleanly with `just mermaid <file>` (all exit 0)
+- [x] Each diagram renders on GitHub (mermaid block is valid syntax)
+- [x] No prose is deleted — the diagram is additive, the prose carries the *why*
+- [x] Diagrams follow the conventions in `playbooks/diagrams-playbook.md` (numbered+token vs descriptive, monochrome)
+- [x] Extractor emits the numbered-box key list after the diagram (coupled pair)
+- [x] README updated with mermaid-tui extension + CLI entries
 
 ## Out of scope
 

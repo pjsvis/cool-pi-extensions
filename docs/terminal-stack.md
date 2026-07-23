@@ -6,6 +6,25 @@ WSL2). SSH-native — no browser, no Electron, no GUI required. Just a terminal.
 
 ## Stack overview
 
+```mermaid
+flowchart TD
+  M["① Mobile"] --> N["② Network"]
+  N --> T["③ Terminal"]
+  T --> H["④ herdr"]
+  H --> A["⑤ pi/Fresh"]
+  O["⑥ td/side"] -.-> A
+```
+
+1. **Mobile SSH (Echo)** — entry point from iOS/iPadOS (Ghostty, Mosh, Face ID)
+2. **Networking (Tailscale)** — WireGuard mesh; any device to any device
+3. **Terminal (Alacritty)** — GPU rendering, font, clipboard
+4. **Session multiplexing (herdr)** — tab/session management, daemon, agent orchestration
+5. **AI agent + editor (pi / Fresh)** — the shared agent-human platform
+6. **Observability (td + sidecar)** — session continuity/handoff + human oversight dashboard
+
+Solid chain = the connection path (arrive → mesh → terminal → mux → agent).
+Dashed edge = observability runs alongside, not in the chain.
+
 
 **Networking (TailScale)** — WireGuard mesh: connect any device to any device. macOS ✓ · Linux ✓ · WSL2 ✓
 **Terminal (Alacritty)** — GPU rendering, font, clipboard. macOS ✓ · Linux ✓ · WSL2 ✓ (native Windows + WSL)

@@ -41,8 +41,14 @@ What we explicitly are NOT building (to prevent scope creep).
 
 ## Lifecycle
 
+```mermaid
+stateDiagram-v2
+    [*] --> draft
+    draft --> pending
+    pending --> in_progress
+    pending --> draft: needs revision
+    in_progress --> complete
+    complete --> [*]: debrief
 ```
-draft → pending → in-progress → complete
-                                    │
-                                    └─► debriefs/NNN-slug.md
-```
+
+A complete brief feeds into `debriefs/NNN-slug.md`.
