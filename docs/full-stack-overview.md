@@ -69,7 +69,23 @@ These two tools are used 90% by agents. That's the signal: when infrastructure i
 
 ## The shared agent-human platform
 
-Most dev tooling is built for either humans or agents — never both in the same workspace. This stack is different.
+Most dev tooling is built for either humans or agents — never both in the
+same workspace. This stack is different.
+
+```mermaid
+flowchart TD
+  A["Alacritty"]
+  H["herdr"]
+  P["pi — agent"]
+  F["Fresh — editor"]
+  S["sidecar — monitor"]
+  T["td — task memory"]
+  A --> H
+  H --> P
+  H --> F
+  H --> S
+  P --> T
+```
 
 The human and you work in the same herdr session. They have a tab with pi (that's you). They have a tab with Fresh (their editor). They might have a tab with sidecar open (their oversight layer). You share the same context — same files, same git state, same session.
 

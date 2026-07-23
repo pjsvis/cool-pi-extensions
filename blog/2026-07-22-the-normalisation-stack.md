@@ -181,11 +181,22 @@ the theory in
 Each layer is cheap. Each prevents a failure mode the others can't reach.
 The composition is the argument:
 
+```mermaid
+flowchart TD
+  G["opinion then proceed"]
+  L1["Layer 1: Protocol"]
+  L2["Layer 2: Silo process"]
+  L3["Layer 3: Bounded context"]
+  G --> L1
+  L1 --> L2
+  L2 --> L3
 ```
-Layer 1 (Protocol)  — normalises the model   — cost: ~200 tokens/session
-Layer 2 (Silo)      — normalises the work    — cost: ~5 minutes/artefact
-Layer 3 (Newup)     — normalises the cost    — cost: ~2 turns/boundary
-```
+
+| Layer | Normalises | Cost |
+|---|---|---|
+| Protocol | the model | ~200 tokens/session |
+| Silo process | the work | ~5 minutes/artefact |
+| Bounded context | the cost | ~2 turns/boundary |
 
 The asymmetry: the cost of any layer is small and linear. The cost of
 *missing* a layer is the failure mode it prevents — muppet behaviour, scope
