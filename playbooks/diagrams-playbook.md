@@ -7,13 +7,22 @@ How we author and render diagrams in this repo. Two tracks, partitioned by **aud
 | Track | Audience | Tool | Layout | Committed artifact |
 |---|---|---|---|---|
 | **Publication** | Readers of GitHub docs | mermaid DSL in `.md` | dagre (via GitHub's renderer) | the `.md` source itself |
+| **Terminal** | Agent / human in the terminal | mermaid DSL in `.md` | `mermaid-tui` (Rust binary) | the `.md` source itself |
 | **Analysis** | Author / agent, transiently | DOT | `dot` (Graphviz) | DOT source; SVG is ephemeral |
+
+Publication and Terminal share the **same source** — the mermaid block in
+the `.md` file. GitHub renders it for web readers; `mermaid-tui` renders it
+for terminal readers. Two renderers, one artifact. The source is the
+canonical form; the renderers are ports.
 
 ## Track 1 — Publication (mermaid-native)
 
-**When:** simple box drawings, state machines, any small graph meant to be *read* in a rendered GitHub document.
+**When:** simple box drawings, state machines, any small graph meant to be
+*read* in a rendered GitHub document or in the terminal.
 
-**How:** author a fenced ```mermaid block directly in the `.md`. GitHub renders it. No local tooling required.
+**How:** author a fenced ```mermaid block directly in the `.md`. GitHub
+renders it for web readers. `mermaid-tui` renders it for terminal readers.
+No local pipeline required for GitHub; `just mermaid <file>` for terminal.
 
 ````md
 ```mermaid
@@ -25,10 +34,63 @@ stateDiagram-v2
 ```
 ````
 
+**Terminal rendering:**
+
+```bash
+just mermaid docs/full-stack-overview.md        # render all mermaid blocks
+just mermaid docs/full-stack-overview.md 2       # render only the 2nd block
+```
+
+Requires: `src/cli/mermaid-tui/target/release/mermaid-tui`
+(`cd src/cli/mermaid-tui && cargo build --release`).
+
 Rules:
-- **Keep graphs small.** If dagre's layout starts to look wrong — crossing edges, cramped clusters, unreadable spacing — that's the signal to escalate to Track 2.
+- **Keep graphs small.** If dagre's layout starts to look wrong — crossing
+  edges, cramped clusters, unreadable spacing — that's the signal to
+  escalate to Track 2.
 - **No committed SVG.** The `.md` source is the artifact.
 - **No pipeline.** Edits just work.
+- **Monochrome.** The terminal renderer outputs box-drawing characters
+  without colour. This is deliberate — monochrome is legible in any terminal
+  theme (light, dark, solarized). Colour is a future enhancement for a
+  specific use case, not a default.
+
+### Numbered-box convention (diagram + key list)
+
+For diagrams with more than 3–4 nodes, descriptive labels make boxes wide
+and the layout sprawls. Use **numbered nodes** instead, with a key list
+below the diagram:
+
+````md
+```mermaid
+flowchart TD
+  G["①"]
+  L1["②"]
+  L2["③"]
+  L3["④"]
+  G --> L1 --> L2 --> L3
+```
+
+1. **Opinion / proceed** — human decision gate between analysis and action
+2. **Protocol** — normalises the model (~200 tokens/session)
+3. **Silo process** — normalises the work (~5 min/artefact)
+4. **Bounded context** — normalises the cost (~2 turns/boundary)
+````
+
+The diagram stays compact. The list carries the detail. The reader's eye
+moves between them — the diagram gives the shape, the list gives the
+substance. This is the figure-and-caption pattern from print, applied to
+terminal-native docs.
+
+When to use:
+- **Numbered:** complex diagrams (>3 nodes) where descriptive labels would
+  make boxes too wide for the terminal.
+- **Descriptive:** simple diagrams (≤3 nodes) where the label is short
+  enough to be self-explanatory.
+
+The tradeoff: numbered boxes are less self-explanatory in isolation. That's
+acceptable when the diagram and list are always co-located, which they are
+in a markdown file.
 
 ## Track 2 — Analysis (DOT, ephemeral SVG)
 
@@ -97,13 +159,22 @@ Move a diagram from mermaid to DOT when **any** of these hold:
 
 ## Dependency surface
 
-- **Track 1:** nothing local. GitHub provides the renderer.
-- **Track 2:** `dot` (Graphviz). `brew install graphviz` / `apt install graphviz`. Verify with `just install-deps`.
+- **Track 1 (GitHub):** nothing local. GitHub provides the renderer.
+- **Track 1 (Terminal):** `mermaid-tui` binary.
+  `cd src/cli/mermaid-tui && cargo build --release`. Only dependency:
+  `unicode-width`. Pi extension at `src/extensions/mermaid-tui/` provides
+  `/mermaid` slash command + `render_mermaid` tool.
+- **Track 2:** `dot` (Graphviz). `brew install graphviz` / `apt install
+  graphviz`. Verify with `just install-deps`.
 
 No sebastian, no `mmdc`, no Chromium, no wasm. That minimalism is the point.
 
 ## References
 
 - Decision 012 — the *why* behind this playbook.
+- Decision 021 — the eval consolidation that produced the session-newup
+  discipline (the terminal renderer was built under the same discipline).
+- `mermaid-tui` brief — `briefs/2026-07-23-brief-go-mermaid-renderer-01.md`
+- `mermaid-extract` brief — `briefs/2026-07-23-brief-mermaid-extract.md`
 - sebastian (evaluated, not adopted): https://github.com/aovestdipaperino/sebastian
 - Decision 006 (MVAS — don't build the scaffolding before the input exists)
