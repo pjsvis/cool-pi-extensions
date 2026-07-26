@@ -14,6 +14,7 @@ export const FIXTURES: Record<string, string> = {
   iq: "prompts/iq-benchmark-v1.json",
   "005b": "prompts/edinburgh-005b-grounding-v1.json",
   "005b-strong": "prompts/edinburgh-005b-strong-v1.json",
+  "006": "prompts/edinburgh-006-scope-primed-v1.json",
   sit: "prompts/stuff-into-things-v1.json",
   sit2: "prompts/stuff-into-things-v2.json",
 };

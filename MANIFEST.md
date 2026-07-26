@@ -65,8 +65,10 @@ Project briefs define **what** and **why** before code is written. Frozen when w
 **[briefs/2026-07-23-brief-mermaid-live-preview.md](briefs/2026-07-23-brief-mermaid-live-preview.md)** — An interactive layer on top of the `mermaid-to-md` CLI: while editing a `​```mmd` source block in a markdown file, the adjacent `​```text`…
 **[briefs/2026-07-23-brief-mermaid-to-md-spinoff.md](briefs/2026-07-23-brief-mermaid-to-md-spinoff.md)** — Spin `mermaid-to-md` and its sibling `mermaid-extract` out of `cool-pi-extensions` into a standalone repository, package the `mermaid-tui`…
 **[briefs/2026-07-23-brief-mermaid-to-md.md](briefs/2026-07-23-brief-mermaid-to-md.md)** — A thin shell script (`scripts/mermaid-to-md.sh`) that takes Mermaid source (from a `.mmd` file or stdin), renders it to Unicode box-drawing…
+**[briefs/2026-07-26-brief-edi-006-phase1-scope-lever-measured.md](briefs/2026-07-26-brief-edi-006-phase1-scope-lever-measured.md)** — Measured whether a concrete scope-discipline instruction in the system prompt closes the EDI-005 gap (both frontier models fail "must ask f…
 **[briefs/2026-07-26-brief-okf-frontmatter-migration.md](briefs/2026-07-26-brief-okf-frontmatter-migration.md)** — Migrate the six registered knowledge folders to OKF v0.2 frontmatter; freeze schema, type vocab, gate flip plan, and replace-vs-coexist.
 **[briefs/2026-07-26-brief-remove-mermaid-to-md.md](briefs/2026-07-26-brief-remove-mermaid-to-md.md)** — Remove spun-off mermaid-to-md work — renderer, pi extension, and 6 briefs — from this repo; it now lives in ~/dev/github/mermaid-to-md.
+**[briefs/2026-07-26-brief-scope-discipline-gate.md](briefs/2026-07-26-brief-scope-discipline-gate.md)** — A phased epic to determine whether scope discipline (the EDI-005 trap: "build on incomplete spec without asking for clarification") is trai…
 
 ## Debriefs
 Post-implementation reflections. Capture what worked, what didn't, what to try next.
@@ -79,6 +81,7 @@ Post-implementation reflections. Capture what worked, what didn't, what to try n
 **[debriefs/010-folder-registers.md](debriefs/010-folder-registers.md)** — A generator (`scripts/gen-registers.ts` + shared `scripts/register-lib.ts`) emits a `register.jsonl` in each of the six process/content fol…
 **[debriefs/011-build-from-source.md](debriefs/011-build-from-source.md)** — Go toolchain is portable. `make install` and `make install-dev` worked identically across the two machines. No distro-specific packaging, n…
 **[debriefs/012-pi-eval-cli-consolidation.md](debriefs/012-pi-eval-cli-consolidation.md)** — Consolidated three eval engines (extension state machine, `pi-eval-runner.ts`, `edinburgh-eval.ts`) into one canonical `pi-eval` CLI at `sr…
+**[debriefs/013-false-muppet-signal-kimi-k3-qwen3.7-max.md](debriefs/013-false-muppet-signal-kimi-k3-qwen3.7-max.md)** — Evaluated `moonshotai/kimi-k3` and `qwen/qwen3.7-max` against the Edinburgh
 
 ## Decisions
 Recorded architectural decisions with context, rationale, and consequences.
@@ -168,6 +171,7 @@ Reusable prompt templates and agent identity frameworks.
 
 **[prompts/edinburgh-005b-grounding-v1.json](prompts/edinburgh-005b-grounding-v1.json)**
 **[prompts/edinburgh-005b-strong-v1.json](prompts/edinburgh-005b-strong-v1.json)**
+**[prompts/edinburgh-006-scope-primed-v1.json](prompts/edinburgh-006-scope-primed-v1.json)**
 **[prompts/edinburgh-protocol-chat.md](prompts/edinburgh-protocol-chat.md)** — > One substrate, many sleeves. The Edinburgh Protocol is a *family*, not a
 **[prompts/edinburgh-protocol-evals-v1.json](prompts/edinburgh-protocol-evals-v1.json)**
 **[prompts/iq-benchmark-v1.json](prompts/iq-benchmark-v1.json)**
