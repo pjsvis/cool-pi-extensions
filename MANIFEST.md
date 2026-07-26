@@ -62,6 +62,7 @@ Project briefs define **what** and **why** before code is written. Frozen when w
 **[briefs/2026-07-23-brief-go-mermaid-renderer-02.md](briefs/2026-07-23-brief-go-mermaid-renderer-02.md)** — //! Self-contained terminal renderer for Mermaid diagrams.
 **[briefs/2026-07-23-brief-mermaid-diagrams-for-docs.md](briefs/2026-07-23-brief-mermaid-diagrams-for-docs.md)** — Convert prose descriptions of architectures, pipelines, and state machines into Mermaid diagrams in four documentation files. Each diagram…
 **[briefs/2026-07-23-brief-mermaid-extract.md](briefs/2026-07-23-brief-mermaid-extract.md)** — A thin shell script (`scripts/mermaid-extract.sh`) that extracts ` ```mermaid ` code blocks from a markdown file and pipes each one to the…
+**[briefs/2026-07-26-brief-okf-frontmatter-migration.md](briefs/2026-07-26-brief-okf-frontmatter-migration.md)** — Migrate the six registered knowledge folders to OKF v0.2 frontmatter; freeze schema, type vocab, gate flip plan, and replace-vs-coexist.
 
 ## Debriefs
 Post-implementation reflections. Capture what worked, what didn't, what to try next.
