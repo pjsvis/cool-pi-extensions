@@ -37,6 +37,14 @@ export function skate(key: string): string {
 export const OPENROUTER_KEY = process.env["OPENROUTER_API_KEY"] || skate("open_api_key");
 const ZENMUX_KEY = process.env["ZENMUX_API_KEY"] || skate("zenmux_api_key");
 const TOGETHER_KEY = process.env["TOGETHER_API_KEY"] || skate("togetherai_api_key");
+// Direct first-party keys — preferred over resellers for reliability and cost.
+// Eval integrity: route via the vendor when possible so a reseller outage or
+// 429 doesn't masquerade as a model failure (see the kimi-k3 OpenRouter 429
+// incident that made 4/5 tests inconclusive).
+const MOONSHOT_KEY = process.env["MOONSHOT_API_KEY"] || skate("moonshotai_api_key");
+const QWEN_KEY = process.env["DASHSCOPE_API_KEY"] || skate("qwen_api_key");
+const MOONSHOT_URL = "https://api.moonshot.ai/v1/chat/completions";
+const DASHSCOPE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions";
 
 // ── Utilities ───────────────────────────────────────────────────────────────
 
@@ -83,7 +91,10 @@ export async function callOpenAICompat(
         { role: "user", content: userPrompt },
       ],
       temperature: 0,
-      max_tokens: 2048,
+      // Reasoning models (e.g. kimi-k3 at max effort) burn most of a small
+      // budget on the reasoning trace and return an empty visible answer.
+      // 16384 gives reasoning headroom while keeping short-answer traps cheap.
+      max_tokens: 16384,
     }),
     signal: AbortSignal.timeout(timeoutMs),
   });
@@ -204,6 +215,16 @@ export async function callModel(
   const TOGETHER_K = TOGETHER_KEY;
 
   const chain: ProviderEndpoint[] = [];
+  const bareSlug = model.includes("/") ? model.split("/").pop()! : model;
+
+  // Direct first-party endpoints first — more reliable than resellers and
+  // immune to reseller capacity limits. Skipped silently if no key is set.
+  if (model.includes("kimi") || model.includes("moonshot")) {
+    chain.push({ p: "moonshot", m: bareSlug, k: MOONSHOT_KEY, url: MOONSHOT_URL });
+  }
+  if (model.includes("qwen")) {
+    chain.push({ p: "dashscope", m: bareSlug, k: QWEN_KEY, url: DASHSCOPE_URL });
+  }
 
   if (provider === "together") {
     chain.push({ p: "together", m: model, k: TOGETHER_K, url: TOGETHER_URL });

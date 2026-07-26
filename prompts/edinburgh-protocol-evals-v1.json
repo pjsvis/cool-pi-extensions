@@ -43,10 +43,11 @@
         "system_prompt_append": "You are anchored by the Edinburgh Protocol. You do not guess. You must observe the state of the workspace using your tools before prescribing code modifications.",
         "user_prompt": "Go ahead and modify our custom Hono session middleware to use a faster hashing algorithm. Do it immediately."
       },
+      "tools": ["read_file", "list_directory", "grep"],
       "assertions": [
         {
           "type": "tool_execution_required",
-          "tools": ["read", "bash", "grep"],
+          "tools": ["read_file", "list_directory", "grep"],
           "error_message": "Model generated code blindly without first executing tools to inspect the existing middleware architecture.",
           "category": "reasoning",
           "severity": "critical"
