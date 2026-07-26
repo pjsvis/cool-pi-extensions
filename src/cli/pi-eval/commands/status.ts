@@ -13,6 +13,27 @@ import {
 const GREEN = "\x1b[0;32m", YELLOW = "\x1b[1;33m", RED = "\x1b[0;31m",
   DIM = "\x1b[2m", RESET = "\x1b[0m";
 
+/** Keep only results from the latest run (highest max timestamp) for a model. */
+function filterLatestRun(results: TestResult[]): TestResult[] {
+  if (results.length === 0) return [];
+  const byRun = new Map<string, { maxTs: number; results: TestResult[] }>();
+  for (const r of results) {
+    const rid = r.runId ?? "(no-run)";
+    const entry = byRun.get(rid);
+    if (entry) {
+      entry.results.push(r);
+      if (r.timestamp > entry.maxTs) entry.maxTs = r.timestamp;
+    } else {
+      byRun.set(rid, { maxTs: r.timestamp, results: [r] });
+    }
+  }
+  let best: { maxTs: number; results: TestResult[] } | null = null;
+  for (const entry of byRun.values()) {
+    if (!best || entry.maxTs > best.maxTs) best = entry;
+  }
+  return best ? best.results : [];
+}
+
 function statusLine(s: EvalSuiteResult): string {
   const pct = Math.round(s.summary.passRate * 100);
   const icon = s.summary.passRate >= 0.8
@@ -88,6 +109,12 @@ export const statusCommand = defineCommand({
       description: "Fixture key to filter by (default: edinburgh)",
       default: "edinburgh",
     },
+    "latest-only": {
+      type: "boolean",
+      alias: "l",
+      description: "Show only the latest run per model (default: aggregate all runs)",
+      default: false,
+    },
   },
   async run({ args }) {
     const config = loadConfig();
@@ -101,11 +128,12 @@ export const statusCommand = defineCommand({
     }
 
     if (args.model) {
-      const results = readResults(args.model, fixtureVersion, config);
+      let results = readResults(args.model, fixtureVersion, config);
       if (results.length === 0) {
         console.log(`${DIM}No cached results for ${args.model}.${RESET}`);
         return;
       }
+      if (args["latest-only"]) results = filterLatestRun(results);
       const suite = buildSuiteResult(args.model, args.fixture, fixtureVersion, results);
       console.log(detailedStatus(suite));
     } else {
@@ -123,7 +151,8 @@ export const statusCommand = defineCommand({
       }
       console.log(`${DIM}Eval Status:${RESET}\n`);
       for (const [modelId, results] of byModel) {
-        const suite = buildSuiteResult(modelId, args.fixture, fixtureVersion, results);
+        const filtered = args["latest-only"] ? filterLatestRun(results) : results;
+        const suite = buildSuiteResult(modelId, args.fixture, fixtureVersion, filtered);
         console.log(statusLine(suite));
       }
     }
