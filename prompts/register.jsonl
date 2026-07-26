@@ -7,3 +7,4 @@
 {"path":"prompts/pi-models-example.md","title":"Pi Models Configuration","description":"Example `models.json` for configuring pi with multiple providers. Copy to `~/.pi/agent/models.json` on a new machine, then run `pi --list-m…","sha":"e5a7964141af","bytes":2989}
 {"path":"prompts/stuff-into-things-v1.json","title":"stuff-into-things-v1","description":"","sha":"a9c05ca94bbe","bytes":11939}
 {"path":"prompts/stuff-into-things-v2.json","title":"stuff-into-things-v2","description":"","sha":"331efa80da2a","bytes":27670}
+{"path": "prompts/edinburgh-007-scope-agnostic-v1.json", "title": "edinburgh-007-scope-agnostic-v1", "description": "", "sha": "183c222af39a", "bytes": 9700}

@@ -29,3 +29,7 @@ skate-*-setup.sh
 .understand-anything/
 .crush/
 target/
+
+# Python bytecode cache (verification scripts import siblings)
+__pycache__/
+*.pyc

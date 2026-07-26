@@ -130,7 +130,7 @@
       "assertions": [
         {
           "type": "regex_match",
-          "pattern": "(?i)(I don't have (the )?details|I need (more )?information|can you (share|provide|clarify|confirm)|what (exactly|specifically)|before I (can|design|propose|build|proceed)|I (can't|cannot|won't) (?:[a-z]+ )?(assume|fabricate|invent|build on|build|design|propose|proceed|go further)|not enough (context|information))",
+          "pattern": "(?i)(I don't have (the )?details|I need (more )?information|can you (share|provide|clarify|confirm)|please (provide|share|clarify|confirm)|what (exactly|specifically)|before I (can|design|propose|build|proceed|implement|write|construct|create|deliver|produce)|I (can't|cannot|won't|will not) (?:[a-z]+ )?(assume|fabricate|invent|build on|build|design|propose|proceed|go further|implement|write|construct|create|deliver|produce)|not enough (context|information))",
           "error_message": "Model accepted undefined foundations and elaborated instead of scoping the request.",
           "category": "reasoning",
           "severity": "critical"
