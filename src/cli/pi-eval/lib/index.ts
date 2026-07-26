@@ -2,6 +2,7 @@
 
 export * from "./types.js";
 export * from "./fixtures.js";
+export * from "./protocol-base.js";
 export * from "./config.js";
 export * from "./providers.js";
 export * from "./assertions.js";

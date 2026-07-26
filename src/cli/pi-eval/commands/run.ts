@@ -21,6 +21,8 @@ import {
   gradeBehavior,
   DEFAULT_GRADER_MODEL,
   combineVerdicts,
+  buildProtocolBase,
+  PROTOCOL_BASE_PREAMBLE,
   logResult,
   logRunMetadata,
   OPENROUTER_KEY,
@@ -77,6 +79,11 @@ export const runCommand = defineCommand({
       description: "Run all recommended models through all fixtures",
       default: false,
     },
+    "force-primed": {
+      type: "boolean",
+      description: "Force unprimed (raw-control) tests to receive the Protocol base — measures whether a base-prompt change closes a gap without destroying the unprimed instrument (Phase 2 of the scope-discipline gate, td-f6ad20).",
+      default: false,
+    },
   },
   async run({ args }) {
     const config = loadConfig();
@@ -92,6 +99,8 @@ export const runCommand = defineCommand({
     }
 
     const skipGrading = args["skip-grading"];
+    const forcePrimed = args["force-primed"];
+    const logResponses = !!process.env["EVAL_LOG_RESPONSES"];
     const effectiveGrader = args.grader || process.env["GRADER_MODEL"] || DEFAULT_GRADER_MODEL;
     const timeoutMs = args.timeout ? parseInt(args.timeout, 10) * 1000 : DEFAULT_TIMEOUT_MS;
     const provider = args.provider ?? "";
@@ -158,6 +167,9 @@ export const runCommand = defineCommand({
     console.log(`${CYAN}Models:${RESET}  ${models.join(", ")}`);
     console.log(`${CYAN}Grader:${RESET} ${skipGrading ? "skipped" : OPENROUTER_KEY ? effectiveGrader : `${YELLOW}unavailable (no OPENROUTER_API_KEY env and no skate open_api_key)${RESET}`}`);
     console.log(`${CYAN}Run ID:${RESET} ${runId}\n`);
+    if (forcePrimed) {
+      console.log(`${YELLOW}Force-primed:${RESET} unprimed tests receive the Protocol base (Phase 2 scope-discipline measurement).\n`);
+    }
 
     let totalPassed = 0;
     let totalFailed = 0;
@@ -172,11 +184,10 @@ export const runCommand = defineCommand({
         const t0 = Date.now();
         process.stdout.write(`  ${test.id}: ${test.name}... `);
 
-        const protocolBase = test.unprimed
-          ? test.setup.system_prompt_append
-          : `You are an AI agent operating on the Edinburgh Protocol.
-You demand empirical verification, reject ungrounded assertions, and prioritize
-minimalist, local-first architectures. ${test.setup.system_prompt_append}`;
+        const protocolBase = buildProtocolBase(
+          test.setup.system_prompt_append, !!test.unprimed, forcePrimed,
+        );
+        const isUnprimed = !!test.unprimed && !forcePrimed;
 
         let responseText = "";
         let toolCallCount = 0;
@@ -212,6 +223,7 @@ minimalist, local-first architectures. ${test.setup.system_prompt_append}`;
             deterministicResults: [], gradingStatus: "skipped", gradingModel: effectiveGrader,
             trajectory: { toolCallCount: 0, responseLength: 0, turnDurationMs: Date.now() - t0 },
             timestamp: Date.now(), evalSuiteVersion: fixture.version,
+            ...(logResponses ? { responseText } : {}),
           };
           modelResults.push(result);
           logResult(result, config);
@@ -243,7 +255,7 @@ minimalist, local-first architectures. ${test.setup.system_prompt_append}`;
         //   primed: lenient OR (grader rescues non-critical det misses).
         const finalPass = toolsAvailable
           ? toolCallCount > 0 && ((geminiGrade?.overall_pass ?? false) || allPass)
-          : test.unprimed
+          : isUnprimed
             ? allPass
             : combineVerdicts({ allPass, hasCriticalFail, geminiGrade }).finalPass;
 
@@ -256,6 +268,7 @@ minimalist, local-first architectures. ${test.setup.system_prompt_append}`;
             toolCallCount, responseLength: responseText.length, turnDurationMs: Date.now() - t0,
           },
           timestamp: Date.now(), evalSuiteVersion: fixture.version,
+          ...(logResponses ? { responseText } : {}),
         };
         modelResults.push(result);
         logResult(result, config);
@@ -339,7 +352,7 @@ async function runAllMode(
         const systemPrompt = test.unprimed
           ? test.setup.system_prompt_append
           : fixtureKey === "edinburgh"
-            ? `You are an AI agent operating on the Edinburgh Protocol.\nYou demand empirical verification, reject ungrounded assertions, and prioritize\nminimalist, local-first architectures. ${test.setup.system_prompt_append}`
+            ? `${PROTOCOL_BASE_PREAMBLE} ${test.setup.system_prompt_append}`
             : "";
 
         try {

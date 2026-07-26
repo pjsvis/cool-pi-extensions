@@ -101,6 +101,13 @@ export interface TestResult {
   trajectory: TrajectoryInfo;
   timestamp: number;
   evalSuiteVersion: string;
+  /**
+   * Optional: full response text. Attached only when EVAL_LOG_RESPONSES=1, so
+   * deterministic assertions can be audited against the text they scored
+   * (Phase 1 flagged the absence as debt — a pass that can't be audited is
+   * decorated rigor). Backward-compatible: absent by default.
+   */
+  responseText?: string;
 }
 
 export interface RunMetadata {
