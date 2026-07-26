@@ -95,6 +95,14 @@ export async function callOpenAICompat(
       // budget on the reasoning trace and return an empty visible answer.
       // 16384 gives reasoning headroom while keeping short-answer traps cheap.
       max_tokens: 16384,
+      // Opt-in reasoning-effort override for always-on reasoning models.
+      // kimi-k3 defaults to max effort, which on long-horizon prompts can
+      // exhaust the token budget before producing a visible answer. Set
+      // EVAL_REASONING_EFFORT=low|high|max to dial it down (trades fidelity
+      // for a completable answer). No effect on models that ignore the field.
+      ...(process.env["EVAL_REASONING_EFFORT"]
+        ? { reasoning_effort: process.env["EVAL_REASONING_EFFORT"] }
+        : {}),
     }),
     signal: AbortSignal.timeout(timeoutMs),
   });
