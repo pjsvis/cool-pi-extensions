@@ -66,6 +66,7 @@ Project briefs define **what** and **why** before code is written. Frozen when w
 **[briefs/2026-07-23-brief-mermaid-to-md-spinoff.md](briefs/2026-07-23-brief-mermaid-to-md-spinoff.md)** — Spin `mermaid-to-md` and its sibling `mermaid-extract` out of `cool-pi-extensions` into a standalone repository, package the `mermaid-tui`…
 **[briefs/2026-07-23-brief-mermaid-to-md.md](briefs/2026-07-23-brief-mermaid-to-md.md)** — A thin shell script (`scripts/mermaid-to-md.sh`) that takes Mermaid source (from a `.mmd` file or stdin), renders it to Unicode box-drawing…
 **[briefs/2026-07-26-brief-okf-frontmatter-migration.md](briefs/2026-07-26-brief-okf-frontmatter-migration.md)** — Migrate the six registered knowledge folders to OKF v0.2 frontmatter; freeze schema, type vocab, gate flip plan, and replace-vs-coexist.
+**[briefs/2026-07-26-brief-remove-mermaid-to-md.md](briefs/2026-07-26-brief-remove-mermaid-to-md.md)** — Remove spun-off mermaid-to-md work — renderer, pi extension, and 6 briefs — from this repo; it now lives in ~/dev/github/mermaid-to-md.
 
 ## Debriefs
 Post-implementation reflections. Capture what worked, what didn't, what to try next.
