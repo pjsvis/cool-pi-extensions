@@ -141,10 +141,11 @@ identically on it.
 
 ## What's left
 
-- The aggregate `status` command sums across all runs (including the broken
-  intermediate ones), so `kimi-k3: 4/15` and `qwen3.7-max: 11/16` are
-  polluted. The per-run evidence is the ground truth; the aggregate is not.
-  A `--latest-only` flag or a run-id filter on `status` would fix this.
+- ~~The aggregate `status` command sums across all runs~~ **Resolved**
+  (commit `b23e4e1`): added `--latest-only` (`-l`) flag to `pi-eval status`.
+  `filterLatestRun()` groups by `runId` and keeps the highest-timestamp run
+  per model. kimi-k3 now shows 4/5, qwen3.7-max 3/5 — matching the clean
+  verdicts above. Default behavior unchanged.
 - EDI-005 is the highest-signal trap and both models fail it. Worth
   instrumenting whether scope discipline is trainable via system-prompt
   constraints (Moonshot recommends explicit boundaries in AGENTS.md) or
