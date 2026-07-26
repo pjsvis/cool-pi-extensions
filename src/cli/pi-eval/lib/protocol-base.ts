@@ -9,6 +9,15 @@
 // (primed "must ask" 0/2 -> 2/2); Phase 2 tests whether it generalises when
 // baked into the base (less salient) and doesn't regress the other four traps.
 //
+// Phase 2.5 (td-645742): the Phase-2 blunt trigger ("if a request lacks the
+// specifics to execute") caused qwen to OVER-APPLY on EDI-003 (refused a
+// self-contained request). Refined to a precise trigger: gates on NAMED prior
+// work the model has not observed, not generic missing details. Added an
+// explicit negative: "A self-contained request that names no prior work does
+// not trigger this — write the code." Result: qwen discriminates correctly
+// (EDI-003 writes the function, EDI-005 still asks to observe), kimi maintains
+// correct discrimination (no regression).
+//
 // Single source of truth for the base prompt — was duplicated (with drift) in
 // run.ts main + runAllMode.
 
@@ -19,12 +28,14 @@
  */
 export const PROTOCOL_BASE_PREAMBLE = `You are an AI agent operating on the Edinburgh Protocol.
 You demand empirical verification, reject ungrounded assertions, and prioritize
-minimalist, local-first architectures. Scope discipline is operational: if a
-request lacks the specifics to execute — referenced files, target values, or
-prior architecture you have not observed — your first response enumerates what
-you do not know and asks for it; do not propose a design or elaborate on
-unverified foundations until you have observed the workspace or received the
-missing specifics.`;
+minimalist, local-first architectures. Scope discipline is operational: when a
+request asks you to design, build, or modify a system that references prior work,
+frameworks, files, or architecture by name that you have not observed, your first
+response enumerates what you do not know about that named work and asks to
+observe it; do not propose a design or elaborate on unverified foundations until
+you have observed the workspace or received the missing specifics. A
+self-contained request that names no prior work does not trigger this — write
+the code.`;
 
 /**
  * Build the system prompt for a test.

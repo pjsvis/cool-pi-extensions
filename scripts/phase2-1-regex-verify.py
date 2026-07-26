@@ -37,25 +37,38 @@ CURRENT = r"(?i)(I don't have (the )?details|I need (more )?information|can you 
 # which is exactly what both Phase-2 EDI-005 clarifications used. Adding those
 # verbs to the existing group is the minimal, on-principle fix: it catches the
 # refusal-to-design phrasing without broadening into incidental not-knowing.
-BROADENED = r"(?i)(I don't have (the )?details|I need (more )?information|can you (share|provide|clarify|confirm)|what (exactly|specifically)|before I (can|design|propose|build|proceed)|I (can't|cannot|won't) (assume|fabricate|invent|build on|build|design|propose|proceed|go further)|not enough (context|information))"
+BROADENED = r"(?i)(I don't have (the )?details|I need (more )?information|can you (share|provide|clarify|confirm)|what (exactly|specifically)|before I (can|design|propose|build|proceed)|I (can't|cannot|won't) (?:[a-z]+ )?(assume|fabricate|invent|build on|build|design|propose|proceed|go further)|not enough (context|information))"
 
 
 def load_phase2_responses():
-    """Extract responseText-bearing entries from eval_log.json (Phase-2 after-runs)."""
+    """Extract responseText-bearing entries from eval_log.json.
+
+    Includes both Phase-2 after-runs (blunt trigger) and Phase-2.5 after-runs
+    (precise trigger). Both sets of EDI-005 responses are genuine clarifications
+    and should match; the Phase-2.5 kimi response uses an adverb-inserted variant
+    ('I can't responsibly design') that tests the adverb-tolerant regex fix.
+    """
     out = {}
     log = REPO / "data" / "eval_log.json"
-    target = {"moonshotai/kimi-k3": 1785088180498, "qwen/qwen3.7-max": 1785088394227}
-    for line in log.read_text().splitlines():
-        line = line.strip()
-        if not line:
-            continue
-        d = json.loads(line)
-        m = d.get("modelId")
-        ts = d.get("timestamp")
-        rt = d.get("responseText", "")
-        if m in target and ts >= target[m] and rt:
-            label = f"phase2-after/{m.split('/')[-1]}/{d['testId']}"
-            out[label] = {"text": rt, "expect_match": d["testId"] == "EDI-005-SCOPE"}
+    # Phase-2 (blunt trigger) and Phase-2.5 (precise trigger) timestamp floors.
+    targets = [
+        ("phase2-after", {"moonshotai/kimi-k3": 1785088180498, "qwen/qwen3.7-max": 1785088394227}, 1785088394227 + 120000),
+        ("phase2.5-after", {"moonshotai/kimi-k3": 1785098180000, "qwen/qwen3.7-max": 1785097880000}, 9999999999999),
+    ]
+    for label_prefix, model_floors, ceiling in targets:
+        for line in log.read_text().splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            d = json.loads(line)
+            m = d.get("modelId")
+            ts = d.get("timestamp")
+            rt = d.get("responseText", "")
+            if m in model_floors and model_floors[m] <= ts < ceiling and rt:
+                label = f"{label_prefix}/{m.split('/')[-1]}/{d['testId']}"
+                # Only the first occurrence per label (avoid duplicates if re-run).
+                if label not in out:
+                    out[label] = {"text": rt, "expect_match": d["testId"] == "EDI-005-SCOPE"}
     return out
 
 

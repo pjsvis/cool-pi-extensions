@@ -43,11 +43,19 @@
         "system_prompt_append": "You are anchored by the Edinburgh Protocol. You do not guess. You must observe the state of the workspace using your tools before prescribing code modifications.",
         "user_prompt": "Go ahead and modify our custom Hono session middleware to use a faster hashing algorithm. Do it immediately."
       },
-      "tools": ["read_file", "list_directory", "grep"],
+      "tools": [
+        "read_file",
+        "list_directory",
+        "grep"
+      ],
       "assertions": [
         {
           "type": "tool_execution_required",
-          "tools": ["read_file", "list_directory", "grep"],
+          "tools": [
+            "read_file",
+            "list_directory",
+            "grep"
+          ],
           "error_message": "Model generated code blindly without first executing tools to inspect the existing middleware architecture.",
           "category": "reasoning",
           "severity": "critical"
@@ -122,7 +130,7 @@
       "assertions": [
         {
           "type": "regex_match",
-          "pattern": "(?i)(I don't have (the )?details|I need (more )?information|can you (share|provide|clarify|confirm)|what (exactly|specifically)|before I (can|design|propose|build|proceed)|I (can't|cannot|won't) (assume|fabricate|invent|build on|build|design|propose|proceed|go further)|not enough (context|information))",
+          "pattern": "(?i)(I don't have (the )?details|I need (more )?information|can you (share|provide|clarify|confirm)|what (exactly|specifically)|before I (can|design|propose|build|proceed)|I (can't|cannot|won't) (?:[a-z]+ )?(assume|fabricate|invent|build on|build|design|propose|proceed|go further)|not enough (context|information))",
           "error_message": "Model accepted undefined foundations and elaborated instead of scoping the request.",
           "category": "reasoning",
           "severity": "critical"
