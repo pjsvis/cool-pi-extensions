@@ -14,7 +14,7 @@ A single session ran too long without a context reset. Every turn re-sent the
 full conversation history to the model. Megabytes of accumulated transcript
 were slung on every turn. The bill hit **$46**.
 
-The session should have been newed up — `/clear` or a fresh session — roughly
+The session should have been newed up — `/new` (a fresh session) — roughly
 **half a dozen times**. It wasn't.
 
 ## The systems problem (not the villain problem)

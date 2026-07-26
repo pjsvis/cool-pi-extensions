@@ -395,5 +395,5 @@ Phase 3, only its three `.md` files are gated. This is stated here so Phase
 | 4 | `td-c64631` | close-out | all six (list removed) | debrief |
 
 New up between phases per the session-newup discipline (`td handoff` →
-`/clear` → resume from `td context`). The locus tags in the handoff carry
+`/new` → resume from `td context`). The locus tags in the handoff carry
 the phase boundary.
