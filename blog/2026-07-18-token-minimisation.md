@@ -31,7 +31,7 @@ The confusion between these two is what produces the $46. You think you're runni
 The discipline is to treat a context reset as a **phase boundary**, not a memory test. At each boundary:
 
 1. **Handoff.** `td handoff` captures the compressed state — the ground truth objective, the rejected hypotheses, the remaining debt. This is the lossy compression. The handoff keeps what the next session needs and drops what it doesn't.
-2. **New up.** `/clear` or a fresh session. The megabytes are dropped. The meter resets.
+2. **New up.** `/new` for a fresh session. The megabytes are dropped. The meter resets.
 3. **Resume.** The new session reads `td context` and continues from the handoff. The handoff is the seed. The raw transcript is the entropy.
 
 Half a dozen newups in a long session is not excessive. It is the difference between *O(n²)* and *O(n)*. The work doesn't get shorter. The bill does.

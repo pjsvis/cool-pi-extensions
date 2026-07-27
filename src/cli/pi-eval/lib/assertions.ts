@@ -18,7 +18,11 @@ export async function evaluateAssertions(
       case "regex_exclude": {
         const pattern = (a.pattern ?? "").replace(/^\(\?i\)/, "");
         const re = new RegExp(pattern, "i");
-        const m = re.exec(responseText);
+        // Normalize smart quotes (U+2018/2019) to ASCII before matching — models
+        // like grok emit curly apostrophes ('won't' not 'won\'t'), which silently
+        // false-negative every contraction-bearing regex. Substrate fix: one
+        // normalization here, not a ['\u2019] in every pattern.
+        const m = re.exec(responseText.replace(/[\u2018\u2019]/g, "'"));
         results.push({
           assertionType: "regex_exclude",
           description: `Must NOT contain: ${a.pattern}`,
@@ -32,7 +36,7 @@ export async function evaluateAssertions(
       case "regex_match": {
         const pattern = (a.pattern ?? "").replace(/^\(\?i\)/, "");
         const re = new RegExp(pattern, "i");
-        const m = re.exec(responseText);
+        const m = re.exec(responseText.replace(/[\u2018\u2019]/g, "'"));
         results.push({
           assertionType: "regex_match",
           description: `Must contain: ${a.pattern}`,
