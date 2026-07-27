@@ -59,14 +59,14 @@ The current rubric grades the four gateway traits (sycophancy, rigor, anti-entro
 
 ### The graders available
 
-The user suggests `google/gemini-2.5-flash` as the primary grader (the config default), with round-robin across available graders for robustness. Available grader models from `models.json`:
-- `google/gemini-2.5-flash` (config default — fast, cheap, reliable)
-- `google/gemini-2.5-pro` (higher quality, more expensive)
-- `qwen/qwen3.7-plus` (the scoring-eval grader — structured reasoning)
-- `qwen/qwen3.7-max` (higher quality)
-- `nvidia/nemotron-3-nano-30b-a3b:free` (the current `DEFAULT_GRADER_MODEL` — free but lower quality)
+**Round-robin = same substrate, different providers, for rate-limit resilience — not different models for bias reduction.** The grader is `google/gemini-2.5-flash` (the config default — fast, cheap, reliable). The round-robin distributes grading calls across the providers that carry it (OpenRouter → ZenMux → Together), so a single provider's rate limit or outage doesn't block the run. The objective is availability, not impartiality — the grader's judgment is the same model's judgment regardless of which reseller routed it. The existing `callModel` provider-fallback chain already implements this for the model under test; the grader should use the same pattern.
 
-Round-robin: distribute grading across 2–3 graders so a single grader's bias doesn't dominate, and a single grader's outage doesn't block the run. The verdict is the majority (or, for disagreement, a tie-breaker grader). This is the "impartial spectator" applied to the grader itself.
+Provider chain for the grader (gemini-2.5-flash):
+- OpenRouter (`OPENROUTER_KEY`, `skate: open_api_key`) — primary
+- ZenMux (`ZENMUX_KEY`, `skate: zenmux_api_key`) — first fallback
+- Together (`TOGETHER_KEY`, `skate: togetherai_api_key`) — second fallback (if it carries gemini-2.5-flash; verify on first run)
+
+The current `gradeBehavior` calls OpenRouter directly (hardcoded `OPENROUTER_URL`). **Phase B/C change:** route the grader through `callModel` (or a parallel `callGrader` that uses the same provider-chain pattern), not a direct OpenRouter call. This is the same rate-limit-resilience architecture the model-under-test already uses.
 
 ## The plan — phased
 
@@ -138,9 +138,15 @@ Round-robin: distribute grading across 2–3 graders so a single grader's bias d
 
 Phases A and B can be done in one session. Phase C is a focused change. Phase D is an overnight script. **We do not need to do everything at once.** The brief is the plan; the execution is sequential.
 
-## What this doesn't fix
+## Disposing of the 1,223 pre-flag results
 
-- **The 1,223 pre-flag results without response text.** Those verdicts are frozen. We cannot re-grade them. The full rerun (Phase D) replaces them with auditable data. Until then, those rows are the regex's opinion, and we treat them as low-confidence.
+The 1,223 results without `responseText` (everything before 2026-07-26) are frozen at their regex verdicts and cannot be re-graded. They are low-confidence data — some are real failures, some are regex false-negatives we'll never catch, some are 0-length provider errors masquerading as failures (as the minimax-m3 prior run revealed). **Plan: delete them once Phase D produces replacement data.**
+
+- **Do not delete yet.** The pre-flag data is the only data we have for several models on the gateway and SIT fixtures. Deleting it before the rerun leaves a gap.
+- **Delete after Phase D.** Once the full rerun produces auditable, grader-graded results for the same models + fixtures, the pre-flag rows are superseded. At that point, archive the old `eval_log.json` to `data/eval_log.pre-grader.jsonl.bak` (not delete — provenance, in case a result is questioned later), and start a fresh `eval_log.json` with the Phase D data as the new baseline.
+- **The `eval_runs.jsonl` metadata stays.** It records what ran, when, with what config — useful for auditability regardless of whether the per-test results are current.
+
+This is a cleanup, not a loss. The pre-flag data was tuition; the Phase D data is the asset.
 - **The EDI-004 regex debt** (keyword synonyms: "binary bloat" not "binary size", "direct SQL" not "raw SQL"). Same class as the scope regex. The grader will fix this too (the rubric grades "justified by concrete constraints" — the judgment the keyword regex can't make). Phase C's grader wiring should cover EDI-004 as well as scope.
 - **The over-application trait** (DeepSeek on EDI-001, MiniMax on SIT-015). The grader can *detect* it (the scope rubric's "over-application is also a FAIL" clause), but the grader is an instrument, not a fix. The fix for over-application is either a sharper negative in the base prompt or the Phase 3 harness gate — separate work.
 
@@ -153,7 +159,7 @@ Phases A and B can be done in one session. Phase C is a focused change. Phase D 
 ## Decision points
 
 1. **Phase A:** flip the logging default + log prompts? (yes — the cost is negligible, the benefit is every result being auditable)
-2. **Phase B:** which graders to round-robin? (proposal: gemini-2.5-flash primary, qwen3.7-plus + gemini-2.5-pro for round-robin; nvidia-nano as a free fallback)
+2. **Phase B:** round-robin = same model (gemini-2.5-flash) across providers (OpenRouter → ZenMux → Together) for rate-limit resilience, NOT different models for bias reduction. Route the grader through the provider-chain pattern, not a direct OpenRouter call.
 3. **Phase B:** the scope-discipline rubric dimension — is the wording above correct? (review before execution)
 4. **Phase C:** regex as pre-filter, grader as primary — is this the right architecture? (proposal: yes — regex passes skip the grader, regex fails trigger the grader; the grader is the final verdict)
 5. **Phase D:** which models to rerun? (proposal: the 24 non-muppet candidates; or a narrower shortlist if cost matters)
