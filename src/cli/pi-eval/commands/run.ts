@@ -11,7 +11,6 @@ import {
   validateFixture,
   fixturePath,
   FIXTURES,
-  REPO_ROOT,
   callModel,
   callModelWithTools,
   listOllamaModels,
@@ -24,11 +23,9 @@ import {
   DEFAULT_SCOPE_GRADER_MODEL,
   combineVerdicts,
   buildProtocolBase,
-  PROTOCOL_BASE_PREAMBLE,
   logResult,
   logRunMetadata,
   OPENROUTER_KEY,
-  type TestCase,
   type TestResult,
   type RunMetadata,
   type EvalFixture,
@@ -37,19 +34,19 @@ import {
 const CYAN = "\x1b[0;36m", GREEN = "\x1b[0;32m", YELLOW = "\x1b[1;33m",
   RED = "\x1b[0;31m", DIM = "\x1b[2m", RESET = "\x1b[0m";
 
-/** Test IDs that use the scope grader as the sole verdict instrument (Phase C).
+/** Edinburgh Protocol behavioral trap tests — grader is the sole verdict.
  *
- * The regex is a closed list matching an open set of clarification phrasings
- * (16% error rate, Phase B). For these tests the grader is the only verdict —
- * the regex runs for provenance (deterministicResults) but never gates the
- * outcome. EDI-005B is excluded — it’s tool-enabled and uses the
- * observational-rigor verdict path, not the scope-discipline path.
+ * The regex was a closed list matching an open set of clarification phrasings
+ * (16% error rate, Phase B). It has been stripped from all Edinburgh fixtures.
+ * The grader (scope-augmented rubric, 5 dimensions) is the sole behavioral
+ * verdict. Structural assertions (tool_execution_required) are ANDed — the
+ * grader can’t verify whether tools were actually called.
  *
- * Prefixes use a trailing dash so EDI-005- matches EDI-005-SCOPE but not
- * EDI-005B-STRONG. */
-const SCOPE_GRADED_PREFIXES = ["EDI-004-", "EDI-005-", "EDI-007-"];
-function isScopeGradedTest(testId: string): boolean {
-  return SCOPE_GRADED_PREFIXES.some((p) => testId.startsWith(p));
+ * SIT and IQ tests are NOT Edinburgh tests — they keep their deterministic
+ * assertions (the grader rubric doesn’t cover SIT-specific traits like
+ * amplification refusal; IQ regex checks correctness, not behavior). */
+function isEdinburghTest(testId: string): boolean {
+  return testId.startsWith("EDI-");
 }
 
 export const runCommand = defineCommand({
@@ -73,14 +70,9 @@ export const runCommand = defineCommand({
       type: "string",
       description: "Grader model for behavioral compliance (default: nvidia/nemotron-3-nano-30b-a3b:free)",
     },
-    "skip-grading": {
-      type: "boolean",
-      description: "Skip Gemini/behavioral grading (deterministic assertions only)",
-      default: false,
-    },
     "scope-grader": {
       type: "string",
-      description: "Scope-discipline grader model (Phase C; grader is the sole verdict for scope tests; default: google/gemini-2.5-flash)",
+      description: "Scope-discipline grader model (grader is the sole verdict for Edinburgh tests; default: google/gemini-2.5-flash)",
     },
     timeout: {
       type: "string",
@@ -109,7 +101,6 @@ export const runCommand = defineCommand({
   async run({ args }) {
     const config = loadConfig();
     const fixtureKey = resolveFixtureKey(args.fixture);
-    const fixtureAbs = fixturePath(fixtureKey);
 
     // Parse models + flags
     let models: string[] = [];
@@ -119,7 +110,6 @@ export const runCommand = defineCommand({
       hasExplicitModels = models.length > 0;
     }
 
-    const skipGrading = args["skip-grading"];
     const forcePrimed = args["force-primed"];
     // Response logging is always on (Phase A — was gated by EVAL_LOG_RESPONSES).
     // The env var is retained as an opt-out for memory-constrained runs.
@@ -134,7 +124,7 @@ export const runCommand = defineCommand({
 
     // ── --run-all mode ──────────────────────────────────────────────────────
     if (args["run-all"]) {
-      await runAllMode(config, effectiveGrader, timeoutMs);
+      await runAllMode(config, effectiveGrader, effectiveScopeGrader, timeoutMs);
       return;
     }
 
@@ -189,7 +179,7 @@ export const runCommand = defineCommand({
 
     console.log(`\n${CYAN}Fixture:${RESET} ${fixture.suiteName} v${fixture.version} (${fixture.tests.length} tests)`);
     console.log(`${CYAN}Models:${RESET}  ${models.join(", ")}`);
-    console.log(`${CYAN}Grader:${RESET} ${skipGrading ? "skipped" : OPENROUTER_KEY ? `${effectiveGrader} (scope: ${effectiveScopeGrader})` : `${YELLOW}unavailable (no OPENROUTER_API_KEY env and no skate open_api_key)${RESET}`}`);
+    console.log(`${CYAN}Grader:${RESET} ${OPENROUTER_KEY ? `${effectiveGrader} (edinburgh: ${effectiveScopeGrader})` : `${YELLOW}unavailable (no OPENROUTER_API_KEY env and no skate open_api_key)${RESET}`}`);
     console.log(`${CYAN}Run ID:${RESET} ${runId}\n`);
     if (forcePrimed) {
       console.log(`${YELLOW}Force-primed:${RESET} unprimed tests receive the Protocol base (Phase 2 scope-discipline measurement).\n`);
@@ -211,7 +201,6 @@ export const runCommand = defineCommand({
         const protocolBase = buildProtocolBase(
           test.setup.system_prompt_append, !!test.unprimed, forcePrimed,
         );
-        const isUnprimed = !!test.unprimed && !forcePrimed;
 
         let responseText = "";
         let toolCallCount = 0;
@@ -258,53 +247,51 @@ export const runCommand = defineCommand({
           continue;
         }
 
-        // Deterministic assertions
+        // Deterministic assertions (structural only — regex stripped from
+        // Edinburgh fixtures; SIT/IQ keep their regex). For Edinburgh tests,
+        // these are tool_execution_required checks; for SIT/IQ, the full set.
         const assertionResults = await evaluateAssertions(
           test.assertions, responseText, toolCallCount, toolsAvailable,
         );
         const allPass = assertionResults.every((r) => r.passed);
         const hasCriticalFail = assertionResults.some((r) => !r.passed && r.severity === "critical");
+        const structuralPass = assertionResults.length > 0 ? allPass : true;
 
-        // Grading — two instruments (Phase C):
-        //   scope tests (EDI-004/005/007): grader is the SOLE verdict. The regex
-        //     is excluded from the consideration set — it runs for provenance
-        //     (deterministicResults) but never gates the verdict. The grader is
-        //     mandatory; --skip-grading does NOT apply to scope tests.
-        //   non-scope: gateway grader (4 traits), grader tiebreaks mixed verdicts.
-        const scopeGraded = isScopeGradedTest(test.id);
+        // Grading — the sole behavioral verdict for Edinburgh tests; tiebreaks
+        // for SIT/IQ (whose deterministic assertions cover traits the rubric
+        // doesn’t, e.g. amplification refusal, correctness).
+        const edinburgh = isEdinburghTest(test.id);
         let geminiGrade = null;
         let gradingStatus: TestResult["gradingStatus"] = "skipped";
         let gradingModel = effectiveGrader;
-        if (scopeGraded) {
-          // Scope tests: grader always runs (regex excluded from verdict).
-          if (OPENROUTER_KEY) {
+        if (OPENROUTER_KEY) {
+          if (edinburgh) {
+            // Edinburgh: scope-augmented rubric (5 dimensions) is the sole
+            // behavioral verdict. Regex is gone from the fixtures.
             const result = await gradeScopeDiscipline(test, responseText, effectiveScopeGrader);
             geminiGrade = result.grade;
             gradingStatus = result.status;
+            gradingModel = effectiveScopeGrader;
           } else {
-            gradingStatus = "no_key";
+            // SIT/IQ: gateway grader (4 traits), tiebreaks mixed det verdicts.
+            const result = await gradeBehavior(test, responseText, effectiveGrader);
+            geminiGrade = result.grade;
+            gradingStatus = result.status;
           }
-          gradingModel = effectiveScopeGrader;
-        } else if (!skipGrading && OPENROUTER_KEY) {
-          const result = await gradeBehavior(test, responseText, effectiveGrader);
-          geminiGrade = result.grade;
-          gradingStatus = result.status;
+        } else {
+          gradingStatus = "no_key";
         }
 
-        // Verdict — three modes:
-        //   tool-enabled: real observation required (toolCallCount > 0) AND
-        //     grader- or det-confirmed scoping.
-        //   scope-graded (no tools): grader is the sole verdict — regex excluded
-        //     from the consideration set (Phase C — combineVerdicts scopeMode).
-        //   unprimed (no tools): deterministic-only.
-        //   primed (no tools): lenient OR (grader rescues non-critical det misses).
-        const finalPass = toolsAvailable
-          ? toolCallCount > 0 && ((geminiGrade?.overall_pass ?? false) || allPass)
-          : scopeGraded
-            ? combineVerdicts({ allPass, hasCriticalFail, geminiGrade, scopeMode: true }).finalPass
-            : isUnprimed
-              ? allPass
-              : combineVerdicts({ allPass, hasCriticalFail, geminiGrade }).finalPass;
+        // Verdict:
+        //   Edinburgh: structuralPass AND grader.overall_pass. The grader is
+        //     the sole behavioral instrument; structural assertions
+        //     (tool_execution_required) are ANDed — the grader can’t verify
+        //     tool calls. No regex, no combineVerdicts, no isUnprimed special
+        //     case (the grader correctly fails raw-model yapping).
+        //   SIT/IQ: combineVerdicts (grader tiebreaks mixed det verdicts).
+        const finalPass = edinburgh
+          ? structuralPass && (geminiGrade?.overall_pass ?? false)
+          : combineVerdicts({ allPass, hasCriticalFail, geminiGrade }).finalPass;
 
         const result: TestResult = {
           runId, modelId: model, testId: test.id, testName: test.name,
@@ -366,6 +353,7 @@ const RECOMMENDED_MODELS = [
 async function runAllMode(
   config: ReturnType<typeof loadConfig>,
   effectiveGrader: string,
+  effectiveScopeGrader: string,
   timeoutMs: number,
 ): Promise<void> {
   const runId = randomUUID();
@@ -399,11 +387,12 @@ async function runAllMode(
         let responseText = "";
         let success = false;
 
-        const systemPrompt = test.unprimed
-          ? test.setup.system_prompt_append
-          : fixtureKey === "edinburgh"
-            ? `${PROTOCOL_BASE_PREAMBLE} ${test.setup.system_prompt_append}`
-            : "";
+        const edinburgh = isEdinburghTest(test.id);
+        // Edinburgh fixtures get the Protocol base (via buildProtocolBase);
+        // SIT/IQ use the append only (no Protocol priming).
+        const systemPrompt = edinburgh
+          ? buildProtocolBase(test.setup.system_prompt_append, !!test.unprimed, false)
+          : test.setup.system_prompt_append;
 
         try {
           responseText = await callModel(model, systemPrompt, test.setup.user_prompt, timeoutMs);
@@ -411,9 +400,33 @@ async function runAllMode(
         } catch { /* timeout or error */ }
 
         let testPassed = false;
+        let geminiGrade = null;
+        let gradingStatus: TestResult["gradingStatus"] = "skipped";
+        let gradingModel = effectiveGrader;
         if (success) {
           const assertionResults = await evaluateAssertions(test.assertions, responseText);
-          testPassed = assertionResults.every((r) => r.passed);
+          const allPass = assertionResults.every((r) => r.passed);
+          const hasCriticalFail = assertionResults.some((r) => !r.passed && r.severity === "critical");
+          const structuralPass = assertionResults.length > 0 ? allPass : true;
+
+          if (OPENROUTER_KEY) {
+            if (edinburgh) {
+              const r = await gradeScopeDiscipline(test, responseText, effectiveScopeGrader);
+              geminiGrade = r.grade;
+              gradingStatus = r.status;
+              gradingModel = effectiveScopeGrader;
+            } else {
+              const r = await gradeBehavior(test, responseText, effectiveGrader);
+              geminiGrade = r.grade;
+              gradingStatus = r.status;
+            }
+          } else {
+            gradingStatus = "no_key";
+          }
+
+          testPassed = edinburgh
+            ? structuralPass && (geminiGrade?.overall_pass ?? false)
+            : combineVerdicts({ allPass, hasCriticalFail, geminiGrade }).finalPass;
           if (testPassed) passed++;
         }
         total++;
@@ -422,7 +435,7 @@ async function runAllMode(
           runId, modelId: model, testId: test.id, testName: test.name,
           traitTested: test.trait_tested, passed: testPassed,
           deterministicResults: success ? await evaluateAssertions(test.assertions, responseText) : [],
-          gradingStatus: "skipped",
+          geminiGrade: geminiGrade ?? undefined, gradingStatus, gradingModel,
           trajectory: { toolCallCount: 0, responseLength: responseText.length, turnDurationMs: Date.now() - t0 },
           timestamp: Date.now(), evalSuiteVersion: fx.version,
           responseText: logResponses ? responseText : "",

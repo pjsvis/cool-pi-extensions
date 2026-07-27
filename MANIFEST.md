@@ -74,6 +74,7 @@ Project briefs define **what** and **why** before code is written. Frozen when w
 **[briefs/2026-07-26-brief-remove-mermaid-to-md.md](briefs/2026-07-26-brief-remove-mermaid-to-md.md)** — Remove spun-off mermaid-to-md work — renderer, pi extension, and 6 briefs — from this repo; it now lives in ~/dev/github/mermaid-to-md.
 **[briefs/2026-07-26-brief-replace-regex-with-grader.md](briefs/2026-07-26-brief-replace-regex-with-grader.md)** — The scope-discipline "must ask" assertion is a `regex_match` — a closed list of refusal-to-proceed phrasings (`I can't design`, `before I c…
 **[briefs/2026-07-26-brief-scope-discipline-gate.md](briefs/2026-07-26-brief-scope-discipline-gate.md)** — A phased epic to determine whether scope discipline (the EDI-005 trap: "build on incomplete spec without asking for clarification") is trai…
+**[briefs/2026-07-27-brief-phase-c-grader-sole-scope-verdict.md](briefs/2026-07-27-brief-phase-c-grader-sole-scope-verdict.md)** — The brief proposed "regex as fast pre-filter, grader as ceiling" — regex passes skip the grader (cost saving), regex fails trigger the grad…
 
 ## Debriefs
 Post-implementation reflections. Capture what worked, what didn't, what to try next.
@@ -108,6 +109,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 **[decisions/019-table-rendering.md](decisions/019-table-rendering.md)** — Accepted — 2026-06-11
 **[decisions/020-failover-ordering-policy.md](decisions/020-failover-ordering-policy.md)** — Decision 016 established that providers are a portfolio for failover + freebie capture, not a dedup graph — redundancy is resilience, not e…
 **[decisions/021-eval-engine-cli-first-thin-extension-port.md](decisions/021-eval-engine-cli-first-thin-extension-port.md)** — The eval surface had grown into three engines with duplicated logic:
+**[decisions/022-drop-regex-eval-grader-sole-verdict.md](decisions/022-drop-regex-eval-grader-sole-verdict.md)** — The Edinburgh Protocol eval engine had two behavioral instruments:
 
 ## Playbooks
 How-to guides for recurring tasks. Give pi the URL and it executes.

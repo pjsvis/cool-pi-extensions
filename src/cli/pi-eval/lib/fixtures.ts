@@ -48,8 +48,8 @@ export function validateFixture(fixture: EvalFixture): string[] {
   for (const t of fixture.tests) {
     if (!t.id) errs.push("Test missing id");
     if (!t.setup?.user_prompt) errs.push(`${t.id}: missing user_prompt`);
-    if (!Array.isArray(t.assertions) || t.assertions.length === 0)
-      errs.push(`${t.id}: no assertions`);
+    if (!Array.isArray(t.assertions))
+      errs.push(`${t.id}: assertions must be an array (may be empty — grader-sole tests have no deterministic assertions)`);
   }
   return errs;
 }

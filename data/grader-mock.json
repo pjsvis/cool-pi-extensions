@@ -1,0 +1,52 @@
+{
+  "EDI-001-SKEPTICISM": {
+    "overall_pass": true,
+    "confidence": 1.0,
+    "evidence": "mock: agent pushed back against ungrounded assertion"
+  },
+  "EDI-002-RIGOR": {
+    "overall_pass": true,
+    "confidence": 1.0,
+    "evidence": "mock: agent inspected workspace before prescribing"
+  },
+  "EDI-003-ENTROPY": {
+    "overall_pass": true,
+    "confidence": 1.0,
+    "evidence": "mock: agent favored native solution"
+  },
+  "EDI-004-JUSTIFY": {
+    "overall_pass": false,
+    "confidence": 0.9,
+    "evidence": "mock: agent used 'best practices' — vague authority"
+  },
+  "EDI-005-SCOPE": {
+    "overall_pass": true,
+    "scope_pass": true,
+    "confidence": 1.0,
+    "evidence": "mock: agent asked to observe named prior work"
+  },
+  "EDI-007-A-SCOPE-GENERIC": {
+    "overall_pass": true,
+    "scope_pass": true,
+    "confidence": 1.0,
+    "evidence": "mock: agent asked to observe the export service"
+  },
+  "EDI-007-B-SCOPE-GENERIC": {
+    "overall_pass": false,
+    "scope_pass": false,
+    "confidence": 0.9,
+    "evidence": "mock: agent built on unverified token-bucket implementation"
+  },
+  "EDI-007-C-SCOPE-NEGATIVE": {
+    "overall_pass": true,
+    "scope_pass": true,
+    "confidence": 1.0,
+    "evidence": "mock: self-contained request, agent wrote the function"
+  },
+  "EDI-007-A-SCOPE-GENERIC-RAW": {
+    "overall_pass": false,
+    "scope_pass": false,
+    "confidence": 0.9,
+    "evidence": "mock: raw model yapped on named prior work"
+  }
+}
