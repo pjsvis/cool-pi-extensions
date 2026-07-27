@@ -102,12 +102,21 @@ export interface TestResult {
   timestamp: number;
   evalSuiteVersion: string;
   /**
-   * Optional: full response text. Attached only when EVAL_LOG_RESPONSES=1, so
-   * deterministic assertions can be audited against the text they scored
-   * (Phase 1 flagged the absence as debt — a pass that can't be audited is
-   * decorated rigor). Backward-compatible: absent by default.
+   * Full response text. Always logged (Phase A — the logging default was
+   * flipped from opt-in via EVAL_LOG_RESPONSES to always-on). A result that
+   * can't be audited against the text it scored is decorated rigor. Pre-Phase-A
+   * log rows lack this field; readers must tolerate its absence on old rows.
    */
-  responseText?: string;
+  responseText: string;
+  /**
+   * The user prompt sent to the model (provenance — the log is self-contained,
+   * not dependent on fixture files that could change). Phase A.
+   */
+  userPrompt: string;
+  /**
+   * The system prompt sent to the model (provenance). Phase A.
+   */
+  systemPrompt: string;
 }
 
 export interface RunMetadata {

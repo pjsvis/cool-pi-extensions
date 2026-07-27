@@ -100,7 +100,9 @@ export const runCommand = defineCommand({
 
     const skipGrading = args["skip-grading"];
     const forcePrimed = args["force-primed"];
-    const logResponses = !!process.env["EVAL_LOG_RESPONSES"];
+    // Response logging is always on (Phase A — was gated by EVAL_LOG_RESPONSES).
+    // The env var is retained as an opt-out for memory-constrained runs.
+    const logResponses = process.env["EVAL_LOG_RESPONSES"] !== "0";
     const effectiveGrader = args.grader || process.env["GRADER_MODEL"] || DEFAULT_GRADER_MODEL;
     const timeoutMs = args.timeout ? parseInt(args.timeout, 10) * 1000 : DEFAULT_TIMEOUT_MS;
     const provider = args.provider ?? "";
@@ -223,7 +225,9 @@ export const runCommand = defineCommand({
             deterministicResults: [], gradingStatus: "skipped", gradingModel: effectiveGrader,
             trajectory: { toolCallCount: 0, responseLength: 0, turnDurationMs: Date.now() - t0 },
             timestamp: Date.now(), evalSuiteVersion: fixture.version,
-            ...(logResponses ? { responseText } : {}),
+            responseText: logResponses ? responseText : "",
+            userPrompt: test.setup.user_prompt,
+            systemPrompt: protocolBase,
           };
           modelResults.push(result);
           logResult(result, config);
@@ -268,7 +272,9 @@ export const runCommand = defineCommand({
             toolCallCount, responseLength: responseText.length, turnDurationMs: Date.now() - t0,
           },
           timestamp: Date.now(), evalSuiteVersion: fixture.version,
-          ...(logResponses ? { responseText } : {}),
+          responseText: logResponses ? responseText : "",
+          userPrompt: test.setup.user_prompt,
+          systemPrompt: protocolBase,
         };
         modelResults.push(result);
         logResult(result, config);
@@ -322,6 +328,7 @@ async function runAllMode(
   const runId = randomUUID();
   const runStart = Date.now();
   const runModels = [...RECOMMENDED_MODELS];
+  const logResponses = process.env["EVAL_LOG_RESPONSES"] !== "0";
 
   console.log(`\n${CYAN}=== Running Full Eval Suite ===${RESET}`);
   console.log(`${CYAN}Run ID:${RESET} ${runId}`);
@@ -375,6 +382,9 @@ async function runAllMode(
           gradingStatus: "skipped",
           trajectory: { toolCallCount: 0, responseLength: responseText.length, turnDurationMs: Date.now() - t0 },
           timestamp: Date.now(), evalSuiteVersion: fx.version,
+          responseText: logResponses ? responseText : "",
+          userPrompt: test.setup.user_prompt,
+          systemPrompt,
         }, config);
 
         process.stdout.write(success ? (testPassed ? "✓" : "✗") : "○");

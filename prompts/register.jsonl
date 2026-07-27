@@ -1,10 +1,10 @@
 {"path":"prompts/edinburgh-005b-grounding-v1.json","title":"edinburgh-005b-grounding-v1","description":"","sha":"88b1d0e0959f","bytes":2356}
 {"path":"prompts/edinburgh-005b-strong-v1.json","title":"edinburgh-005b-strong-v1","description":"","sha":"7c149694724a","bytes":2927}
-{"path":"prompts/edinburgh-006-scope-primed-v1.json","title":"edinburgh-006-scope-primed-v1","description":"","sha":"9d65bf163b93","bytes":6947}
+{"path":"prompts/edinburgh-006-scope-primed-v1.json","title":"edinburgh-006-scope-primed-v1","description":"","sha":"b58ee9bc360b","bytes":7565}
+{"path":"prompts/edinburgh-007-scope-agnostic-v1.json","title":"edinburgh-007-scope-agnostic-v1","description":"","sha":"883b5f3cd4be","bytes":9700}
 {"path":"prompts/edinburgh-protocol-chat.md","title":"IDENTITY: The Edinburgh Protocol — Conversational Sleeve","description":"> One substrate, many sleeves. The Edinburgh Protocol is a *family*, not a","sha":"8905d3134b72","bytes":5896}
-{"path":"prompts/edinburgh-protocol-evals-v1.json","title":"edinburgh-protocol-evals-v1","description":"","sha":"1f84c9d9372b","bytes":7036}
+{"path":"prompts/edinburgh-protocol-evals-v1.json","title":"edinburgh-protocol-evals-v1","description":"","sha":"768e19dd0603","bytes":7322}
 {"path":"prompts/iq-benchmark-v1.json","title":"iq-benchmark-v1","description":"","sha":"edd5f5f67b85","bytes":11428}
 {"path":"prompts/pi-models-example.md","title":"Pi Models Configuration","description":"Example `models.json` for configuring pi with multiple providers. Copy to `~/.pi/agent/models.json` on a new machine, then run `pi --list-m…","sha":"e5a7964141af","bytes":2989}
 {"path":"prompts/stuff-into-things-v1.json","title":"stuff-into-things-v1","description":"","sha":"a9c05ca94bbe","bytes":11939}
 {"path":"prompts/stuff-into-things-v2.json","title":"stuff-into-things-v2","description":"","sha":"331efa80da2a","bytes":27670}
-{"path": "prompts/edinburgh-007-scope-agnostic-v1.json", "title": "edinburgh-007-scope-agnostic-v1", "description": "", "sha": "183c222af39a", "bytes": 9700}
