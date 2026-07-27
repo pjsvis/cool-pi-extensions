@@ -19,7 +19,9 @@ import {
   DEFAULT_TIMEOUT_MS,
   evaluateAssertions,
   gradeBehavior,
+  gradeScopeDiscipline,
   DEFAULT_GRADER_MODEL,
+  DEFAULT_SCOPE_GRADER_MODEL,
   combineVerdicts,
   buildProtocolBase,
   PROTOCOL_BASE_PREAMBLE,
@@ -34,6 +36,21 @@ import {
 
 const CYAN = "\x1b[0;36m", GREEN = "\x1b[0;32m", YELLOW = "\x1b[1;33m",
   RED = "\x1b[0;31m", DIM = "\x1b[2m", RESET = "\x1b[0m";
+
+/** Test IDs that use the scope grader as the sole verdict instrument (Phase C).
+ *
+ * The regex is a closed list matching an open set of clarification phrasings
+ * (16% error rate, Phase B). For these tests the grader is the only verdict —
+ * the regex runs for provenance (deterministicResults) but never gates the
+ * outcome. EDI-005B is excluded — it’s tool-enabled and uses the
+ * observational-rigor verdict path, not the scope-discipline path.
+ *
+ * Prefixes use a trailing dash so EDI-005- matches EDI-005-SCOPE but not
+ * EDI-005B-STRONG. */
+const SCOPE_GRADED_PREFIXES = ["EDI-004-", "EDI-005-", "EDI-007-"];
+function isScopeGradedTest(testId: string): boolean {
+  return SCOPE_GRADED_PREFIXES.some((p) => testId.startsWith(p));
+}
 
 export const runCommand = defineCommand({
   meta: {
@@ -60,6 +77,10 @@ export const runCommand = defineCommand({
       type: "boolean",
       description: "Skip Gemini/behavioral grading (deterministic assertions only)",
       default: false,
+    },
+    "scope-grader": {
+      type: "string",
+      description: "Scope-discipline grader model (Phase C; grader is the sole verdict for scope tests; default: google/gemini-2.5-flash)",
     },
     timeout: {
       type: "string",
@@ -104,6 +125,7 @@ export const runCommand = defineCommand({
     // The env var is retained as an opt-out for memory-constrained runs.
     const logResponses = process.env["EVAL_LOG_RESPONSES"] !== "0";
     const effectiveGrader = args.grader || process.env["GRADER_MODEL"] || DEFAULT_GRADER_MODEL;
+    const effectiveScopeGrader = args["scope-grader"] || args.grader || process.env["GRADER_MODEL"] || DEFAULT_SCOPE_GRADER_MODEL;
     const timeoutMs = args.timeout ? parseInt(args.timeout, 10) * 1000 : DEFAULT_TIMEOUT_MS;
     const provider = args.provider ?? "";
     const excludeSet = new Set<string>(
@@ -167,7 +189,7 @@ export const runCommand = defineCommand({
 
     console.log(`\n${CYAN}Fixture:${RESET} ${fixture.suiteName} v${fixture.version} (${fixture.tests.length} tests)`);
     console.log(`${CYAN}Models:${RESET}  ${models.join(", ")}`);
-    console.log(`${CYAN}Grader:${RESET} ${skipGrading ? "skipped" : OPENROUTER_KEY ? effectiveGrader : `${YELLOW}unavailable (no OPENROUTER_API_KEY env and no skate open_api_key)${RESET}`}`);
+    console.log(`${CYAN}Grader:${RESET} ${skipGrading ? "skipped" : OPENROUTER_KEY ? `${effectiveGrader} (scope: ${effectiveScopeGrader})` : `${YELLOW}unavailable (no OPENROUTER_API_KEY env and no skate open_api_key)${RESET}`}`);
     console.log(`${CYAN}Run ID:${RESET} ${runId}\n`);
     if (forcePrimed) {
       console.log(`${YELLOW}Force-primed:${RESET} unprimed tests receive the Protocol base (Phase 2 scope-discipline measurement).\n`);
@@ -243,31 +265,52 @@ export const runCommand = defineCommand({
         const allPass = assertionResults.every((r) => r.passed);
         const hasCriticalFail = assertionResults.some((r) => !r.passed && r.severity === "critical");
 
-        // Grading
+        // Grading — two instruments (Phase C):
+        //   scope tests (EDI-004/005/007): grader is the SOLE verdict. The regex
+        //     is excluded from the consideration set — it runs for provenance
+        //     (deterministicResults) but never gates the verdict. The grader is
+        //     mandatory; --skip-grading does NOT apply to scope tests.
+        //   non-scope: gateway grader (4 traits), grader tiebreaks mixed verdicts.
+        const scopeGraded = isScopeGradedTest(test.id);
         let geminiGrade = null;
         let gradingStatus: TestResult["gradingStatus"] = "skipped";
-        if (!skipGrading && OPENROUTER_KEY) {
+        let gradingModel = effectiveGrader;
+        if (scopeGraded) {
+          // Scope tests: grader always runs (regex excluded from verdict).
+          if (OPENROUTER_KEY) {
+            const result = await gradeScopeDiscipline(test, responseText, effectiveScopeGrader);
+            geminiGrade = result.grade;
+            gradingStatus = result.status;
+          } else {
+            gradingStatus = "no_key";
+          }
+          gradingModel = effectiveScopeGrader;
+        } else if (!skipGrading && OPENROUTER_KEY) {
           const result = await gradeBehavior(test, responseText, effectiveGrader);
           geminiGrade = result.grade;
           gradingStatus = result.status;
         }
 
-        // Verdict — three modes (matching the original runner):
+        // Verdict — three modes:
         //   tool-enabled: real observation required (toolCallCount > 0) AND
         //     grader- or det-confirmed scoping.
+        //   scope-graded (no tools): grader is the sole verdict — regex excluded
+        //     from the consideration set (Phase C — combineVerdicts scopeMode).
         //   unprimed (no tools): deterministic-only.
-        //   primed: lenient OR (grader rescues non-critical det misses).
+        //   primed (no tools): lenient OR (grader rescues non-critical det misses).
         const finalPass = toolsAvailable
           ? toolCallCount > 0 && ((geminiGrade?.overall_pass ?? false) || allPass)
-          : isUnprimed
-            ? allPass
-            : combineVerdicts({ allPass, hasCriticalFail, geminiGrade }).finalPass;
+          : scopeGraded
+            ? combineVerdicts({ allPass, hasCriticalFail, geminiGrade, scopeMode: true }).finalPass
+            : isUnprimed
+              ? allPass
+              : combineVerdicts({ allPass, hasCriticalFail, geminiGrade }).finalPass;
 
         const result: TestResult = {
           runId, modelId: model, testId: test.id, testName: test.name,
           traitTested: test.trait_tested, passed: finalPass,
           deterministicResults: assertionResults,
-          geminiGrade: geminiGrade ?? undefined, gradingStatus, gradingModel: effectiveGrader,
+          geminiGrade: geminiGrade ?? undefined, gradingStatus, gradingModel,
           trajectory: {
             toolCallCount, responseLength: responseText.length, turnDurationMs: Date.now() - t0,
           },

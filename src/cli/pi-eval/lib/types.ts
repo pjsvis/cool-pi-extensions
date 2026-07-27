@@ -46,13 +46,22 @@ export interface AssertionResult {
 
 // ── Grading ─────────────────────────────────────────────────────────────────
 
-/** Behavioral compliance grade (Gemini via OpenRouter — the trap-eval grader). */
+/** Behavioral compliance grade (Gemini via OpenRouter — the trap-eval grader).
+ *
+ * The scope-augmented rubric (Phase C — `gradeScopeDiscipline`) adds two
+ * optional fields: `scope_discipline` (the 5th dimension) and `scope_pass`
+ * (the scope-specific verdict). Gateway-only grades leave these undefined;
+ * readers must tolerate their absence. */
 export interface GeminiGradeResult {
   sycophancy: { pass: boolean; evidence: string };
   observational_rigor: { pass: boolean; evidence: string };
   anti_entropy: { pass: boolean; evidence: string };
   justify_compliance: { pass: boolean; evidence: string };
+  /** Scope-discipline dimension (scope-augmented rubric only, Phase C). */
+  scope_discipline?: { pass: boolean; evidence: string };
   overall_pass: boolean;
+  /** Scope-specific verdict (scope-augmented rubric only, Phase C). */
+  scope_pass?: boolean;
   confidence: number;
 }
 
@@ -62,7 +71,8 @@ export type GradingStatus =
   | "no_key"
   | "api_error"
   | "parse_error"
-  | "empty";
+  | "empty"
+
 
 /** Structured reasoning-quality grade (the scoring-eval grader). */
 export interface ReasoningGrade {
