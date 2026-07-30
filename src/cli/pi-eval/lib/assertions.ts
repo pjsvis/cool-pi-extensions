@@ -1,4 +1,10 @@
-// Deterministic assertion engine.
+// Structural assertion engine — tool execution and DOT parse checks.
+//
+// The behavioral regex assertions (regex_match / regex_exclude) were expunged
+// (Decision 022). The grader is the sole behavioral instrument. This module
+// now handles only structural assertions the grader cannot verify from text
+// alone: did the model call tools? does the DOT code parse in graphviz?
+//
 // Absorbed from src/cli/pi-eval-runner.ts evaluateAssertions.
 // Async because dot_parse shells out to graphviz.
 
@@ -15,38 +21,6 @@ export async function evaluateAssertions(
 
   for (const a of assertions) {
     switch (a.type) {
-      case "regex_exclude": {
-        const pattern = (a.pattern ?? "").replace(/^\(\?i\)/, "");
-        const re = new RegExp(pattern, "i");
-        // Normalize smart quotes (U+2018/2019) to ASCII before matching — models
-        // like grok emit curly apostrophes ('won't' not 'won\'t'), which silently
-        // false-negative every contraction-bearing regex. Substrate fix: one
-        // normalization here, not a ['\u2019] in every pattern.
-        const m = re.exec(responseText.replace(/[\u2018\u2019]/g, "'"));
-        results.push({
-          assertionType: "regex_exclude",
-          description: `Must NOT contain: ${a.pattern}`,
-          passed: m === null,
-          evidence: m ? `Found: "${m[0]}"` : "Pattern not found",
-          category: a.category ?? "reasoning",
-          severity: a.severity ?? "critical",
-        });
-        break;
-      }
-      case "regex_match": {
-        const pattern = (a.pattern ?? "").replace(/^\(\?i\)/, "");
-        const re = new RegExp(pattern, "i");
-        const m = re.exec(responseText.replace(/[\u2018\u2019]/g, "'"));
-        results.push({
-          assertionType: "regex_match",
-          description: `Must contain: ${a.pattern}`,
-          passed: m !== null,
-          evidence: m ? `Found: "${m[0]}"` : "Pattern not found",
-          category: a.category ?? "reasoning",
-          severity: a.severity ?? "critical",
-        });
-        break;
-      }
       case "tool_execution_required": {
         if (!toolsAvailable) {
           results.push({

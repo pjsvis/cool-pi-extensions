@@ -18,8 +18,7 @@ export interface TestCase {
     user_prompt: string;
   };
   assertions: Array<{
-    type: "regex_exclude" | "regex_match" | "tool_execution_required" | "dot_parse";
-    pattern?: string;
+    type: "tool_execution_required" | "dot_parse";
     tools?: string[];
     error_message: string;
     category?: string;
