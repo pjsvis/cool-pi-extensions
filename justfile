@@ -88,6 +88,14 @@ registers:
 check:
     @bun run scripts/check-manifest.ts
 
+# Live model probe — sends a real chat completion through `pi` for each
+# enabledModel. Catches auth.json staleness, baseUrl/api collisions, and
+# per-model header issues that pi-check (which hits /models and bypasses
+# auth.json) cannot. Pass model refs as args to probe a subset.
+[group("hygiene")]
+probe *args="":
+    @scripts/probe-models.sh {{args}}
+
 # Run extension tests (silo boundary verification).
 [group("hygiene")]
 test:

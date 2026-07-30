@@ -405,7 +405,7 @@
       "_squadron_note": "M3 dropped. Use M2.7. Balance restored after $30 top-up."
     },
     "zai": {
-      "baseUrl": "https://open.bigmodel.cn/api/paas/v4",
+      "baseUrl": "https://api.z.ai/api/coding/paas/v4",
       "api": "openai-completions",
       "apiKey": "!skate get zai_api_key",
       "authHeader": true,
