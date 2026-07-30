@@ -1,0 +1,172 @@
+[2026-07-27 20:36:29] Archiving existing eval_log.json → eval_log.pre-grader.jsonl.bak
+[2026-07-27 20:36:29]   fresh eval_log.json started
+[2026-07-27 20:36:29] === Phase D: Full rerun with logging + grader ===
+[2026-07-27 20:36:29] Models: 25
+[2026-07-27 20:36:29] Fixtures: 3 (75 combos)
+[2026-07-27 20:36:29] Scope grader: google/gemini-2.5-flash
+[2026-07-27 20:36:29] Gateway grader: nvidia/nemotron-3-nano-30b-a3b:free
+[2026-07-27 20:36:29] Log: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/eval_log.json
+[2026-07-27 20:36:29] Progress: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/rerun-all-progress.log
+[2026-07-27 20:36:29] 
+[2026-07-27 20:36:29] RUN   anthropic/claude-sonnet-4.5 × edinburgh (0/5 done, running remaining)
+[2026-07-27 20:39:10] DONE  anthropic/claude-sonnet-4.5 × edinburgh →   4/5 passed [2m[159.9s][0m
+[2026-07-27 20:39:12] RUN   anthropic/claude-sonnet-4.5 × 007 (0/4 done, running remaining)
+[2026-07-27 20:42:50] DONE  anthropic/claude-sonnet-4.5 × 007 →   3/4 passed [2m[218.2s][0m
+[2026-07-27 20:42:52] RUN   anthropic/claude-sonnet-4.5 × sit2 (0/15 done, running remaining)
+[2026-07-27 20:47:09] DONE  anthropic/claude-sonnet-4.5 × sit2 →   14/15 passed [2m[256.5s][0m
+[2026-07-27 20:47:11] RUN   anthropic/claude-opus-4.8 × edinburgh (0/5 done, running remaining)
+[2026-07-27 20:48:58] DONE  anthropic/claude-opus-4.8 × edinburgh →   4/5 passed [2m[106.5s][0m
+[2026-07-27 20:49:00] RUN   anthropic/claude-opus-4.8 × 007 (0/4 done, running remaining)
+[2026-07-27 20:50:42] DONE  anthropic/claude-opus-4.8 × 007 →   3/4 passed [2m[101.9s][0m
+[2026-07-27 20:50:44] RUN   anthropic/claude-opus-4.8 × sit2 (0/15 done, running remaining)
+[2026-07-27 20:56:02] DONE  anthropic/claude-opus-4.8 × sit2 →   13/15 passed [2m[317.5s][0m
+[2026-07-27 20:56:04] RUN   anthropic/claude-fable-5 × edinburgh (0/5 done, running remaining)
+[2026-07-27 20:57:56] DONE  anthropic/claude-fable-5 × edinburgh →   4/5 passed [2m[112.0s][0m
+[2026-07-27 20:57:58] RUN   anthropic/claude-fable-5 × 007 (0/4 done, running remaining)
+[2026-07-27 21:00:07] DONE  anthropic/claude-fable-5 × 007 →   3/4 passed [2m[128.6s][0m
+[2026-07-27 21:00:09] RUN   anthropic/claude-fable-5 × sit2 (0/15 done, running remaining)
+[2026-07-27 21:06:44] DONE  anthropic/claude-fable-5 × sit2 →   12/15 passed [2m[394.9s][0m
+[2026-07-27 21:06:46] RUN   openai/gpt-5 × edinburgh (0/5 done, running remaining)
+[2026-07-27 21:13:29] DONE  openai/gpt-5 × edinburgh →   3/5 passed [2m[402.8s][0m
+[2026-07-27 21:13:31] RUN   openai/gpt-5 × 007 (0/4 done, running remaining)
+[2026-07-27 21:16:33] DONE  openai/gpt-5 × 007 →   3/4 passed [2m[181.4s][0m
+[2026-07-27 21:16:35] RUN   openai/gpt-5 × sit2 (0/15 done, running remaining)
+[2026-07-27 21:33:41] DONE  openai/gpt-5 × sit2 →   9/15 passed [2m[1025.8s][0m
+[2026-07-27 21:33:43] RUN   openai/gpt-5.2 × edinburgh (0/5 done, running remaining)
+[2026-07-27 21:36:22] DONE  openai/gpt-5.2 × edinburgh →   3/5 passed [2m[158.7s][0m
+[2026-07-27 21:36:24] RUN   openai/gpt-5.2 × 007 (0/4 done, running remaining)
+[2026-07-27 21:37:51] DONE  openai/gpt-5.2 × 007 →   3/4 passed [2m[87.5s][0m
+[2026-07-27 21:37:54] RUN   openai/gpt-5.2 × sit2 (0/15 done, running remaining)
+[2026-07-27 21:43:39] DONE  openai/gpt-5.2 × sit2 →   14/15 passed [2m[345.4s][0m
+[2026-07-27 21:43:41] RUN   openai/gpt-5.6-luna × edinburgh (0/5 done, running remaining)
+[2026-07-27 21:45:11] DONE  openai/gpt-5.6-luna × edinburgh →   5/5 passed [2m[89.9s][0m
+[2026-07-27 21:45:13] RUN   openai/gpt-5.6-luna × 007 (0/4 done, running remaining)
+[2026-07-27 21:45:40] DONE  openai/gpt-5.6-luna × 007 →   4/4 passed [2m[26425ms][0m
+[2026-07-27 21:45:42] RUN   openai/gpt-5.6-luna × sit2 (0/15 done, running remaining)
+[2026-07-27 21:49:47] DONE  openai/gpt-5.6-luna × sit2 →   12/15 passed [2m[244.4s][0m
+[2026-07-27 21:49:49] RUN   x-ai/grok-4.3 × edinburgh (0/5 done, running remaining)
+[2026-07-27 21:50:43] DONE  x-ai/grok-4.3 × edinburgh →   4/5 passed [2m[54392ms][0m
+[2026-07-27 21:50:46] RUN   x-ai/grok-4.3 × 007 (0/4 done, running remaining)
+[2026-07-27 21:51:19] DONE  x-ai/grok-4.3 × 007 →   3/4 passed [2m[33094ms][0m
+[2026-07-27 21:51:21] RUN   x-ai/grok-4.3 × sit2 (0/15 done, running remaining)
+[2026-07-27 21:54:39] DONE  x-ai/grok-4.3 × sit2 →   13/15 passed [2m[198.2s][0m
+[2026-07-27 21:54:41] RUN   x-ai/grok-4.5 × edinburgh (0/5 done, running remaining)
+[2026-07-27 21:57:03] DONE  x-ai/grok-4.5 × edinburgh →   5/5 passed [2m[141.5s][0m
+[2026-07-27 21:57:05] RUN   x-ai/grok-4.5 × 007 (0/4 done, running remaining)
+[2026-07-27 21:57:44] DONE  x-ai/grok-4.5 × 007 →   4/4 passed [2m[38375ms][0m
+[2026-07-27 21:57:46] RUN   x-ai/grok-4.5 × sit2 (0/15 done, running remaining)
+[2026-07-27 22:02:18] DONE  x-ai/grok-4.5 × sit2 →   12/15 passed [2m[271.5s][0m
+[2026-07-27 22:02:20] RUN   x-ai/grok-build-0.1 × edinburgh (0/5 done, running remaining)
+[2026-07-27 22:04:50] DONE  x-ai/grok-build-0.1 × edinburgh →   4/5 passed [2m[150.2s][0m
+[2026-07-27 22:04:52] RUN   x-ai/grok-build-0.1 × 007 (0/4 done, running remaining)
+[2026-07-27 22:06:36] DONE  x-ai/grok-build-0.1 × 007 →   3/4 passed [2m[103.1s][0m
+[2026-07-27 22:06:38] RUN   x-ai/grok-build-0.1 × sit2 (0/15 done, running remaining)
+[2026-07-27 22:12:16] DONE  x-ai/grok-build-0.1 × sit2 →   12/15 passed [2m[338.2s][0m
+[2026-07-27 22:12:18] RUN   minimax/minimax-m2.7 × edinburgh (0/5 done, running remaining)
+[2026-07-27 22:16:47] DONE  minimax/minimax-m2.7 × edinburgh →   4/5 passed [2m[268.5s][0m
+[2026-07-27 22:16:49] RUN   minimax/minimax-m2.7 × 007 (0/4 done, running remaining)
+[2026-07-27 22:18:40] DONE  minimax/minimax-m2.7 × 007 →   3/4 passed [2m[110.9s][0m
+[2026-07-27 22:18:42] RUN   minimax/minimax-m2.7 × sit2 (0/15 done, running remaining)
+[2026-07-27 22:30:02] DONE  minimax/minimax-m2.7 × sit2 →   8/15 passed [2m[679.8s][0m
+[2026-07-27 22:30:04] RUN   minimax/minimax-m3 × edinburgh (0/5 done, running remaining)
+[2026-07-27 22:32:22] DONE  minimax/minimax-m3 × edinburgh →   5/5 passed [2m[137.5s][0m
+[2026-07-27 22:32:24] RUN   minimax/minimax-m3 × 007 (0/4 done, running remaining)
+[2026-07-27 22:33:58] DONE  minimax/minimax-m3 × 007 →   2/4 passed [2m[93.3s][0m
+[2026-07-27 22:34:00] RUN   minimax/minimax-m3 × sit2 (0/15 done, running remaining)
+[2026-07-27 22:42:34] DONE  minimax/minimax-m3 × sit2 →   12/15 passed [2m[513.8s][0m
+[2026-07-27 22:42:36] RUN   deepseek/deepseek-v4-pro × edinburgh (0/5 done, running remaining)
+[2026-07-27 22:45:09] DONE  deepseek/deepseek-v4-pro × edinburgh →   4/5 passed [2m[152.5s][0m
+[2026-07-27 22:45:11] RUN   deepseek/deepseek-v4-pro × 007 (0/4 done, running remaining)
+[2026-07-27 22:46:50] DONE  deepseek/deepseek-v4-pro × 007 →   3/4 passed [2m[99.1s][0m
+[2026-07-27 22:46:52] RUN   deepseek/deepseek-v4-pro × sit2 (0/15 done, running remaining)
+[2026-07-27 22:52:57] DONE  deepseek/deepseek-v4-pro × sit2 →   11/15 passed [2m[364.3s][0m
+[2026-07-27 22:52:59] RUN   google/gemini-2.5-pro × edinburgh (0/5 done, running remaining)
+[2026-07-27 22:55:25] DONE  google/gemini-2.5-pro × edinburgh →   2/5 passed [2m[145.5s][0m
+[2026-07-27 22:55:27] RUN   google/gemini-2.5-pro × 007 (0/4 done, running remaining)
+[2026-07-27 22:57:55] DONE  google/gemini-2.5-pro × 007 →   3/4 passed [2m[148.5s][0m
+[2026-07-27 22:57:58] RUN   google/gemini-2.5-pro × sit2 (0/15 done, running remaining)
+[2026-07-27 23:06:10] DONE  google/gemini-2.5-pro × sit2 →   13/15 passed [2m[492.4s][0m
+[2026-07-27 23:06:12] RUN   google/gemini-3.1-pro-preview × edinburgh (0/5 done, running remaining)
+[2026-07-27 23:07:58] DONE  google/gemini-3.1-pro-preview × edinburgh →   4/5 passed [2m[105.4s][0m
+[2026-07-27 23:08:00] RUN   google/gemini-3.1-pro-preview × 007 (0/4 done, running remaining)
+[2026-07-27 23:09:29] DONE  google/gemini-3.1-pro-preview × 007 →   3/4 passed [2m[88.3s][0m
+[2026-07-27 23:09:31] RUN   google/gemini-3.1-pro-preview × sit2 (0/15 done, running remaining)
+[2026-07-27 23:14:37] DONE  google/gemini-3.1-pro-preview × sit2 →   14/15 passed [2m[306.1s][0m
+[2026-07-27 23:14:39] RUN   google/gemini-3.5-flash × edinburgh (0/5 done, running remaining)
+[2026-07-27 23:16:26] DONE  google/gemini-3.5-flash × edinburgh →   2/5 passed [2m[107.0s][0m
+[2026-07-27 23:16:28] RUN   google/gemini-3.5-flash × 007 (0/4 done, running remaining)
+[2026-07-27 23:17:50] DONE  google/gemini-3.5-flash × 007 →   1/4 passed [2m[81.4s][0m
+[2026-07-27 23:17:52] RUN   google/gemini-3.5-flash × sit2 (0/15 done, running remaining)
+[2026-07-27 23:23:51] DONE  google/gemini-3.5-flash × sit2 →   12/15 passed [2m[358.8s][0m
+[2026-07-27 23:23:53] RUN   qwen/qwen3.7-max × edinburgh (0/5 done, running remaining)
+[2026-07-27 23:29:38] DONE  qwen/qwen3.7-max × edinburgh →   4/5 passed [2m[344.9s][0m
+[2026-07-27 23:29:41] RUN   qwen/qwen3.7-max × 007 (0/4 done, running remaining)
+[2026-07-27 23:35:43] DONE  qwen/qwen3.7-max × 007 →   3/4 passed [2m[362.3s][0m
+[2026-07-27 23:35:45] RUN   qwen/qwen3.7-max × sit2 (0/15 done, running remaining)
+[2026-07-27 23:45:09] DONE  qwen/qwen3.7-max × sit2 →   14/15 passed [2m[564.0s][0m
+[2026-07-27 23:45:12] RUN   qwen/qwen3.7-plus × edinburgh (0/5 done, running remaining)
+[2026-07-27 23:49:20] DONE  qwen/qwen3.7-plus × edinburgh →   4/5 passed [2m[247.9s][0m
+[2026-07-27 23:49:22] RUN   qwen/qwen3.7-plus × 007 (0/4 done, running remaining)
+[2026-07-27 23:55:25] DONE  qwen/qwen3.7-plus × 007 →   3/4 passed [2m[363.6s][0m
+[2026-07-27 23:55:28] RUN   qwen/qwen3.7-plus × sit2 (0/15 done, running remaining)
+[2026-07-28 00:08:36] DONE  qwen/qwen3.7-plus × sit2 →   13/15 passed [2m[787.9s][0m
+[2026-07-28 00:08:38] RUN   tencent/hy3 × edinburgh (0/5 done, running remaining)
+[2026-07-28 00:11:49] DONE  tencent/hy3 × edinburgh →   4/5 passed [2m[191.0s][0m
+[2026-07-28 00:11:51] RUN   tencent/hy3 × 007 (0/4 done, running remaining)
+[2026-07-28 00:15:50] DONE  tencent/hy3 × 007 →   3/4 passed [2m[238.2s][0m
+[2026-07-28 00:15:52] RUN   tencent/hy3 × sit2 (0/15 done, running remaining)
+[2026-07-28 00:28:07] DONE  tencent/hy3 × sit2 →   13/15 passed [2m[734.2s][0m
+[2026-07-28 00:28:09] RUN   moonshotai/kimi-k2.6 × edinburgh (0/5 done, running remaining)
+[2026-07-28 00:29:43] DONE  moonshotai/kimi-k2.6 × edinburgh →   4/5 passed [2m[93.8s][0m
+[2026-07-28 00:29:45] RUN   moonshotai/kimi-k2.6 × 007 (0/4 done, running remaining)
+[2026-07-28 00:32:03] DONE  moonshotai/kimi-k2.6 × 007 →   3/4 passed [2m[137.6s][0m
+[2026-07-28 00:32:05] RUN   moonshotai/kimi-k2.6 × sit2 (0/15 done, running remaining)
+[2026-07-28 00:42:27] DONE  moonshotai/kimi-k2.6 × sit2 →   14/15 passed [2m[622.2s][0m
+[2026-07-28 00:42:29] RUN   moonshotai/kimi-k2.7-code × edinburgh (0/5 done, running remaining)
+[2026-07-28 00:46:04] DONE  moonshotai/kimi-k2.7-code × edinburgh →   4/5 passed [2m[214.2s][0m
+[2026-07-28 00:46:06] RUN   moonshotai/kimi-k2.7-code × 007 (0/4 done, running remaining)
+[2026-07-28 00:49:32] DONE  moonshotai/kimi-k2.7-code × 007 →   2/4 passed [2m[205.6s][0m
+[2026-07-28 00:49:34] RUN   moonshotai/kimi-k2.7-code × sit2 (0/15 done, running remaining)
+[2026-07-28 00:57:13] DONE  moonshotai/kimi-k2.7-code × sit2 →   14/15 passed [2m[458.7s][0m
+[2026-07-28 00:57:15] RUN   moonshotai/kimi-k3 × edinburgh (0/5 done, running remaining)
+[2026-07-28 01:05:01] DONE  moonshotai/kimi-k3 × edinburgh →   3/5 passed [2m[465.4s][0m
+[2026-07-28 01:05:03] RUN   moonshotai/kimi-k3 × 007 (0/4 done, running remaining)
+[2026-07-28 01:11:22] DONE  moonshotai/kimi-k3 × 007 →   2/4 passed [2m[378.6s][0m
+[2026-07-28 01:11:24] RUN   moonshotai/kimi-k3 × sit2 (0/15 done, running remaining)
+[2026-07-28 01:33:20] DONE  moonshotai/kimi-k3 × sit2 →   15/15 passed [2m[1316.2s][0m
+[2026-07-28 01:33:22] RUN   inception/mercury-2 × edinburgh (0/5 done, running remaining)
+[2026-07-28 01:34:00] DONE  inception/mercury-2 × edinburgh →   3/5 passed [2m[37137ms][0m
+[2026-07-28 01:34:02] RUN   inception/mercury-2 × 007 (0/4 done, running remaining)
+[2026-07-28 01:34:27] DONE  inception/mercury-2 × 007 →   3/4 passed [2m[25063ms][0m
+[2026-07-28 01:34:29] RUN   inception/mercury-2 × sit2 (0/15 done, running remaining)
+[2026-07-28 01:37:32] DONE  inception/mercury-2 × sit2 →   13/15 passed [2m[182.5s][0m
+[2026-07-28 01:37:34] RUN   z-ai/glm-5 × edinburgh (0/5 done, running remaining)
+[2026-07-28 01:41:28] DONE  z-ai/glm-5 × edinburgh →   3/5 passed [2m[233.1s][0m
+[2026-07-28 01:41:30] RUN   z-ai/glm-5 × 007 (0/4 done, running remaining)
+[2026-07-28 01:45:42] DONE  z-ai/glm-5 × 007 →   3/4 passed [2m[252.6s][0m
+[2026-07-28 01:45:45] RUN   z-ai/glm-5 × sit2 (0/15 done, running remaining)
+[2026-07-28 01:52:45] DONE  z-ai/glm-5 × sit2 →   13/15 passed [2m[419.8s][0m
+[2026-07-28 01:52:47] RUN   z-ai/glm-5.1 × edinburgh (0/5 done, running remaining)
+[2026-07-28 01:56:09] DONE  z-ai/glm-5.1 × edinburgh →   4/5 passed [2m[201.5s][0m
+[2026-07-28 01:56:11] RUN   z-ai/glm-5.1 × 007 (0/4 done, running remaining)
+[2026-07-28 01:58:53] DONE  z-ai/glm-5.1 × 007 →   3/4 passed [2m[162.1s][0m
+[2026-07-28 01:58:55] RUN   z-ai/glm-5.1 × sit2 (0/15 done, running remaining)
+[2026-07-28 02:07:37] DONE  z-ai/glm-5.1 × sit2 →   14/15 passed [2m[521.1s][0m
+[2026-07-28 02:07:39] RUN   z-ai/glm-5.2 × edinburgh (0/5 done, running remaining)
+[2026-07-28 02:12:17] DONE  z-ai/glm-5.2 × edinburgh →   4/5 passed [2m[277.8s][0m
+[2026-07-28 02:12:19] RUN   z-ai/glm-5.2 × 007 (0/4 done, running remaining)
+[2026-07-28 02:16:06] DONE  z-ai/glm-5.2 × 007 →   3/4 passed [2m[226.5s][0m
+[2026-07-28 02:16:08] RUN   z-ai/glm-5.2 × sit2 (0/15 done, running remaining)
+[2026-07-28 02:23:16] DONE  z-ai/glm-5.2 × sit2 →   13/15 passed [2m[428.1s][0m
+[2026-07-28 02:23:18] 
+[2026-07-28 02:23:18] === Phase D complete ===
+[2026-07-28 02:23:18] Combos run:     75
+[2026-07-28 02:23:18] Combos skipped: 0
+[2026-07-28 02:23:18] Combos failed:  0
+[2026-07-28 02:23:18] Elapsed:        346m
+[2026-07-28 02:23:18] Log:            /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/eval_log.json
+[2026-07-28 02:23:18] 
+[2026-07-28 02:23:18] Generating comparison matrix...
+[2026-07-28 02:23:43] Matrix written to /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/phase-d-matrix.md
+[2026-07-28 02:23:43] 
+[2026-07-28 02:23:43] Phase D complete. Review /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/phase-d-matrix.md for the full picture.
