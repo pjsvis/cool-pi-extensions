@@ -12,9 +12,9 @@ The Edinburgh Protocol's SILO DISCIPLINE constrains the agent to the repository 
 
 A blanket "the agent may edit anywhere under `~/.pi/`" would be too broad: `~/.pi/agent/auth.json` holds API keys and OAuth tokens, and secrets (skate) must remain the user's domain. The exception needs to be **narrow, named, and exclusive of secrets**.
 
-**Enforcement reality (verified 2026-07-10):**
-- The silo extension is installed at `~/.pi/agent/extensions/silo/` as a **separate copy** — not symlinked from the repo source, unlike `defuddle` and `edinburgh-evals`.
-- Its global config sets `"siloRoot": "/path/to/repo"` — a placeholder that does not exist, so the extension **self-disables** (`existsSync` fails → `sandboxEnabled = false`). Silo is therefore **not currently enforcing**; "I'm staying in" is a policy constraint, not a hard code boundary, in this repo today.
+**Enforcement reality (verified 2026-07-10; reconciled 2026-07-29, td-077b8d):**
+- The silo extension is installed at `~/.pi/agent/extensions/silo/` as a **symlink** to the repo source `src/extensions/silo/` — matching `defuddle` and `edinburgh-evals`. (Previously a stale separate copy that had drifted from the repo; reconciled 2026-07-29. The stale copy is preserved at `~/.pi/agent/extensions/silo.bak.20260729-152335`.)
+- Its global config sets `"siloRoot": "/path/to/repo"` — a placeholder that does not exist, so the extension **self-disables** (`existsSync` fails → `sandboxEnabled = false`). Silo is therefore **not currently enforcing**; "I'm staying in" is a policy constraint, not a hard code boundary, in this repo today. This is intentional pending `allowedPaths` (see Implementation) — activating a real `siloRoot` now would hard-block the Pi-config work this exception exists to permit.
 - Pi config files present: `models.json` (provider/model definitions), `settings.json` (settings), `auth.json` (secrets, mode 600).
 
 ## Decision
@@ -61,11 +61,11 @@ This is the **sole** exception to "I'm staying in." All other out-of-repo reques
 
 - **`AGENTS.md`** — exception clause added (loaded into every session's context). This is the operative "explicit in the repo" surface.
 - **This ADR** — full rationale, scope, and enforcement-gap record.
-- **Enforcement follow-up (pending, not done):** add an `allowedPaths` field to the silo extension (`src/extensions/silo/index.ts`) permitting `~/.pi/agent/models.json` and `~/.pi/agent/settings.json`, and make the **active** extension pick it up. Caveat: the active silo is a **separate installed copy**, not the repo source — so the change must be applied to the installed copy, or the installed copy replaced with a symlink to the repo source (as `defuddle` / `edinburgh-evals` already are). Security-relevant; do it deliberately, not silently.
+- **Enforcement follow-up (~~pending~~ DONE 2026-07-29, td-788f5b):** `allowedPaths` field added to the silo extension (`src/extensions/silo/check.ts` `isPathAllowed` + `checkCommand`; `index.ts` threads `config.allowedPaths` into both the bash-tool and interactive-bash paths). Matching is **exact-resolved-path, never prefix** — verified by `check.test.ts` (`auth.json` stays blocked when `models.json` is allowed; sibling/prefix attacks fail). Project config declared at `.pi/silo.json` (this repo) listing the two permitted files. The placeholder `siloRoot` is intentionally retained — silo remains self-disabled until a real `siloRoot` is set; `allowedPaths` is honoured the moment silo activates. Security-relevant change; reviewed in td-788f5b.
 
 ## References
 
 - Edinburgh Protocol — SILO DISCIPLINE (`prompts/edinburgh-protocol.md`; global `~/.pi/agent/AGENTS.md`)
-- Silo extension: `src/extensions/silo/index.ts` (source); installed at `~/.pi/agent/extensions/silo/` (separate copy)
+- Silo extension: `src/extensions/silo/index.ts` (source); installed at `~/.pi/agent/extensions/silo/` (**symlink** to source since td-077b8d, 2026-07-29)
 - Pi custom-provider docs: `docs/custom-provider.md` (`pi.registerProvider()`)
 - Decision 014 (pending) — model/provider wiring this exception enables: Z.ai primary, cerebras retired, ZenMux wired

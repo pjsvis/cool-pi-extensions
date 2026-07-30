@@ -9,10 +9,19 @@
  * note it. If blocked→escape, that's a regression.
  */
 import { test, expect } from "bun:test";
+import { homedir } from "node:os";
 import { checkCommand } from "./check";
 
 const SILO = "/repo";
 const IN_SUB = "/repo/sub";
+
+// Decision 013 scoped exception — the two Pi-config files permitted out-of-silo.
+const ALLOWED = [
+  `${homedir()}/.pi/agent/models.json`,
+  `${homedir()}/.pi/agent/settings.json`,
+];
+const blockedWith = (cmd: string, allowed: string[] = ALLOWED, cwd = SILO) =>
+  checkCommand(cmd, SILO, cwd, allowed).blocked;
 
 const blocked = (cmd: string, cwd = SILO) =>
   checkCommand(cmd, SILO, cwd).blocked;
@@ -81,4 +90,43 @@ test("KNOWN LIMITATIONS — adversarial escapes (documented, not fixed)", () => 
   expect(blocked("cd")).toBe(false);
   // Symlink inside silo pointing out — not resolvable statically.
   // (Cannot test without fs; documented as a limitation.)
+});
+
+// ── Decision 013: allowedPaths scoped exception ──────────────────────
+// Security-critical: the exception must admit ONLY the named files.
+// secrets (auth.json) must remain blocked even when a sibling is allowed.
+
+test("allowedPaths: declared Pi-config files are permitted out-of-silo", () => {
+  expect(blockedWith(`cat ~/.pi/agent/models.json`)).toBe(false);
+  expect(blockedWith(`cat ~/.pi/agent/settings.json`)).toBe(false);
+  // absolute form too
+  expect(blockedWith(`cat ${homedir()}/.pi/agent/models.json`)).toBe(false);
+});
+
+test("allowedPaths: the secrets sibling auth.json stays BLOCKED", () => {
+  // The whole point: allowing models.json must NOT admit auth.json.
+  expect(blockedWith(`cat ~/.pi/agent/auth.json`)).toBe(true);
+  expect(blockedWith(`cat ${homedir()}/.pi/agent/auth.json`)).toBe(true);
+});
+
+test("allowedPaths: an entry does not admit its siblings (no prefix match)", () => {
+  // Even if an entry were the bare directory, only that exact path matches.
+  expect(blockedWith(`cat ~/.pi/agent/oauth.json`)).toBe(true);
+  expect(blockedWith(`cat ~/.pi/agent/models.json.bak`)).toBe(true);
+  expect(blockedWith(`cat ~/.pi/agent/models`)).toBe(true); // dir of same prefix
+});
+
+test("allowedPaths: in-silo commands unaffected by the exception list", () => {
+  expect(blockedWith("cat README.md")).toBe(false);
+  expect(blockedWith("ls src")).toBe(false);
+});
+
+test("allowedPaths: empty list means no exception (default behaviour)", () => {
+  expect(blockedWith(`cat ~/.pi/agent/models.json`, [])).toBe(true);
+});
+
+test("allowedPaths: writing to a permitted file is allowed (not just read)", () => {
+  // The exception is path-based, agnostic to read/write — Decision 013 lets
+  // the agent EDIT models.json/settings.json.
+  expect(blockedWith(`echo '{}' > ~/.pi/agent/models.json`)).toBe(false);
 });

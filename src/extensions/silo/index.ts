@@ -20,8 +20,17 @@
  *   ~/.pi/agent/extensions/silo/config.json  (global)
  *
  * ```json
- * { "siloRoot": "/path/to/repo", "enabled": true }
+ * {
+ *   "siloRoot": "/path/to/repo",
+ *   "enabled": true,
+ *   "allowedPaths": ["~/.pi/agent/models.json", "~/.pi/agent/settings.json"]
+ * }
  * ```
+ *
+ * `allowedPaths` exempts specific files from the silo boundary (Decision 013
+ * scoped exception). Matching is EXACT on the resolved path, never a prefix —
+ * an entry admits exactly that file, not its siblings or children. Secrets
+ * (auth.json, skate) must never appear here.
  *
  * Usage:
  *   pi --no-silo            disable for this session
@@ -36,7 +45,7 @@ import {
   type BashOperations,
 } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { checkCommand, type SiloConfig } from "./check";
+import { checkCommand, resolvePath, type SiloConfig } from "./check";
 
 // ── Config ────────────────────────────────────────────────────────
 
@@ -88,10 +97,11 @@ function loadLegacyConfig(cwd: string): SiloConfig {
 function createSiloBashOps(
   inner: BashOperations,
   siloRoot: string,
+  allowedPaths: string[] = [],
 ): BashOperations {
   return {
     async exec(command, cwd, options) {
-      const blocked = checkCommand(command, siloRoot, cwd);
+      const blocked = checkCommand(command, siloRoot, cwd, allowedPaths);
       if (blocked.blocked) {
         const msg = "I'm staying in.\n";
         options.onData(Buffer.from(msg));
@@ -114,6 +124,10 @@ export default async function (pi: ExtensionAPI) {
 
   let siloRoot = process.cwd();
   let sandboxEnabled = false;
+  // Decision 013 scoped exception — paths permitted despite being outside
+  // siloRoot. Resolved against home so "~/.pi/agent/..." entries canonicalise
+  // before the exact-match check in isPathAllowed.
+  let allowedPaths: string[] = [];
 
   // ── Session start ──
 
@@ -140,6 +154,12 @@ export default async function (pi: ExtensionAPI) {
 
     siloRoot = config.siloRoot ?? ctx.cwd;
 
+    // Resolve allowed-paths entries (~ → home) so isPathAllowed's exact match
+    // compares canonical paths. Empty by default — no exception unless declared.
+    allowedPaths = (config.allowedPaths ?? []).map((p) =>
+      resolvePath(p, ctx.cwd),
+    );
+
     if (!existsSync(siloRoot)) {
       sandboxEnabled = false;
       ctx.ui.notify(
@@ -151,8 +171,11 @@ export default async function (pi: ExtensionAPI) {
 
     sandboxEnabled = true;
 
+    const exceptions = allowedPaths.length > 0
+      ? `\n  Allowed exceptions (exact paths): ${allowedPaths.length}`
+      : "";
     ctx.ui.notify(
-      `[silo] Active. Sandboxed to: ${siloRoot}\n` +
+      `[silo] Active. Sandboxed to: ${siloRoot}${exceptions}\n` +
         `  Commands outside this root will return: "I'm staying in."\n` +
         `  Use /silo-status for details, or --no-silo to disable.`,
       "info",
@@ -174,7 +197,7 @@ export default async function (pi: ExtensionAPI) {
       const command = (params as { command: string }).command ?? "";
       const timeout = (params as { timeout?: number }).timeout;
 
-      const blocked = checkCommand(command, siloRoot);
+      const blocked = checkCommand(command, siloRoot, ctx?.cwd, allowedPaths);
       if (blocked.blocked) {
         return {
           content: [{ type: "text", text: "I'm staying in.\n" }],
@@ -187,7 +210,7 @@ export default async function (pi: ExtensionAPI) {
       const inner = createLocalBashOperations();
       const sandboxed = createBashTool(
         process.cwd(),
-        { operations: createSiloBashOps(inner, siloRoot) },
+        { operations: createSiloBashOps(inner, siloRoot, allowedPaths) },
       );
       return sandboxed.execute(toolCallId, params, signal, onUpdate);
     },
@@ -198,7 +221,7 @@ export default async function (pi: ExtensionAPI) {
   pi.on("user_bash", () => {
     if (!sandboxEnabled) return;
     const inner = createLocalBashOperations();
-    return { operations: createSiloBashOps(inner, siloRoot) };
+    return { operations: createSiloBashOps(inner, siloRoot, allowedPaths) };
   });
 
   // ── Status command ──
@@ -211,7 +234,10 @@ export default async function (pi: ExtensionAPI) {
         return;
       }
       ctx.ui.notify(
-        `[silo] Active — root: ${siloRoot}`,
+        `[silo] Active — root: ${siloRoot}` +
+          (allowedPaths.length > 0
+            ? `\n  Allowed exceptions (exact paths): ${allowedPaths.length}`
+            : ""),
         "info",
       );
     },

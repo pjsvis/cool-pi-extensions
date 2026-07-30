@@ -1,0 +1,6 @@
+{
+  "allowedPaths": [
+    "~/.pi/agent/models.json",
+    "~/.pi/agent/settings.json"
+  ]
+}
