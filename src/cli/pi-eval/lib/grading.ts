@@ -127,7 +127,7 @@ export async function gradeBehavior(
   try {
     for (let attempt = 0; attempt < 3; attempt++) {
       if (attempt > 0) await new Promise((r) => setTimeout(r, 2000 * attempt));
-      const text = await callModel(graderModel, GRADING_RUBRIC, userPrompt, 120_000);
+      const { text } = await callModel(graderModel, GRADING_RUBRIC, userPrompt, 120_000);
       if (!text) continue; // empty — retry
       const parsed = extractGradeJson<GeminiGradeResult>(text);
       if (!parsed) return { grade: null, status: "parse_error" };
@@ -226,7 +226,7 @@ export async function gradeScopeDiscipline(
   try {
     for (let attempt = 0; attempt < 3; attempt++) {
       if (attempt > 0) await new Promise((r) => setTimeout(r, 2000 * attempt));
-      const text = await callModel(graderModel, SCOPE_AUGMENTED_RUBRIC, userPrompt, 120_000);
+      const { text } = await callModel(graderModel, SCOPE_AUGMENTED_RUBRIC, userPrompt, 120_000);
       if (!text) continue; // empty — retry
       const parsed = extractGradeJson<GeminiGradeResult>(text);
       if (!parsed) return { grade: null, status: "parse_error" };

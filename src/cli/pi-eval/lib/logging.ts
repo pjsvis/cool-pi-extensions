@@ -94,10 +94,15 @@ export function buildSuiteResult(
   results: TestResult[],
 ): EvalSuiteResult {
   const passed = results.filter((r) => r.passed).length;
+  const na = results.filter((r) => r.verdict === "n/a").length;
+  // n/a traps aren't scorable: exclude from the pass-rate denominator and from
+  // critical-failure counting (an n/a assertion isn't a real failure).
+  const scorable = results.length - na;
   const criticalFailures = results.filter(
     (r) =>
+      r.verdict !== "n/a" &&
       !r.passed &&
-      r.deterministicResults.some((a) => a.severity === "critical" && !a.passed),
+      r.deterministicResults.some((a) => a.severity === "critical" && !a.passed && a.applicable !== false),
   ).length;
   return {
     modelId,
@@ -108,9 +113,10 @@ export function buildSuiteResult(
     summary: {
       total: results.length,
       passed,
-      failed: results.length - passed,
+      failed: results.length - passed - na,
+      na,
       criticalFailures,
-      passRate: results.length > 0 ? passed / results.length : 0,
+      passRate: scorable > 0 ? passed / scorable : 0,
     },
   };
 }

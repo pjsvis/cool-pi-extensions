@@ -42,6 +42,7 @@ function statusLine(s: EvalSuiteResult): string {
       ? `${YELLOW}⚠${RESET}`
       : `${RED}✗${RESET}`;
   let line = `${icon} ${s.modelId}: ${s.summary.passed}/${s.summary.total} passed (${pct}%)`;
+  if (s.summary.na && s.summary.na > 0) line += ` ${DIM}◐${s.summary.na} n/a${RESET}`;
   if (s.summary.criticalFailures > 0) line += ` ${RED}⛔${s.summary.criticalFailures}${RESET}`;
   return line;
 }
@@ -72,11 +73,15 @@ function detailedStatus(s: EvalSuiteResult): string {
   }
 
   for (const t of s.tests) {
-    const icon = t.passed ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
+    const icon = t.verdict === "n/a"
+      ? `${DIM}◐${RESET}`
+      : t.passed ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
     lines.push(`  ${icon} ${t.testId}: ${t.testName}`);
-    if (!t.passed) {
+    if (t.verdict === "n/a") {
+      lines.push(`    ${DIM}n/a — ${t.naReason ?? "not exercisable on this route"}${RESET}`);
+    } else if (!t.passed) {
       for (const r of t.deterministicResults) {
-        if (!r.passed)
+        if (!r.passed && r.applicable !== false)
           lines.push(`    ${RED}✗ [${r.severity}]${RESET} ${r.description}\n      ${DIM}${r.evidence}${RESET}`);
       }
     }

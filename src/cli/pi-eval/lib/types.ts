@@ -41,6 +41,10 @@ export interface AssertionResult {
   evidence: string;
   category: string;
   severity: string;
+  /** Structural applicability. false = n/a (the route can't exercise this
+   *  assertion — e.g. tool_execution_required on a text-only Ollama route).
+   *  Omit/true = scorable. n/a assertions count as neither pass nor fail. */
+  applicable?: boolean;
 }
 
 // ── Grading ─────────────────────────────────────────────────────────────────
@@ -90,10 +94,37 @@ export const REASONING_GRADE_MAX = 16;
 
 // ── Test results ────────────────────────────────────────────────────────────
 
+/** Substrate timing/liveness telemetry captured during a model call (B2).
+ *  Optional — present when the route streams and reports timing.
+ *
+ *  Ollama NDJSON reports true decode/prefill durations (`eval_duration`,
+ *  `prompt_eval_duration`) → `decodeTokPerSec`/`prefillMs` are exact.
+ *  OpenAI-compat SSE reports token counts (`usage`) but not decode time →
+ *  only the token counts are populated; `decodeTokPerSec` is omitted rather
+ *  than approximated from wall-clock (which would conflate prefill+network). */
+export interface CallTelemetry {
+  /** Decode (generation) token count. */
+  decodeTokens?: number;
+  /** Prompt (prefill) token count. */
+  promptTokens?: number;
+  /** Decode throughput in tokens/sec (Ollama only — true eval_duration). */
+  decodeTokPerSec?: number;
+  /** Decode duration in ms (Ollama only). */
+  decodeMs?: number;
+  /** Prefill duration in ms (Ollama only). */
+  prefillMs?: number;
+}
+
 export interface TrajectoryInfo {
   toolCallCount: number;
   responseLength: number;
   turnDurationMs: number;
+  /** Captured substrate telemetry (B2 streaming-liveness path only). */
+  telemetry?: CallTelemetry;
+  /** How the per-call timeout was enforced.
+   *  `streaming-liveness` = B2 (token-gap watchdog + wall-clock backstop).
+   *  `wallclock-bracketed` = B1 fallback (no streaming) or the tool-use loop. */
+  timeoutMethod?: "streaming-liveness" | "wallclock-bracketed";
 }
 
 export interface TestResult {
@@ -103,6 +134,12 @@ export interface TestResult {
   testName: string;
   traitTested: string;
   passed: boolean;
+  /** Authoritative outcome. "n/a" = the trap couldn't be fully exercised on
+   *  this route (capability mismatch); `passed` is false but `verdict`
+   *  disambiguates. Omitted on legacy rows → read pass/fail from `passed`. */
+  verdict?: "pass" | "fail" | "n/a";
+  /** Why a result is n/a (capability reason). */
+  naReason?: string;
   deterministicResults: AssertionResult[];
   geminiGrade?: GeminiGradeResult;
   gradingStatus: GradingStatus | string;
@@ -139,6 +176,9 @@ export interface RunMetadata {
   passedTests: number;
   skippedTests: number;
   failedTests: number;
+  /** Traps that were n/a (capability mismatch) in this run. Optional for
+   *  backward compat with pre-A run rows. */
+  naTests?: number;
   durationMs: number;
 }
 
@@ -154,6 +194,8 @@ export interface EvalSuiteResult {
     total: number;
     passed: number;
     failed: number;
+    /** Traps that were n/a (capability mismatch) — not scorable. */
+    na?: number;
     criticalFailures: number;
     passRate: number;
   };

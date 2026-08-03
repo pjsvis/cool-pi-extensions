@@ -16,16 +16,31 @@ export async function evaluateAssertions(
   responseText: string,
   toolCallCount = 0,
   toolsAvailable = false,
+  routeSupportsTools = true,
 ): Promise<AssertionResult[]> {
   const results: AssertionResult[] = [];
 
   for (const a of assertions) {
     switch (a.type) {
       case "tool_execution_required": {
-        if (!toolsAvailable) {
+        const toolList = (a.tools ?? []).join(", ");
+        if (!routeSupportsTools) {
+          // Capability mismatch — the route can't execute tools (e.g. Ollama
+          // text-only). Structural assertion is n/a, not a fail. The behavioral
+          // grader still assesses the response text independently.
           results.push({
             assertionType: "tool_execution_required",
-            description: `Must call: [${(a.tools ?? []).join(", ")}]`,
+            description: `Must call: [${toolList}]`,
+            passed: false,
+            applicable: false,
+            evidence: "Route cannot execute tools (text-only) — structural assertion n/a.",
+            category: a.category ?? "reasoning",
+            severity: a.severity ?? "critical",
+          });
+        } else if (!toolsAvailable) {
+          results.push({
+            assertionType: "tool_execution_required",
+            description: `Must call: [${toolList}]`,
             passed: false,
             evidence: "Headless mode — tool trace unavailable. Skipping.",
             category: a.category ?? "reasoning",
@@ -35,7 +50,7 @@ export async function evaluateAssertions(
           const called = toolCallCount > 0;
           results.push({
             assertionType: "tool_execution_required",
-            description: `Must call: [${(a.tools ?? []).join(", ")}]`,
+            description: `Must call: [${toolList}]`,
             passed: called,
             evidence: called ? `Called ${toolCallCount} tool(s)` : "No tools called",
             category: a.category ?? "reasoning",

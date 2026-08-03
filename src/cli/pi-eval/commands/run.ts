@@ -13,6 +13,7 @@ import {
   FIXTURES,
   callModel,
   callModelWithTools,
+  routeCapabilities,
   listOllamaModels,
   DEFAULT_EXCLUDE_LIST,
   DEFAULT_TIMEOUT_MS,
@@ -29,6 +30,7 @@ import {
   type TestResult,
   type RunMetadata,
   type EvalFixture,
+  type ModelCallResult,
 } from "../lib/index.js";
 
 const CYAN = "\x1b[0;36m", GREEN = "\x1b[0;32m", YELLOW = "\x1b[1;33m",
@@ -76,7 +78,7 @@ export const runCommand = defineCommand({
     },
     timeout: {
       type: "string",
-      description: "Per-test timeout in seconds (default: 60)",
+      description: "Per-test wall-clock backstop in seconds (default: 180). B2 streaming-liveness also applies a token-gap watchdog (EVAL_TOKEN_GAP_SEC, default 60s) that fails stuck substrates fast regardless of this ceiling.",
     },
     provider: {
       type: "string",
@@ -188,9 +190,19 @@ export const runCommand = defineCommand({
     let totalPassed = 0;
     let totalFailed = 0;
     let totalSkipped = 0;
+    let totalNa = 0;
 
     for (const model of models) {
       const modelT0 = Date.now();
+      const caps = routeCapabilities(model);
+      // B1 admission gate: skip models that can't stream when the operator has
+      // made streaming a hard admission criterion. Off by default (flag, don't
+      // reject); callModel also enforces it at the call site.
+      if (!caps.streaming && process.env["EVAL_REJECT_NO_STREAMING"] === "1") {
+        console.log(`${YELLOW}── ${model} ──${RESET}`);
+        console.log(`  ${YELLOW}SKIP — streaming unavailable and EVAL_REJECT_NO_STREAMING=1${RESET}\n`);
+        continue;
+      }
       console.log(`${CYAN}── ${model} ──${RESET}`);
       const modelResults: TestResult[] = [];
 
@@ -207,16 +219,18 @@ export const runCommand = defineCommand({
         const toolsAvailable = !!(test.tools && test.tools.length > 0);
         let testFailed = false;
         let testTimedOut = false;
+        let callResult: ModelCallResult | null = null;
 
         try {
           if (toolsAvailable) {
-            const r = await callModelWithTools(
+            callResult = await callModelWithTools(
               model, protocolBase, test.setup.user_prompt, test.tools as string[], timeoutMs,
             );
-            responseText = r.text;
-            toolCallCount = r.toolCallCount;
+            responseText = callResult.text;
+            toolCallCount = callResult.toolCallCount ?? 0;
           } else {
-            responseText = await callModel(model, protocolBase, test.setup.user_prompt, timeoutMs, provider);
+            callResult = await callModel(model, protocolBase, test.setup.user_prompt, timeoutMs, provider);
+            responseText = callResult.text;
           }
         } catch (err) {
           const errMsg = err instanceof Error ? err.message : String(err);
@@ -232,7 +246,7 @@ export const runCommand = defineCommand({
         if (testFailed || testTimedOut) {
           const result: TestResult = {
             runId, modelId: model, testId: test.id, testName: test.name,
-            traitTested: test.trait_tested, passed: false,
+            traitTested: test.trait_tested, passed: false, verdict: "fail",
             deterministicResults: [], gradingStatus: "skipped", gradingModel: effectiveGrader,
             trajectory: { toolCallCount: 0, responseLength: 0, turnDurationMs: Date.now() - t0 },
             timestamp: Date.now(), evalSuiteVersion: fixture.version,
@@ -250,12 +264,19 @@ export const runCommand = defineCommand({
         // Deterministic assertions (structural only — regex stripped from
         // Edinburgh fixtures; SIT/IQ keep their regex). For Edinburgh tests,
         // these are tool_execution_required checks; for SIT/IQ, the full set.
+        // Structural assertions. `routeSupportsTools` lets tool_execution_required
+        // mark itself n/a on routes that can't execute tools (e.g. Ollama
+        // text-only) instead of recording a misleading critical fail.
         const assertionResults = await evaluateAssertions(
-          test.assertions, responseText, toolCallCount, toolsAvailable,
+          test.assertions, responseText, toolCallCount, toolsAvailable, caps.tools,
         );
-        const allPass = assertionResults.every((r) => r.passed);
-        const hasCriticalFail = assertionResults.some((r) => !r.passed && r.severity === "critical");
-        const structuralPass = assertionResults.length > 0 ? allPass : true;
+        const applicable = assertionResults.filter((r) => r.applicable !== false);
+        const allPass = applicable.every((r) => r.passed);
+        const hasCriticalFail = applicable.some((r) => !r.passed && r.severity === "critical");
+        const structuralPass = applicable.length > 0 ? allPass : true;
+        // Every structural assertion n/a → the trap can't be exercised on this
+        // route. Verdict is n/a; the behavioral grade below is still recorded.
+        const structuralNA = assertionResults.length > 0 && applicable.length === 0;
 
         // Grading — the sole behavioral verdict for Edinburgh tests; tiebreaks
         // for SIT/IQ (whose deterministic assertions cover traits the rubric
@@ -282,24 +303,38 @@ export const runCommand = defineCommand({
           gradingStatus = "no_key";
         }
 
-        // Verdict:
-        //   Edinburgh: structuralPass AND grader.overall_pass. The grader is
-        //     the sole behavioral instrument; structural assertions
-        //     (tool_execution_required) are ANDed — the grader can’t verify
-        //     tool calls. No regex, no combineVerdicts, no isUnprimed special
-        //     case (the grader correctly fails raw-model yapping).
-        //   SIT/IQ: combineVerdicts (grader tiebreaks mixed det verdicts).
-        const finalPass = edinburgh
-          ? structuralPass && (geminiGrade?.overall_pass ?? false)
-          : combineVerdicts({ allPass, hasCriticalFail, geminiGrade }).finalPass;
+        // Verdict: pass | fail | n/a.
+        //   n/a       — every structural assertion is untestable on this route
+        //               (capability mismatch). `passed` stays false; `verdict`
+        //               disambiguates. The behavioral grade is still recorded
+        //               for audit but doesn't elevate the trap to pass/fail.
+        //   Edinburgh — structuralPass AND grader.overall_pass. The grader is
+        //               the sole behavioral instrument; structural assertions
+        //               (tool_execution_required) are ANDed.
+        //   SIT/IQ    — combineVerdicts (grader tiebreaks mixed det verdicts).
+        let verdict: TestResult["verdict"];
+        let finalPass: boolean;
+        if (structuralNA) {
+          verdict = "n/a";
+          finalPass = false;
+        } else if (edinburgh) {
+          finalPass = structuralPass && (geminiGrade?.overall_pass ?? false);
+          verdict = finalPass ? "pass" : "fail";
+        } else {
+          finalPass = combineVerdicts({ allPass, hasCriticalFail, geminiGrade }).finalPass;
+          verdict = finalPass ? "pass" : "fail";
+        }
 
         const result: TestResult = {
           runId, modelId: model, testId: test.id, testName: test.name,
-          traitTested: test.trait_tested, passed: finalPass,
+          traitTested: test.trait_tested, passed: finalPass, verdict,
+          ...(structuralNA ? { naReason: "structural assertions not exercisable on this route (tools unsupported)" } : {}),
           deterministicResults: assertionResults,
           geminiGrade: geminiGrade ?? undefined, gradingStatus, gradingModel,
           trajectory: {
             toolCallCount, responseLength: responseText.length, turnDurationMs: Date.now() - t0,
+            ...(callResult?.telemetry ? { telemetry: callResult.telemetry } : {}),
+            ...(callResult?.timeoutMethod ? { timeoutMethod: callResult.timeoutMethod } : {}),
           },
           timestamp: Date.now(), evalSuiteVersion: fixture.version,
           responseText: logResponses ? responseText : "",
@@ -309,30 +344,48 @@ export const runCommand = defineCommand({
         modelResults.push(result);
         logResult(result, config);
 
-        const icon = finalPass ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
-        const detIcon = allPass ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
+        const icon = verdict === "n/a" ? `${DIM}◐ n/a${RESET}`
+          : finalPass ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
+        const detIcon = assertionResults.length === 0
+          ? `${DIM}—${RESET}`                              // grader-only trap: no structural check
+          : applicable.length === 0
+            ? `${DIM}n/a${RESET}`                          // capability mismatch: all structural n/a
+            : allPass ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`;
         const gemIcon = geminiGrade
           ? geminiGrade.overall_pass ? `${GREEN}✓${RESET}` : `${RED}✗${RESET}`
           : `${DIM}—${RESET}`;
-        console.log(`${icon}  det:${detIcon} gem:${gemIcon}  ${DIM}(${responseText.length}c, ${Date.now() - t0}ms)${RESET}`);
+        // Surface the timeout method + substrate tok/s. B2 (streaming-liveness)
+        // is the quiet default; B1 (wallclock-bracketed) is flagged so the
+        // degraded stall-detection is visible. tok/s is exact on Ollama
+        // (final-frame eval_duration), absent on OpenAI-compat.
+        const methodTag = callResult?.timeoutMethod === "wallclock-bracketed"
+          ? `${YELLOW}[B1]${RESET} ` : "";
+        const tpsTag = callResult?.telemetry?.decodeTokPerSec
+          ? `${DIM}${callResult.telemetry.decodeTokPerSec.toFixed(0)}tok/s${RESET} `
+          : "";
+        console.log(`${icon}  det:${detIcon} gem:${gemIcon}  ${DIM}(${responseText.length}c, ${tpsTag}${methodTag}${Date.now() - t0}ms)${RESET}`);
 
-        if (finalPass) totalPassed++;
+        if (verdict === "n/a") totalNa++;
+        else if (finalPass) totalPassed++;
         else totalFailed++;
       }
 
       // Per-model summary
       const modelTimeMs = Date.now() - modelT0;
       const modelPassed = modelResults.filter((r) => r.passed).length;
+      const modelNa = modelResults.filter((r) => r.verdict === "n/a").length;
       const timeStr = modelTimeMs > 60000 ? `${(modelTimeMs / 1000).toFixed(1)}s` : `${modelTimeMs}ms`;
-      console.log(`  ${modelPassed}/${modelResults.length} passed ${DIM}[${timeStr}]${RESET}\n`);
+      const naStr = modelNa > 0 ? `, ${modelNa} n/a` : "";
+      console.log(`  ${modelPassed}/${modelResults.length} passed${naStr} ${DIM}[${timeStr}]${RESET}\n`);
     }
 
     // Log run metadata
     const runMeta: RunMetadata = {
       runId, timestamp: runStart, fixture: fixtureKey, models,
       graderModel: effectiveGrader, timeoutMs,
-      totalTests: totalPassed + totalFailed + totalSkipped,
+      totalTests: totalPassed + totalFailed + totalSkipped + totalNa,
       passedTests: totalPassed, skippedTests: totalSkipped, failedTests: totalFailed,
+      naTests: totalNa,
       durationMs: Date.now() - runStart,
     };
     logRunMetadata(runMeta, config);
@@ -394,8 +447,10 @@ async function runAllMode(
           ? buildProtocolBase(test.setup.system_prompt_append, !!test.unprimed, false)
           : test.setup.system_prompt_append;
 
+        let runCallResult: ModelCallResult | null = null;
         try {
-          responseText = await callModel(model, systemPrompt, test.setup.user_prompt, timeoutMs);
+          runCallResult = await callModel(model, systemPrompt, test.setup.user_prompt, timeoutMs);
+          responseText = runCallResult.text;
           success = true;
         } catch { /* timeout or error */ }
 
@@ -436,7 +491,11 @@ async function runAllMode(
           traitTested: test.trait_tested, passed: testPassed,
           deterministicResults: success ? await evaluateAssertions(test.assertions, responseText) : [],
           geminiGrade: geminiGrade ?? undefined, gradingStatus, gradingModel,
-          trajectory: { toolCallCount: 0, responseLength: responseText.length, turnDurationMs: Date.now() - t0 },
+          trajectory: {
+            toolCallCount: 0, responseLength: responseText.length, turnDurationMs: Date.now() - t0,
+            ...(runCallResult?.telemetry ? { telemetry: runCallResult.telemetry } : {}),
+            ...(runCallResult?.timeoutMethod ? { timeoutMethod: runCallResult.timeoutMethod } : {}),
+          },
           timestamp: Date.now(), evalSuiteVersion: fx.version,
           responseText: logResponses ? responseText : "",
           userPrompt: test.setup.user_prompt,

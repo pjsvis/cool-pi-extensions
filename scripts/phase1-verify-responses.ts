@@ -23,7 +23,7 @@ for (const [model, sys, label, effort] of cases) {
   else delete process.env["EVAL_REASONING_EFFORT"];
   console.log(`\n${"=".repeat(78)}\n${label}  [${model}]\n${"=".repeat(78)}`);
   try {
-    const text = await callModel(model, sys, USER, 180_000);
+    const { text } = await callModel(model, sys, USER, 180_000);
     console.log(`[len=${text.length}c]\n${text}`);
   } catch (e) {
     console.log(`ERROR: ${e instanceof Error ? e.message : String(e)}`);

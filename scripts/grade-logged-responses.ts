@@ -36,8 +36,12 @@ const DRY_RUN = args.includes("--dry-run");
 const GRADER_MODEL = process.env["GRADER_MODEL"] || "google/gemini-2.5-flash";
 const CONCURRENCY = parseInt(process.env["GRADER_CONCURRENCY"] || "5", 10);
 const LOG_PATH = resolve(REPO_ROOT, "data/eval_log.json");
-const OUT_JSONL = resolve(REPO_ROOT, "data/phase-b-grader-delta.jsonl");
-const OUT_REPORT = resolve(REPO_ROOT, "data/phase-b-grader-delta-report.md");
+// OUT_TAG lets a control-grader replay write to separate files (e.g.
+// `phase-b-grader-delta-control-sonnet.jsonl`) without clobbering the
+// original Phase B artifact. Empty tag = original Phase B paths (default).
+const OUT_TAG = process.env["OUT_TAG"] ? `-${process.env["OUT_TAG"]}` : "";
+const OUT_JSONL = resolve(REPO_ROOT, `data/phase-b-grader-delta${OUT_TAG}.jsonl`);
+const OUT_REPORT = resolve(REPO_ROOT, `data/phase-b-grader-delta${OUT_TAG}-report.md`);
 
 // ── Scope-discipline-augmented rubric ───────────────────────────────────────
 //
@@ -155,7 +159,7 @@ async function gradeRow(
     return { grade: null, status: "dry_run", raw: "" };
   }
   try {
-    const text = await callModel(GRADER_MODEL, SCOPE_AUGMENTED_RUBRIC, userPrompt, 120_000);
+    const { text } = await callModel(GRADER_MODEL, SCOPE_AUGMENTED_RUBRIC, userPrompt, 120_000);
     if (!text) return { grade: null, status: "empty", raw: "" };
     // Robust JSON extraction: strip markdown fences, then grab the outermost
     // { ... } block (handles trailing prose after the closing fence).
