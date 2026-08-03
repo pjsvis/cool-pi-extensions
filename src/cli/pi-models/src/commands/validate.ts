@@ -7,7 +7,13 @@ export default defineCommand({
     description: "Validate models.json for errors and warnings",
   },
   async run() {
-    const data = load();
+    let data;
+    try {
+      data = load();
+    } catch (e) {
+      console.error((e as Error).message);
+      process.exit(1);
+    }
     const issues = validate(data);
 
     const errors = issues.filter((i) => i.level === "error");

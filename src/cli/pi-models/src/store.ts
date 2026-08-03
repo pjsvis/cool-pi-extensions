@@ -1,7 +1,14 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import type { ModelsFile, ProviderConfig, Model, Cost } from "./types";
+import {
+  ModelsFileSchema,
+  MODEL_KEYS,
+  PROVIDER_KEYS,
+  type ModelsFile,
+  type ProviderConfig,
+  type Model,
+} from "./schema";
 
 // ── Paths ──────────────────────────────────────────────────────────
 
@@ -11,7 +18,17 @@ export const MODELS_PATH = join(homedir(), ".pi", "agent", "models.json");
 
 export function load(): ModelsFile {
   if (!existsSync(MODELS_PATH)) return { providers: {} };
-  return JSON.parse(readFileSync(MODELS_PATH, "utf-8"));
+  const raw = JSON.parse(readFileSync(MODELS_PATH, "utf-8"));
+  const parsed = ModelsFileSchema.safeParse(raw);
+  if (!parsed.success) {
+    const lines = parsed.error.issues.map(
+      (i) => `  at ${i.path.join(".") || "<root>"}: ${i.message}`,
+    );
+    throw new Error(
+      `models.json failed structural validation:\n${lines.join("\n")}`,
+    );
+  }
+  return parsed.data;
 }
 
 export function save(data: ModelsFile): void {
@@ -56,6 +73,14 @@ export function validate(data: ModelsFile): ValidationIssue[] {
       }
 
       for (const m of cfg.models) {
+        for (const k of Object.keys(m)) {
+          if (!MODEL_KEYS.has(k) && !k.startsWith("_")) {
+            issues.push({
+              level: "warning",
+              message: `${pName}/${m.id || "?"}: unknown field "${k}" (typo? underscore-prefixed annotations are ignored)`,
+            });
+          }
+        }
         if (!m.id) {
           issues.push({ level: "error", message: `${pName}: model missing "id"` });
         }
@@ -79,6 +104,14 @@ export function validate(data: ModelsFile): ValidationIssue[] {
             });
           }
         }
+      }
+    }
+    for (const k of Object.keys(cfg)) {
+      if (!PROVIDER_KEYS.has(k) && !k.startsWith("_")) {
+        issues.push({
+          level: "warning",
+          message: `${pName}: unknown provider field "${k}" (typo? underscore-prefixed annotations are ignored)`,
+        });
       }
     }
     if (!cfg.apiKey) {

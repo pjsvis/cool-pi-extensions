@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "citty": "0.2.2"
+    "citty": "0.2.2",
+    "zod": "^4.4.3"
   },
   "scripts": {
     "build": "bun build src/main.ts --outfile dist/pi-models.js --target bun --format esm && chmod +x dist/pi-models.js",
