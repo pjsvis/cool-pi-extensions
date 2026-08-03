@@ -1,0 +1,6 @@
+[2026-08-01 12:44:47] === V4 Flash — remaining fixtures (edinburgh done) ===
+[2026-08-01 12:44:47] RUN deepseek/deepseek-v4-flash × 007
+[2026-08-01 12:48:23] DONE 007 →   3/4 passed [2m[216.3s][0m
+[2026-08-01 12:48:25] RUN deepseek/deepseek-v4-flash × sit2
+[2026-08-01 12:53:23] DONE sit2 →   14/15 passed [2m[297.8s][0m
+[2026-08-01 12:53:25] === V4 Flash eval complete ===

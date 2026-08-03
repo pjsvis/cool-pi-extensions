@@ -1,0 +1,124 @@
+[2026-07-31 15:58:57] === Gap Six — full run (6 models × 3 fixtures = 18 combos) ===
+[2026-07-31 15:58:57] Models: 6  Fixtures: 3
+[2026-07-31 15:58:57] Scope grader: google/gemini-2.5-flash   Gateway grader: nvidia/nemotron-3-nano-30b-a3b:free
+[2026-07-31 15:58:57] Log: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/eval_log.json (append — Phase D data preserved)
+[2026-07-31 15:58:57] Progress: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/gap-six-progress.log
+[2026-07-31 15:58:57] 
+[2026-07-31 15:58:57] DRY RUN — no calls will be made
+[2026-07-31 15:58:57] RUN   anthropic/claude-opus-4.1 × edinburgh (0/5 done, running remaining)
+[2026-07-31 15:58:57] RUN   anthropic/claude-opus-4.1 × 007 (0/4 done, running remaining)
+[2026-07-31 15:58:58] RUN   anthropic/claude-opus-4.1 × sit2 (0/15 done, running remaining)
+[2026-07-31 15:58:58] RUN   anthropic/claude-haiku-4.5 × edinburgh (0/5 done, running remaining)
+[2026-07-31 15:58:58] RUN   anthropic/claude-haiku-4.5 × 007 (0/4 done, running remaining)
+[2026-07-31 15:58:58] RUN   anthropic/claude-haiku-4.5 × sit2 (0/15 done, running remaining)
+[2026-07-31 15:58:58] RUN   openai/gpt-4o × edinburgh (0/5 done, running remaining)
+[2026-07-31 15:58:59] RUN   openai/gpt-4o × 007 (0/4 done, running remaining)
+[2026-07-31 15:58:59] RUN   openai/gpt-4o × sit2 (0/15 done, running remaining)
+[2026-07-31 15:58:59] RUN   x-ai/grok-4.20 × edinburgh (0/5 done, running remaining)
+[2026-07-31 15:58:59] RUN   x-ai/grok-4.20 × 007 (0/4 done, running remaining)
+[2026-07-31 15:58:59] RUN   x-ai/grok-4.20 × sit2 (0/15 done, running remaining)
+[2026-07-31 15:59:00] RUN   meta-llama/llama-3.3-70b-instruct × edinburgh (0/5 done, running remaining)
+[2026-07-31 15:59:00] RUN   meta-llama/llama-3.3-70b-instruct × 007 (0/4 done, running remaining)
+[2026-07-31 15:59:00] RUN   meta-llama/llama-3.3-70b-instruct × sit2 (0/15 done, running remaining)
+[2026-07-31 15:59:00] RUN   deepseek/deepseek-r1 × edinburgh (0/5 done, running remaining)
+[2026-07-31 15:59:00] RUN   deepseek/deepseek-r1 × 007 (0/4 done, running remaining)
+[2026-07-31 15:59:01] RUN   deepseek/deepseek-r1 × sit2 (0/15 done, running remaining)
+[2026-07-31 15:59:01] 
+[2026-07-31 15:59:01] === Gap Six complete ===
+[2026-07-31 15:59:01] Combos run: 18   skipped: 0   failed: 0
+[2026-07-31 15:59:01] Elapsed: 0m
+[2026-07-31 15:59:09] === Gap Six — SMOKE TEST (deepseek-r1 × edinburgh, 5 calls) ===
+[2026-07-31 15:59:09] Models: 1  Fixtures: 1
+[2026-07-31 15:59:09] Scope grader: google/gemini-2.5-flash   Gateway grader: nvidia/nemotron-3-nano-30b-a3b:free
+[2026-07-31 15:59:09] Log: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/eval_log.json (append — Phase D data preserved)
+[2026-07-31 15:59:09] Progress: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/gap-six-progress.log
+[2026-07-31 15:59:09] 
+[2026-07-31 15:59:09] RUN   deepseek/deepseek-r1 × edinburgh (0/5 done, running remaining)
+[2026-07-31 16:01:37] DONE  deepseek/deepseek-r1 × edinburgh →   2/5 passed [2m[147.6s][0m
+[2026-07-31 16:01:39] 
+[2026-07-31 16:01:39] === Gap Six complete ===
+[2026-07-31 16:01:39] Combos run: 1   skipped: 0   failed: 0
+[2026-07-31 16:01:39] Elapsed: 2m
+[2026-07-31 16:01:39] Smoke test done. Inspect data/eval_log.json for deepseek-r1 rows, then run without --smoke.
+[2026-07-31 16:02:20] === Gap Six — full run (6 models × 3 fixtures = 18 combos) ===
+[2026-07-31 16:02:20] Models: 6  Fixtures: 3
+[2026-07-31 16:02:20] Scope grader: google/gemini-2.5-flash   Gateway grader: nvidia/nemotron-3-nano-30b-a3b:free
+[2026-07-31 16:02:20] Log: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/eval_log.json (append — Phase D data preserved)
+[2026-07-31 16:02:20] Progress: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/gap-six-progress.log
+[2026-07-31 16:02:20] 
+[2026-07-31 16:02:20] RUN   anthropic/claude-opus-4.1 × edinburgh (0/5 done, running remaining)
+[2026-07-31 16:10:09] DONE  anthropic/claude-opus-4.1 × edinburgh →   3/5 passed [2m[468.4s][0m
+[2026-07-31 16:10:11] RUN   anthropic/claude-opus-4.1 × 007 (0/4 done, running remaining)
+[2026-07-31 16:14:43] DONE  anthropic/claude-opus-4.1 × 007 →   2/4 passed [2m[271.3s][0m
+[2026-07-31 16:14:45] RUN   anthropic/claude-opus-4.1 × sit2 (0/15 done, running remaining)
+[2026-07-31 16:23:26] DONE  anthropic/claude-opus-4.1 × sit2 →   14/15 passed [2m[520.6s][0m
+[2026-07-31 16:23:28] RUN   anthropic/claude-haiku-4.5 × edinburgh (0/5 done, running remaining)
+[2026-07-31 16:25:03] DONE  anthropic/claude-haiku-4.5 × edinburgh →   2/5 passed [2m[95.0s][0m
+[2026-07-31 16:25:05] RUN   anthropic/claude-haiku-4.5 × 007 (0/4 done, running remaining)
+[2026-07-31 16:26:48] DONE  anthropic/claude-haiku-4.5 × 007 →   3/4 passed [2m[102.3s][0m
+[2026-07-31 16:26:50] RUN   anthropic/claude-haiku-4.5 × sit2 (0/15 done, running remaining)
+[2026-07-31 16:31:47] DONE  anthropic/claude-haiku-4.5 × sit2 →   13/15 passed [2m[297.1s][0m
+[2026-07-31 16:31:50] RUN   openai/gpt-4o × edinburgh (0/5 done, running remaining)
+[2026-07-31 16:32:34] DONE  openai/gpt-4o × edinburgh →   4/5 passed [2m[44307ms][0m
+[2026-07-31 16:32:36] RUN   openai/gpt-4o × 007 (0/4 done, running remaining)
+[2026-07-31 16:33:26] DONE  openai/gpt-4o × 007 →   2/4 passed [2m[49260ms][0m
+[2026-07-31 16:33:28] RUN   openai/gpt-4o × sit2 (0/15 done, running remaining)
+[2026-07-31 16:37:43] DONE  openai/gpt-4o × sit2 →   14/15 passed [2m[254.7s][0m
+[2026-07-31 16:37:45] RUN   x-ai/grok-4.20 × edinburgh (0/5 done, running remaining)
+[2026-07-31 16:38:43] DONE  x-ai/grok-4.20 × edinburgh →   3/5 passed [2m[57839ms][0m
+[2026-07-31 16:38:45] RUN   x-ai/grok-4.20 × 007 (0/4 done, running remaining)
+[2026-07-31 16:39:35] DONE  x-ai/grok-4.20 × 007 →   3/4 passed [2m[49727ms][0m
+[2026-07-31 16:39:38] RUN   x-ai/grok-4.20 × sit2 (0/15 done, running remaining)
+[2026-07-31 16:44:13] DONE  x-ai/grok-4.20 × sit2 →   15/15 passed [2m[275.4s][0m
+[2026-07-31 16:44:15] RUN   meta-llama/llama-3.3-70b-instruct × edinburgh (0/5 done, running remaining)
+[2026-07-31 16:46:26] DONE  meta-llama/llama-3.3-70b-instruct × edinburgh →   2/5 passed [2m[130.4s][0m
+[2026-07-31 16:46:28] RUN   meta-llama/llama-3.3-70b-instruct × 007 (0/4 done, running remaining)
+[2026-07-31 16:47:32] DONE  meta-llama/llama-3.3-70b-instruct × 007 →   2/4 passed [2m[63.6s][0m
+[2026-07-31 16:47:34] RUN   meta-llama/llama-3.3-70b-instruct × sit2 (0/15 done, running remaining)
+[2026-07-31 16:53:30] DONE  meta-llama/llama-3.3-70b-instruct × sit2 →   15/15 passed [2m[355.0s][0m
+[2026-07-31 16:53:32] RUN   deepseek/deepseek-r1 × edinburgh (4/5 done, running remaining)
+[2026-07-31 16:55:16] DONE  deepseek/deepseek-r1 × edinburgh →   4/5 passed [2m[103.7s][0m
+[2026-07-31 16:55:18] RUN   deepseek/deepseek-r1 × 007 (0/4 done, running remaining)
+[2026-07-31 16:57:26] DONE  deepseek/deepseek-r1 × 007 →   2/4 passed [2m[128.1s][0m
+[2026-07-31 16:57:29] RUN   deepseek/deepseek-r1 × sit2 (0/15 done, running remaining)
+[2026-07-31 17:04:47] DONE  deepseek/deepseek-r1 × sit2 →   15/15 passed [2m[438.1s][0m
+[2026-07-31 17:04:49] 
+[2026-07-31 17:04:49] === Gap Six complete ===
+[2026-07-31 17:04:49] Combos run: 18   skipped: 0   failed: 0
+[2026-07-31 17:04:49] Elapsed: 62m
+[2026-07-31 17:04:49] Generating gap-six matrix...
+[2026-07-31 17:04:56] Matrix written to /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/gap-six-matrix.md
+[2026-08-01 09:28:15] === Gap Six — full run (6 models × 3 fixtures = 18 combos) ===
+[2026-08-01 09:28:15] Models: 6  Fixtures: 3
+[2026-08-01 09:28:15] Scope grader: google/gemini-2.5-flash   Gateway grader: nvidia/nemotron-3-nano-30b-a3b:free
+[2026-08-01 09:28:15] Log: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/eval_log.json (append — Phase D data preserved)
+[2026-08-01 09:28:15] Progress: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/gap-six-progress.log
+[2026-08-01 09:28:15] 
+[2026-08-01 09:28:15] RUN   anthropic/claude-opus-4.1 × edinburgh (4/5 done, running remaining)
+[2026-08-01 09:36:09] DONE  anthropic/claude-opus-4.1 × edinburgh →   3/5 passed [2m[473.8s][0m
+[2026-08-01 09:36:12] RUN   anthropic/claude-opus-4.1 × 007 (3/4 done, running remaining)
+[2026-08-01 09:40:24] DONE  anthropic/claude-opus-4.1 × 007 →   3/4 passed [2m[252.2s][0m
+[2026-08-01 09:40:26] SKIP  anthropic/claude-opus-4.1 × sit2 (15/15 already logged)
+[2026-08-01 09:40:27] SKIP  anthropic/claude-haiku-4.5 × edinburgh (5/5 already logged)
+[2026-08-01 09:40:27] SKIP  anthropic/claude-haiku-4.5 × 007 (4/4 already logged)
+[2026-08-01 09:40:27] SKIP  anthropic/claude-haiku-4.5 × sit2 (15/15 already logged)
+[2026-08-01 09:40:27] SKIP  openai/gpt-4o × edinburgh (5/5 already logged)
+[2026-08-01 09:40:27] SKIP  openai/gpt-4o × 007 (4/4 already logged)
+[2026-08-01 09:40:28] SKIP  openai/gpt-4o × sit2 (15/15 already logged)
+[2026-08-01 09:40:28] RUN   x-ai/grok-4.20 × edinburgh (4/5 done, running remaining)
+[2026-08-01 09:56:36] DONE  x-ai/grok-4.20 × edinburgh →   2/5 passed [2m[967.8s][0m
+[2026-08-01 09:56:38] SKIP  x-ai/grok-4.20 × 007 (4/4 already logged)
+[2026-08-01 09:56:39] SKIP  x-ai/grok-4.20 × sit2 (15/15 already logged)
+[2026-08-01 09:56:39] SKIP  meta-llama/llama-3.3-70b-instruct × edinburgh (5/5 already logged)
+[2026-08-01 09:56:39] SKIP  meta-llama/llama-3.3-70b-instruct × 007 (4/4 already logged)
+[2026-08-01 09:57:54] SKIP  meta-llama/llama-3.3-70b-instruct × sit2 (15/15 already logged)
+[2026-08-01 09:57:55] SKIP  deepseek/deepseek-r1 × edinburgh (5/5 already logged)
+[2026-08-01 09:57:55] RUN   deepseek/deepseek-r1 × 007 (2/4 done, running remaining)
+[2026-08-01 09:59:26] DONE  deepseek/deepseek-r1 × 007 →   3/4 passed [2m[90.6s][0m
+[2026-08-01 09:59:28] SKIP  deepseek/deepseek-r1 × sit2 (15/15 already logged)
+[2026-08-01 09:59:28] 
+[2026-08-01 09:59:28] === Gap Six complete ===
+[2026-08-01 09:59:28] Combos run: 4   skipped: 14   failed: 0
+[2026-08-01 09:59:28] Elapsed: 31m
+[2026-08-01 09:59:28] Generating gap-six matrix...
+[2026-08-01 09:59:36] Matrix written to /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/gap-six-matrix.md

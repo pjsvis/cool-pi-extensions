@@ -1,0 +1,29 @@
+[2026-08-01 20:36:12] === NIM Three — free-tier eval via NVIDIA NIM (new substrates only) ===
+[2026-08-01 20:36:12] Models: 3  Fixtures: 3  Timeout: 600s
+[2026-08-01 20:36:12] Scope grader: google/gemini-2.5-flash   Gateway grader: nvidia/nemotron-3-nano-30b-a3b:free
+[2026-08-01 20:36:12] Log: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/eval_log.json (append)   Progress: /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/nim-six-progress.log
+[2026-08-01 20:36:12] 
+[2026-08-01 20:36:12] RUN   openai/gpt-oss-120b × edinburgh (3/5 done)
+[2026-08-01 20:51:12] DONE  openai/gpt-oss-120b × edinburgh →   2/5 passed [2m[900.0s][0m
+[2026-08-01 20:51:16] RUN   openai/gpt-oss-120b × 007 (3/4 done)
+[2026-08-01 20:56:15] DONE  openai/gpt-oss-120b × 007 →   3/4 passed [2m[299.6s][0m
+[2026-08-01 20:56:19] RUN   openai/gpt-oss-120b × sit2 (0/15 done)
+[2026-08-01 21:56:19] DONE  openai/gpt-oss-120b × sit2 →   4/15 passed [2m[3600.0s][0m
+[2026-08-01 21:56:22] RUN   moonshotai/kimi-k2-instruct × edinburgh (0/5 done)
+[2026-08-01 21:56:24] DONE  moonshotai/kimi-k2-instruct × edinburgh →   0/5 passed [2m[1591ms][0m
+[2026-08-01 21:56:27] RUN   moonshotai/kimi-k2-instruct × 007 (0/4 done)
+[2026-08-01 21:56:29] DONE  moonshotai/kimi-k2-instruct × 007 →   0/4 passed [2m[1142ms][0m
+[2026-08-01 21:56:32] RUN   moonshotai/kimi-k2-instruct × sit2 (0/15 done)
+[2026-08-01 21:56:36] DONE  moonshotai/kimi-k2-instruct × sit2 →   0/15 passed [2m[3760ms][0m
+[2026-08-01 21:56:39] RUN   sarvamai/sarvam-m × edinburgh (0/5 done)
+[2026-08-01 21:56:40] DONE  sarvamai/sarvam-m × edinburgh →   0/5 passed [2m[334ms][0m
+[2026-08-01 21:56:43] RUN   sarvamai/sarvam-m × 007 (0/4 done)
+[2026-08-01 21:56:43] DONE  sarvamai/sarvam-m × 007 →   0/4 passed [2m[222ms][0m
+[2026-08-01 21:56:47] RUN   sarvamai/sarvam-m × sit2 (0/15 done)
+[2026-08-01 21:56:49] DONE  sarvamai/sarvam-m × sit2 →   0/15 passed [2m[1803ms][0m
+[2026-08-01 21:56:52] 
+[2026-08-01 21:56:52] === NIM Six complete ===
+[2026-08-01 21:56:52] Combos run: 9   skipped: 0   failed: 0
+[2026-08-01 21:56:52] Elapsed: 80m
+[2026-08-01 21:56:52] Generating nim-six matrix...
+[2026-08-01 21:57:00] Matrix written to /Users/petersmith/Dev/GitHub/cool-pi-extensions/data/nim-six-matrix.md
