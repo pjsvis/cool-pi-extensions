@@ -120,6 +120,7 @@ Recorded architectural decisions with context, rationale, and consequences.
 How-to guides for recurring tasks. Give pi the URL and it executes.
 
 **[playbooks/014-lightweight-system.md](playbooks/014-lightweight-system.md)** — > Retired 2026-07-18. Superseded by `playbooks/repo-setup-retrofit-playbook.md`,
+**[playbooks/015-probe-before-you-patch-playbook.md](playbooks/015-probe-before-you-patch-playbook.md)** — > Probe before you patch. The obvious fault is usually the wrong fault. Evidence is cheaper than a rollback.
 **[playbooks/agent-messages-playbook.md](playbooks/agent-messages-playbook.md)** — > Status: Dormant design record. This documents the June 2026 two-machine experiment (see debrief 007). The `msgs-*` recipe facade below wa…
 **[playbooks/briefs-playbook.md](playbooks/briefs-playbook.md)** — Project briefs define the what and why before any code is written. Each brief is a self-contained specification for a single feature, exten…
 **[playbooks/cli-playbook.md](playbooks/cli-playbook.md)** — Standalone CLI tools distributed with cool-pi-extensions. Built with Bun + citty.
