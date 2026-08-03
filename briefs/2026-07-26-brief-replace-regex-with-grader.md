@@ -1,7 +1,7 @@
 ---
 title: Brief — Replace the Regex with the Grader (the Instrument Fix)
 date: 2026-07-26
-status: pending
+status: complete — Phases A–D executed 2026-07-26..28 (see debriefs/014-regex-to-grader-migration.md)
 protocol: Edinburgh Protocol v1.1.0
 ---
 

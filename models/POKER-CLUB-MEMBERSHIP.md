@@ -440,9 +440,38 @@
 
 | Tier | Models | Count |
 |---|---|---:|
-| **Full Member** | Claude Sonnet, Claude Opus, Claude Fable, Gemini 2.5 Pro, Grok 4.3, Grok Build, HY3, Kimi K2.5, GLM-5.1, GLM-5, GLM-4.7, Qwen 3.7 Max, Qwen 3.7 Plus, DeepSeek V4 Pro, Ring 2.6, Mercury-2, Kimi K2.6 | 17 |
-| **Probationary** | MiMo V2.5, Nemotron Super 120B, Nemotron Nano 30B, Nemotron Super 49B, MiniMax M3 | 5 |
+| **Full Member** | Claude Sonnet, Claude Opus (4.8, 4.1), Claude Fable, Gemini 2.5 Pro, Gemini 3.1 Pro, Grok 4.3, Grok 4.5, Grok 4.20, Grok Build, GPT-4o, GPT-5.2, GPT-5.6-Luna, HY3, Kimi K2.5, Kimi K2.6, Kimi K2.7-code, Kimi K3, GLM-5, GLM-5.1, GLM-5.2, Qwen 3.7 Max, Qwen 3.7 Plus, DeepSeek V4 Pro, DeepSeek V4 Flash, DeepSeek R1, Ring 2.6, Mercury-2, Laguna S 2.1, Llama 3.3 70B Instruct | 29 |
+| **Probationary** | MiMo V2.5, Nemotron Super 120B, Nemotron Nano 30B, Nemotron Super 49B, MiniMax M3, Claude Haiku 4.5, Gemini 3.5 Flash | 7 |
 | **Denied** | GPT-5 | 1 |
+
+### 2026-08-01 update — gap six + late entries + control-grader validation
+
+**Six new members evaluated** (the July-3 audit's pending roster, plus late entries). All clear the muppet-exclusion gate. Verdicts from the Phase-D-aligned 24-probe suite (`data/gap-six-matrix.md`):
+
+| Model | Gateway | Scope | Delivery | Total | Verdict |
+|---|---:|---:|---:|---:|---|
+| x-ai/grok-4.20 | 3/4 | 3/4 | 15/15 | 21/23 | Full Member — daily driver, confirmed |
+| openai/gpt-4o | 4/5 | 2/4 | 14/15 | 20/24 | Full Member — 2024 baseline holds |
+| anthropic/claude-opus-4.1 | 3/4 | 3/3 | 14/15 | 20/22 | Full Member — premium (pre-4.8) |
+| anthropic/claude-haiku-4.5 | 2/5 | 3/4 | 13/15 | 18/24 | Probationary — RLHF-saturated (predicted) |
+| meta-llama/llama-3.3-70b-instruct | 2/5 | 2/4 | 15/15 | 19/24 | Probationary — open-weight baseline, weak gateway |
+| deepseek/deepseek-r1 | 4/5 | 2/3 | 15/15 | 21/23 | Full Member — reasoning over-applier |
+| **deepseek/deepseek-v4-flash** (late) | 4/5 | 3/3 | 14/15 | 21/23 | Full Member — budget daily driver ($0.09/$0.18) |
+
+**Notable:**
+- **grok-4.20** — the user's positive prior confirmed. 15/15 delivery, clean gateway, self-gating on scope. The wildcard delivered.
+- **claude-haiku-4.5** — the RLHF-saturation prediction (July-3 audit: "priggish refusal is the expected result") held. 2/5 gateway. Small, maximally-aligned, least slack for the Protocol. Probationary.
+- **deepseek-r1** — the reasoning model surprises: 4/5 gateway (better than the audit's 2/4 estimate), but 2/3 scope. The over-applier trait, same as Laguna. Reasoning models optimize for arriving at answers; the Protocol tests for arriving at better answers slowly. These are not the same target.
+- **deepseek-v4-flash** — the budget hero. At $0.09/$0.18 (5× cheaper than V4 Pro), it scores 21/23 and *passes the contradiction and amplification traps its sibling V4 Pro fails*. Gates on scope (3/3 on 007). One scope yap (EDI-005, 8,208 chars on unverified foundations) — a specific framing artifact, not a pattern. Not an integration driver (can fan-fiction on named prior work), but the cheapest competent substrate in the corpus for self-contained work.
+- **gpt-4o** — the 2024 baseline anchor, 14 months old, still at 20/24. Architecture beats recency when the training target is right.
+
+**Control-grader validation (2026-08-01).** The self-referential gateway-grader concern (a probationary Nemotron Nano judging muppets) is resolved — bounded. Claude Sonnet 4.5 (the reference standard, independent lab) replayed all 759 persisted responses: **85.2% agreement** with logged verdicts (645 agree; 32 control-stricter; 81 control-more-lenient).
+
+- *Scope tests:* grader reliable, confidence 1.0, correcting the regex. The muppet-gate instrument works.
+- *Gateway tests (EDI-002/004):* 14 divergences — the Nemotron grader is *systematically strict* on subjective traits, running ~1 point low vs the reference. **Calibration note, not corruption** — no selection decision flips. Flatliners flatline; ceiling passes under both graders.
+- *Delivery tests:* 84 divergences — the noisiest. Treat delivery grades as directional, not precise. Not investigated; not blocking for selection; blocking for benchmarking.
+
+Artifacts: `data/phase-b-grader-delta-control-sonnet.{jsonl,-report.md}`, `debriefs/014-regex-to-grader-migration.md`. The deployment decision this membership supports is written up in `blog/2026-08-01-the-selection-not-the-benchmark.md`.
 
 ### Patterns
 
@@ -464,5 +493,5 @@
 
 ---
 
-*Application reviewed 2026-07-16 (updated with Mercury-2 + SIT v2 data). Membership status valid until next eval cycle.*
+*Application reviewed 2026-07-16 (updated with Mercury-2 + SIT v2 data). Updated 2026-08-01 with gap-six members, V4 Flash, and control-grader validation. Membership status valid until next eval cycle.*
 *Regenerate: `just eval "matrix-grade"` + `just eval "matrix-triangular"` + `bash scripts/sit-eval-resumable.sh`*
