@@ -14,6 +14,10 @@ import type { CallTelemetry } from "./types.js";
 // ── Constants ───────────────────────────────────────────────────────────────
 
 const OLLAMA_BASE = "http://localhost:11434";
+// apfel — on-device Apple Intelligence via `apfel --serve` (OpenAI-compat).
+// Port 11435 (ollama owns 11434). Dummy key: apfel serve is unauth by default.
+// See briefs/2026-08-04-brief-apfel-apple-intelligence-candidate.md.
+const APFEL_URL = "http://localhost:11435/v1/chat/completions";
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 const ZENMUX_URL = "https://zenmux.ai/api/v1/chat/completions";
 const TOGETHER_URL = "https://api.together.xyz/v1/chat/completions";
@@ -541,6 +545,16 @@ export async function callModel(
   }
   if (model.includes("qwen")) {
     chain.push({ p: "dashscope", m: bareSlug, k: QWEN_KEY, url: DASHSCOPE_URL });
+  }
+  // apfel (Apple Intelligence, on-device). Bare slug the server expects is fixed;
+  // route on any apfel/apple-foundationmodel modelId. Dummy key (serve is unauth).
+  if (model.includes("apfel") || model.includes("apple-foundationmodel")) {
+    chain.push({
+      p: "apfel",
+      m: "apple-foundationmodel",
+      k: process.env["APFEL_KEY"] || "apfel",
+      url: APFEL_URL,
+    });
   }
 
   if (provider === "together") {
