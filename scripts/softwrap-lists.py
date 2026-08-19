@@ -52,65 +52,60 @@ def wrap(content, width, cont_indent_str):
     return out
 
 def process(text, limit=LIMIT, write=False):
+    """Soft-wrap single-line list items > limit; loosen affected lists.
+
+    Per-item, not per-run-abort: a list item whose next line is an indented
+    continuation is LEFT verbatim (re-wrapping multi-line item content is the
+    genuinely tricky part, deliberately out of scope). Single-line items >80
+    are wrapped at existing spaces. A list is loosened (blank spacers between
+    items) whenever ANY item wraps OR is multi-line — both need the boundary air."""
     lines = text.split("\n")
-    out, i, infence = [], 0, False
-    # collect list runs (consecutive items ignoring blanks) to decide loosen
-    # pass 1: identify item lines and whether the list they belong to wraps
-    def is_item(l): 
-        return ITEM.match(l) is not None
-    # We process list-by-list: a list = maximal run where each non-blank line
-    # is an item (or a continuation/indented line of one).
-    idx = 0
+    out, idx, infence = [], 0, False
     while idx < len(lines):
         if lines[idx].lstrip().startswith("```"):
             infence = not infence
             out.append(lines[idx]); idx += 1; continue
-        if infence:
+        if infence or not ITEM.match(lines[idx]):
             out.append(lines[idx]); idx += 1; continue
-        m = ITEM.match(lines[idx])
-        if not m:
-            out.append(lines[idx]); idx += 1; continue
-        # found a list — gather its item lines (blanks between are tolerated)
-        start = idx
-        block = []   # list of (line_index, match)
+        # gather a run: items + their continuation lines, blanks tolerated between items
+        items = []  # each: {match, cont: [continuation line strings]}
         while idx < len(lines):
-            if lines[idx].lstrip().startswith("```"):
-                break
-            mm = ITEM.match(lines[idx])
-            if mm:
-                block.append((idx, mm)); idx += 1
-            elif lines[idx].strip() == "":
-                # peek: blank then item → still same list; blank then non-item → end
+            if lines[idx].lstrip().startswith("```"): break
+            m = ITEM.match(lines[idx])
+            if m:
+                cont = []
                 j = idx + 1
-                while j < len(lines) and lines[j].strip() == "": j += 1
-                if j < len(lines) and ITEM.match(lines[j]):
-                    idx = j; continue
-                else:
-                    break
-            elif lines[idx].startswith(" " * (len(mm.group(1)) + len(mm.group(2)))) if block else False:
-                # continuation line of previous item
-                idx += 1; continue
-            else:
-                break
-        # does any item in this block wrap?
-        wraps = any(len(mm.group(3)) > limit for _, mm in block)
-        # re-emit the block, soft-wrapping + (if wraps) loosening
+                while j < len(lines) and lines[j].startswith(" ") and lines[j].strip() != "" and not ITEM.match(lines[j]):
+                    cont.append(lines[j]); j += 1
+                items.append({"m": m, "cont": cont, "first": lines[idx]})
+                idx = j
+                # skip blanks between items
+                while idx < len(lines) and lines[idx].strip() == "":
+                    # peek: is the next non-blank an item? if not, end run
+                    k = idx + 1
+                    while k < len(lines) and lines[k].strip() == "": k += 1
+                    if k < len(lines) and ITEM.match(lines[k]):
+                        idx = k; break
+                    else:
+                        break
+                continue
+            break  # non-item, non-blank ends the run
+        if not items:
+            out.append(lines[idx]); idx += 1; continue
+        wraps_or_ml = any((len(it["m"].group(3)) > limit) or it["cont"] for it in items)
         first = True
-        for k, (li, mm) in enumerate(block):
-            indent, marker, content = mm.group(1), mm.group(2), mm.group(3)
+        for it in items:
+            mm = it["m"]; indent, marker, content = mm.group(1), mm.group(2), mm.group(3)
             cont_indent = " " * (len(indent) + len(marker))
-            if len(content) > limit:
-                toks = list(tokenize(content))
+            if not it["cont"] and len(content) > limit:  # single-line + over → wrap
                 width = limit - len(indent) - len(marker)
                 wrapped = wrap(content, width, cont_indent)
-                newlines = [indent + marker + wrapped[0]] + [x for x in wrapped[1:]]
-            else:
-                newlines = [indent + marker + content]
-            if wraps and not first:
-                out.append("")   # spacer before each item except the first
-            out.extend(newlines)
-            first = False
-        # idx already advanced past the block
+                newlines = [indent + marker + wrapped[0]] + list(wrapped[1:])
+            else:                                         # multi-line or short → verbatim
+                newlines = [it["first"]] + it["cont"]
+            if wraps_or_ml and not first:
+                out.append("")
+            out.extend(newlines); first = False
     result = "\n".join(out)
     if write:
         open(start_path, "w").write(result)
