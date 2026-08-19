@@ -38,7 +38,13 @@ The JSON fixture is a runtime dependency — the extension reads it directly. Th
 
 ### List spacing
 
-Numbered lists get a blank line between items — a guided tour deserves room between steps. Bullets stay tight (the marker is the boundary).
+Numbered lists get a blank line between items — a guided tour deserves room
+between steps. Bullets stay tight (the marker is the boundary). This uses
+*structural* blank lines (honored by every renderer), not soft line breaks.
+
+> Glow collapses soft line breaks by default; set `preserveNewLines: true` in
+> `~/.config/glow/glow.yml` (or `glow -n`) to honor them. Not needed for this
+> rule — blank lines are structural.
 
 ## When to create a docs/ file
 
