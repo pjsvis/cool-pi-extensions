@@ -114,7 +114,6 @@ The primary structural division is between **installable code** (`src/`) and **r
 
 - **Code goes in `src/`.** Extensions, CLI tools, libraries — anything that
   produces an artifact you install, link, or execute.
-
 - **Everything else stays at root.** Briefs, debriefs, playbooks, essays, docs,
   canonical references. These are consumed by humans, not by package managers.
 

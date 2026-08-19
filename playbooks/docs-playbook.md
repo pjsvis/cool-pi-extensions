@@ -36,32 +36,31 @@ The JSON fixture is a runtime dependency — the extension reads it directly. Th
 - Keep the narrative voice consistent with the Edinburgh Protocol: precise,
   dryly witty, anti-bloat
 
-### List spacing (loose when items wrap or nest)
+### List spacing (loosen numbered lists; bullets stay tight)
 
-Blank lines between list items earn their keep when items **wrap at render
-or nest in source** — they disambiguate item boundaries for both the reader
-(air between a wrapped item's continuation lines and the next bullet) and
-the author/editor (continuation content doesn't mis-attribute to the wrong
-item). For items short enough to fit one render line, the `- ` marker
-already marks the boundary, so loose only adds air without clarity.
+Two rules, split by axis.
 
-- **Items that wrap at render → loose.** The trigger is render-wrap, not
-  source-line-count: a 200-char item is one source line but three render
-  lines in Glow at 80 cols, and the wrapped lines run into the next bullet
-  without air to sever them. Since render width varies (terminal, GitHub,
-  phone), the practical proxy is length — items longer than the column
-  target wrap somewhere.
+**Soft-wrap by length (both types):** any list item >80 cols is soft-wrapped
+at word boundaries so no line exceeds the terminal (`scripts/softwrap-lists.py`).
+This is the 80-col discipline — applies to bullets and numbered lists alike.
 
-- **Source multi-line or nested items → loose.** Same boundary job, in source
-  for the parser and the editor.
+**Loosen by type:**
 
-- **Items that fit one render line → tight is fine.** Loose is harmless but
-  not required; don't cargo-cult air where the marker already disambiguates.
+1. **Numbered lists → loose** (blank line between items). A numbered list is a
+   guided tour: the reader processes step 1, then step 2. The blank line gives
+   the rhythm a sequence deserves, even when items are short.
 
-Apply per-list for consistency: if any item in a list wraps, loosen the whole
-list. This refines ADR-001's "blank lines create breathing room" principle
-(`decisions/019`): the breathing room matters where structure is ambiguous,
-not everywhere.
+2. **Bullets → tight.** A bullet list is a scannable set, not a sequence;
+   compact is the point. The `- ` marker disambiguates the boundary even when an
+   item wraps (the continuation indent makes the marker pop at the left margin),
+   so wrapped bullets don't need air. Exception: nested bullets or
+   multi-paragraph items loosen for *structure*, not rhythm.
+
+This supersedes the earlier "wrap → spacer" rule: the loosen trigger is type
+(numbered), not length. Wrapping bullets are tight-but-wrapped — readable,
+because the marker is the boundary. The boundary-disambiguation argument that
+drove the length-based rule turned out to be moot for bullets (the marker
+already does that job); it was only ever real for *nested* structure.
 
 ## When to create a docs/ file
 
