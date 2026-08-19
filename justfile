@@ -121,14 +121,14 @@ sync-config:
 uninstall-editors FLAGS="":
     @scripts/uninstall-editors.sh {{ FLAGS }}
 
-# ── Mermaid TUI ───────────────────────────────────────────────────────────
-# Render ```mermaid blocks from markdown files in the terminal.
-# Requires: src/cli/mermaid-tui/target/release/mermaid-tui (cargo build --release)
+# ── Mermaid ────────────────────────────────────────────────────────────────
+# Thin facade over the external npm CLI (repo ~/Dev/GitHub/mermaid-to-md,
+# symlinked on PATH; Decision 023 — no in-repo renderer).
 #
 # Usage:
-#   just mermaid docs/architecture.md        — render all mermaid blocks
-#   just mermaid docs/architecture.md 2       — render only the 2nd block
+#   just mermaid docs/architecture.md        — (re)bake art from ```mmd blocks, in place
+#   just mermaid --verify docs/architecture.md — drift check (exit 1 if stale)
 
 [group("mermaid")]
-mermaid FILE BLOCK="":
-    @scripts/mermaid-extract.sh {{ FILE }} {{ BLOCK }}
+mermaid *ARGS:
+    @mermaid-to-md {{ ARGS }}

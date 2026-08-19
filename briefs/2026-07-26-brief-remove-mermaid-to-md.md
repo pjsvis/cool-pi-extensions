@@ -1,7 +1,7 @@
 ---
 type: brief
 description: Remove spun-off mermaid-to-md work — renderer, pi extension, and 6 briefs — from this repo; it now lives in ~/dev/github/mermaid-to-md.
-status: pending
+status: done — executed 2026-08-19 by decisions/023-spin-off-mermaid-to-md.md (the removal commit is the artifact; the brief's "decision 022" slot had been taken by the regex decision)
 timestamp: 2026-07-26
 td: td-ab3a97
 ---

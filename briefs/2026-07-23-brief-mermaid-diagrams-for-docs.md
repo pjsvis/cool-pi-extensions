@@ -2,7 +2,7 @@
 
 **Created:** 2026-07-23
 **Status:** complete
-**Depends on:** `mermaid-tui` binary (epic td-076e0a), `mermaid-extract.sh`
+**Depends on:** `mermaid-tui` binary (epic td-076e0a), `mermaid-extract.sh` — *as built then; the tooling has since been spun off (Decision 023), canonical in `~/Dev/GitHub/mermaid-to-md`*
 **Playbook:** `playbooks/diagrams-playbook.md`
 
 ## What

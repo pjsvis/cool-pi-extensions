@@ -7,13 +7,13 @@ How we author and render diagrams in this repo. Two tracks, partitioned by **aud
 | Track | Audience | Tool | Layout | Committed artifact |
 |---|---|---|---|---|
 | **Publication** | Readers of GitHub docs | mermaid DSL in `.md` | dagre (via GitHub's renderer) | the `.md` source itself |
-| **Terminal** | Agent / human in the terminal | mermaid DSL in `.md` | `mermaid-tui` (Rust binary) | the `.md` source itself |
+| **Terminal** | Agent / human in the terminal | baked Unicode art via `mermaid-to-md` (external npm CLI) | mermaid-tui engine | the `.md` (art block + `mmd` source) |
 | **Analysis** | Author / agent, transiently | DOT | `dot` (Graphviz) | DOT source; SVG is ephemeral |
 
-Publication and Terminal share the **same source** — the mermaid block in
-the `.md` file. GitHub renders it for web readers; `mermaid-tui` renders it
-for terminal readers. Two renderers, one artifact. The source is the
-canonical form; the renderers are ports.
+Publication and Terminal share the **same source** — the mermaid `mmd` block in
+the `.md` file. GitHub renders it for web readers; the baked Unicode art
+block renders it for terminal readers. Two renderers, one artifact. The
+source is the canonical form; the renderers are ports.
 
 ## Track 1 — Publication (mermaid-native)
 
@@ -21,8 +21,9 @@ canonical form; the renderers are ports.
 *read* in a rendered GitHub document or in the terminal.
 
 **How:** author a fenced ```mermaid block directly in the `.md`. GitHub
-renders it for web readers. `mermaid-tui` renders it for terminal readers.
-No local pipeline required for GitHub; `just mermaid <file>` for terminal.
+renders it for web readers. Terminal readers get the baked art block
+(see Track 1b below).
+No local pipeline required for GitHub.
 
 ````md
 ```mermaid
@@ -37,12 +38,18 @@ stateDiagram-v2
 **Terminal rendering:**
 
 ```bash
-just mermaid docs/full-stack-overview.md        # render all mermaid blocks
-just mermaid docs/full-stack-overview.md 2       # render only the 2nd block
+mermaid-to-md --inject docs/full-stack-overview.md   # (re)bake art from mmd blocks
+mermaid-to-md --verify docs/full-stack-overview.md    # drift check (exit 1 if stale)
 ```
 
-Requires: `src/cli/mermaid-tui/target/release/mermaid-tui`
-(`cd src/cli/mermaid-tui && cargo build --release`).
+Requires: the external npm CLI `mermaid-to-md` (repo `~/Dev/GitHub/mermaid-to-md`,
+symlinked at `~/.local/bin/mermaid-to-md`; Decision 023). Baked art blocks carry
+the `<!-- mermaid-to-md:art -->` sentinel — `--verify` ignores unmanaged art.
+
+**Width convention:** bake and verify at `COLUMNS=140` (the narrowest width
+that avoids the too-wide fallback across this repo's diagrams). The width is
+not recorded in the artifact, so the convention lives here — verify with
+`COLUMNS=140 mermaid-to-md --verify <file>` or art will false-positive as stale.
 
 Rules:
 - **Keep graphs small.** If dagre's layout starts to look wrong — crossing
@@ -171,10 +178,9 @@ Move a diagram from mermaid to DOT when **any** of these hold:
 ## Dependency surface
 
 - **Track 1 (GitHub):** nothing local. GitHub provides the renderer.
-- **Track 1 (Terminal):** `mermaid-tui` binary.
-  `cd src/cli/mermaid-tui && cargo build --release`. Only dependency:
-  `unicode-width`. Pi extension at `src/extensions/mermaid-tui/` provides
-  `/mermaid` slash command + `render_mermaid` tool.
+- **Track 1 (Terminal):** external npm CLI `mermaid-to-md`
+  (`~/Dev/GitHub/mermaid-to-md`, symlinked on PATH; Decision 023). No
+  in-repo binary; committed art needs no renderer at view time.
 - **Track 2:** `dot` (Graphviz). `brew install graphviz` / `apt install
   graphviz`. Verify with `just install-deps`.
 
@@ -185,7 +191,8 @@ No sebastian, no `mmdc`, no Chromium, no wasm. That minimalism is the point.
 - Decision 012 — the *why* behind this playbook.
 - Decision 021 — the eval consolidation that produced the session-newup
   discipline (the terminal renderer was built under the same discipline).
-- `mermaid-tui` brief — `briefs/2026-07-23-brief-go-mermaid-renderer-01.md`
-- `mermaid-extract` brief — `briefs/2026-07-23-brief-mermaid-extract.md`
+- Decision 023 — the mermaid spinoff: this repo consumes the external CLI.
+- `briefs/2026-07-23-brief-mermaid-diagrams-for-docs.md` — this repo's
+  diagram-work record (the spun-off tooling briefs moved with the spinoff).
 - sebastian (evaluated, not adopted): https://github.com/aovestdipaperino/sebastian
 - Decision 006 (MVAS — don't build the scaffolding before the input exists)
