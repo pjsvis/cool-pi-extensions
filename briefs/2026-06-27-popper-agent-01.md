@@ -12,9 +12,9 @@ To eliminate the *Palimpsest Problem* and *stochastic hallucinations* by introdu
 
 ### 2. System Architecture & Boundaries
 
-* **The Substrate:** Bun runtime, TypeScript, localized markdown ledger (`/briefs`, `/decisions`, `/playbooks`), and an in-memory or local SQLite transaction cache.
-* **The Boundary Rule:** No single LLM execution thread may both *write* code and *verify* code. Generation (Inductive Engine) and Refutation (Deductive Saboteur) must run in isolated shell contexts or distinct API sessions.
-* **The Invariant:** Every implementation must output its own structural boundaries. If a code patch retains legacy tokens specified in `deprecated_registry.json`, the payload is falsified on contact.
+- **The Substrate:** Bun runtime, TypeScript, localized markdown ledger (`/briefs`, `/decisions`, `/playbooks`), and an in-memory or local SQLite transaction cache.
+- **The Boundary Rule:** No single LLM execution thread may both *write* code and *verify* code. Generation (Inductive Engine) and Refutation (Deductive Saboteur) must run in isolated shell contexts or distinct API sessions.
+- **The Invariant:** Every implementation must output its own structural boundaries. If a code patch retains legacy tokens specified in `deprecated_registry.json`, the payload is falsified on contact.
 
 ### 3. File System Blueprint
 

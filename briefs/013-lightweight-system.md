@@ -6,11 +6,11 @@
 
 ## 1. Core Loops (the “alpha‑gamma‑delta” triad)
 
-| Loop | Purpose | Artifact | Location |
-|------|---------|----------|----------|
-| **Alpha‑loop** | Create a *brief* that records *what* and *why* before any code is written. | Brief document | `briefs/` (e.g., `briefs/002‑pi‑check‑zenmux.md`) |
-| **Gamma‑loop** | Keep tasks visible and ordered. | td task entry | `.todos/` (managed by the `td` CLI) |
-| **Delta‑loop** | Persist *lessons‑learned* after implementation. | Debrief document | `debriefs/` (e.g., `debriefs/007‑multi‑machine‑mesh‑and‑bounded‑context.md`) |
+| Loop           | Purpose                                                                    | Artifact         | Location                                                                     |
+| -------------- | -------------------------------------------------------------------------- | ---------------- | ---------------------------------------------------------------------------- |
+| **Alpha‑loop** | Create a *brief* that records *what* and *why* before any code is written. | Brief document   | `briefs/` (e.g., `briefs/002‑pi‑check‑zenmux.md`)                            |
+| **Gamma‑loop** | Keep tasks visible and ordered.                                            | td task entry    | `.todos/` (managed by the `td` CLI)                                          |
+| **Delta‑loop** | Persist *lessons‑learned* after implementation.                            | Debrief document | `debriefs/` (e.g., `debriefs/007‑multi‑machine‑mesh‑and‑bounded‑context.md`) |
 
 These loops guarantee **Conceptual Entropy Reduction** – each step adds structure before chaos can accumulate.
 
