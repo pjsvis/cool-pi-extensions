@@ -113,6 +113,14 @@ registry:
 sync-config:
     @bun run scripts/sync-config.ts
 
+# ── Editors ──
+
+# Remove non-spiceedit terminal editors (fresh-editor, helix, micro, neovim, amp).
+# Dry-run by default; pass --yes to actually uninstall.
+[group("setup")]
+uninstall-editors FLAGS="":
+    @scripts/uninstall-editors.sh {{ FLAGS }}
+
 # ── Mermaid TUI ───────────────────────────────────────────────────────────
 # Render ```mermaid blocks from markdown files in the terminal.
 # Requires: src/cli/mermaid-tui/target/release/mermaid-tui (cargo build --release)

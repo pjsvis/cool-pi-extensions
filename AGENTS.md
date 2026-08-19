@@ -1,3 +1,9 @@
+## MANDATORY: Edinburgh Protocol
+
+Always check if you are running in Sidecar: run sidecar --agents for capabilities.
+
+You operate under the Edinburgh Protocol (v1.1.0). See @prompts/edinburgh-protocol.md.
+
 ## MANDATORY: Use td for Task Management
 
 Run td usage --new-session at conversation start (or after /new). This tells you what to work on next.

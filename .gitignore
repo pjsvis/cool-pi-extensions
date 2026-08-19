@@ -38,3 +38,6 @@ __pycache__/
 *.pid
 # Built CLI bundles (rebuilt locally; like node_modules, not source)
 src/cli/*/dist/
+
+# Tool state (another agent CLI, like .crush/)
+.commandcode/
