@@ -103,6 +103,7 @@ cool-pi-extensions/
 The primary structural division is between **installable code** (`src/`) and **readable documentation** (everything else). This is the pattern's most consequential constraint:
 
 - **Code goes in `src/`.** Extensions, CLI tools, libraries — anything that produces an artifact you install, link, or execute.
+
 - **Everything else stays at root.** Briefs, debriefs, playbooks, essays, docs, canonical references. These are consumed by humans, not by package managers.
 
 This split is violated constantly in real monorepos, where documentation is buried in `packages/*/docs/` and process records are scattered across Notion, Google Docs, and Slack threads. The Standard Mono-Repo Pattern says: **if you can read it, it belongs at the root.**
@@ -123,7 +124,9 @@ A playbook does not contain data. It contains **instructions for producing data.
 
 Three silos form a lifecycle:
 
+
 1. `briefs/` — **Specification.** What to build. A numbered, dated, self-contained description of a feature, tool, or change.
+
 2. `decisions/` — **Rationale.** Why we chose X. Architectural Decision Records documenting trade-offs and context.
 3. `debriefs/` — **Reflection.** What we learned. Post-project analysis: what worked, what didn't, what we'd do differently.
 
@@ -163,13 +166,17 @@ The Standard Mono-Repo Pattern is a structural extension of the Edinburgh Protoc
 
 In the Protocol, the silo is a **filesystem boundary** — the agent cannot read or write outside the repo root. In the Pattern, the silo is a **conceptual boundary** — content stays within its silo's purpose. Both serve the same function: **entropy reduction through bounded context.**
 
+
 ## Principles
 
+
 1. **Silo discipline.** Every file belongs to exactly one silo. Crossing silos is an anti-pattern.
+
 2. **Playbook completeness.** A silo without a playbook is just a folder. Publish the playbook before populating the silo.
 3. **Root-level readability.** A new contributor should understand the repository's structure by reading root-level directory names. No archaeology required.
 4. **Source separation.** Installable code lives under `src/`. Readable documentation lives at root. Never mix them.
 5. **Process over product.** The repository is a workshop, not a warehouse. Briefs, decisions, and debriefs are first-class artifacts.
+
 
 ## Adoption
 

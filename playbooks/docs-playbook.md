@@ -30,21 +30,28 @@ The JSON fixture is a runtime dependency — the extension reads it directly. Th
 - Link back to the machine-readable source
 - Keep the narrative voice consistent with the Edinburgh Protocol: precise, dryly witty, anti-bloat
 
-### List spacing (loose only when it pays)
+### List spacing (loose when items wrap or nest)
 
-Blank lines between list items earn their keep when items **wrap or nest** —
-they disambiguate item boundaries in source for both the CommonMark parser
-and the human reader, and they keep nested/continuation content from
-mis-attributing to the wrong item. For single-line bullets the `- ` marker
-already marks the boundary, so the blank line only adds air without clarity.
+Blank lines between list items earn their keep when items **wrap at render
+or nest in source** — they disambiguate item boundaries for both the reader
+(air between a wrapped item's continuation lines and the next bullet) and
+the author/editor (continuation content doesn't mis-attribute to the wrong
+item). For items short enough to fit one render line, the `- ` marker
+already marks the boundary, so loose only adds air without clarity.
 
-- **Multi-line or nested items → loose** (blank line between each item). This
-  is the rule's load-bearing case — without the blank line, a wrapped
-  continuation line reads as part of the previous item.
-- **Single-line items → tight is fine** (no blank line). Loose is harmless but
+- **Items that wrap at render → loose.** The trigger is render-wrap, not
+  source-line-count: a 200-char item is one source line but three render
+  lines in Glow at 80 cols, and the wrapped lines run into the next bullet
+  without air to sever them. Since render width varies (terminal, GitHub,
+  phone), the practical proxy is length — items longer than the column
+  target wrap somewhere.
+- **Source multi-line or nested items → loose.** Same boundary job, in source
+  for the parser and the editor.
+- **Items that fit one render line → tight is fine.** Loose is harmless but
   not required; don't cargo-cult air where the marker already disambiguates.
 
-This refines ADR-001's "blank lines create breathing room" principle
+Apply per-list for consistency: if any item in a list wraps, loosen the whole
+list. This refines ADR-001's "blank lines create breathing room" principle
 (`decisions/019`): the breathing room matters where structure is ambiguous,
 not everywhere.
 
