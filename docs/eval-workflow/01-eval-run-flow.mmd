@@ -1,25 +1,14 @@
 %%{init: {"flowchart": {"htmlLabels": false}} }%%
 graph TD
-    A[Start: pi-eval run] --> B{Is Edinburgh test?<br/>EDI-* prefix}
-    B -->|Yes| C[Call model under test<br/>via callModel provider chain]
-    B -->|No, SIT/IQ| D[Call model under test<br/>via callModel provider chain]
-
-    C --> E[Run structural assertions<br/>tool_execution_required only]
-    D --> F[Run deterministic assertions<br/>regex_match / regex_exclude / dot_parse]
-
-    E --> G{EVAL_GRADER_MOCK?}
-    G -->|Mock| H[Read grader-mock.json<br/>deterministic verdict]
-    G -->|Live| I[gradeScopeDiscipline<br/>scope-augmented rubric, 5 dims<br/>via callModel provider chain]
-
-    F --> J{EVAL_GRADER_MOCK?}
-    J -->|Mock| K[Read grader-mock.json<br/>deterministic verdict]
-    J -->|Live| L[gradeBehavior<br/>gateway rubric, 4 dims<br/>via callModel provider chain]
-
-    H --> M[Verdict: structuralPass AND grader.overall_pass]
-    I --> M
-    K --> N[combineVerdicts<br/>grader tiebreaks mixed det]
-    L --> N
-
-    M --> O[Log result + responseText]
-    N --> O
-    O --> P[Next test]
+    A[Start: pi-eval run] --> B{Edinburgh test?}
+    B -->|yes| C[Structural assertions only]
+    B -->|no, SIT/IQ| D[Full det assertions]
+    C --> E[Grade: scope rubric, 5 dims]
+    D --> F[Grade: gateway rubric, 4 dims]
+    E --> G{Grader?}
+    F --> G
+    G -->|edinburgh| H[structuralPass AND grader.overall_pass]
+    G -->|SIT/IQ| I[combineVerdicts: grader tiebreaks]
+    H --> J[Log result + response]
+    I --> J
+    J --> K[Next test]

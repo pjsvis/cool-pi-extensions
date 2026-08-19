@@ -46,10 +46,28 @@ Requires: the external npm CLI `mermaid-to-md` (repo `~/Dev/GitHub/mermaid-to-md
 symlinked at `~/.local/bin/mermaid-to-md`; Decision 023). Baked art blocks carry
 the `<!-- mermaid-to-md:art -->` sentinel — `--verify` ignores unmanaged art.
 
-**Width convention:** bake and verify at `COLUMNS=140` (the narrowest width
-that avoids the too-wide fallback across this repo's diagrams). The width is
-not recorded in the artifact, so the convention lives here — verify with
-`COLUMNS=140 mermaid-to-md --verify <file>` or art will false-positive as stale.
+**Width convention:** bake and verify at `COLUMNS=80` (the terminal default;
+more is a band-aid — see the rules below). The width is not recorded in the
+artifact, so the convention lives here — verify with
+`COLUMNS=80 mermaid-to-md --verify <file>` or art will false-positive as stale.
+
+### Rendering rules (the three laws)
+
+1. **80 columns max, maybe less.** A diagram wider than the terminal is a
+   diagram that can't be read where it's committed. Do not widen `COLUMNS` to
+   make a too-wide diagram fit — that is benchmaxxing the width, suppressing
+   the symptom while the disease (a layout too wide for a terminal) persists.
+2. **Vertical by default.** Lay out top-down (`graph TD` / `flowchart TD`)
+   unless horizontal is the point (a timeline, a left-to-right pipeline where
+   order *is* the message). A simple chain laid out horizontally (`LR`) is a
+   bug, not a choice — it forces width for no structural reason.
+3. **Too big → refactor, don't widen.** If a diagram still exceeds 80 after
+   going vertical, it is too detailed for a flow diagram. Simplify: collapse
+   parallel branches that enumerate implementation cases into one node
+   ("route to a provider" not four providers); drop debug/edge-case branches
+   that belong in code, not in a diagram; split a symmetric two-column
+   decision tree into two small per-path diagrams. The diagram shows the
+   *shape* of the logic; the code is the source of truth for every branch.
 
 Rules:
 - **Keep graphs small.** If dagre's layout starts to look wrong — crossing

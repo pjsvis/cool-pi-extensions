@@ -19,14 +19,30 @@ The entry point is the documentation. No manual, no index, no onboarding doc. Ju
 
 <!-- mermaid-to-md:art -->
 ```text
-                               ┌────────────────────┐                                    ┌──────────────────────┐
-┌─────────────────────────┐    │ Entry (teaches the │    ┌──────────────────────────┐    │ Teach (zero-friction │
-│ Visitor (knows nothing) ├───▶│      system)       ├───▶│ Self (references itself) ├───▶│      discovery)      │
-└─────────────────────────┘    └────────────────────┘    └──────────────────────────┘    └──────────────────────┘
+ ┌─────────────────────────┐
+ │ Visitor (knows nothing) │
+ └────────────┬────────────┘
+              │
+              ▼
+   ┌────────────────────┐
+   │ Entry (teaches the │
+   │      system)       │
+   └──────────┬─────────┘
+              │
+              ▼
+┌──────────────────────────┐
+│ Self (references itself) │
+└─────────────┬────────────┘
+              │
+              ▼
+  ┌──────────────────────┐
+  │ Teach (zero-friction │
+  │      discovery)      │
+  └──────────────────────┘
 ```
 
 ```mmd
-flowchart LR
+flowchart TD
   V["Visitor<br/>(knows nothing)"] --> E["Entry<br/>(teaches the system)"]
   E --> S["Self<br/>(references itself)"]
   S --> T["Teach<br/>(zero-friction discovery)"]

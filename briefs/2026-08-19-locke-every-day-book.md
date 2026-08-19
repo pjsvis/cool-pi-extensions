@@ -98,16 +98,33 @@ graph TD
 
 <!-- mermaid-to-md:art -->
 ```text
-
-┌──────────────────────────┐    ┌──────────────────────────┐    ┌────────────────────┐    ┌─────────────────────┐
-│ Week 1: Scaffolding hash │    │   Week 2: Integration    │    │ Week 3: Benchmarks │    │  Week 4: Synthesis  │
-│   funcs, storage pages   ├───▶│ dual-stream RAG, prompts ├───▶│ evaluation matrix  ├───▶│ collision analysis, │
-└──────────────────────────┘    └──────────────────────────┘    └────────────────────┘    │      packaging      │
-                                                                                          └─────────────────────┘
+┌──────────────────────────┐
+│ Week 1: Scaffolding hash │
+│   funcs, storage pages   │
+└─────────────┬────────────┘
+              │
+              ▼
+┌──────────────────────────┐
+│   Week 2: Integration    │
+│ dual-stream RAG, prompts │
+└─────────────┬────────────┘
+              │
+              ▼
+   ┌────────────────────┐
+   │ Week 3: Benchmarks │
+   │ evaluation matrix  │
+   └──────────┬─────────┘
+              │
+              ▼
+   ┌─────────────────────┐
+   │  Week 4: Synthesis  │
+   │ collision analysis, │
+   │      packaging      │
+   └─────────────────────┘
 ```
 
 ```mmd
-graph LR
+graph TD
     W1[Week 1: Scaffolding<br/>hash funcs, storage pages] --> W2[Week 2: Integration<br/>dual-stream RAG, prompts]
     W2 --> W3[Week 3: Benchmarks<br/>evaluation matrix]
     W3 --> W4[Week 4: Synthesis<br/>collision analysis, packaging]

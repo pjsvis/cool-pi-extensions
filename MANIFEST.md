@@ -361,8 +361,6 @@ Structured reference material.
 
 **[docs/eval-workflow/01-eval-run-flow.md](docs/eval-workflow/01-eval-run-flow.md)** — <!-- mermaid-to-md:art -->
 
-**[docs/eval-workflow/02-grading-decision-tree.md](docs/eval-workflow/02-grading-decision-tree.md)** — <!-- mermaid-to-md:art -->
-
 **[docs/eval-workflow/03-provider-chain.md](docs/eval-workflow/03-provider-chain.md)** — <!-- mermaid-to-md:art -->
 
 **[docs/forgetting-seth-myers.md](docs/forgetting-seth-myers.md)** — *A meditation on the lost token, the gap, and the aaargggh of incomplete retrieval.*

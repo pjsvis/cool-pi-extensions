@@ -183,9 +183,9 @@ The composition is the argument:
 
 <!-- mermaid-to-md:art -->
 ```text
-  ┌──────────────────────┐
-  │ opinion then proceed │
-  └───────────┬──────────┘
+    ┌───────────────────┐
+    │ opinion → proceed │
+    └─────────┬─────────┘
               │
               ▼
     ┌───────────────────┐
@@ -205,7 +205,7 @@ The composition is the argument:
 
 ```mmd
 flowchart TD
-  G["opinion then proceed"]
+  G["opinion → proceed"]
   L1["Layer 1: Protocol"]
   L2["Layer 2: Silo process"]
   L3["Layer 3: Bounded context"]

@@ -8,29 +8,29 @@ WSL2). SSH-native — no browser, no Electron, no GUI required. Just a terminal.
 
 <!-- mermaid-to-md:art -->
 ```text
-┌──────────┐    ┌───────────┐
-│ ① Mobile │    │ ⑥ td/side ├╌┐
-└─────┬────┘    └───────────┘ ╎
-      └───────┐               ╎
-              ▼               ╎
-        ┌───────────┐         ╎
-        │ ② Network │         ╎
-        └─────┬─────┘         ╎
-              │               ╎
-              ▼               ╎
-       ┌────────────┐         ╎
-       │ ③ Terminal │         ╎
-       └──────┬─────┘         ╎
-              │               ╎
-              ▼               ╎
-         ┌─────────┐          ╎
-         │ ④ herdr │          ╎
-         └────┬────┘          ╎
-              │               ╎
-              ▼               ╎
-       ┌────────────┐         ╎
-       │ ⑤ pi/Fresh │◄╌╌╌╌╌╌╌╌┘
-       └────────────┘
+┌──────────┐   ┌──────┐
+│ ① Mobile │   │ ⑥ td ├╌┐
+└─────┬────┘   └──────┘ ╎
+      └──────┐          ╎
+             ▼          ╎
+       ┌───────────┐    ╎
+       │ ② Network │    ╎
+       └─────┬─────┘    ╎
+             │          ╎
+             ▼          ╎
+      ┌────────────┐    ╎
+      │ ③ Terminal │    ╎
+      └──────┬─────┘    ╎
+             │          ╎
+             ▼          ╎
+        ┌─────────┐     ╎
+        │ ④ herdr │     ╎
+        └────┬────┘     ╎
+             │          ╎
+             ▼          ╎
+      ┌────────────┐    ╎
+      │ ⑤ pi/Fresh │◄╌╌╌┘
+      └────────────┘
 ```
 
 ```mmd
@@ -39,7 +39,7 @@ flowchart TD
   N --> T["③ Terminal"]
   T --> H["④ herdr"]
   H --> A["⑤ pi/Fresh"]
-  O["⑥ td/side"] -.-> A
+  O["⑥ td"] -.-> A
 ```
 
 1. **Mobile SSH (Echo)** — entry point from iOS/iPadOS (Ghostty, Mosh, Face ID)

@@ -24,17 +24,30 @@ that varies by repo; these four are structural:
 
 <!-- mermaid-to-md:art -->
 ```text
-                                                     ┌─────────────────────────┐    ┌───────────────────┐
-┌─────────────────┐    ┌────────────────────────┐    │ Decisions (why we chose │    │ Debriefs (what we │
-│ Playbooks (how) ├╌╌╌▶│ Briefs (what to build) ├───▶│           X)            ├───▶│     learned)      │
-└────────┬────────┘    └────────────────────────┘    └─────────────────────────┘    └─────────┬─────────┘
-         ╎                          ▲                             ▲                           ▲
-         └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┴╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
-                                    └─────────────────────────────────────────────────────────┘
+     ┌─────────────────┐
+     │ Playbooks (how) ├╌╌╌╌╌┐
+     └────────┬────────┘     ╎
+              ╎              ╎
+              ▼              ╎
+ ┌────────────────────────┐  ╎
+ │ Briefs (what to build) │◄─┼┐
+ └────────────┬───────────┘  ╎│
+              │              ╎│
+              ▼              ╎│
+ ┌─────────────────────────┐ ╎│
+ │ Decisions (why we chose │ ╎│
+ │           X)            │◄┤│
+ └────────────┬────────────┘ ╎│
+              │              ╎│
+              ▼              ╎│
+    ┌───────────────────┐    ╎│
+    │ Debriefs (what we │    ╎│
+    │     learned)      ├◄───┴┘
+    └───────────────────┘
 ```
 
 ```mmd
-flowchart LR
+flowchart TD
   P["Playbooks<br/>(how)"] -.-> B
   P -.-> D
   P -.-> R
@@ -118,16 +131,25 @@ Each feeds the next. A brief triggers decisions. Decisions produce outcomes. Out
 
 <!-- mermaid-to-md:art -->
 ```text
-                              ┌─────────────────────────┐    ┌───────────────────┐
-┌────────────────────────┐    │ Decisions (why we chose │    │ Debriefs (what we │
-│ Briefs (what to build) ├───▶│           X)            ├───▶│     learned)      │
-└────────────────────────┘    └─────────────────────────┘    └─────────┬─────────┘
-             ▲                                                         │
-             └─────────────────────────────────────────────────────────┘
+ ┌────────────────────────┐
+ │ Briefs (what to build) │◄─┐
+ └────────────┬───────────┘  │
+              │              │
+              ▼              │
+ ┌─────────────────────────┐ │
+ │ Decisions (why we chose │ │
+ │           X)            │ │
+ └────────────┬────────────┘ │
+              │              │
+              ▼              │
+    ┌───────────────────┐    │
+    │ Debriefs (what we │    │
+    │     learned)      ├────┘
+    └───────────────────┘
 ```
 
 ```mmd
-flowchart LR
+flowchart TD
   B["Briefs<br/>(what to build)"] --> D["Decisions<br/>(why we chose X)"]
   D --> R["Debriefs<br/>(what we learned)"]
   R --> B

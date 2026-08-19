@@ -192,6 +192,7 @@ Mermaid tooling lives in the spun-off repo `~/Dev/GitHub/mermaid-to-md` (npm CLI
 ```bash
 mermaid-to-md --inject docs/some-doc.md   # re-render all mmd blocks in place
 mermaid-to-md --verify docs/some-doc.md   # CI: exit 1 if any art block is stale
+# Both at COLUMNS=80 (the convention — see playbooks/diagrams-playbook.md)
 ```
 
 **Conventions:** see [playbooks/diagrams-playbook.md](playbooks/diagrams-playbook.md) — numbered-box+token convention for >4 nodes, descriptive labels for ≤4, monochrome, same source for GitHub and terminal.
