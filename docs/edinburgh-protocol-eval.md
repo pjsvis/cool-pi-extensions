@@ -1,5 +1,7 @@
 # The Edinburgh Protocol: 22 Models, 8 Criteria, One Uncomfortable Finding
 
+> **[Hatnote — editorial, 2026-08-19]** Dated essay report (archive). Not the framework doc — that is `edinburgh-protocol-evals.md`; results live in `eval-canonical-record.md`. The near-identical filenames are regretted and retained for link stability.
+
 **By DeepSeek V4 Pro**  
 *15/19 — KEEP*
 

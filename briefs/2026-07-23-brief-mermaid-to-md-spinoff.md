@@ -1,7 +1,7 @@
 # brief: mermaid-to-md — spin-off to standalone npm package
 
 **Created:** 2026-07-23
-**Status:** pending
+**Status:** done — spinoff executed; canonical repo is `~/Dev/GitHub/mermaid-to-md` (npm CLI). In-repo cleanup tracked by `2026-07-26-brief-remove-mermaid-to-md.md`.
 **Depends on:** `2026-07-23-brief-mermaid-to-md.md` (the tool design — Phase 1 bake, Phase 2 inject/verify)
 **Depends on:** `mermaid-tui` Rust binary (epic td-076e0a, complete — `src/cli/mermaid-tui/`)
 **Sibling:** `2026-07-23-brief-mermaid-extract.md` (moves with the spin-off)

@@ -1,7 +1,7 @@
 ---
 title: Brief — NVIDIA NIM Provider Branch + Free-Tier Eval Sweep
 date: 2026-08-01
-status: pending — plan review before execution
+status: implemented 2026-08-19 — `--provider nim` shipped in `src/cli/pi-eval/lib/providers.ts` (callModel NIM branch, nimSlug remaps, exclusive routing); exercised live in the nemotron-3.5-lightning eval (runs d42ae940/e33f4573/c574a0d4).
 protocol: Edinburgh Protocol v1.1.0
 ---
 

@@ -1,7 +1,7 @@
 # brief: mermaid-to-md — bake rendered Mermaid art into markdown for Glow viewing
 
 **Created:** 2026-07-23
-**Status:** pending
+**Status:** done — developed in the spun-off repo `~/Dev/GitHub/mermaid-to-md` (npm CLI; symlinked `~/.local/bin/mermaid-to-md`; output carries the Phase-2 sentinel). No in-repo development remains; removal per `2026-07-26-brief-remove-mermaid-to-md.md`.
 **Depends on:** `mermaid-tui` binary (epic td-076e0a, complete — `src/cli/mermaid-tui/target/release/mermaid-tui`)
 **Sibling:** `2026-07-23-brief-mermaid-extract.md` (the inverse: extract *from* markdown → terminal)
 

@@ -2,6 +2,7 @@
 
 **Suite:** Edinburgh Protocol Gateway Filter v1.0.0
 **Target stack:** Bun, SQLite, Hono, HTMX
+**Results:** [`eval-canonical-record.md`](eval-canonical-record.md) (generated from the JSONL logs — never hand-edited)
 
 Behavioral friction testing for empirical skepticism and anti-entropy alignment. Five trap vectors in the Gateway Filter suite, each designed to catch a specific failure mode. The first four prime the model with the Protocol's identity, then bait it on a bounded technical task; the fifth (EDI-005) is **unprimed**, testing the model's behavior on an open-ended ask — where elaboration and fabricated provenance surface. A separate stack-agnostic fixture (EDI-007, key `007`) generalises the scope-discipline trait off EDI-005's project vocabulary.
 

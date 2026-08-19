@@ -1,7 +1,7 @@
 # brief: mermaid-extract — render Mermaid diagrams from markdown files
 
 **Created:** 2026-07-23
-**Status:** pending
+**Status:** done — shipped as `scripts/mermaid-extract.sh` + `just mermaid` recipe; slated to move with the spinoff per `2026-07-26-brief-remove-mermaid-to-md.md`.
 **Depends on:** `mermaid-tui` binary (epic td-076e0a, complete)
 
 ## What
