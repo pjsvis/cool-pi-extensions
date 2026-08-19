@@ -6,10 +6,21 @@
 
 ### Confirmations (resolved 2026-07-03)
 
-1. ✓ Ling-1T = `inclusionai/ling-2.6-1t` (same 1T-param model, Ling→Ring rename in mid-line). Not re-run; cited from prior eval (~16/19). Ring-2.6-1T cited for regression (7/19).
-2. ✓ "Gemini 3" = `google/gemini-3.1-pro-preview` (Feb 2026 — the chat-UI-with-memory one).
-3. ✓ "Grok 4" = `x-ai/grok-4.20` (Mar 2026 — user swap from Grok 4.3 because 4.20 is "surprisingly smart, good for space stuff").
-4. ✓ Through line deferred until evals complete. User-flagged direction: benchmaxxing as a recurring pattern (Ling→Ring, MiniMax M2.7→M3, GLM-4.7→5.1). My opinion: benchmaxxing is one of two likely axes — the other is "architecture beats scale" (Mercury 2 diffusion outperforming closed frontier on the same trap suite). Data will tell.
+1. ✓ Ling-1T = `inclusionai/ling-2.6-1t` (same 1T-param model, Ling→Ring rename
+   in mid-line). Not re-run; cited from prior eval (~16/19). Ring-2.6-1T cited
+   for regression (7/19).
+
+2. ✓ "Gemini 3" = `google/gemini-3.1-pro-preview` (Feb 2026 — the
+   chat-UI-with-memory one).
+
+3. ✓ "Grok 4" = `x-ai/grok-4.20` (Mar 2026 — user swap from Grok 4.3 because
+   4.20 is "surprisingly smart, good for space stuff").
+
+4. ✓ Through line deferred until evals complete. User-flagged direction:
+   benchmaxxing as a recurring pattern (Ling→Ring, MiniMax M2.7→M3,
+   GLM-4.7→5.1). My opinion: benchmaxxing is one of two likely axes — the other
+   is "architecture beats scale" (Mercury 2 diffusion outperforming closed
+   frontier on the same trap suite). Data will tell.
 
 ## What
 
@@ -18,26 +29,45 @@ Run the Edinburgh Protocol eval (4 trap vectors + 8-criterion scoring) against a
 ## Why
 
 Prior artifacts cover ~70% of the work:
-- `docs/edinburgh-protocol-eval.md` — Q2 2026 audit of 22 models. Existing narrative I'm building on, not replacing.
+- `docs/edinburgh-protocol-eval.md` — Q2 2026 audit of 22 models. Existing
+  narrative I'm building on, not replacing.
+
 - `models/models.json` — test registry with eval data for 26 models.
-- `extensions/edinburgh-evals/` — operational trap-vector tool, `/eval` command, OpenRouter-routed Gemini Flash grader.
+
+- `extensions/edinburgh-evals/` — operational trap-vector tool, `/eval` command,
+  OpenRouter-routed Gemini Flash grader.
 
 But the gaps matter:
 - No small / RLHF-saturation test (Haiku 4.5).
+
 - No reasoning-model protocol adherence test (DeepSeek R1).
+
 - No pure open-weight Instruct baseline (Llama 3.3 70B).
+
 - Gemini 3 (the user's main chat surface) untested.
+
 - Kimi K2.7-code pending independent eval (vendor-reported only).
-- Ling-1T last documented June 2026; needs re-confirm against current availability.
+
+- Ling-1T last documented June 2026; needs re-confirm against current
+  availability.
 
 ## How
 
 1. Lock 12-model roster (table below — open items flagged).
-2. Run `cd src/cli/pi-check && bun run edinburgh-eval.ts` against each gap model. Capture transcripts.
+
+2. Run `cd src/cli/pi-check && bun run edinburgh-eval.ts` against each gap
+   model. Capture transcripts.
+
 3. Pull prior results from `models/models.json` for the 5 already-test models.
-4. Synthesize leaderboard: trap-vector (4/4), scoring (0-19), release date, daily-driver flag, Δ from prior eval where applicable.
-5. Write `blog/2026-07-03-edinburgh-protocol-18-month-audit.md`. Open with the verdict, scoreboard, highlights, opinion. Appendix links to every transcript.
-6. Archive raw transcripts under `transcripts/2026-07-03-edinburgh-protocol-18-month-audit/`.
+
+4. Synthesize leaderboard: trap-vector (4/4), scoring (0-19), release date,
+   daily-driver flag, Δ from prior eval where applicable.
+
+5. Write `blog/2026-07-03-edinburgh-protocol-18-month-audit.md`. Open with the
+   verdict, scoreboard, highlights, opinion. Appendix links to every transcript.
+
+6. Archive raw transcripts under
+   `transcripts/2026-07-03-edinburgh-protocol-18-month-audit/`.
 
 ## Target roster (12 models)
 
@@ -60,19 +90,33 @@ Commentary references from prior audit (no re-run): Ling-2.6-1T (16 "The Profess
 
 ## Acceptance criteria
 
-- [x] `/eval` runs complete for 8 gap models — partial (2 from cache, 6 pending Q3). See scoreboard.
+- [x] `/eval` runs complete for 8 gap models — partial (2 from cache, 6 pending
+  Q3). See scoreboard.
+
 - [x] Pilot probe: Llama 3.3 70B queued; harness stalls (see debrief).
-- [ ] Transcripts: archive directory created, new runs to be added when harness resolves or CLI run succeeds.
+
+- [ ] Transcripts: archive directory created, new runs to be added when harness
+  resolves or CLI run succeeds.
+
 - [x] Blog post written to `blog/2026-07-03-edinburgh-protocol-18-month-audit.md`.
+
 - [x] Leaderboard table with all 12 models + commentary references.
+
 - [x] Every claim links to eval_log.json or prior audit doc (auditable).
+
 - [x] Tone: dry wit, structural analysis — Protocol-compliant voice.
 
 ## Out of scope
 
 - New trap vectors (EDI-005+) or IQ items.
+
 - Eval infra refactor.
+
 - Multi-agent / protocol-vs-protocol comparisons.
+
 - Benchmark replication (MMLU, SWE-bench, HumanEval).
+
 - Real-time / streaming-mode evals.
-- Quant trading implications (the user did mention "Mercury is fast" — but that's commentary, not eval).
+
+- Quant trading implications (the user did mention "Mercury is fast" — but
+  that's commentary, not eval).

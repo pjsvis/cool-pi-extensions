@@ -12,9 +12,13 @@ The brilliance of grabbing an `ident-text` at initialization is that **it acts a
 1. **Keep `IDENT.md` tiny:** It shouldn't be an architectural thesis. Just 5–8 lines:
    ```markdown
    # IDENT
+
    - Repo: billing-engine
+
    - Domain: Invoicing, Payment Processing, Ledger Records
-   - External Boundaries: Auth handled by `identity-service`, Orders handled by `order-router`
+
+   - External Boundaries: Auth handled by `identity-service`, Orders handled by
+     `order-router`
 
 ```
 
@@ -23,8 +27,11 @@ The brilliance of grabbing an `ident-text` at initialization is that **it acts a
 ```text
 [DIAGNOSTIC_ABORT]
 - Requested: auth_jwt.go / JWT expiration
+
 - Local Domain: billing-engine
-- Reason: Target symbol not found in local boundary. Expected in 'identity-service'.
+
+- Reason: Target symbol not found in local boundary. Expected in
+  'identity-service'.
 
 ```
 

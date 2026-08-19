@@ -168,9 +168,14 @@ This repo is a working example. Clone it, run `just orient`, run `just browse`. 
 
 If you're building a tool that agents or humans will interact with, consider the VEST Protocol:
 
-1. Create `just orient` — output should include: where you are, what's active, what's available, what to do next, and the other verbs.
-2. Create `just browse` — output should include: what's here, how to read it, what to do with it.
-3. Verify: a first-time visitor can orient themselves in under 60 seconds without reading anything.
+1. Create `just orient` — output should include: where you are, what's active,
+   what's available, what to do next, and the other verbs.
+
+2. Create `just browse` — output should include: what's here, how to read it,
+   what to do with it.
+
+3. Verify: a first-time visitor can orient themselves in under 60 seconds
+   without reading anything.
 
 That's it. The simplest API is the hardest to design.
 

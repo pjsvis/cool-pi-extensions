@@ -13,12 +13,33 @@ Four-part directive: (1-2) excise glow-fresh editor integration; (3-5) get silo 
 Removed all traces of the glow-preview Fresh plugin. **Kept:** glow-the-CLI (powers `just read`/`browse`/`help`) and Fresh-the-editor (the human's editor in the stack).
 
 - **Code:** `src/fresh/glow-preview.ts` deleted; `src/fresh/` dir removed.
+
 - **Rationale:** decisions 001–004, briefs 004+007, debriefs 004+005 deleted.
-- **Wiring:** justfile (`help`, `show-edinburgh`), `scripts/about.sh`, `scripts/read.sh` — the `fresh-high-contrast` glow style unlinked → plain `glow`.
-- **Docs:** README, about, `docs/terminal-stack.md`, `docs/full-stack-overview.md`, `playbooks/{extensions,terminal-stack,omarchy-setup,dev-stack-setup,insights}-playbook.md` — all glow-preview sections removed; terminal-stack-playbook Step 8 deleted + steps renumbered.
-- **Verification:** `just check` green; final trace sweep clean (no `glow-preview`/`fresh-high-contrast`/`Fresh plugin`/`glow-fresh`). Registers regenerated (126→118 files).
-- **Lost insight (flagged):** debrief 005 "visibility-patterns" + its insights-playbook entry were 100% glow-preview-illustrated; deleted per "all trace." The principle — *don't surface affordances covered by automation; design the failure mode to teach the override* — is worth re-deriving from a different example.
-- **Style file:** `~/.config/glow/styles/fresh-high-contrast.json` is no longer installed by any playbook or referenced by any script. `just help`/`show-edinburgh`/`about`/`read`/`browse` now use plain `glow` (default style) — minor visual change.
+
+- **Wiring:** justfile (`help`, `show-edinburgh`), `scripts/about.sh`,
+  `scripts/read.sh` — the `fresh-high-contrast` glow style unlinked → plain
+  `glow`.
+
+- **Docs:** README, about, `docs/terminal-stack.md`,
+  `docs/full-stack-overview.md`,
+  `playbooks/{extensions,terminal-stack,omarchy-setup,dev-stack-setup,insights}-playbook.md`
+  — all glow-preview sections removed; terminal-stack-playbook Step 8 deleted +
+  steps renumbered.
+
+- **Verification:** `just check` green; final trace sweep clean (no
+  `glow-preview`/`fresh-high-contrast`/`Fresh plugin`/`glow-fresh`). Registers
+  regenerated (126→118 files).
+
+- **Lost insight (flagged):** debrief 005 "visibility-patterns" + its
+  insights-playbook entry were 100% glow-preview-illustrated; deleted per "all
+  trace." The principle — *don't surface affordances covered by automation;
+  design the failure mode to teach the override* — is worth re-deriving from a
+  different example.
+
+- **Style file:** `~/.config/glow/styles/fresh-high-contrast.json` is no longer
+  installed by any playbook or referenced by any script. `just
+  help`/`show-edinburgh`/`about`/`read`/`browse` now use plain `glow` (default
+  style) — minor visual change.
 
 ## Phase B — silo verdict: SOFT BOUNDARY, NOT HARD ISOLATION
 
@@ -39,14 +60,31 @@ Empirically confirmed by replicating `extractPaths`/`checkCommand` from `src/ext
 For the Protocol's purpose (belt-and-braces over the behavioral SILO DISCIPLINE), a soft boundary is a legitimate role — but it must be *honestly described*. The current naming is the defect, not the softness itself.
 
 **Fix scope (next phase):**
-1. **Reframe** the naming: "hard" → "soft" / "intent-enforcing" in README, about, silo docstring. Be honest about what it catches and what it doesn't.
-2. **Tighten cheap gaps:** resolve relative paths against cwd — `exec(command, cwd, options)` already has cwd; pass it to `checkCommand`. Reconsider `SYSTEM_EXACT` (a silo should DENY `/etc`, `/tmp`, not allow them).
-3. **Test:** add escape-vector tests so the boundary is *verified, not asserted* — the Derrida question applied to silo itself.
+1. **Reframe** the naming: "hard" → "soft" / "intent-enforcing" in README,
+   about, silo docstring. Be honest about what it catches and what it doesn't.
+
+2. **Tighten cheap gaps:** resolve relative paths against cwd — `exec(command,
+   cwd, options)` already has cwd; pass it to `checkCommand`. Reconsider
+   `SYSTEM_EXACT` (a silo should DENY `/etc`, `/tmp`, not allow them).
+
+3. **Test:** add escape-vector tests so the boundary is *verified, not asserted*
+   — the Derrida question applied to silo itself.
 
 ## Remaining program (subsequent phases)
 
-- **Phase C — MVAS review (Decision 006):** now that glow-fresh is gone, review the minimal viable stack. The silo reframing feeds this: an honestly-described soft boundary may suffice for the Protocol's belt-and-braces role — or may prompt the Derrida question ("is silo even worth it as a separate tool, given the Protocol already enforces silo behaviorally?"). Candidates: anything in DEPENDENCIES.md not earning its place.
-- **Phase D — SYSTEM.md:** create as the Protocol's container (first-party substrate), with DEPENDENCIES.md as third-party deps. **Resolve the relationship with `prompts/edinburgh-protocol.md`** (currently the canonical source, symlinked to `~/.pi/agent/AGENTS.md`) — per Decision 009, SYSTEM.md and `prompts/edinburgh-protocol.md` must not coexist as competing sources; one canonical location.
+- **Phase C — MVAS review (Decision 006):** now that glow-fresh is gone, review
+  the minimal viable stack. The silo reframing feeds this: an honestly-described
+  soft boundary may suffice for the Protocol's belt-and-braces role — or may
+  prompt the Derrida question ("is silo even worth it as a separate tool, given
+  the Protocol already enforces silo behaviorally?"). Candidates: anything in
+  DEPENDENCIES.md not earning its place.
+
+- **Phase D — SYSTEM.md:** create as the Protocol's container (first-party
+  substrate), with DEPENDENCIES.md as third-party deps. **Resolve the
+  relationship with `prompts/edinburgh-protocol.md`** (currently the canonical
+  source, symlinked to `~/.pi/agent/AGENTS.md`) — per Decision 009, SYSTEM.md
+  and `prompts/edinburgh-protocol.md` must not coexist as competing sources; one
+  canonical location.
 
 ## How to resume
 
@@ -55,6 +93,11 @@ New session: read this brief + `src/extensions/silo/index.ts` + Decision 006. Or
 ## Locus
 
 - `[LOC: src/extensions/silo/index.ts]` — the extension under assessment.
-- `[LOC: decisions/006-minimal-viable-agent-stack.md]` — MVAS authority for Phase C.
-- `[LOC: prompts/edinburgh-protocol.md]` — the Protocol SYSTEM.md must reconcile with, for Phase D.
+
+- `[LOC: decisions/006-minimal-viable-agent-stack.md]` — MVAS authority for
+  Phase C.
+
+- `[LOC: prompts/edinburgh-protocol.md]` — the Protocol SYSTEM.md must reconcile
+  with, for Phase D.
+
 - `[WAYPOINT: glow excised; silo verdict fixed]`

@@ -118,9 +118,14 @@ The keyword scorer's negative verdict was a measurement artifact. The structured
 
 ## Where we are in the experiment
 
-1. **Pilot (keyword scorer):** Protocol net effect −0.28. Measurement artifact — scorer rewards format, not reasoning.
-2. **Controlled re-test (Qwen grader):** Protocol net effect +3.81. 14/16 positive, 0 negative.
-3. **Triangulation (Gemini grader):** Protocol net effect +4.24. 14/16 positive, 0 directional disagreements with Qwen.
+1. **Pilot (keyword scorer):** Protocol net effect −0.28. Measurement artifact —
+   scorer rewards format, not reasoning.
+
+2. **Controlled re-test (Qwen grader):** Protocol net effect +3.81. 14/16
+   positive, 0 negative.
+
+3. **Triangulation (Gemini grader):** Protocol net effect +4.24. 14/16 positive,
+   0 directional disagreements with Qwen.
 
 The experiment has converged. Two independent instruments agree on direction and effect profile. Further grader triangulation (round-robin, external grader) would tighten confidence but is unlikely to reverse the finding.
 
@@ -128,10 +133,17 @@ The experiment has converged. Two independent instruments agree on direction and
 
 ## Where we could go next
 
-1. **Truly external grader.** A model outside the eval lineup (not selected by the protocol). Would eliminate the last selection-bias concern.
-2. **Variance testing.** Run the same model 5× per condition to measure noise. The ±1 disagreement on grok-4.3 suggests noise is small but nonzero.
-3. **Multiple prompts.** Test with 2-3 different scenarios. Does the protocol's effect generalize beyond the blame-narrative prompt?
-4. **Round-robin.** Each model grades all others. Reveals self-serving and style-alignment biases. Bigger experiment, different question.
+1. **Truly external grader.** A model outside the eval lineup (not selected by
+   the protocol). Would eliminate the last selection-bias concern.
+
+2. **Variance testing.** Run the same model 5× per condition to measure noise.
+   The ±1 disagreement on grok-4.3 suggests noise is small but nonzero.
+
+3. **Multiple prompts.** Test with 2-3 different scenarios. Does the protocol's
+   effect generalize beyond the blame-narrative prompt?
+
+4. **Round-robin.** Each model grades all others. Reveals self-serving and
+   style-alignment biases. Bigger experiment, different question.
 
 The experiment has answered its original question. These next steps would answer different, deeper questions about measurement validity.
 

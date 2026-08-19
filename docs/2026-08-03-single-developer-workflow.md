@@ -42,20 +42,35 @@ To make this actionable for a team, we structure the workspace into three distin
 ### Layer 1: Ephemeral State (`marcus/td`)
 
 * **Role:** External task memory across context window resets.
-* **Mechanism:** `td` maintains atomic progress (`done`, `remaining`, `decisions`, `uncertainties`) directly in `.todos/`.
-* **Value:** An arriving developer or fresh AI agent runs `td usage --new-session` and immediately inherits the exact, un-compacted state of the project without reading 50 closed pull requests.
+
+* **Mechanism:** `td` maintains atomic progress (`done`, `remaining`,
+  `decisions`, `uncertainties`) directly in `.todos/`.
+
+* **Value:** An arriving developer or fresh AI agent runs `td usage
+  --new-session` and immediately inherits the exact, un-compacted state of the
+  project without reading 50 closed pull requests.
 
 ### Layer 2: The Interface Protocol (`Justfile`)
 
 * **Role:** The standard API for both humans and AI agents.
-* **Mechanism:** Instead of agents running arbitrary, risky shell commands, they execute hardened targets (`just test`, `just brief`, `just debrief`, `just check-entropy`).
-* **Value:** Eliminates the "how do I run this repo?" tax. The `Justfile` acts as the shared vocabulary that abstracts complex build, test, and lint logic behind simple, predictable endpoints.
+
+* **Mechanism:** Instead of agents running arbitrary, risky shell commands, they
+  execute hardened targets (`just test`, `just brief`, `just debrief`, `just
+  check-entropy`).
+
+* **Value:** Eliminates the "how do I run this repo?" tax. The `Justfile` acts
+  as the shared vocabulary that abstracts complex build, test, and lint logic
+  behind simple, predictable endpoints.
 
 ### Layer 3: Durable Truth (Co-located `.md`)
 
 * **Role:** Long-term invariant checks (The Shannon Checksum).
-* **Mechanism:** A local `README.md` in every folder declaring *Intent & Invariants*.
-* **Value:** Serves as the ground-truth baseline against which code changes are measured for drift.
+
+* **Mechanism:** A local `README.md` in every folder declaring *Intent &
+  Invariants*.
+
+* **Value:** Serves as the ground-truth baseline against which code changes are
+  measured for drift.
 
 ---
 
@@ -84,15 +99,27 @@ Every unit of work—whether assigned to a senior engineer or a sub-agent—is g
 ### Job 1: Formulate the Brief
 
 * **Rule:** No code is modified until a Brief is written.
-* **Content:** The agent/human checks the co-located `README.md` and active `td` task context. They declare *what* will change, *why* it changes, and *which invariants must not break*.
-* **Validation:** If the proposed change contradicts the local folder's `README.md`, the discrepancy is surfaced immediately. (Do we update the spec, or fix the plan?)
+
+* **Content:** The agent/human checks the co-located `README.md` and active `td`
+  task context. They declare *what* will change, *why* it changes, and *which
+  invariants must not break*.
+
+* **Validation:** If the proposed change contradicts the local folder's
+  `README.md`, the discrepancy is surfaced immediately. (Do we update the spec,
+  or fix the plan?)
 
 ### Job 2: Implement, Debrief, and Re-Checksum
 
-* **Rule:** A task is not done when the code passes unit tests; it is done when the documentation and memory stores reflect reality.
+* **Rule:** A task is not done when the code passes unit tests; it is done when
+  the documentation and memory stores reflect reality.
+
 * **Execution:** Write the code, run `just test`.
-* **Debrief:** Execute a structured debrief (e.g., via `td handoff` logging decisions and remaining uncertainties).
-* **Re-Checksum:** If the implementation legally altered system behavior, update the co-located `README.md` in the same commit.
+
+* **Debrief:** Execute a structured debrief (e.g., via `td handoff` logging
+  decisions and remaining uncertainties).
+
+* **Re-Checksum:** If the implementation legally altered system behavior, update
+  the co-located `README.md` in the same commit.
 
 ---
 

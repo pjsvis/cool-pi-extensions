@@ -229,23 +229,42 @@ The smart kids are already doing it. The question is whether the organization ma
 
 The evidence behind the argument. Stored as append-only JSONL in the repository.
 
-- `data/scoring_matrix.jsonl` — keyword scorer results (deprecated for reasoning, retained for format analysis)
+- `data/scoring_matrix.jsonl` — keyword scorer results (deprecated for
+  reasoning, retained for format analysis)
+
 - `data/graded_matrix.jsonl` — Qwen 3.7 Plus structured grader results
-- `data/graded_matrix_gemini.jsonl` — Gemini 2.5 Pro structured grader results (triangulation)
+
+- `data/graded_matrix_gemini.jsonl` — Gemini 2.5 Pro structured grader results
+  (triangulation)
+
 - `data/eval_log.json` — Stuff-into-Things v2 results (15 tests, 22+ models)
+
 - `data/eval-results-matrix-2026-07-16.md` — ranked comparison table
-- `data/normalisation-analysis-2026-07-16.md` — variance compression, Claude gap, adequacy thresholds
-- `models/POKER-CLUB-MEMBERSHIP.md` — membership review (17 Full, 5 Probationary, 1 Denied)
+
+- `data/normalisation-analysis-2026-07-16.md` — variance compression, Claude
+  gap, adequacy thresholds
+
+- `models/POKER-CLUB-MEMBERSHIP.md` — membership review (17 Full, 5
+  Probationary, 1 Denied)
 
 ### Key numbers
 
 - 25 models evaluated, 2 graders, zero directional disagreements
+
 - convergence (zero directional disagreements, two graders)
+
 - Standard deviation: 4.3 (bare) → 2.5 (primed) — 42% compression
+
 - Claude gap: 6.2 (bare) → 1.7 (primed) — 72% reduction
-- Deployable models (≥12/16): 10 → 22 out of 24 — the normalisation measured in models you can use
-- Stuff-into-Things: ingestion gate 96–100%, delivery gate 86–100%, DOT ambiguity 76% (the remaining weakness)
-- Mercury-2 (diffusion model): same +4 delta as autoregressive models, exact grader agreement — protocol generalises across architectures
+
+- Deployable models (≥12/16): 10 → 22 out of 24 — the normalisation measured in
+  models you can use
+
+- Stuff-into-Things: ingestion gate 96–100%, delivery gate 86–100%, DOT
+  ambiguity 76% (the remaining weakness)
+
+- Mercury-2 (diffusion model): same +4 delta as autoregressive models, exact
+  grader agreement — protocol generalises across architectures
 
 ---
 
@@ -253,18 +272,42 @@ The evidence behind the argument. Stored as append-only JSONL in the repository.
 
 The marble has these veins:
 
-1. **The café** — reality exposes AI hype. The pundit overclaimed. The pilot was valid. Failure surfaces variables.
+1. **The café** — reality exposes AI hype. The pundit overclaimed. The pilot was
+   valid. Failure surfaces variables.
+
 2. **The protocol** — we have constraints. Do they work? We never checked.
-3. **The experiment** — primed vs bare. Keyword scorer (wrong, measures format). Structured grader (right, measures reasoning). Triangulation (two graders, zero disagreements, convergence — not statistics).
-4. **The reframing** — enhancement → normalisation. Floor rises, ceiling stays. The protocol makes models predictably adequate, not brilliant.
+
+3. **The experiment** — primed vs bare. Keyword scorer (wrong, measures format).
+   Structured grader (right, measures reasoning). Triangulation (two graders,
+   zero disagreements, convergence — not statistics).
+
+4. **The reframing** — enhancement → normalisation. Floor rises, ceiling stays.
+   The protocol makes models predictably adequate, not brilliant.
+
 5. **The pizza shop** — what we need, not what we want. Minimize cost, constrain efficacy. The benchmark confirms we're below it. That's
  fine.
-6. **The eval's job** — exclude muppets. Build a roster. Let personal experience select. Failure is a cheap data point.
-7. **The work process** — no token anxiety, no single point of failure, always on, second opinions, retry without ceremony.
-8. **The manager's job** — approve the roster. The eval excludes muppets. The developer selects. The protocol normalises. Three gates, no overlap.
-9. **The safe choice fallacy** — IBM → Microsoft → Anthropic. Safe for the manager, expensive for the organization. Inference arbitrage is the smart play. The protocol makes it defensible.
-10. **The Derrida question** — should this model even be in our eval? External constraints, not model quality. The manager's gate before the eval's gate. Business criteria, not behavioral criteria.
-11. **The honest position** — predictably adequate is sufficient. The protocol is sufficient. Improvement is unlikely to provide meaningful benefits. The remaining weaknesses are acceptable failures in a system designed for adequate, not perfect.
+
+6. **The eval's job** — exclude muppets. Build a roster. Let personal experience
+   select. Failure is a cheap data point.
+
+7. **The work process** — no token anxiety, no single point of failure, always
+   on, second opinions, retry without ceremony.
+
+8. **The manager's job** — approve the roster. The eval excludes muppets. The
+   developer selects. The protocol normalises. Three gates, no overlap.
+
+9. **The safe choice fallacy** — IBM → Microsoft → Anthropic. Safe for the
+   manager, expensive for the organization. Inference arbitrage is the smart
+   play. The protocol makes it defensible.
+
+10. **The Derrida question** — should this model even be in our eval? External
+    constraints, not model quality. The manager's gate before the eval's gate.
+    Business criteria, not behavioral criteria.
+
+11. **The honest position** — predictably adequate is sufficient. The protocol
+    is sufficient. Improvement is unlikely to provide meaningful benefits. The
+    remaining weaknesses are acceptable failures in a system designed for
+    adequate, not perfect.
 
 ### The phrase that holds it together
 
@@ -274,17 +317,32 @@ The marble has these veins:
 
 The marble is here. The veins are visible. The sculptor's job:
 
-1. **Find the voice.** The three drafts have different registers — evidence, governance, argument. The final piece needs one voice. Probably the argument voice — it's the most alive — but with the evidence woven in, not separate.
+1. **Find the voice.** The three drafts have different registers — evidence,
+   governance, argument. The final piece needs one voice. Probably the argument
+   voice — it's the most alive — but with the evidence woven in, not separate.
 
-2. **Cut the repetition.** The pizza shop appears three times. The muppet definition appears twice. The "ashes show up" line appears twice. The sculptor keeps the best version of each and cuts the rest.
+2. **Cut the repetition.** The pizza shop appears three times. The muppet
+   definition appears twice. The "ashes show up" line appears twice. The
+   sculptor keeps the best version of each and cuts the rest.
 
-3. **Order for the reader, not the discoverer.** The narrative order (café → experiment → finding) is how we found it. The reader might need: problem → solution → evidence → governance. Or: the chip pan fire → the pizza shop → how we got there → what the manager does. The sculptor decides.
+3. **Order for the reader, not the discoverer.** The narrative order (café →
+   experiment → finding) is how we found it. The reader might need: problem →
+   solution → evidence → governance. Or: the chip pan fire → the pizza shop →
+   how we got there → what the manager does. The sculptor decides.
 
-4. **Voice the Derrida question.** It's the deepest cut in the marble — the idea that managers make decisions based on external constraints, not model quality. It needs to land. Currently it's in Component 3, buried. It might belong earlier, or it might be the climax.
+4. **Voice the Derrida question.** It's the deepest cut in the marble — the idea
+   that managers make decisions based on external constraints, not model
+   quality. It needs to land. Currently it's in Component 3, buried. It might
+   belong earlier, or it might be the climax.
 
-5. **Decide what to leave out.** The keyword scorer story is interesting but long. The per-criterion deltas are data, not story. The DOT ambiguity weakness is honest but might not serve the piece. The sculptor keeps what serves the argument and moves the rest to footnotes or the appendix.
+5. **Decide what to leave out.** The keyword scorer story is interesting but
+   long. The per-criterion deltas are data, not story. The DOT ambiguity
+   weakness is honest but might not serve the piece. The sculptor keeps what
+   serves the argument and moves the rest to footnotes or the appendix.
 
-6. **Rule 1: no sculpting until the marble arrives from Carrara.** The marble has arrived. But the sculptor should live with it for a while before cutting. The block is here. The chisel can wait.
+6. **Rule 1: no sculpting until the marble arrives from Carrara.** The marble
+   has arrived. But the sculptor should live with it for a while before cutting.
+   The block is here. The chisel can wait.
 
 ---
 
@@ -361,9 +419,19 @@ But how often is the software actually a moat? Be honest. Most code is automatin
 
 If the data is confidential but the process is obvious, you have options:
 
-- **Run the process as open source.** The code goes to the LLM, but there's nothing to protect — the process is industry-standard, the implementation is boilerplate, the "secret" is the data, which you handle separately.
-- **Use a private repo and accept the LLM has seen your code.** Private GitHub repo, AI coding assistant has read access, you've accepted that the code crosses an API boundary. For most business logic, this is fine. The code isn't the moat.
-- **Local models for the sensitive parts, API models for the rest.** The protocol normalises both. Use Ollama for the genuinely proprietary bits, API models for the routine work. The behavior is consistent because the protocol makes it consistent.
+- **Run the process as open source.** The code goes to the LLM, but there's
+  nothing to protect — the process is industry-standard, the implementation is
+  boilerplate, the "secret" is the data, which you handle separately.
+
+- **Use a private repo and accept the LLM has seen your code.** Private GitHub
+  repo, AI coding assistant has read access, you've accepted that the code
+  crosses an API boundary. For most business logic, this is fine. The code isn't
+  the moat.
+
+- **Local models for the sensitive parts, API models for the rest.** The
+  protocol normalises both. Use Ollama for the genuinely proprietary bits, API
+  models for the routine work. The behavior is consistent because the protocol
+  makes it consistent.
 
 ### Forget the guarantees
 
@@ -371,9 +439,19 @@ Every AI provider offers some version of "we don't train on your code." It's in 
 
 Forget it. Not because they're lying — they probably aren't, today. But because:
 
-1. **Telemetry exists at the API boundary.** When your code crosses an API to reach the model, it traverses infrastructure you don't control. Logging, caching, debugging, monitoring — all of it potentially captures your input. The provider's intent not to train on it doesn't mean the infrastructure doesn't see it.
-2. **Policies change.** Today's "we don't train on your code" is today's policy. Tomorrow's acquisition, reorganisation, or business-model pivot can change it. You don't control the policy. You control what you send.
-3. **The guarantee is unverifiable.** You cannot audit whether your code was used in training. The guarantee is a promise, not a technical control. A promise from a company whose business model depends on data.
+1. **Telemetry exists at the API boundary.** When your code crosses an API to
+   reach the model, it traverses infrastructure you don't control. Logging,
+   caching, debugging, monitoring — all of it potentially captures your input.
+   The provider's intent not to train on it doesn't mean the infrastructure
+   doesn't see it.
+
+2. **Policies change.** Today's "we don't train on your code" is today's policy.
+   Tomorrow's acquisition, reorganisation, or business-model pivot can change
+   it. You don't control the policy. You control what you send.
+
+3. **The guarantee is unverifiable.** You cannot audit whether your code was
+   used in training. The guarantee is a promise, not a technical control. A
+   promise from a company whose business model depends on data.
 
 This isn't paranoia. It's just the reality of API-based inference: you don't control the infrastructure between you and the model. If that bothers you for a specific piece of code, don't send that code. For everything else — the 92% that's routine, obvious, not-a-moat work — send it to the cheapest adequate model and stop worrying.
 
@@ -381,8 +459,12 @@ This isn't paranoia. It's just the reality of API-based inference: you don't con
 
 The confidentiality question doesn't favour the edge-lord. If anything, it favours the cheapest model:
 
-- If the code is a moat: use local models. The edge-lord doesn't help — it's still an API, still infrastructure you don't control.
-- If the code isn't a moat: use the cheapest adequate model. The data handling is the same risk at $0.30 and $3.00. Paying more doesn't buy you more confidentiality — it buys you the same API boundary at a higher price.
+- If the code is a moat: use local models. The edge-lord doesn't help — it's
+  still an API, still infrastructure you don't control.
+
+- If the code isn't a moat: use the cheapest adequate model. The data handling
+  is the same risk at $0.30 and $3.00. Paying more doesn't buy you more
+  confidentiality — it buys you the same API boundary at a higher price.
 
 The one advantage of local models (Ollama) is genuine: the code never leaves your machine. The protocol normalises local models too — the eval includes Ollama models, and the normalisation holds. Nemotron Nano (30B) runs locally, free, and scores 14/16 primed. Not as good as Claude (16/16), but predictably adequate — and the code stays on your hardware.
 
@@ -433,9 +515,14 @@ If your answer is "we can't use AI because everything is proprietary," one of th
 
 The moat question — *how much are you prepared to pay for your moat?* — demands a budget, not a verdict. The budget isn't "all or nothing." It's a classification:
 
-- "This code is a moat. It stays local. We accept slower, weaker models for this tier."
-- "This code is sensitive but not a moat. It goes to API models with accepted boundary risk."
-- "This code is routine. It goes to the cheapest adequate model. No special treatment."
+- "This code is a moat. It stays local. We accept slower, weaker models for this
+  tier."
+
+- "This code is sensitive but not a moat. It goes to API models with accepted
+  boundary risk."
+
+- "This code is routine. It goes to the cheapest adequate model. No special
+  treatment."
 
 The third category is where the productivity gain lives. If you can't identify it — or won't — you're not protecting your moat. You're protecting your uncertainty. And uncertainty is the most expensive thing in the stack, because it makes you pay edge-lord prices for pizza-shop work, *and* it makes you feel virtuous about it.
 
@@ -488,9 +575,14 @@ Every prompt ends with a directive: `- opinion` or `- proceed` or `- opinion and
 
 This is mode signaling. It tells the agent what to do before it does anything:
 
-- **opinion** → think about this, reason it through, don't act yet. The agent is in analysis mode. It should assess, disagree if warranted, and give reasons.
-- **proceed** → do the thing. The agent is in execution mode. It should act, then report what it did.
-- **opinion and proceed** → think first, then act. The agent reasons, proposes, and executes in one pass.
+- **opinion** → think about this, reason it through, don't act yet. The agent is
+  in analysis mode. It should assess, disagree if warranted, and give reasons.
+
+- **proceed** → do the thing. The agent is in execution mode. It should act,
+  then report what it did.
+
+- **opinion and proceed** → think first, then act. The agent reasons, proposes,
+  and executes in one pass.
 
 One word at the end of the prompt eliminates a whole class of misunderstanding. The agent doesn't guess whether you want analysis or action. You said which. The token cost is negligible — one word. The clarity gain is substantial.
 
@@ -521,15 +613,33 @@ But formalizing it in the Conceptual Lexicon makes it sharper and more consisten
 Terms developed during this conversation that belong in the CL:
 
 - **Wrap-up** — summarize, persist, note what's left
-- **Predictably adequate** — the protocol's effect: not brilliant, but reliably good enough
-- **No muppets** — the only selection criterion: models that don't ignore constraints
-- **Stuff into Things** — the transformation: unstructured chaos in, structured output out
-- **Decorated Stuff** — output that looks like a Thing but isn't: format without substance
-- **Edge-lord** — the reference model, not the default: the benchmark you measure against, not the one you deploy
-- **Pizza shop** — the metaphor for predictably adequate: consistent, acceptable output at sustainable cost
-- **Chip pan fire** — the metaphor for unmanaged AI use: reactive, expensive, out of control
-- **The moat question** — "can you name your secrets?" The existential gate before the quality gate
-- **The Derrida question** — "should this even be in our consideration set?" The gatekeeper's gatekeeper
+
+- **Predictably adequate** — the protocol's effect: not brilliant, but reliably
+  good enough
+
+- **No muppets** — the only selection criterion: models that don't ignore
+  constraints
+
+- **Stuff into Things** — the transformation: unstructured chaos in, structured
+  output out
+
+- **Decorated Stuff** — output that looks like a Thing but isn't: format without
+  substance
+
+- **Edge-lord** — the reference model, not the default: the benchmark you
+  measure against, not the one you deploy
+
+- **Pizza shop** — the metaphor for predictably adequate: consistent, acceptable
+  output at sustainable cost
+
+- **Chip pan fire** — the metaphor for unmanaged AI use: reactive, expensive,
+  out of control
+
+- **The moat question** — "can you name your secrets?" The existential gate
+  before the quality gate
+
+- **The Derrida question** — "should this even be in our consideration set?" The
+  gatekeeper's gatekeeper
 
 Each term compresses a complex instruction or concept into a phrase the agent recognizes. The CL carries the weight so the prompt doesn't have to.
 

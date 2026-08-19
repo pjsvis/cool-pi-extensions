@@ -71,8 +71,12 @@ WSL2), SSH-native — session persistence, AI assistance, and a fast editor from
 any terminal, anywhere.
 
 - [**→ Stack architecture**](docs/terminal-stack.md)
-- [**→ Install playbook**](playbooks/terminal-stack-playbook.md) — give pi the URL and it installs everything
-- [**→ Full dev-stack setup**](playbooks/dev-stack-setup-playbook.md) — step-by-step onboarding guide
+
+- [**→ Install playbook**](playbooks/terminal-stack-playbook.md) — give pi the
+  URL and it installs everything
+
+- [**→ Full dev-stack setup**](playbooks/dev-stack-setup-playbook.md) —
+  step-by-step onboarding guide
 
 ---
 
@@ -92,10 +96,15 @@ merge workflow. Watch your agent work without interfering.
 
 A small surface for agents and humans:
 
-- **Agents:** `just orient` — full orientation (branch, git state, active tasks, entry points).
+- **Agents:** `just orient` — full orientation (branch, git state, active tasks,
+  entry points).
+
 - **Humans:** `just browse` — list all docs with descriptions, preview with glow.
+
 - **Both:** type `glow` alone for an interactive markdown file picker.
-- **Visiting agents:** `just adopt-edinburgh` applies the Protocol's constraint stack, then `just orient` initialises context:
+
+- **Visiting agents:** `just adopt-edinburgh` applies the Protocol's constraint
+  stack, then `just orient` initialises context:
 
 ```bash
 just adopt-edinburgh   # apply Edinburgh Protocol (normalize behavior)

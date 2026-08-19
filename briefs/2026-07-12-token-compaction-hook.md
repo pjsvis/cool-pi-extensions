@@ -52,8 +52,14 @@ To eliminate multi-agent write contention and prevent context contamination acro
 ### The Storage Lifecycle
 
 * **Location:** Active intra-task memory is written to `.td-memory/${TASK_ID}.md`.
-* **Version Control:** This folder is tracked by Git *only* within the lifecycle of the active feature branch.
-* **Portability:** Committing and pushing this file to the remote feature branch ensures that if an environment fails or a handoff occurs, the incoming agent can run `td current` and instantly pull down the clean, de-barnacled summary history.
+
+* **Version Control:** This folder is tracked by Git *only* within the lifecycle
+  of the active feature branch.
+
+* **Portability:** Committing and pushing this file to the remote feature branch
+  ensures that if an environment fails or a handoff occurs, the incoming agent
+  can run `td current` and instantly pull down the clean, de-barnacled summary
+  history.
 
 ---
 
@@ -69,9 +75,14 @@ When a review agent assesses a Pull Request, it typically only sees the final di
 
 When the task is approved, the repository utilizes a **Squash-and-Merge** execution step.
 
-* The individual "fix typo" and "compaction pass" commits are melded into a single clean production commit.
-* The explicit markdown text within the sidecar file is used to auto-populate a comprehensive, structured PR description.
-* **The Delete Phase:** The feature branch is deleted upon merging. The `.td-memory/` folder never enters the active file tree of the `main` branch.
+* The individual "fix typo" and "compaction pass" commits are melded into a
+  single clean production commit.
+
+* The explicit markdown text within the sidecar file is used to auto-populate a
+  comprehensive, structured PR description.
+
+* **The Delete Phase:** The feature branch is deleted upon merging. The
+  `.td-memory/` folder never enters the active file tree of the `main` branch.
 
 ---
 
@@ -151,8 +162,14 @@ This output is a system input for a downstream Code Review Agent. It must be bru
 
 By structuring the template this way, we enforce the **Justify Engine** principle at the prompt layer:
 
-* **Section 2 (Rejected Hypotheses)** acts as the defensive shield for the human and the review agent. It stops the downstream reviewer from re-litigating decisions that have already been settled by the data.
-* **Section 3 (Discovered Constraints)** ensures that implicit knowledge gained during the messy discovery phase is immediately explicitly registered into the repository state, preventing the next zero-state agent session from stepping on the same landmines.
+* **Section 2 (Rejected Hypotheses)** acts as the defensive shield for the human
+  and the review agent. It stops the downstream reviewer from re-litigating
+  decisions that have already been settled by the data.
+
+* **Section 3 (Discovered Constraints)** ensures that implicit knowledge gained
+  during the messy discovery phase is immediately explicitly registered into the
+  repository state, preventing the next zero-state agent session from stepping
+  on the same landmines.
 
 It keeps the entire pipeline focused entirely on inputs, outputs, and state tracking.
 

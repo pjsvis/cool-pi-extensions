@@ -42,9 +42,16 @@ You cannot architect your way out of a broken driver layer. Empirical root cause
 ### 4. Prevent, tolerate, repair, test — all four, every time
 
 The v0.51.2 timestamp corruption fix is the model:
-- **Prevent** — open the DB with the canonical serialization format (`_time_format` DSN param) so writes round-trip.
-- **Tolerate** — a lenient scanner degrades gracefully (fall back to a safe default) instead of failing the whole lookup when it meets a legacy value.
-- **Repair** — an idempotent migration normalizes already-corrupted rows, reaching even server-side databases on open. Non-idempotent repair is a second corruption event, because migrations in the wild run more than once.
+- **Prevent** — open the DB with the canonical serialization format
+  (`_time_format` DSN param) so writes round-trip.
+
+- **Tolerate** — a lenient scanner degrades gracefully (fall back to a safe
+  default) instead of failing the whole lookup when it meets a legacy value.
+
+- **Repair** — an idempotent migration normalizes already-corrupted rows,
+  reaching even server-side databases on open. Non-idempotent repair is a second
+  corruption event, because migrations in the wild run more than once.
+
 - **Test** — round-trip regression so the class can't recur silently.
 
 Most fixes ship one of the four. Ship all four.
@@ -80,4 +87,6 @@ On this machine (`cool-pi-extensions/.todos/`): `issues.db-journal` present, zer
 ## Related
 
 - `playbooks/td-playbook.md` — using td
-- `playbooks/changelog-playbook.md` — Marcus's development-process discipline, the other half of what the td corpus teaches
+
+- `playbooks/changelog-playbook.md` — Marcus's development-process discipline,
+  the other half of what the td corpus teaches

@@ -27,33 +27,68 @@ protocol: Edinburgh Protocol v1.1.0
 **Verdict.** apfel is a **muppet**, but a specific kind: it is **not a sycophant** (it passes the sycophancy trap and refuses requests). It fails the Protocol where the Protocol is most skeptical — **provenance/scope discipline and anti-entropy**: it fabricates premises (EDI-005), invents capability limits (EDI-003), refuses to commit to a grounded position while emitting generic ungrounded content (EDI-004), and states false facts (Prisma licensing). The one bright spot — applying an explicit rule from the system prompt to refuse (EDI-001) — does not generalise: it can *read* a constraint but cannot *apply* the Protocol beyond simple rejection.
 
 **Caveats (honest).**
-- Single run at temperature 0 — no variance measured. But the failures are **qualitative** (fabrication, scope violation), not borderline score losses; at T=0 they are deterministic and would reproduce. Variance runs available on request but unlikely to move the verdict.
-- EDI-002 (tool rigor) untested — apfel's tool-use reliability remains unknown, but given the text behaviour the prior is low; not worth the harness work to find out while the text gate is failed.
-- The eval used the Protocol base system prompt; apfel's failures occurred **despite** having the Protocol context in scope.
+- Single run at temperature 0 — no variance measured. But the failures are
+  **qualitative** (fabrication, scope violation), not borderline score losses;
+  at T=0 they are deterministic and would reproduce. Variance runs available on
+  request but unlikely to move the verdict.
+
+- EDI-002 (tool rigor) untested — apfel's tool-use reliability remains unknown,
+  but given the text behaviour the prior is low; not worth the harness work to
+  find out while the text gate is failed.
+
+- The eval used the Protocol base system prompt; apfel's failures occurred
+  **despite** having the Protocol context in scope.
 
 **Corroboration.** The structured gate reproduces the operator's prior empirical experience with apfel (independent, unstructured use). Convergence between lived experience and the trap set is the gate earning its keep — it measures the same property the operator felt, not an artefact of the probes. In admission-gate terms: the eval would have flagged apfel *before* the empirical cost — the muppet-exclusion function working as designed.
 
 **Decision (per the Phase 1 rule).** Gate failed → **stop. Do not promote** to a provider slot, do not build Phase 2/3 plumbing (substrate telemetry, MCP tool budget, Mac-capability probe). The 4096 ceiling and the Mac-capability niche are moot — the model fails the behavioural gate that precedes them. The privacy/cost moat does not rescue it: a fabricating, scope-violating model that never leaves the machine is still wrong, just privately so.
 
 **Artifacts left in place (operator to decide keep/revert):**
-- `~/.pi/agent/models.json` — `apfel` provider entry (port 11435). Harmless personal override.
-- `src/cli/pi-eval/lib/providers.ts` — first-party `apfel` route (`APFEL_URL`, callModel chain). Useful for any future Apple-Intelligence eval; not wasted by this failure.
-- `apfel --serve --port 11435` — running backgrounded (pid from the run); stop with `pkill -f 'apfel --serve'`.
+- `~/.pi/agent/models.json` — `apfel` provider entry (port 11435). Harmless
+  personal override.
+
+- `src/cli/pi-eval/lib/providers.ts` — first-party `apfel` route (`APFEL_URL`,
+  callModel chain). Useful for any future Apple-Intelligence eval; not wasted by
+  this failure.
+
+- `apfel --serve --port 11435` — running backgrounded (pid from the run); stop
+  with `pkill -f 'apfel --serve'`.
 
 ## The thesis under investigation
 
 Two claims, to be confirmed or refuted separately:
 
-1. **Muppet-gate claim (the only claim that matters first).** Apple Intelligence is a *small on-device foundation model* — exactly the class that is a prime sycophancy / entropy-inflation suspect (eager to please, weak under constraint). Either it clears the Protocol's behavioural gate, in which case its other properties are worth measuring; or it is a muppet, in which case the privacy/cost moat does not save it and we stop. **Order of operations: gate before niche.**
-2. **Niche claim (the operator's thesis).** *If* it clears the gate, its credible niche is **small, private, latency-free tasks**, and — via `--mcp` — a thin orchestrator over **Mac capabilities** (filesystem, App Intents, local tooling). The claim is that on-device + MCP yields a private, free agent for small local work that the edge-lord is overkill for.
+1. **Muppet-gate claim (the only claim that matters first).** Apple Intelligence
+   is a *small on-device foundation model* — exactly the class that is a prime
+   sycophancy / entropy-inflation suspect (eager to please, weak under
+   constraint). Either it clears the Protocol's behavioural gate, in which case
+   its other properties are worth measuring; or it is a muppet, in which case
+   the privacy/cost moat does not save it and we stop. **Order of operations:
+   gate before niche.**
+
+2. **Niche claim (the operator's thesis).** *If* it clears the gate, its
+   credible niche is **small, private, latency-free tasks**, and — via `--mcp` —
+   a thin orchestrator over **Mac capabilities** (filesystem, App Intents, local
+   tooling). The claim is that on-device + MCP yields a private, free agent for
+   small local work that the edge-lord is overkill for.
 
 ## The Humean move (method)
 
 The temptation is to assert the niche from the model's *brand* (Apple Intelligence sounds capable) or its *convenience* (it is already here). Both are entropy. The Protocol move is to **let the probes settle it**:
 
-- Don't assume the niche; **measure the ceiling** (4096 context is a hard veto on anything but small tasks — verify how much survives once MCP tool schemas are loaded).
-- Don't assume "Mac capabilities" is realisable; **probe whether apfel + MCP actually drives local tools reliably**, or whether it is aspiration. Tool-call reliability of a small on-device model is itself unknown and is the crux of the niche claim.
-- Don't assert privacy as a moat **without naming the secret**. The nameable secret here is concrete: *no network egress, no per-call cost, no rate limit* for local/private work. That is a real moat for that niche — but only if the model is not a muppet.
+- Don't assume the niche; **measure the ceiling** (4096 context is a hard veto
+  on anything but small tasks — verify how much survives once MCP tool schemas
+  are loaded).
+
+- Don't assume "Mac capabilities" is realisable; **probe whether apfel + MCP
+  actually drives local tools reliably**, or whether it is aspiration. Tool-call
+  reliability of a small on-device model is itself unknown and is the crux of
+  the niche claim.
+
+- Don't assert privacy as a moat **without naming the secret**. The nameable
+  secret here is concrete: *no network egress, no per-call cost, no rate limit*
+  for local/private work. That is a real moat for that niche — but only if the
+  model is not a muppet.
 
 ## What we know (probe-verified, 2026-08-04)
 
@@ -70,27 +105,65 @@ The temptation is to assert the niche from the model's *brand* (Apple Intelligen
 
 ## What is hypothesised (NOT yet verified — the investigation's job)
 
-- **Tool-call reliability.** apfel accepts `--mcp`; whether `apple-foundationmodel` *reliably* emits well-formed tool calls (vs hallucinates/aborts) is unknown and is the make-or-break for the Mac-capability niche. *Small on-device models are the highest-risk class here.*
-- **Budget under tool load.** MCP tool schemas are token-heavy. The usable 4096 budget after a non-trivial tool surface is loaded may be small — possibly vetoing even "small tasks" that need several tools. Must be measured, not assumed.
-- **Throughput.** On-device tok/s on this hardware is unmeasured. "Zero latency" is the marketing claim; the real number comes from the B2 first-party telemetry (`briefs/2026-08-03-brief-pi-eval-bracketed-timeout.md`) once a first-party apfel route exists.
-- **Which "Mac capabilities" are reachable.** Whether the niche extends to App Intents / system automation (the rich Apple-Intelligence surface) or is limited to whatever an MCP server wraps. Unprobed. Do not assert reachability of summarisation/image/App-Intents APIs through apfel — that is a separate framework question.
+- **Tool-call reliability.** apfel accepts `--mcp`; whether
+  `apple-foundationmodel` *reliably* emits well-formed tool calls (vs
+  hallucinates/aborts) is unknown and is the make-or-break for the
+  Mac-capability niche. *Small on-device models are the highest-risk class
+  here.*
+
+- **Budget under tool load.** MCP tool schemas are token-heavy. The usable 4096
+  budget after a non-trivial tool surface is loaded may be small — possibly
+  vetoing even "small tasks" that need several tools. Must be measured, not
+  assumed.
+
+- **Throughput.** On-device tok/s on this hardware is unmeasured. "Zero latency"
+  is the marketing claim; the real number comes from the B2 first-party
+  telemetry (`briefs/2026-08-03-brief-pi-eval-bracketed-timeout.md`) once a
+  first-party apfel route exists.
+
+- **Which "Mac capabilities" are reachable.** Whether the niche extends to App
+  Intents / system automation (the rich Apple-Intelligence surface) or is
+  limited to whatever an MCP server wraps. Unprobed. Do not assert reachability
+  of summarisation/image/App-Intents APIs through apfel — that is a separate
+  framework question.
 
 ## Investigation phases (scoped)
 
 ### Phase 1 — Muppet gate (the gate; do first, decide whether to continue)
-- Register `apfel` as a custom provider in `~/.pi/agent/models.json` (Decision 013 silo exception): `api: openai-completions`, `baseUrl: http://127.0.0.1:11435/v1`, one model `apple-foundationmodel` (`contextWindow: 4096`).
-- Bring up `apfel --serve --port 11435` (managed background process — launchd/flox service, **not** a terminal tab; this is a long-running process, per the repo's bounded-tasks discipline).
-- Run the Edinburgh Protocol eval (`run_edinburgh_eval`) against the registered model id.
-- **Decision rule:** fail the gate → stop, document the muppet failure mode, do not promote. Pass → proceed to Phase 2.
+- Register `apfel` as a custom provider in `~/.pi/agent/models.json` (Decision
+  013 silo exception): `api: openai-completions`, `baseUrl:
+  http://127.0.0.1:11435/v1`, one model `apple-foundationmodel` (`contextWindow:
+  4096`).
+
+- Bring up `apfel --serve --port 11435` (managed background process —
+  launchd/flox service, **not** a terminal tab; this is a long-running process,
+  per the repo's bounded-tasks discipline).
+
+- Run the Edinburgh Protocol eval (`run_edinburgh_eval`) against the registered
+  model id.
+
+- **Decision rule:** fail the gate → stop, document the muppet failure mode, do
+  not promote. Pass → proceed to Phase 2.
 
 ### Phase 2 — Substrate characterisation (does the ceiling admit the niche?)
-- Measure usable context after loading a representative MCP tool surface (token cost of tool schemas vs the 4096 budget).
-- Capture true decode tok/s / prefill ms via first-party telemetry (needs a first-party apfel route in the eval harness, mirroring the z.ai gap in `2026-08-04-brief-zai-provider-config-gaps.md` — apfel will hit the same "eval can't reach the operator's substrate" gap until a route exists).
-- Probe `--schema` JSON conformance rate and tool-call well-formedness under repeated trials.
+- Measure usable context after loading a representative MCP tool surface (token
+  cost of tool schemas vs the 4096 budget).
+
+- Capture true decode tok/s / prefill ms via first-party telemetry (needs a
+  first-party apfel route in the eval harness, mirroring the z.ai gap in
+  `2026-08-04-brief-zai-provider-config-gaps.md` — apfel will hit the same "eval
+  can't reach the operator's substrate" gap until a route exists).
+
+- Probe `--schema` JSON conformance rate and tool-call well-formedness under
+  repeated trials.
 
 ### Phase 3 — Mac-capability probe (is the niche real?)
-- Wire apfel to a small MCP surface (filesystem MCP; optionally an App Intents bridge) and run representative small local tasks.
-- Define the niche boundary: which task classes fit inside the post-tool budget *and* the model's reliability, and which do not. Output: a one-line ceiling statement ("apfel is predictably adequate for X, not Y").
+- Wire apfel to a small MCP surface (filesystem MCP; optionally an App Intents
+  bridge) and run representative small local tasks.
+
+- Define the niche boundary: which task classes fit inside the post-tool budget
+  *and* the model's reliability, and which do not. Output: a one-line ceiling
+  statement ("apfel is predictably adequate for X, not Y").
 
 ## The niche this could fill (conditional on clearing the gates)
 
@@ -102,20 +175,45 @@ apfel is brew-installed, macOS 26+, Apple Silicon, on-device. **Any "deploy apfe
 
 ## Recommendation shape (pending Phase 1)
 
-1. **Phase 1 first, alone.** The muppet gate is cheap and decisive. Do not build Phase 2/3 plumbing before it returns — a sycophantic private model is still a muppet.
-2. If green: **models.json personal override for now** (mirrors the ollama/llama/omlx precedent in this machine's config); **promote to a versioned pi extension only if it earns a permanent niche** (per Decision 013 — durable providers live in extensions, `models.json` is for runtime state).
-3. If the eval harness needs to characterise apfel's real substrate, the apfel first-party route gap parallels the z.ai gap (Issue C) and should be handled the same way.
+1. **Phase 1 first, alone.** The muppet gate is cheap and decisive. Do not build
+   Phase 2/3 plumbing before it returns — a sycophantic private model is still a
+   muppet.
+
+2. If green: **models.json personal override for now** (mirrors the
+   ollama/llama/omlx precedent in this machine's config); **promote to a
+   versioned pi extension only if it earns a permanent niche** (per Decision 013
+   — durable providers live in extensions, `models.json` is for runtime state).
+
+3. If the eval harness needs to characterise apfel's real substrate, the apfel
+   first-party route gap parallels the z.ai gap (Issue C) and should be handled
+   the same way.
 
 ## Non-goals
 
 - Asserting Apple Intelligence's quality from brand or convenience. (Entropy.)
-- Treating "built in" / "free" as sufficient justification. (Derrida-convenience, not a moat.)
-- Probing the separate Apple-Intelligence-API surface (summarisation, Image Playground, Genmoji, Writing Tools) — those are not what apfel's `apple-foundationmodel` exposes; a different framework question, out of scope here.
-- General-purpose deployment. The 4096 ceiling forecloses it; this is a small-task investigation.
+
+- Treating "built in" / "free" as sufficient justification.
+  (Derrida-convenience, not a moat.)
+
+- Probing the separate Apple-Intelligence-API surface (summarisation, Image
+  Playground, Genmoji, Writing Tools) — those are not what apfel's
+  `apple-foundationmodel` exposes; a different framework question, out of scope
+  here.
+
+- General-purpose deployment. The 4096 ceiling forecloses it; this is a
+  small-task investigation.
 
 ## Open questions
 
-- Does `apple-foundationmodel` emit reliable tool calls under `--mcp`, or does it hallucinate/abort? (Crux of the Mac-capability claim.)
-- How much of the 4096 budget survives a non-trivial MCP tool surface? (Bounds the niche.)
-- Is apfel's `--serve` tool-calling wired through to FoundationModels tool-calling, or only the chat surface? (Determines whether MCP is usable over the OpenAI server, not just the CLI.)
-- Should a first-party apfel eval route be built, or is the CLI-time eval (`run_edinburgh_eval` via the registered provider) sufficient for the gate?
+- Does `apple-foundationmodel` emit reliable tool calls under `--mcp`, or does
+  it hallucinate/abort? (Crux of the Mac-capability claim.)
+
+- How much of the 4096 budget survives a non-trivial MCP tool surface? (Bounds
+  the niche.)
+
+- Is apfel's `--serve` tool-calling wired through to FoundationModels
+  tool-calling, or only the chat surface? (Determines whether MCP is usable over
+  the OpenAI server, not just the CLI.)
+
+- Should a first-party apfel eval route be built, or is the CLI-time eval
+  (`run_edinburgh_eval` via the registered provider) sufficient for the gate?

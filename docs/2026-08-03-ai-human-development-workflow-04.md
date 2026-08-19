@@ -22,8 +22,13 @@ When you ground your system in the **actual territory of the repo**, you turn ex
 
 Third-party models, vector databases, and vendor-locked agent memories are merely **maps**—and as the epistemic rule goes, *the map is not the territory*.
 
-* **The Third-Party Map:** Proprietary embeddings, vendor memory states, and frontier LLM reasoning are probabilistic estimations. They drift, expire, get compacted, or go offline.
-* **The Repo Territory:** The plain-text source files, co-located invariant READMEs, ISO-prefixed briefs/debriefs, and `Justfile` targets are **concrete reality**.
+* **The Third-Party Map:** Proprietary embeddings, vendor memory states, and
+  frontier LLM reasoning are probabilistic estimations. They drift, expire, get
+  compacted, or go offline.
+
+* **The Repo Territory:** The plain-text source files, co-located invariant
+  READMEs, ISO-prefixed briefs/debriefs, and `Justfile` targets are **concrete
+  reality**.
 
 If a $200/month edge-lord model or a graph database makes a claim about how a module works, **it has to prove it against the territory**. The repo acts as the supreme court. If the model's output violates a co-located invariant or breaks a `just test` check, the model's output is discarded. You get all the reasoning horsepower of high-end tooling without surrendering system sovereignty.
 
@@ -37,13 +42,17 @@ By treating software as a continuous process anchored directly in Git, the workf
 
 Because work is structured around explicit briefs, `Justfile` targets, and deterministic test passes, running an agent task multiple times produces the exact same system state.
 
-* If an agent crashes halfway through, running `just brief` or re-executing the task from `marcus/td` doesn't stack duplicate logic or corrupt the codebase—it simply converges back to the declared invariant.
+* If an agent crashes halfway through, running `just brief` or re-executing the
+  task from `marcus/td` doesn't stack duplicate logic or corrupt the codebase—it
+  simply converges back to the declared invariant.
 
 ### B. Restartability (Zero Onboarding Latency)
 
 Because context is persisted in `marcus/td` and plain-text ISO logs rather than hidden in a ephemeral agent session, a session can be killed at any moment.
 
-* A new session (or a completely different human/AI operator) opens the repo, reads the current task state in $O(1)$ time, and picks up execution mid-stride. There is zero context lost and zero need to re-prompt or re-index.
+* A new session (or a completely different human/AI operator) opens the repo,
+  reads the current task state in $O(1)$ time, and picks up execution
+  mid-stride. There is zero context lost and zero need to re-prompt or re-index.
 
 ### C. Agent Independence (Vendor Un-locking)
 

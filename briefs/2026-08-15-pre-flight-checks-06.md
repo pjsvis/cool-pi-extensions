@@ -4,10 +4,22 @@ The venture-backed AI landscape is currently obsessed with "benchmaxxing" and er
 
 Here are a few ways to sharpen the framing:
 
-- **The Steam Engine Rule:** We don't need a volatile polymath that occasionally writes Shakespeare and occasionally burns down the parlor; we need James Watt's centrifugal governor—boring, steady, and mechanically incapable of blowing up.
-- **The Pizza Shop Epigram:** Efficacy isn't a Michelin star delivered once a quarter; it’s a predictable Margherita delivered every Friday night without lighting the kitchen on fire.
-- **The Variance Paradox:** In the Noosphere, genius is measured by the height of the ceiling. In the Biosphere, efficacy is measured by the elevation of the floor.
-- **The Mechanic's Verdict:** *A tool you have to supervise 100% of the time to catch 5% catastrophic errors isn't an assistant; it's a toddler with an API key.*
+- **The Steam Engine Rule:** We don't need a volatile polymath that occasionally
+  writes Shakespeare and occasionally burns down the parlor; we need James
+  Watt's centrifugal governor—boring, steady, and mechanically incapable of
+  blowing up.
+
+- **The Pizza Shop Epigram:** Efficacy isn't a Michelin star delivered once a
+  quarter; it’s a predictable Margherita delivered every Friday night without
+  lighting the kitchen on fire.
+
+- **The Variance Paradox:** In the Noosphere, genius is measured by the height
+  of the ceiling. In the Biosphere, efficacy is measured by the elevation of the
+  floor.
+
+- **The Mechanic's Verdict:** *A tool you have to supervise 100% of the time to
+  catch 5% catastrophic errors isn't an assistant; it's a toddler with an API
+  key.*
 
 When you strip away the marketing, predictable adequacy is the only metric that compounds.
 

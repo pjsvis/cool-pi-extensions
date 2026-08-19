@@ -23,10 +23,16 @@ That's not agile (which still pre-plans the sprint). It's not waterfall (which p
 
 Emergent methods fail when the steps converge on what's easy to do next, not what matters. The signal that distinguishes: **is the deferred thing tracked, or is it forgotten?**
 
-- Brief-before-code = bridge preservation (freeze scope so the next step has ground).
+- Brief-before-code = bridge preservation (freeze scope so the next step has
+  ground).
+
 - Resumable scripts = bridge preservation (a gap is a retry, not a dead end).
-- Out-of-scope sections = bridge preservation (the deferred thing is named, not lost).
+
+- Out-of-scope sections = bridge preservation (the deferred thing is named, not
+  lost).
+
 - Debriefs = bridge preservation (the next session resumes from compressed state).
+
 - td issues / brief checkboxes = the tracking that keeps deferral honest.
 
 Emergent without optionality-preservation is drifting. Emergent *with* it is the thing we're doing.
@@ -35,15 +41,23 @@ Emergent without optionality-preservation is drifting. Emergent *with* it is the
 
 Named patterns get reused; unnamed habits don't. But naming on first instance is ceremony; naming on third instance is pattern-recognition. The threshold: **three instances and it gets a name.** The register for the name is "operational-heuristic" — below a principle (lexicon entry), above a tip (disposable). Enough structure to reuse, not enough to become ceremony.
 
-- **Smoke-test-as-instrument:** three instances (gap-six, V4 Flash, NIM). Earned. Red→green with a real failure surface exposed. Now an operational-heuristic in practice.
-- **Patience budget** (timeout matches the context's cost model, not a default): two instances. Not yet named. When the third batch makes the same call, coin it — a paragraph, not a manifesto.
+- **Smoke-test-as-instrument:** three instances (gap-six, V4 Flash, NIM).
+  Earned. Red→green with a real failure surface exposed. Now an
+  operational-heuristic in practice.
+
+- **Patience budget** (timeout matches the context's cost model, not a default):
+  two instances. Not yet named. When the third batch makes the same call, coin
+  it — a paragraph, not a manifesto.
 
 ## The patience budget (the principle, captured before it's named)
 
 The timeout is a function of *who's waiting*, not *what's running*.
 
 - Interactive run: human at the window. Impatience is the constraint. 90s correct.
-- Fire-and-forget batch: no human. Patience budget is effectively infinite (overnight). Timeout = "longer than any legit response, shorter than a hang you'd want to detect." ~600s for a 120B on a free tier.
+
+- Fire-and-forget batch: no human. Patience budget is effectively infinite
+  (overnight). Timeout = "longer than any legit response, shorter than a hang
+  you'd want to detect." ~600s for a 120B on a free tier.
 
 Cost of waiting on slow-but-legit: ~0 wall-clock you weren't using. Cost of killing it: lost data, a gap, possibly a false "model failed" belief. Cost of waiting on a true hang: one timeout of dead time, then move on. Overnight, unattended: ~0. Expected value: wait.
 

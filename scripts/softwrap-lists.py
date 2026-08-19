@@ -117,4 +117,6 @@ if __name__ == "__main__":
     limit = int(sys.argv[2]) if len(sys.argv) > 2 and sys.argv[2].isdigit() else LIMIT
     write = "--write" in sys.argv
     text = open(path, encoding="utf-8").read()
-    sys.stdout.write(process(text, limit, write))
+    result = process(text, limit, write)
+    if not write:
+        sys.stdout.write(result)

@@ -24,6 +24,10 @@ Generated from `~/.pi/agent/models.json`. Documents:
 ## Conventions
 
 - Configuration files in this directory are **documentation**, not runtime config
-- Runtime config lives in `~/.pi/agent/settings.json` and extension `config.json` files
+
+- Runtime config lives in `~/.pi/agent/settings.json` and extension
+  `config.json` files
+
 - Regenerate the provider registry after significant provider changes
+
 - Include generation date in the file header

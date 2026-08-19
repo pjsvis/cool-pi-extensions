@@ -152,11 +152,16 @@ This is not an argument for Chinese AI over American AI. It's an argument for ev
 
 The eval results tell us:
 
-1. **Benchmark optimization has diminishing returns.** The easy gains from training on test distributions have been captured. What's left is genuine capability.
+1. **Benchmark optimization has diminishing returns.** The easy gains from
+   training on test distributions have been captured. What's left is genuine
+   capability.
 
-2. **The price-performance gap is closing.** Nemotron 3 Ultra (free) achieves 4/4 on the same constraint-stack tests. Kimi earns its cost through superior reasoning and speed, but free alternatives exist.
+2. **The price-performance gap is closing.** Nemotron 3 Ultra (free) achieves
+   4/4 on the same constraint-stack tests. Kimi earns its cost through superior
+   reasoning and speed, but free alternatives exist.
 
-3. **The market is starting to notice.** Cursor's choice to build on Kimi is a leading indicator.
+3. **The market is starting to notice.** Cursor's choice to build on Kimi is a
+   leading indicator.
 
 ---
 

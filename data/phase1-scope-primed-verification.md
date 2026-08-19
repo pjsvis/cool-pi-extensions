@@ -21,19 +21,34 @@ Here's what I do not know, and need before proposing components or data flow:
 
 **About algorithmic-dentistry (the prior framework):**
 1. What is its runtime model? Is it a CLI, a library, a daemon, a task runner?
-2. What is the "main agent" the pre-flight audit would run before? How is it currently launched, and what hook or entry point would the audit intercept?
-3. Does the framework already have a plugin/extension mechanism, or would the audit subsystem be a new integration surface?
+
+2. What is the "main agent" the pre-flight audit would run before? How is it
+   currently launched, and what hook or entry point would the audit intercept?
+
+3. Does the framework already have a plugin/extension mechanism, or would the
+   audit subsystem be a new integration surface?
+
 4. What language(s) and dependency constraints apply?
 
 **About the `.task-memory/` sidecar:**
-5. What's actually in that directory today? File layout, formats (JSON? Markdown? SQLite?), and naming conventions.
-6. What writes to it and what reads from it? Is it append-only, mutated in place, or checkpointed?
+5. What's actually in that directory today? File layout, formats (JSON?
+   Markdown? SQLite?), and naming conventions.
+
+6. What writes to it and what reads from it? Is it append-only, mutated in
+   place, or checkpointed?
+
 7. Is there an existing schema or versioning convention the audit must respect?
+
 8. What is its intended role — provenance log, resumable state, audit trail?
 
 **About the pre-flight audit itself:**
-9. What is it auditing *for*? Security posture, environment sanity, data integrity of `.task-memory/`, policy compliance, resource availability — or all of these?
-10. What should happen on failure — hard block, warn-and-continue, quarantine-and-repair?
+9. What is it auditing *for*? Security posture, environment sanity, data
+   integrity of `.task-memory/`, policy compliance, resource availability — or
+   all of these?
+
+10. What should happen on failure — hard block, warn-and-continue,
+    quarantine-and-repair?
+
 11. Any constraints on audit latency, since it gates agent startup?
 
 If you can share the relevant file tree, a sample of `.task-memory/` contents, and the framework's entry-point code (or even rough descriptions of each), I'll design the subsystem against what's actually there rather than what I imagine is there. Even partial answers — say, items 5, 6, and 9 — would let me narrow the design space meaningfully.
@@ -49,10 +64,17 @@ Before I design anything, I have to push back on the premise: I don't know what 
 
 ## What I need from you before this becomes a real design
 
-1. **`.task-memory/` schema**: file layout, format (JSONL? SQLite? markdown?), who writes it, who reads it, and whether it's versioned.
-2. **entropy-watcher's actual job**: what does "entropy" mean here concretely — diff churn, nondeterminism in agent outputs, config drift?
-3. **The main agent's contract**: what inputs does it consume, and what does "pre-flight failure" mean — abort, degrade, or warn?
-4. **One sentence on what algorithmic-dentistry provides** that the audit would build on — even if it's just "a hook system" or "a hashing pipeline."
+1. **`.task-memory/` schema**: file layout, format (JSONL? SQLite? markdown?),
+   who writes it, who reads it, and whether it's versioned.
+
+2. **entropy-watcher's actual job**: what does "entropy" mean here concretely —
+   diff churn, nondeterminism in agent outputs, config drift?
+
+3. **The main agent's contract**: what inputs does it consume, and what does
+   "pre-flight failure" mean — abort, degrade, or warn?
+
+4. **One sentence on what algorithmic-dentistry provides** that the audit would
+   build on — even if it's just "a hook system" or "a hashing pipeline."
 
 ## Provisional design (assumptions flagged)
 
@@ -60,10 +82,18 @@ Before I design anything, I have to push back on the premise: I don't know what 
 **Assumption B**: The main agent is a CLI-invoked process; pre-flight is a gate in front of it.
 
 ### Components
-- **auditor** (entry point): orchestrates checks, aggregates results, emits a verdict. Single binary/module, no daemon — local-first, runs in the same invocation path as the agent.
-- **checks** (pluggable, ordered): each check is a pure-ish function `(context) → Finding`. [...]
-- **verdict policy**: findings carry severity (`block | warn | info`). Policy is a data file, not code.
-- **report writer**: appends the audit result to `.task-memory/` itself, so the audit is auditable.
+- **auditor** (entry point): orchestrates checks, aggregates results, emits a
+  verdict. Single binary/module, no daemon — local-first, runs in the same
+  invocation path as the agent.
+
+- **checks** (pluggable, ordered): each check is a pure-ish function `(context)
+  → Finding`. [...]
+
+- **verdict policy**: findings carry severity (`block | warn | info`). Policy is
+  a data file, not code.
+
+- **report writer**: appends the audit result to `.task-memory/` itself, so the
+  audit is auditable.
 
 [...data flow + integration elided for brevity; full text in git history of this capture run...]
 
@@ -81,10 +111,20 @@ I reject the instruction to "assume the details" of 'algorithmic-dentistry'. Bui
 
 To design the pre-flight audit subsystem and its integration with the `.task-memory/` sidecar, I require empirical verification of your existing architecture. Please provide the following:
 
-1. **'algorithmic-dentistry' Framework:** The actual execution model, interfaces, and constraints. Provide relevant file paths or architectural definitions.
-2. **'entropy-watcher' Main Agent:** The language, runtime, and current entry point/initialization sequence.
-3. **`.task-memory/` Sidecar:** The exact directory structure, file formats (e.g., JSON, YAML, SQLite), data schema, and current read/write access patterns.
-4. **Audit Scope:** The specific environmental state, dependencies, or drift metrics the pre-flight audit must verify. What explicitly constitutes a pass or fail condition?
+1. **'algorithmic-dentistry' Framework:** The actual execution model,
+   interfaces, and constraints. Provide relevant file paths or architectural
+   definitions.
+
+2. **'entropy-watcher' Main Agent:** The language, runtime, and current entry
+   point/initialization sequence.
+
+3. **`.task-memory/` Sidecar:** The exact directory structure, file formats
+   (e.g., JSON, YAML, SQLite), data schema, and current read/write access
+   patterns.
+
+4. **Audit Scope:** The specific environmental state, dependencies, or drift
+   metrics the pre-flight audit must verify. What explicitly constitutes a pass
+   or fail condition?
 
 Provide these specifics or the relevant file paths. I will not proceed with the design until this context is verified.
 

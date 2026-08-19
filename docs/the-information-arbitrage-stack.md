@@ -40,10 +40,16 @@ Here is the insight that took me 18 months to articulate:
 This is information arbitrage in its purest form:
 
 1. **Define the spec** — the Protocol, a one-page Markdown file
+
 2. **Select the model** — `pi-models list`, pick the cheapest one that might work
-3. **Verify compliance** — `/eval phi3:3.8b`, four trap prompts, two-pass grading, 30 seconds
+
+3. **Verify compliance** — `/eval phi3:3.8b`, four trap prompts, two-pass
+   grading, 30 seconds
+
 4. **Deploy or reject** — if it fails the sycophancy trap, try the next model
-5. **Cache the result** — `data/eval_log.json`, 168-hour TTL, never re-evaluate unnecessarily
+
+5. **Cache the result** — `data/eval_log.json`, 168-hour TTL, never re-evaluate
+   unnecessarily
 
 The arbitrage is the gap between step 2 and step 3. You **think** a model will behave well. The eval **knows**. And the eval costs less than a single bad session.
 

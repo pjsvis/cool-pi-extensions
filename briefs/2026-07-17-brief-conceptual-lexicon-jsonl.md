@@ -13,9 +13,15 @@ Extract the Conceptual Lexicon from inline markdown in `prompts/edinburgh-protoc
 
 The CL currently lives as prose in two places — the protocol prompt and the agent AGENTS.md. This has three problems:
 
-1. **Duplication.** The same terms are defined in two files. Edits must be made in both. Drift is inevitable.
-2. **Not machine-readable.** Scripts that want to check whether a cited term resolves (the "semantic anchor" the preflight audit checks against) have to parse markdown prose. JSONL is parseable with `jq`.
-3. **Not append-only.** Adding a term means editing a markdown block. JSONL is append-only — new terms are new lines, no rewriting.
+1. **Duplication.** The same terms are defined in two files. Edits must be made
+   in both. Drift is inevitable.
+
+2. **Not machine-readable.** Scripts that want to check whether a cited term
+   resolves (the "semantic anchor" the preflight audit checks against) have to
+   parse markdown prose. JSONL is parseable with `jq`.
+
+3. **Not append-only.** Adding a term means editing a markdown block. JSONL is
+   append-only — new terms are new lines, no rewriting.
 
 The user noted earlier: "our first edit will likely be to convert the conceptual lexicon to JSONL and put it in a separate file." This is that edit.
 
@@ -100,17 +106,41 @@ cat conceptual-lexicon.jsonl | jq 'select(.category == "metaphor")'
 ## Acceptance criteria
 
 - [ ] `conceptual-lexicon.jsonl` created at repo root with all 10 existing terms
+
 - [ ] JSONL is valid (each line parses as JSON)
-- [ ] Schema documented (either inline or as `conceptual-lexicon.schema.json` at root)
-- [x] `SYSTEM.md` created at repo root (2026-07-20): Protocol text moved to `SYSTEM.md`; `prompts/edinburgh-protocol.md` is now a compat symlink → `../SYSTEM.md` (all existing refs resolve, incl. `~/.pi/agent/AGENTS.md`). High-value refs updated (adopt-edinburgh, justfile, README); descriptive-ref tidy across decisions/briefs/playbooks pending (low-risk, no breakage — all resolve via the symlink).
+
+- [ ] Schema documented (either inline or as `conceptual-lexicon.schema.json` at
+  root)
+
+- [x] `SYSTEM.md` created at repo root (2026-07-20): Protocol text moved to
+  `SYSTEM.md`; `prompts/edinburgh-protocol.md` is now a compat symlink →
+  `../SYSTEM.md` (all existing refs resolve, incl. `~/.pi/agent/AGENTS.md`).
+  High-value refs updated (adopt-edinburgh, justfile, README); descriptive-ref
+  tidy across decisions/briefs/playbooks pending (low-risk, no breakage — all
+  resolve via the symlink).
+
 - [ ] `SYSTEM.md` CL section replaced with reference to `conceptual-lexicon.jsonl`
-- [ ] `~/.pi/agent/AGENTS.md` CL section replaced with reference to `conceptual-lexicon.jsonl`
+
+- [ ] `~/.pi/agent/AGENTS.md` CL section replaced with reference to
+  `conceptual-lexicon.jsonl`
+
 - [ ] Query examples work (jq can search/filter from repo root)
+
 - [ ] Playbook created (`playbooks/conceptual-lexicon-playbook.md`)
 
 ## Notes
 
-- The schema pattern follows the JSON Schema convention used in `ctx-cli-dev/silo_barley/schema.json` — adapt for CL requirements (different fields, different validation rules).
-- The JSONL file is append-only. New terms are new lines. No rewriting existing entries — version them instead (add a new line with updated definition, mark old as superseded).
-- The CL is the prompt compression mechanism. Terms that don't compress (one word doesn't replace a paragraph) don't belong in the CL — they belong in a glossary. The CL is not a glossary.
-- Anti-ceremony: don't add terms that aren't cited. A term in the CL that nobody uses is entropy.
+- The schema pattern follows the JSON Schema convention used in
+  `ctx-cli-dev/silo_barley/schema.json` — adapt for CL requirements (different
+  fields, different validation rules).
+
+- The JSONL file is append-only. New terms are new lines. No rewriting existing
+  entries — version them instead (add a new line with updated definition, mark
+  old as superseded).
+
+- The CL is the prompt compression mechanism. Terms that don't compress (one
+  word doesn't replace a paragraph) don't belong in the CL — they belong in a
+  glossary. The CL is not a glossary.
+
+- Anti-ceremony: don't add terms that aren't cited. A term in the CL that nobody
+  uses is entropy.

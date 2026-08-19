@@ -123,10 +123,22 @@ To handle highly specific corporate data secrets without fine-tuning a massive w
 
 ### Operational Mechanics
 
-1. **The Baseline Failure Run**: A user feeds a document containing proprietary knowledge (e.g., an internal code-name or secret manufacturing procedure). The local SLM passes it because the phrase doesn't inherently pattern like traditional PII.
-2. **The Structural Injection**: The user triggers an interception coaching command. This isolates the specific missed token structure and converts it into a structural rule.
-3. **The Local Constraint Cache**: The signature is appended to a local JSON configuration block stored natively within the browser extension's secure local runtime storage (`chrome.storage.local`).
-4. **Enforcement**: Future runs immediately compare strings against both the general legal rules and the custom local string/semantic matrix before hitting the LLM model token pass.
+1. **The Baseline Failure Run**: A user feeds a document containing proprietary
+   knowledge (e.g., an internal code-name or secret manufacturing procedure).
+   The local SLM passes it because the phrase doesn't inherently pattern like
+   traditional PII.
+
+2. **The Structural Injection**: The user triggers an interception coaching
+   command. This isolates the specific missed token structure and converts it
+   into a structural rule.
+
+3. **The Local Constraint Cache**: The signature is appended to a local JSON
+   configuration block stored natively within the browser extension's secure
+   local runtime storage (`chrome.storage.local`).
+
+4. **Enforcement**: Future runs immediately compare strings against both the
+   general legal rules and the custom local string/semantic matrix before
+   hitting the LLM model token pass.
 
 ---
 

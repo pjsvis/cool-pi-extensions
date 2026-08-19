@@ -12,9 +12,23 @@ word_count: 4367
 
 Here’s why you should care about how you release your npm package:
 
-1. Supply chain attacks that steal npm packages are now a real threat, with new attacks every month. If the [TanStack](https://tanstack.com/blog/npm-supply-chain-compromise-postmortem), [Axios](https://github.com/axios/axios/issues/10636), or [ESLint](https://eslint.org/blog/2018/07/postmortem-for-malicious-package-publishes/) teams were hacked, you can be hacked. These days, attackers steal packages automatically with LLMs, using previously stolen dependencies to reach the next ones.
-2. Taking care of ecosystem security is also a marketing tool. The right publishing method gives you a nice green check icon on [npmjs.com](https://www.npmjs.com/package/nanoid) and a better security score. You can use this as an advantage over competitors.
-3. In the future, when coding skill can be replaced by LLMs, safeguards and security will become new core responsibilities. That means it’s time to go deeper into security now.
+1. Supply chain attacks that steal npm packages are now a real threat, with new
+   attacks every month. If the
+   [TanStack](https://tanstack.com/blog/npm-supply-chain-compromise-postmortem),
+   [Axios](https://github.com/axios/axios/issues/10636), or
+   [ESLint](https://eslint.org/blog/2018/07/postmortem-for-malicious-package-publishes/)
+   teams were hacked, you can be hacked. These days, attackers steal packages
+   automatically with LLMs, using previously stolen dependencies to reach the
+   next ones.
+
+2. Taking care of ecosystem security is also a marketing tool. The right
+   publishing method gives you a nice green check icon on
+   [npmjs.com](https://www.npmjs.com/package/nanoid) and a better security
+   score. You can use this as an advantage over competitors.
+
+3. In the future, when coding skill can be replaced by LLMs, safeguards and
+   security will become new core responsibilities. That means it’s time to go
+   deeper into security now.
 
 At Evil Martians, we have [more than 100](https://evilmartians.com/opensource) open source projects. That creates a risk: somebody could use one open project to steal an npm token, then steal all the others. So for us, supply chain security has been an everyday practice since 2024.
 
@@ -32,12 +46,26 @@ Book a call
 
 Here are the essentials. See below for extra tricks that need more context beyond copy-paste instructions.
 
-1. Open the `Settings` tab of your npm package on [npmjs.com](https://www.npmjs.com/).
-	1. Create a **Trusted Publisher**: select GitHub, enter your repository organization and name, and set `publish.yaml` as the `Workflow filename`. Enable only `Allow npm stage publish`.
+1. Open the `Settings` tab of your npm package on
+   [npmjs.com](https://www.npmjs.com/).
+
+	1. Create a **Trusted Publisher**: select GitHub, enter your repository
+    organization and name, and set `publish.yaml` as the `Workflow filename`.
+    Enable only `Allow npm stage publish`.
+
 		2. Enable **… and disallow tokens** in **Publishing access**.
-2. Enable **2FA** for everyone: on GitHub, go to organization settings → **Authentication security**.
-3. Allow **only admins to create tags**: on GitHub, go to repository settings → Rules → Rulesets, press *New ruleset* → *New tag ruleset*. Put `Tags only by admins` in *Ruleset Name*; `Active` in *Enforcement status*; add `Repository admins` to the *Bypass list* and `Include all tags` to *Target tags*. Enable **Restrict creations** in *Tag rules*.
-4. Pin third-party CI actions by SHA commit with [actions-up](https://github.com/azat-io/actions-up):
+
+2. Enable **2FA** for everyone: on GitHub, go to organization settings →
+   **Authentication security**.
+
+3. Allow **only admins to create tags**: on GitHub, go to repository settings →
+   Rules → Rulesets, press *New ruleset* → *New tag ruleset*. Put `Tags only by
+   admins` in *Ruleset Name*; `Active` in *Enforcement status*; add `Repository
+   admins` to the *Bypass list* and `Include all tags` to *Target tags*. Enable
+   **Restrict creations** in *Tag rules*.
+
+4. Pin third-party CI actions by SHA commit with
+   [actions-up](https://github.com/azat-io/actions-up):
 	```bash
 	npx actions-up
 	```
@@ -72,7 +100,9 @@ Here are the essentials. See below for extra tricks that need more context beyon
 	# yarn config set npmMinimalAgeGate 3d
 	# printf '\n[install]\nminimumReleaseAge = 259200\n' >> bunfig.toml
 	```
-7. Migrate to npm 12, pnpm 10, yarn 4.14, or bun so that the `postinstall` scripts of your npm dependencies aren’t called during install.
+7. Migrate to npm 12, pnpm 10, yarn 4.14, or bun so that the `postinstall`
+   scripts of your npm dependencies aren’t called during install.
+
 8. Create `.github/workflows/publish.yaml`
 ```yaml
 name: Release
@@ -186,10 +216,33 @@ Instead, I suggest thinking about real attacks (and potential attacks, if you en
 
 Right now, the main risks for an npm package maintainer are as follows:
 
-- You or an LLM run `npm install …` for some dependency needed by your current task. But, as it turns out, **this dependency was hacked** and contains malware. The malware now has full access to your laptop or CI. It steals your npm tokens, and the attacker’s LLM quickly injects malware into your package, releasing it to reach even more people. For instance, [OpenAI was compromised](https://openai.com/index/our-response-to-the-tanstack-npm-supply-chain-attack/) through a compromised TanStack package during the [Mini Shai-Hulud campaign](https://socket.dev/blog/tanstack-npm-packages-compromised-mini-shai-hulud-supply-chain-attack).
-- A **third-party CI action was hacked**. The attacker injects malware and re-releases old tags like `v3`. On your next publish job, this action has full access to your CI and injects malware into your package before release. Read more about the [tj-actions/changed-files case](https://safeguard.sh/resources/blog/tj-actions-changed-files-compromise-march-2025).
-- Your **CI pipeline was hacked** because of some mistake (like misusing `pull_request_target` or having a shell injection). Through cache poisoning, the attacker infects other CI workflows and, with access to the publish workflow, releases your package with malware. This is how [TanStack](https://snyk.io/blog/tanstack-npm-packages-compromised/) was hacked.
-- A maintainer is invited to a **fake job interview**, then attackers use the high-stress situation to pressure them into installing **fake Zoom plugins** that steal every token from their machine. [Axios’s maintainer](https://github.com/axios/axios/issues/10636#issuecomment-4180237789) was hacked this way.
+- You or an LLM run `npm install …` for some dependency needed by your current
+  task. But, as it turns out, **this dependency was hacked** and contains
+  malware. The malware now has full access to your laptop or CI. It steals your
+  npm tokens, and the attacker’s LLM quickly injects malware into your package,
+  releasing it to reach even more people. For instance, [OpenAI was
+  compromised](https://openai.com/index/our-response-to-the-tanstack-npm-supply-chain-attack/)
+  through a compromised TanStack package during the [Mini Shai-Hulud
+  campaign](https://socket.dev/blog/tanstack-npm-packages-compromised-mini-shai-hulud-supply-chain-attack).
+
+- A **third-party CI action was hacked**. The attacker injects malware and
+  re-releases old tags like `v3`. On your next publish job, this action has full
+  access to your CI and injects malware into your package before release. Read
+  more about the [tj-actions/changed-files
+  case](https://safeguard.sh/resources/blog/tj-actions-changed-files-compromise-march-2025).
+
+- Your **CI pipeline was hacked** because of some mistake (like misusing
+  `pull_request_target` or having a shell injection). Through cache poisoning,
+  the attacker infects other CI workflows and, with access to the publish
+  workflow, releases your package with malware. This is how
+  [TanStack](https://snyk.io/blog/tanstack-npm-packages-compromised/) was
+  hacked.
+
+- A maintainer is invited to a **fake job interview**, then attackers use the
+  high-stress situation to pressure them into installing **fake Zoom plugins**
+  that steal every token from their machine. [Axios’s
+  maintainer](https://github.com/axios/axios/issues/10636#issuecomment-4180237789)
+  was hacked this way.
 
 So, the main sources of risk during `npm publish` are:
 
@@ -220,9 +273,17 @@ Of course, LLMs deflate the cost of a personal attack a lot. But your task still
 
 There are advanced security topics for specialists, but *basic security* should be expected of every developer.
 
-1. It’s simply impossible to have good security if every worker (except the security specialist) tries to work around the protections. A chain is only as strong as its weakest link. A company can have good security only if *every* worker helps.
-2. The industry is changing very rapidly right now, and people expect more *fullstack* developers. Basic security is part of that expectation, at least until a package grows big enough to have dedicated specialists.
-3. Since coding is shifting to LLMs, the human work of every developer is shifting toward security and safeguards.
+1. It’s simply impossible to have good security if every worker (except the
+   security specialist) tries to work around the protections. A chain is only as
+   strong as its weakest link. A company can have good security only if *every*
+   worker helps.
+
+2. The industry is changing very rapidly right now, and people expect more
+   *fullstack* developers. Basic security is part of that expectation, at least
+   until a package grows big enough to have dedicated specialists.
+
+3. Since coding is shifting to LLMs, the human work of every developer is
+   shifting toward security and safeguards.
 
 ## Breaking down each security step
 
@@ -250,8 +311,11 @@ CI can always be hacked and release an npm package while you’re sleeping.
 
 But **Staged Publishing** brought us the best of both worlds: CI publishing with good DX and npm Provenance, *and* a manual check with a hardware 2FA token.
 
-1. In the first step, CI releases the package using `npm stage publish` instead of `npm publish`.
-2. In the second step, you manually approve the publish with your hardware 2FA token.
+1. In the first step, CI releases the package using `npm stage publish` instead
+   of `npm publish`.
+
+2. In the second step, you manually approve the publish with your hardware 2FA
+   token.
 ```
 steps:
       …
@@ -282,8 +346,17 @@ Many recent supply chain attacks started from a mistake in a popular CI workflow
 
 I know 2 good CI linters, but both have a small issue:
 
-- **[CodeQL](https://codeql.github.com/)** is a security linter for many languages, including GitHub workflows. It’s built into GitHub. Enable it in repository settings → *Advanced Security* → *Code scanning* → *CodeQL analysis*, press `Set up`, and select `Default`. The problem is DX: to check warnings, you have to manually open the *Security and quality* tab and go to the *Code scanning* page.
-- **[zizmor](https://github.com/zizmorcore/zizmor)** is a linter only for GitHub Actions. It has more rules, but since it’s a Rust tool, it’s a little harder to install into an npm project. Still, you can use an action to lint workflows on CI.
+- **[CodeQL](https://codeql.github.com/)** is a security linter for many
+  languages, including GitHub workflows. It’s built into GitHub. Enable it in
+  repository settings → *Advanced Security* → *Code scanning* → *CodeQL
+  analysis*, press `Set up`, and select `Default`. The problem is DX: to check
+  warnings, you have to manually open the *Security and quality* tab and go to
+  the *Code scanning* page.
+
+- **[zizmor](https://github.com/zizmorcore/zizmor)** is a linter only for GitHub
+  Actions. It has more rules, but since it’s a Rust tool, it’s a little harder
+  to install into an npm project. Still, you can use an action to lint workflows
+  on CI.
 ```yaml
 name: Lint CI workflows
 on:
@@ -455,8 +528,19 @@ Malware code from an npm package can execute:
 
 Again, there’s no way to protect yourself from this 100%. But there are ways to reduce the risks:
 
-- **Disable `postinstall`** and similar scripts. [npm 12](https://github.blog/changelog/2026-06-09-upcoming-breaking-changes-for-npm-v12/), [pnpm 10](https://github.com/pnpm/pnpm/releases/tag/v10.0.0), [yarn 4.14](https://github.com/yarnpkg/berry/releases#release-@yarnpkg/cli/4.14.0), and bun disable them by default, so update to the latest version.
-- **Cooldown:** wait 1-3 days before using a new version. *The median takedown time was [14 hours](https://hextrap.com/blog/soak-time-defense-depth/), and a 3-day cooldown would have blocked about 94% of malicious packages.* [pnpm 11](https://pnpm.io/blog/releases/11.0) and [yarn 4.15](https://github.com/yarnpkg/berry/releases#release-@yarnpkg/cli/4.15.0) moved to a default 1-day cooldown. Now every package manager has cooldown options:
+- **Disable `postinstall`** and similar scripts. [npm
+  12](https://github.blog/changelog/2026-06-09-upcoming-breaking-changes-for-npm-v12/),
+  [pnpm 10](https://github.com/pnpm/pnpm/releases/tag/v10.0.0), [yarn
+  4.14](https://github.com/yarnpkg/berry/releases#release-@yarnpkg/cli/4.14.0),
+  and bun disable them by default, so update to the latest version.
+
+- **Cooldown:** wait 1-3 days before using a new version. *The median takedown
+  time was [14 hours](https://hextrap.com/blog/soak-time-defense-depth/), and a
+  3-day cooldown would have blocked about 94% of malicious packages.* [pnpm
+  11](https://pnpm.io/blog/releases/11.0) and [yarn
+  4.15](https://github.com/yarnpkg/berry/releases#release-@yarnpkg/cli/4.15.0)
+  moved to a default 1-day cooldown. Now every package manager has cooldown
+  options:
 	```bash
 	npm config set --location=project min-release-age 3
 	pnpm config set --location=project minimumReleaseAge 4320
@@ -467,7 +551,12 @@ Again, there’s no way to protect yourself from this 100%. But there are ways t
 	[install]
 	minimumReleaseAge = 259200
 	```
-- Add a **“firewall”** that scans dependency contents before using them. For instance, [Socket Firewall](https://socket.dev/blog/introducing-socket-firewall) or [SafeDep PMG](https://docs.safedep.io/package-security/pmg/quickstart). It’s a good defense against typosquatting, when you or an LLM makes a mistake in a package name.
+- Add a **“firewall”** that scans dependency contents before using them. For
+  instance, [Socket
+  Firewall](https://socket.dev/blog/introducing-socket-firewall) or [SafeDep
+  PMG](https://docs.safedep.io/package-security/pmg/quickstart). It’s a good
+  defense against typosquatting, when you or an LLM makes a mistake in a package
+  name.
 
 ## Extra steps
 
@@ -479,17 +568,35 @@ I know that changing habits is hard. But we have these huge supply chain attacks
 
 **Nested dependencies** (the dependencies of your dependencies) are often the biggest part of this. The good news: this can often be fixed quickly by moving to an alternative tool with fewer dependencies.
 
-- The [e18e community](https://e18e.dev/) does a lot to make the JS ecosystem faster, smaller, and safer. They have a [manual list](https://e18e.dev/docs/replacements/), a [CLI tool](https://e18e.dev/docs/cli/), and a [CI action](https://github.com/e18e/action-dependency-diff) to help you find and replace dependencies that pull in a lot of nested dependencies.
+- The [e18e community](https://e18e.dev/) does a lot to make the JS ecosystem
+  faster, smaller, and safer. They have a [manual
+  list](https://e18e.dev/docs/replacements/), a [CLI
+  tool](https://e18e.dev/docs/cli/), and a [CI
+  action](https://github.com/e18e/action-dependency-diff) to help you find and
+  replace dependencies that pull in a lot of nested dependencies.
 	```bash
 	npx @e18e/cli analyze
 	```
-- Check your dependencies with [npmgraph](https://npmgraph.js.org/) to see the number of nested dependencies, and use [npmx.dev](https://npmx.dev/package/fast-glob) to find alternatives.
-- Small helpers that don’t need updates are better rewritten with an LLM and stored as local JS files in the project. **Many third-party CI actions can be rewritten as a short shell script by an LLM.**
+- Check your dependencies with [npmgraph](https://npmgraph.js.org/) to see the
+  number of nested dependencies, and use
+  [npmx.dev](https://npmx.dev/package/fast-glob) to find alternatives.
+
+- Small helpers that don’t need updates are better rewritten with an LLM and
+  stored as local JS files in the project. **Many third-party CI actions can be
+  rewritten as a short shell script by an LLM.**
 
 Where to focus your effort, by priority:
 
-1. Your direct `dependencies` and their nested dependencies. Your clients can be hacked not only by malware in your package, but by malware in any of your dependencies. Check your package on [npmgraph](https://npmgraph.js.org/) and start thinking about replacements for the bigger branches.
-2. Then move to your `devDependencies`. Every nested dependency can be hacked and try to steal your CI tokens. Ask maintainers to move to the smallest alternatives or native modules in their direct dependencies. If you have a huge, powerful tool but use only a single feature, rewrite it with an LLM.
+1. Your direct `dependencies` and their nested dependencies. Your clients can be
+   hacked not only by malware in your package, but by malware in any of your
+   dependencies. Check your package on [npmgraph](https://npmgraph.js.org/) and
+   start thinking about replacements for the bigger branches.
+
+2. Then move to your `devDependencies`. Every nested dependency can be hacked
+   and try to steal your CI tokens. Ask maintainers to move to the smallest
+   alternatives or native modules in their direct dependencies. If you have a
+   huge, powerful tool but use only a single feature, rewrite it with an LLM.
+
 3. Then check third-party actions. Ask an LLM to rewrite the smallest ones.
 
 ### Dev Container
@@ -504,9 +611,15 @@ If you use VS Code, we also recommend disabling the Docker socket for better sec
 
 With a Dev Container, you get more than just better security:
 
-1. Your LLM runs inside the container too, so it can’t break your system because of a hallucination.
-2. You get an almost one-line onboarding process for new developers. No need to install databases and tools on the system manually; everything is set up for you.
+1. Your LLM runs inside the container too, so it can’t break your system because
+   of a hallucination.
+
+2. You get an almost one-line onboarding process for new developers. No need to
+   install databases and tools on the system manually; everything is set up for
+   you.
+
 3. Your whole team runs the project in the same environment.
+
 4. The project can be started in web IDEs like GitHub Codespaces.
 
 ### Harden Runner
@@ -536,18 +649,38 @@ This supply chain attack crisis isn’t because of npm or JS (pnpm has a lot of 
 To stop this, we need to start managing the risk. And that applies not only to npm/JS, but to any environment:
 
 - Docker base images (including Dev Container images and features).
+
 - IDE extensions.
-- Other package managers, like those used for backends or [Python for AI tools](https://snyk.io/blog/lightning-pypi-compromise-bun-based-credential-stealer/).
+
+- Other package managers, like those used for backends or [Python for AI
+  tools](https://snyk.io/blog/lightning-pypi-compromise-bun-based-credential-stealer/).
+
 - Third-party CI actions.
+
 - Skills for LLMs.
+
 - And so on.
 
 For each of your environments, think about these points:
 
-- **How to reduce the number of dependencies or the attack surface.** Don’t grab an unknown thing from a viral social post. Try to use a minimal solution instead of a big “everything together” one.
-- **How to isolate or limit access.** Wrap more things in a container, limit API access to only what’s necessary, and so on.
-- **Do you have control over updates?** A lockfile, an update cooldown ([cooldowns.dev](https://cooldowns.dev/) has instructions for different environments).
-- **How can you review them when adding or updating?** Define how to check the quality of a new tool (don’t use popularity or star count for that). Consider getting diffs for updates (like in our [Multiocular](https://github.com/ai/multiocular)). Maybe add a service with LLMs reviewing changes (just don’t treat it as the only option; there are ways [to blind LLMs](https://socket.dev/blog/mini-shai-hulud-miasma-and-hades-worms-target-bioinformatics-and-mcp-developers-via-malicious#LLM-Scanner-Anti-Analysis)).
+- **How to reduce the number of dependencies or the attack surface.** Don’t grab
+  an unknown thing from a viral social post. Try to use a minimal solution
+  instead of a big “everything together” one.
+
+- **How to isolate or limit access.** Wrap more things in a container, limit API
+  access to only what’s necessary, and so on.
+
+- **Do you have control over updates?** A lockfile, an update cooldown
+  ([cooldowns.dev](https://cooldowns.dev/) has instructions for different
+  environments).
+
+- **How can you review them when adding or updating?** Define how to check the
+  quality of a new tool (don’t use popularity or star count for that). Consider
+  getting diffs for updates (like in our
+  [Multiocular](https://github.com/ai/multiocular)). Maybe add a service with
+  LLMs reviewing changes (just don’t treat it as the only option; there are ways
+  [to blind
+  LLMs](https://socket.dev/blog/mini-shai-hulud-miasma-and-hades-worms-target-bioinformatics-and-mcp-developers-via-malicious#LLM-Scanner-Anti-Analysis)).
 
 For instance, IDE extensions are one of the least protected areas right now. There’s no cooldown, no lockfile, and no user-controlled update process. GitHub itself was hacked by a [poisoned VS Code extension](https://x.com/github/status/2056949168208552080).
 

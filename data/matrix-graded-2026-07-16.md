@@ -110,8 +110,11 @@ The 16-model sample (of 25 attempted) is reduced by provider errors. The missing
 
 Two scorers, two different pictures:
 
-- **Keyword scorer:** net −0.28, protocol hurts more models than it helps. But the scorer measures format markers, not reasoning.
-- **Structured grader:** net +3.81, protocol helps every model, hurts none. The grader measures reasoning quality with formatting explicitly excluded.
+- **Keyword scorer:** net −0.28, protocol hurts more models than it helps. But
+  the scorer measures format markers, not reasoning.
+
+- **Structured grader:** net +3.81, protocol helps every model, hurts none. The
+  grader measures reasoning quality with formatting explicitly excluded.
 
 The structured grader is the more valid instrument for the question we're asking — "does the protocol produce better thinking?" — because it's designed to measure thinking, not formatting. The keyword scorer is measuring something real (the protocol does change output format), but that's not the variable we care about.
 
@@ -121,11 +124,20 @@ This is the end of the experiment's pilot phase. We started with a question ("do
 
 ### Where we could go next
 
-1. **External grader.** Use a model outside the eval lineup (e.g., Claude Opus) to grade, eliminating the self-referential bias risk.
-2. **Full sample recovery.** Re-run with better rate-limit handling to get all 25 models graded in both conditions.
-3. **Multiple grader consensus.** Run 3 different graders and take the median, reducing single-grader bias.
-4. **Variance testing.** Run the same model 5× in each condition to measure noise vs signal.
-5. **Different eval prompts.** The café/blame prompt is one scenario. Test with 2-3 different prompts to see if the protocol's effect generalizes.
+1. **External grader.** Use a model outside the eval lineup (e.g., Claude Opus)
+   to grade, eliminating the self-referential bias risk.
+
+2. **Full sample recovery.** Re-run with better rate-limit handling to get all
+   25 models graded in both conditions.
+
+3. **Multiple grader consensus.** Run 3 different graders and take the median,
+   reducing single-grader bias.
+
+4. **Variance testing.** Run the same model 5× in each condition to measure
+   noise vs signal.
+
+5. **Different eval prompts.** The café/blame prompt is one scenario. Test with
+   2-3 different prompts to see if the protocol's effect generalizes.
 
 ---
 

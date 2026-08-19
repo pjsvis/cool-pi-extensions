@@ -18,8 +18,11 @@ They are 90% used by agents. The human doesn't notice them because they work. Th
 
 td tracks:
 - Session identity and issue state
+
 - What was done, what remains, what's blocked
-- Handoff context so the next agent session resumes exactly where the previous one stopped
+
+- Handoff context so the next agent session resumes exactly where the previous
+  one stopped
 
 An agent calls `td handoff` before stopping. The next agent calls `td start` and knows everything. No debrief to read, no context to reconstruct.
 
@@ -48,9 +51,14 @@ Terminal (Alacritty)
 ```
 
 Each layer is the same pattern at a different scale:
-- **Small surface area.** Each context is bounded. The agent can't escape its silo. The worktree is isolated. The session has a clear purpose.
-- **Clear boundaries.** Worktrees don't share filesystems. Sessions don't share terminal state. Agents don't share memory.
-- **Observable state.** td captures what happened. sidecar shows what's happening. The human can see all layers simultaneously.
+- **Small surface area.** Each context is bounded. The agent can't escape its
+  silo. The worktree is isolated. The session has a clear purpose.
+
+- **Clear boundaries.** Worktrees don't share filesystems. Sessions don't share
+  terminal state. Agents don't share memory.
+
+- **Observable state.** td captures what happened. sidecar shows what's
+  happening. The human can see all layers simultaneously.
 
 **The human occupies the meta-layer.** They can drop into any tab, any worktree, any agent's context — but they don't need to. sidecar shows them enough to supervise without interfering.
 
@@ -102,5 +110,9 @@ The invisible cables should be visible enough that someone reading the docs unde
 ## References
 
 - [herdr](https://herdr.dev) — session multiplexing, tab management, daemon
-- [td](https://github.com/marcusjensen/homebrew-tap) — structured session and issue tracking for agents (`brew install td`)
-- [sidecar](https://github.com/marcusjensen/homebrew-tap) — TUI for watching agent progress and worktrees (`brew install sidecar`)
+
+- [td](https://github.com/marcusjensen/homebrew-tap) — structured session and
+  issue tracking for agents (`brew install td`)
+
+- [sidecar](https://github.com/marcusjensen/homebrew-tap) — TUI for watching
+  agent progress and worktrees (`brew install sidecar`)

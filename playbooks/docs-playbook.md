@@ -25,10 +25,16 @@ The JSON fixture is a runtime dependency — the extension reads it directly. Th
 ## Conventions
 
 - One `.md` file per artifact (not per version — version the filename if needed)
-- Describe the *why*, not just the *what* — the JSON says what the trap tests; the doc says why it works
+
+- Describe the *why*, not just the *what* — the JSON says what the trap tests;
+  the doc says why it works
+
 - Include usage instructions where relevant
+
 - Link back to the machine-readable source
-- Keep the narrative voice consistent with the Edinburgh Protocol: precise, dryly witty, anti-bloat
+
+- Keep the narrative voice consistent with the Edinburgh Protocol: precise,
+  dryly witty, anti-bloat
 
 ### List spacing (loose when items wrap or nest)
 
@@ -45,8 +51,10 @@ already marks the boundary, so loose only adds air without clarity.
   without air to sever them. Since render width varies (terminal, GitHub,
   phone), the practical proxy is length — items longer than the column
   target wrap somewhere.
+
 - **Source multi-line or nested items → loose.** Same boundary job, in source
   for the parser and the editor.
+
 - **Items that fit one render line → tight is fine.** Loose is harmless but
   not required; don't cargo-cult air where the marker already disambiguates.
 
@@ -65,5 +73,8 @@ not everywhere.
 ## When not to
 
 - The JSON is self-documenting and simple (a flat list of models, a config file)
+
 - The artifact is already prose (AGENTS.md, playbooks)
-- You're tempted to duplicate what the JSON already says — add context or don't bother
+
+- You're tempted to duplicate what the JSON already says — add context or don't
+  bother

@@ -24,9 +24,11 @@ This is a structural incentive failure, not a memory lapse:
 - **Quadratic cost.** A conversation of *n* turns, each re-sending the growing
   history, costs *O(n²)* in input tokens. A long session doesn't just get
   expensive at the end — it gets expensive *per turn* as it grows.
+
 - **The agent has no skin in the game.** It never sees the bill. It will
   happily carry 200K tokens of barnacles into turn 201. Cost pressure lives
   entirely with the human.
+
 - **Human memory is the wrong control.** "Remember to new up" is a rule
   enforced by the party least able to feel the marginal cost in the moment.
 
@@ -37,10 +39,13 @@ with the handoff mechanism that already exists:
 
 1. **Work in bounded phases.** A phase is a logical unit of work, not a time
    interval.
+
 2. **Handoff at the phase boundary.** `td handoff` captures the compressed
    state — ground truth, rejected hypotheses, remaining debt.
+
 3. **New up.** Fresh context. The handoff is the seed; the megabytes are
    dropped.
+
 4. **Resume from handoff.** The new session reads `td context` and continues.
 
 This is the bounded-context idea (brief 010) applied to the session itself.
@@ -58,6 +63,7 @@ compression; the raw transcript is the entropy.
 
 - Surface this in `AGENTS.md` as an operational guideline (candidate for the
   Operational Guidelines section).
+
 - The parked token-compaction-hook brief (2026-07-12) sketched an automated
   compaction pass at `td handoff`. This brief is the manual discipline that
   makes automation worth building — the $46 is the proof.

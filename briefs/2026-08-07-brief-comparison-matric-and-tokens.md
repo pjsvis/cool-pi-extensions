@@ -44,7 +44,9 @@ Extract token usage from provider responses (OpenAI-compatible `usage` payloads,
 Incorporate a **Token Efficiency Ratio** alongside functional pass rates:
 
 * Functional Pass Score ($S$) vs. Total Tokens Used ($T$).
-* Flag "Token Burners": Models that pass functional tests but consume an excessive token multiplier compared to the benchmark median.
+
+* Flag "Token Burners": Models that pass functional tests but consume an
+  excessive token multiplier compared to the benchmark median.
 
 ---
 
@@ -95,11 +97,11 @@ For context retrieval or agentic sandbox suites, render explicit sub-matrix brea
 
 1. **Schema Integrity:** `pi-eval run` records `usage` in `data/eval_runs.jsonl`.
 
+2. **Matrix Command Output:** `pi-eval matrix` renders the Runtime Environment
+   Block and the summary table including token totals and loop counts.
 
-2. **Matrix Command Output:** `pi-eval matrix` renders the Runtime Environment Block and the summary table including token totals and loop counts.
-
-
-3. **No Regressions:** Non-tokenized historical runs degrade gracefully in table views (render `N/A` for usage without crashing matrix generation).
+3. **No Regressions:** Non-tokenized historical runs degrade gracefully in table
+   views (render `N/A` for usage without crashing matrix generation).
 
 
 

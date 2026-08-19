@@ -20,9 +20,18 @@ The instinct when you see a $46 bill is to缩短 the work — do less, stop earl
 
 There are two things that can be "long-running," and they have nothing in common:
 
-- **A long-running process** is work that takes many steps — a migration, a documentation overhaul, a multi-phase eval. These are fine. They should run as long as they need to. You decompose them into epics and tasks with `td`, you document the decomposition, and you let the work proceed. The cost is linear in the work. No problem.
+- **A long-running process** is work that takes many steps — a migration, a
+  documentation overhaul, a multi-phase eval. These are fine. They should run as
+  long as they need to. You decompose them into epics and tasks with `td`, you
+  document the decomposition, and you let the work proceed. The cost is linear
+  in the work. No problem.
 
-- **A long-running agent** is a single conversational session that never gets reset. This is the problem. Each turn re-sends the entire history. A conversation of *n* turns costs *O(n²)* in input tokens. A session that runs twice as long costs roughly **four times** as much, not twice. The marginal cost of every turn rises with the session length. Turn 200 costs what turn 1 cost plus 199 turns of barnacles.
+- **A long-running agent** is a single conversational session that never gets
+  reset. This is the problem. Each turn re-sends the entire history. A
+  conversation of *n* turns costs *O(n²)* in input tokens. A session that runs
+  twice as long costs roughly **four times** as much, not twice. The marginal
+  cost of every turn rises with the session length. Turn 200 costs what turn 1
+  cost plus 199 turns of barnacles.
 
 The confusion between these two is what produces the $46. You think you're running a long-running process (fine, linear). You're actually running a long-running agent (quadratic, expensive). The fix is not to do less work. The fix is to stop carrying the barnacles.
 
@@ -30,9 +39,16 @@ The confusion between these two is what produces the $46. You think you're runni
 
 The discipline is to treat a context reset as a **phase boundary**, not a memory test. At each boundary:
 
-1. **Handoff.** `td handoff` captures the compressed state — the ground truth objective, the rejected hypotheses, the remaining debt. This is the lossy compression. The handoff keeps what the next session needs and drops what it doesn't.
-2. **New up.** `/new` for a fresh session. The megabytes are dropped. The meter resets.
-3. **Resume.** The new session reads `td context` and continues from the handoff. The handoff is the seed. The raw transcript is the entropy.
+1. **Handoff.** `td handoff` captures the compressed state — the ground truth
+   objective, the rejected hypotheses, the remaining debt. This is the lossy
+   compression. The handoff keeps what the next session needs and drops what it
+   doesn't.
+
+2. **New up.** `/new` for a fresh session. The megabytes are dropped. The meter
+   resets.
+
+3. **Resume.** The new session reads `td context` and continues from the
+   handoff. The handoff is the seed. The raw transcript is the entropy.
 
 Half a dozen newups in a long session is not excessive. It is the difference between *O(n²)* and *O(n)*. The work doesn't get shorter. The bill does.
 

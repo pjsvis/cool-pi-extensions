@@ -26,24 +26,38 @@ By running basic string parsing over directory listings across 5, 50, or 500 cod
 
 By parsing the min/max dates from `briefs/` and `debriefs/` across repos, you get an instant heatmap of your ecosystem:
 
-* **High Thermal:** A repo with 15 briefs filed in the last 14 days is undergoing rapid evolution or active refactoring.
-* **Dormant:** A stable microservice whose last debrief was 8 months ago is operating in steady-state maintenance.
-* **Zombie Project:** A repo with active task locks in `marcus/td` but no filed debriefs for months is stuck in operational drift.
+* **High Thermal:** A repo with 15 briefs filed in the last 14 days is
+  undergoing rapid evolution or active refactoring.
+
+* **Dormant:** A stable microservice whose last debrief was 8 months ago is
+  operating in steady-state maintenance.
+
+* **Zombie Project:** A repo with active task locks in `marcus/td` but no filed
+  debriefs for months is stuck in operational drift.
 
 ### 2. The Friction Index (Brief-to-Debrief Ratio)
 
 Comparing the count and temporal pairing of files in `briefs/` versus `debriefs/` yields an immediate signal on execution health:
 
-* **Ratio $\approx 1:1$:** High execution discipline. Ideas are tested, completed, and debriefed.
-* **Ratio $> 2:1$:** Analysis paralysis or high task abandonment. Teams (or agents) are writing speculative briefs that never survive contact with the code.
-* **Ratio $< 1:2$:** Reactive fire-fighting. Work is being done on the fly with minimal pre-execution assertion.
+* **Ratio $\approx 1:1$:** High execution discipline. Ideas are tested,
+  completed, and debriefed.
+
+* **Ratio $> 2:1$:** Analysis paralysis or high task abandonment. Teams (or
+  agents) are writing speculative briefs that never survive contact with the
+  code.
+
+* **Ratio $< 1:2$:** Reactive fire-fighting. Work is being done on the fly with
+  minimal pre-execution assertion.
 
 ### 3. Architectural Volatility (Decision Velocity)
 
 Tracking the frequency of new files in `decisions/` tells you how settled an architecture is:
 
-* A cluster of 10 decision logs in a single month indicates a team breaking new ground or fighting fundamental design flaws.
-* A stable repo averaging 1 decision per quarter has achieved architectural equilibrium.
+* A cluster of 10 decision logs in a single month indicates a team breaking new
+  ground or fighting fundamental design flaws.
+
+* A stable repo averaging 1 decision per quarter has achieved architectural
+  equilibrium.
 
 ---
 

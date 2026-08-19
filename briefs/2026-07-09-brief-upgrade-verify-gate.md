@@ -8,11 +8,25 @@ Born from a real incident: a `td` upgrade was believed complete but the binary w
 
 ## Architectural Constraints (The Silo)
 
-* **Dependency-light by necessity.** A tool that exists to catch upgrade/dependency problems must not itself be a dependency hazard. Implemented in **POSIX shell**, zero runtime deps beyond `brew`, `jq`, and the tools under test. Not TS/Bun, not Python — ironic as that is for this repo, the gate must be the one thing that cannot break because of an upgrade.
-* **External authority for "expected".** The desired version is derived live from `brew info --json=v2` (`stable` field), never hardcoded. When a new release lands, the gate knows the target without an edit.
-* **Never silently succeed.** Every run ends in either `VERIFIED <tool> <version>` or a non-zero exit with specifics. No quiet pass.
-* **Canaries must be side-effect-clean.** Any smoke test that mutates state (e.g., creating a throwaway td issue) cleans up via a `trap`, even on failure. Throwaways carry an obvious marker title.
-* **Canary registry, not a monolith.** Each tool's smoke is an isolated script under `canaries/`. Adding a tool = adding one file + one registry entry.
+* **Dependency-light by necessity.** A tool that exists to catch
+  upgrade/dependency problems must not itself be a dependency hazard.
+  Implemented in **POSIX shell**, zero runtime deps beyond `brew`, `jq`, and the
+  tools under test. Not TS/Bun, not Python — ironic as that is for this repo,
+  the gate must be the one thing that cannot break because of an upgrade.
+
+* **External authority for "expected".** The desired version is derived live
+  from `brew info --json=v2` (`stable` field), never hardcoded. When a new
+  release lands, the gate knows the target without an edit.
+
+* **Never silently succeed.** Every run ends in either `VERIFIED <tool>
+  <version>` or a non-zero exit with specifics. No quiet pass.
+
+* **Canaries must be side-effect-clean.** Any smoke test that mutates state
+  (e.g., creating a throwaway td issue) cleans up via a `trap`, even on failure.
+  Throwaways carry an obvious marker title.
+
+* **Canary registry, not a monolith.** Each tool's smoke is an isolated script
+  under `canaries/`. Adding a tool = adding one file + one registry entry.
 
 ## Operational Flow
 
@@ -28,7 +42,10 @@ Record the installed version: `tool --version` (parsed) and `brew info --json=v2
 
 Re-read installed version. Assert `post == brew stable`. Three outcomes, all explicit:
 - `post == stable` and `post != pre` → upgraded cleanly. Continue.
-- `post == stable` and `post == pre` → already current. Report "current", still run smoke.
+
+- `post == stable` and `post == pre` → already current. Report "current", still
+  run smoke.
+
 - `post != stable` → **FAIL loud.** Drift between binary and formula.
 
 ### 4. Smoke canary
@@ -58,10 +75,23 @@ New tools: add `canaries/<tool>.sh` exporting a `smoke()` function, register in 
 
 ## Risks & Open Questions
 
-* **Canary side effects.** The td canary creates then deletes an issue. Must use an unmistakable marker title (`zzz-verify-upgrade-<epoch>`), verify deletion in the `trap`, and never run against a board where `zzz-*` is meaningful. Deletion is soft-delete (`td delete`); acceptable.
-* **Version parsing fragility.** `brew info --json=v2` wraps tap-prefixed names (`marcus/tap/td`). The extractor must normalise. Validate against `td`, `sidecar`, and one cask before trusting it.
-* **`jq` dependency.** ubiquitous on macOS dev machines but technically a dep. Confirm present; if absent, gate fails loud with a clear install hint rather than silently misbehaving.
-* **Scope discipline.** This gate verifies "did the upgrade take and does the tool still work" — *not* "is our whole fleet in spec." The latter is P2 (Brewfile). P3 closes the immediate gap; P2 closes the structural one. Don't let P3 creep into fleet management.
+* **Canary side effects.** The td canary creates then deletes an issue. Must use
+  an unmistakable marker title (`zzz-verify-upgrade-<epoch>`), verify deletion
+  in the `trap`, and never run against a board where `zzz-*` is meaningful.
+  Deletion is soft-delete (`td delete`); acceptable.
+
+* **Version parsing fragility.** `brew info --json=v2` wraps tap-prefixed names
+  (`marcus/tap/td`). The extractor must normalise. Validate against `td`,
+  `sidecar`, and one cask before trusting it.
+
+* **`jq` dependency.** ubiquitous on macOS dev machines but technically a dep.
+  Confirm present; if absent, gate fails loud with a clear install hint rather
+  than silently misbehaving.
+
+* **Scope discipline.** This gate verifies "did the upgrade take and does the
+  tool still work" — *not* "is our whole fleet in spec." The latter is P2
+  (Brewfile). P3 closes the immediate gap; P2 closes the structural one. Don't
+  let P3 creep into fleet management.
 
 ## Core Modules to Scaffold
 

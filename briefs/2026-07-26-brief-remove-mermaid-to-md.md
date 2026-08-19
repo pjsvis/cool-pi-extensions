@@ -64,16 +64,20 @@ deprecation (`decisions/008`) is the precedent.
 
 - `briefs/2026-07-23-brief-mermaid-diagrams-for-docs.md` — record of *this*
   repo's diagram work (`td-3552ed`). Historical; stays.
+
 - The baked mermaid diagrams in `docs/` — committed art (plain text). This
   repo's content. Untouched.
+
 - `playbooks/diagrams-playbook.md` — this repo's diagram workflow. Stays, but
   **updated** to reference the external npm CLI.
 
 ### Update (dangling references after removal)
 
 - `README.md` — remove/rewrite the `mermaid-tui` + `mermaid-to-md` references.
+
 - `playbooks/diagrams-playbook.md` — point regen at the external `mermaid-to-md`
   npm CLI; no in-repo binary paths.
+
 - Registers + `MANIFEST.md` — regenerate via `just registers` after the brief
   removal.
 
@@ -85,9 +89,12 @@ deprecation (`decisions/008`) is the precedent.
 
 ### td reconciliation
 
-- `td-076e0a` (mermaid-tui epic, open) → **close** (work complete in the new repo).
+- `td-076e0a` (mermaid-tui epic, open) → **close** (work complete in the new
+  repo).
+
 - `td-3552ed` (diagrams in 4 docs, in_progress) → **close** if the committed
   diagram work is complete.
+
 - `td-9f956f` (mermaid-tui CLI phase 1, open) → **close** (moved to the new repo).
 
 ## How
@@ -95,11 +102,16 @@ deprecation (`decisions/008`) is the precedent.
 One atomic commit (Decision 009: no old/new coexistence) that:
 
 1. `git rm`s the tooling + the 6 spun-off briefs;
+
 2. adds `decisions/022-spin-off-mermaid-to-md.md`;
+
 3. updates `README.md` + `playbooks/diagrams-playbook.md` to reference the
    external npm CLI;
+
 4. regenerates registers (`just registers`);
+
 5. `just check` green;
+
 6. reconciles the three td tasks.
 
 The baked diagrams in `docs/` are untouched — they are committed art, not
@@ -109,24 +121,33 @@ tooling.
 
 - [ ] `src/cli/mermaid-tui/`, `src/extensions/mermaid-tui/`,
       `scripts/mermaid-extract.sh` removed.
+
 - [ ] The 6 spun-off mermaid briefs removed; `brief-mermaid-diagrams-for-docs.md`
       stays.
+
 - [ ] `decisions/022-spin-off-mermaid-to-md.md` records the delineation.
+
 - [ ] `README.md` + `playbooks/diagrams-playbook.md` reference the external npm
       CLI; no dangling in-repo `src/cli/mermaid-tui` paths.
+
 - [ ] `just registers` + `just check` green; registers reflect the removed briefs.
+
 - [ ] `td-076e0a`, `td-3552ed`, `td-9f956f` closed with pointers to the new repo.
+
 - [ ] Baked diagrams in `docs/` untouched.
 
 ## Out of scope
 
 - Any work inside `~/dev/github/mermaid-to-md` — that is the new repo's domain.
+
 - Re-adding a pi extension that wraps the npm CLI — explicitly not required;
   the operator chose the CLI.
+
 - OKF frontmatter migration (separate epic, `td-e4dcf4`) — this removal just
   shrinks the `briefs/` set that Phase 2 (`td-813f48`) will migrate. **This
   removal should land before Phase 2** so Phase 2 does not migrate
   soon-to-be-removed briefs.
+
 - The baked diagrams in `docs/` — they stay; regenerating them is a future
   edit, using the external CLI.
 

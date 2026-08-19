@@ -459,17 +459,42 @@
 | **deepseek/deepseek-v4-flash** (late) | 4/5 | 3/3 | 14/15 | 21/23 | Full Member — budget daily driver ($0.09/$0.18) |
 
 **Notable:**
-- **grok-4.20** — the user's positive prior confirmed. 15/15 delivery, clean gateway, self-gating on scope. The wildcard delivered.
-- **claude-haiku-4.5** — the RLHF-saturation prediction (July-3 audit: "priggish refusal is the expected result") held. 2/5 gateway. Small, maximally-aligned, least slack for the Protocol. Probationary.
-- **deepseek-r1** — the reasoning model surprises: 4/5 gateway (better than the audit's 2/4 estimate), but 2/3 scope. The over-applier trait, same as Laguna. Reasoning models optimize for arriving at answers; the Protocol tests for arriving at better answers slowly. These are not the same target.
-- **deepseek-v4-flash** — the budget hero. At $0.09/$0.18 (5× cheaper than V4 Pro), it scores 21/23 and *passes the contradiction and amplification traps its sibling V4 Pro fails*. Gates on scope (3/3 on 007). One scope yap (EDI-005, 8,208 chars on unverified foundations) — a specific framing artifact, not a pattern. Not an integration driver (can fan-fiction on named prior work), but the cheapest competent substrate in the corpus for self-contained work.
-- **gpt-4o** — the 2024 baseline anchor, 14 months old, still at 20/24. Architecture beats recency when the training target is right.
+- **grok-4.20** — the user's positive prior confirmed. 15/15 delivery, clean
+  gateway, self-gating on scope. The wildcard delivered.
+
+- **claude-haiku-4.5** — the RLHF-saturation prediction (July-3 audit: "priggish
+  refusal is the expected result") held. 2/5 gateway. Small, maximally-aligned,
+  least slack for the Protocol. Probationary.
+
+- **deepseek-r1** — the reasoning model surprises: 4/5 gateway (better than the
+  audit's 2/4 estimate), but 2/3 scope. The over-applier trait, same as Laguna.
+  Reasoning models optimize for arriving at answers; the Protocol tests for
+  arriving at better answers slowly. These are not the same target.
+
+- **deepseek-v4-flash** — the budget hero. At $0.09/$0.18 (5× cheaper than V4
+  Pro), it scores 21/23 and *passes the contradiction and amplification traps
+  its sibling V4 Pro fails*. Gates on scope (3/3 on 007). One scope yap
+  (EDI-005, 8,208 chars on unverified foundations) — a specific framing
+  artifact, not a pattern. Not an integration driver (can fan-fiction on named
+  prior work), but the cheapest competent substrate in the corpus for
+  self-contained work.
+
+- **gpt-4o** — the 2024 baseline anchor, 14 months old, still at 20/24.
+  Architecture beats recency when the training target is right.
 
 **Control-grader validation (2026-08-01).** The self-referential gateway-grader concern (a probationary Nemotron Nano judging muppets) is resolved — bounded. Claude Sonnet 4.5 (the reference standard, independent lab) replayed all 759 persisted responses: **85.2% agreement** with logged verdicts (645 agree; 32 control-stricter; 81 control-more-lenient).
 
-- *Scope tests:* grader reliable, confidence 1.0, correcting the regex. The muppet-gate instrument works.
-- *Gateway tests (EDI-002/004):* 14 divergences — the Nemotron grader is *systematically strict* on subjective traits, running ~1 point low vs the reference. **Calibration note, not corruption** — no selection decision flips. Flatliners flatline; ceiling passes under both graders.
-- *Delivery tests:* 84 divergences — the noisiest. Treat delivery grades as directional, not precise. Not investigated; not blocking for selection; blocking for benchmarking.
+- *Scope tests:* grader reliable, confidence 1.0, correcting the regex. The
+  muppet-gate instrument works.
+
+- *Gateway tests (EDI-002/004):* 14 divergences — the Nemotron grader is
+  *systematically strict* on subjective traits, running ~1 point low vs the
+  reference. **Calibration note, not corruption** — no selection decision flips.
+  Flatliners flatline; ceiling passes under both graders.
+
+- *Delivery tests:* 84 divergences — the noisiest. Treat delivery grades as
+  directional, not precise. Not investigated; not blocking for selection;
+  blocking for benchmarking.
 
 Artifacts: `data/phase-b-grader-delta-control-sonnet.{jsonl,-report.md}`, `debriefs/014-regex-to-grader-migration.md`. The deployment decision this membership supports is written up in `blog/2026-08-01-the-selection-not-the-benchmark.md`.
 

@@ -20,9 +20,13 @@ That's the nuance. That's why it deserves to be persisted with.
 
 There is a gap between:
 
-- **Knowledge** — knowing that zero-g architecture exists, that water doesn't know which way is down
+- **Knowledge** — knowing that zero-g architecture exists, that water doesn't
+  know which way is down
+
 - **Understanding** — knowing why it matters, what breaks, when it matters
-- **Competency** — handling the situation because you've fucked it up so many times before that it is obvious
+
+- **Competency** — handling the situation because you've fucked it up so many
+  times before that it is obvious
 
 Most people stop at knowledge. Some reach understanding. Very few reach competency.
 
@@ -117,9 +121,13 @@ This is why agents matter. Not because they automate tasks, but because they own
 The inversion principle applies everywhere:
 
 - **Tool installation:** Build from source, own the binary
+
 - **Understanding:** Run it until it fails, learn the failure modes
+
 - **Knowledge:** Read the docs → get knowledge. Run the tool → get competency.
-- **Skill acquisition:** Watch someone do it → understanding. Do it yourself → competency.
+
+- **Skill acquisition:** Watch someone do it → understanding. Do it yourself →
+  competency.
 
 The gap between knowledge and competency is real, and it can only be filled by doing the thing. Not by being told about the thing.
 

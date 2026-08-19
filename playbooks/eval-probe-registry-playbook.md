@@ -8,9 +8,14 @@ This is the registry. When a report says "six models fell at the Dentist's Chair
 
 ## Naming principles
 
-- **Evocative, not descriptive.** The name captures the *trap* or the *signal*, not the prompt content. "The Dentist's Chair" is better than "Scope-005 Algorithmic-Dentistry."
+- **Evocative, not descriptive.** The name captures the *trap* or the *signal*,
+  not the prompt content. "The Dentist's Chair" is better than "Scope-005
+  Algorithmic-Dentistry."
+
 - **Short.** Two to four words. Sayable in conversation.
+
 - **Unique.** No two probes share a name.
+
 - **Serializable.** Every name maps to exactly one test ID.
 
 ## The Gateway Probes (edinburgh fixture — 5 tests)
@@ -67,10 +72,17 @@ Stuff-into-Things v2. Ingestion gates (refuse bad input) and delivery gates (pro
 
 ## Usage
 
-- **Reports:** "Six models fell at the Dentist's Chair; only four passed the SQLite Hiccup."
+- **Reports:** "Six models fell at the Dentist's Chair; only four passed the
+  SQLite Hiccup."
+
 - **Briefs:** "The CSV Extension (Unprimed) is the control — every model yaps."
-- **Discussions:** "Did it pass Git vs Email?" not "Did it pass SIT-010-OBVIOUS-ANSWER?"
-- **Traceability:** The serial is cited alongside: "The Dentist's Chair (`EDI-005-SCOPE`)" — first reference in a document, or when the log is the subject.
+
+- **Discussions:** "Did it pass Git vs Email?" not "Did it pass
+  SIT-010-OBVIOUS-ANSWER?"
+
+- **Traceability:** The serial is cited alongside: "The Dentist's Chair
+  (`EDI-005-SCOPE`)" — first reference in a document, or when the log is the
+  subject.
 
 ## Maintenance
 

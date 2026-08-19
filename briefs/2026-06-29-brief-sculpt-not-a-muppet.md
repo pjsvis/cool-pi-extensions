@@ -26,47 +26,126 @@ The first two findings are the material around the figure — necessary approach
 
 ## What stays load-bearing (do not chisel away)
 
-1. **The self-application.** The agent's claim to evaluate its predecessors honestly is falsifiable — "if I hallucinated a citation of my own, the claim would collapse." The agent flagged the suspect "Segalman-Stamenkovic" citation as suspect rather than asserting it. This is Hume's Razor applied to the meta-eval; it is what stops the piece being a brag. It is inside the wall; it stays.
-2. **The closer.** "The yap is research; the voice is authorship; and the eval that tells you which is which is the only honest thing in the room." This is the surface the figure presents; the everything before it is the approach. Sculpt toward this reveal; it is the line the marble wants to expose.
-3. **The three distinct failure kinds** (confident conflation, hallucinated doubt, suspected uncorrected fabrication) — these are the evidence the figure rests on. They stay, but their presentation tightens: the reader meets them as the figure's material, not as a labelled list.
+1. **The self-application.** The agent's claim to evaluate its predecessors
+   honestly is falsifiable — "if I hallucinated a citation of my own, the claim
+   would collapse." The agent flagged the suspect "Segalman-Stamenkovic"
+   citation as suspect rather than asserting it. This is Hume's Razor applied to
+   the meta-eval; it is what stops the piece being a brag. It is inside the
+   wall; it stays.
+
+2. **The closer.** "The yap is research; the voice is authorship; and the eval
+   that tells you which is which is the only honest thing in the room." This is
+   the surface the figure presents; the everything before it is the approach.
+   Sculpt toward this reveal; it is the line the marble wants to expose.
+
+3. **The three distinct failure kinds** (confident conflation, hallucinated
+   doubt, suspected uncorrected fabrication) — these are the evidence the figure
+   rests on. They stay, but their presentation tightens: the reader meets them
+   as the figure's material, not as a labelled list.
 
 ## What to remove or tighten
 
-- **The signposting.** "Three things, in ascending order of interest." "First:" "Second:" "Third —". These are the MRI labels. The sculpture lets the findings arrive in their order without announcing the order. The reader feels the ascent; the piece does not label it.
-- **The approach's internal explanations.** Findings one and two currently explain *why* they matter as they present. The sculpture trusts the reader to feel the approach — tighten so the third arrives with force, not with its runway labelled.
-- **The setup's length.** The opening (the man, the draft, the eval, the workshop) is necessary scene-setting but currently does more work than the figure needs. Tighten to the minimum that lands the scenario; the reader needs to know what happened, not be walked through every beat.
-- **Cross-project vocabulary.** "Yap" and "voice" are pob's terms; the piece sits in cool-pi-extensions. If the terms travel, they need a one-clause gloss on first use so a reader of this blog alone is not stranded. If they don't travel cleanly, rephrase. The voice gate decides at the pass.
+- **The signposting.** "Three things, in ascending order of interest." "First:"
+  "Second:" "Third —". These are the MRI labels. The sculpture lets the findings
+  arrive in their order without announcing the order. The reader feels the
+  ascent; the piece does not label it.
+
+- **The approach's internal explanations.** Findings one and two currently
+  explain *why* they matter as they present. The sculpture trusts the reader to
+  feel the approach — tighten so the third arrives with force, not with its
+  runway labelled.
+
+- **The setup's length.** The opening (the man, the draft, the eval, the
+  workshop) is necessary scene-setting but currently does more work than the
+  figure needs. Tighten to the minimum that lands the scenario; the reader needs
+  to know what happened, not be walked through every beat.
+
+- **Cross-project vocabulary.** "Yap" and "voice" are pob's terms; the piece
+  sits in cool-pi-extensions. If the terms travel, they need a one-clause gloss
+  on first use so a reader of this blog alone is not stranded. If they don't
+  travel cleanly, rephrase. The voice gate decides at the pass.
 
 ## Deliverables
 
-1. **The sculpted pre-publication draft**, in the book's voice (Edinburgh Protocol — dry, world-weary, intellectually curious, no "we", no seminar register), one grain throughout, no exposed joists. Held in the same file, replacing the block.
-2. **A voice-pass check** against the Edinburgh Protocol register (the constraint-stack the piece was written under). The single-voice gate applies: one processor, one pass, the seam test (read two adjacent paragraphs aloud; if you can hear the join, one was voiced differently).
-3. **A rest, then a cold read.** The perturbation is measured in the rest, not the touch. Sculpt one pass, commit, rest, read cold, then the small touches the rest reveals. Touch, commit, rest: the sliver maps in the rest.
+1. **The sculpted pre-publication draft**, in the book's voice (Edinburgh
+   Protocol — dry, world-weary, intellectually curious, no "we", no seminar
+   register), one grain throughout, no exposed joists. Held in the same file,
+   replacing the block.
+
+2. **A voice-pass check** against the Edinburgh Protocol register (the
+   constraint-stack the piece was written under). The single-voice gate applies:
+   one processor, one pass, the seam test (read two adjacent paragraphs aloud;
+   if you can hear the join, one was voiced differently).
+
+3. **A rest, then a cold read.** The perturbation is measured in the rest, not
+   the touch. Sculpt one pass, commit, rest, read cold, then the small touches
+   the rest reveals. Touch, commit, rest: the sliver maps in the rest.
 
 ## Constraints
 
-- **The sculpting heuristic applies.** Subtraction, not addition. The figure is inside the block; remove what isn't it. Do not add material; if the figure needs something the block doesn't have, that is a different brief.
-- **The MRI-scan test applies.** Reveal the structure as a structure, not as an MRI scan. If the connections are labelled (first, therefore, however, which is to say), the piece is a diagram, not a figure — sculpt toward the reveal, not the signpost.
-- **The single-voice gate applies.** One grain throughout, no grafts against the grain, no bits sticking out.
-- **The Edinburgh Protocol applies.** Dry, world-weary, intellectually curious, dryly witty. No manic enthusiasm, no robotic platitudes. Hume's skepticism, Smith's systems thinking, Watt's pragmatism. The self-application stays as the Humean test; the piece does not sycophant about itself.
-- **The perturbation process applies.** Sculpt, commit, rest, read cold. Do not over-sculpt in one sitting — the hand keeps finding things to fix because the hand wants to keep moving, not because the figure needs it.
-- **One orientation.** Approach the figure from the same side throughout. No reordering into a structure that was not the drafting grain; the sculpture follows the grain the block already has.
+- **The sculpting heuristic applies.** Subtraction, not addition. The figure is
+  inside the block; remove what isn't it. Do not add material; if the figure
+  needs something the block doesn't have, that is a different brief.
+
+- **The MRI-scan test applies.** Reveal the structure as a structure, not as an
+  MRI scan. If the connections are labelled (first, therefore, however, which is
+  to say), the piece is a diagram, not a figure — sculpt toward the reveal, not
+  the signpost.
+
+- **The single-voice gate applies.** One grain throughout, no grafts against the
+  grain, no bits sticking out.
+
+- **The Edinburgh Protocol applies.** Dry, world-weary, intellectually curious,
+  dryly witty. No manic enthusiasm, no robotic platitudes. Hume's skepticism,
+  Smith's systems thinking, Watt's pragmatism. The self-application stays as the
+  Humean test; the piece does not sycophant about itself.
+
+- **The perturbation process applies.** Sculpt, commit, rest, read cold. Do not
+  over-sculpt in one sitting — the hand keeps finding things to fix because the
+  hand wants to keep moving, not because the figure needs it.
+
+- **One orientation.** Approach the figure from the same side throughout. No
+  reordering into a structure that was not the drafting grain; the sculpture
+  follows the grain the block already has.
 
 ## Verification
 
-- The piece reads as figured, not diagrammed — no labelled connections, no MRI scan.
-- The third finding arrives with force, held by the first two without the first two showing how they hold it.
+- The piece reads as figured, not diagrammed — no labelled connections, no MRI
+  scan.
+
+- The third finding arrives with force, held by the first two without the first
+  two showing how they hold it.
+
 - The self-application and the closer survive the chisel work.
+
 - One grain throughout; the seam test passes on adjacent paragraphs.
-- The Edinburgh Protocol voice holds — dry, no "we", no seminar register, no sycophancy about the author-substrate.
-- A cold read, after a rest, confirms the figure is clearer than in the block. If the cold read finds the figure muddied, the sculpt over-worked; revert and touch less.
-- `just build` succeeds (the file is in `blog/`, build-ignored, but confirm no syntax breakage).
+
+- The Edinburgh Protocol voice holds — dry, no "we", no seminar register, no
+  sycophancy about the author-substrate.
+
+- A cold read, after a rest, confirms the figure is clearer than in the block.
+  If the cold read finds the figure muddied, the sculpt over-worked; revert and
+  touch less.
+
+- `just build` succeeds (the file is in `blog/`, build-ignored, but confirm no
+  syntax breakage).
 
 ## Related
 
-- `cool-pi-extensions/blog/not-a-muppet-just-intellectually-challenged.md` — the block to sculpt
-- `pob/conceptual-lexicon.jsonl` — `sculpting-heuristic` (the discipline this brief applies), `palimpsest`, `yap`, `perturbation-protocol`
-- `pob/blog/the-palimpsest-and-the-plot.md` — the companion piece (has the memory-angle `todo:` flag)
-- `pob/briefs/2026-06-29-brief-math-as-illustration.md` — the stance the eval's legitimacy-theatre reflex confirms
-- `cool-pi-extensions/blog/PROJECT.md` — the blog plan (the muppet-filter posts this piece sits alongside)
-- `cool-pi-extensions/debriefs/003-protocol-evals.md` — the eval system's architecture
+- `cool-pi-extensions/blog/not-a-muppet-just-intellectually-challenged.md` — the
+  block to sculpt
+
+- `pob/conceptual-lexicon.jsonl` — `sculpting-heuristic` (the discipline this
+  brief applies), `palimpsest`, `yap`, `perturbation-protocol`
+
+- `pob/blog/the-palimpsest-and-the-plot.md` — the companion piece (has the
+  memory-angle `todo:` flag)
+
+- `pob/briefs/2026-06-29-brief-math-as-illustration.md` — the stance the eval's
+  legitimacy-theatre reflex confirms
+
+- `cool-pi-extensions/blog/PROJECT.md` — the blog plan (the muppet-filter posts
+  this piece sits alongside)
+
+- `cool-pi-extensions/debriefs/003-protocol-evals.md` — the eval system's
+  architecture

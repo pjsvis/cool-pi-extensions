@@ -6,14 +6,23 @@ Deploy a background daemon that operates as an entropy diagnostic device. Instea
 
 ## The Operational Mechanics
 
-1. **Ingestion:** A lightweight Bun process uses `fs.watch` to monitor the active directory. It debounces file saves to prevent thrashing.
-2. **The Tensegrity Check:** When a file changes, the delta is pushed to a local inference endpoint. The system prompt forces the model to apply the Edinburgh Protocol and output its reasoning in a `<think>` block.
-3. **The Trace Heuristic:** We ignore the model's final summary. We extract the `<think>` block and measure its character count.
+1. **Ingestion:** A lightweight Bun process uses `fs.watch` to monitor the
+   active directory. It debounces file saves to prevent thrashing.
+
+2. **The Tensegrity Check:** When a file changes, the delta is pushed to a local
+   inference endpoint. The system prompt forces the model to apply the Edinburgh
+   Protocol and output its reasoning in a `<think>` block.
+
+3. **The Trace Heuristic:** We ignore the model's final summary. We extract the
+   `<think>` block and measure its character count.
+
 * *Low Entropy (< 500 chars):* The logic is grounded. Silent pass.
-* *High Entropy (> 1500 chars):* The model is attempting to reconcile ungrounded assumptions or structural contradictions.
 
+* *High Entropy (> 1500 chars):* The model is attempting to reconcile ungrounded
+  assumptions or structural contradictions.
 
-4. **Interjection:** If the trace crosses the panic threshold, the daemon logs the event and throws a terminal alert.
+4. **Interjection:** If the trace crosses the panic threshold, the daemon logs
+   the event and throws a terminal alert.
 
 ---
 

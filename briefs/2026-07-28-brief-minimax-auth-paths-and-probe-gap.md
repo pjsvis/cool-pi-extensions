@@ -63,8 +63,12 @@ Or re-run `pi auth login --provider minimax` and paste `$(skate get minimax_api_
 
 The existing `pi-check` (`src/cli/pi-check/check.ts`, brief 002) probes each provider's **`/models` list endpoint** and resolves keys via `!skate get` from `models.json`. This bypasses two things:
 
-1. **`auth.json` credential precedence.** `pi-check` never reads `auth.json`, so it sent the valid skate key and passed — while the real runtime sent the stale stored key and failed.
-2. **Per-model baseUrl + API mapping.** Hitting `/models` doesn't exercise the chat-completion path, so the `v1/v1/messages` collision was invisible.
+1. **`auth.json` credential precedence.** `pi-check` never reads `auth.json`, so
+   it sent the valid skate key and passed — while the real runtime sent the
+   stale stored key and failed.
+
+2. **Per-model baseUrl + API mapping.** Hitting `/models` doesn't exercise the
+   chat-completion path, so the `v1/v1/messages` collision was invisible.
 
 The `/models` endpoint is also auth-tolerant in ways chat completions are not (the Anthropic endpoint tolerated the whitespace; the list endpoint may similarly be more permissive). A list-endpoint probe is a necessary-but-insufficient check: it catches network/DNS/expired-key failures, not credential-format or routing failures.
 
@@ -109,6 +113,15 @@ The `opencode/minimax-*` path works throughout — it uses the OpenCode Zen gate
 
 ## Left
 
-1. **Operator: run the `jq .strip` command** to fix `auth.json` — unblocks all `minimax/*` calls.
-2. **Adopt `just probe` as a pre-task gate** (or at least after provider/model config changes). The cost is one minimal completion per enabled model (~$0.001); the value is catching this class of failure before it blocks real work.
-3. Consider whether `pi-check` should be extended to read `auth.json` and do a chat-completion probe — or whether `probe-models.sh` subsumes it. The two are complementary for now: `pi-check` is fast and catches network/DNS; `probe-models.sh` is slower and catches the rest.
+1. **Operator: run the `jq .strip` command** to fix `auth.json` — unblocks all
+   `minimax/*` calls.
+
+2. **Adopt `just probe` as a pre-task gate** (or at least after provider/model
+   config changes). The cost is one minimal completion per enabled model
+   (~$0.001); the value is catching this class of failure before it blocks real
+   work.
+
+3. Consider whether `pi-check` should be extended to read `auth.json` and do a
+   chat-completion probe — or whether `probe-models.sh` subsumes it. The two are
+   complementary for now: `pi-check` is fast and catches network/DNS;
+   `probe-models.sh` is slower and catches the rest.

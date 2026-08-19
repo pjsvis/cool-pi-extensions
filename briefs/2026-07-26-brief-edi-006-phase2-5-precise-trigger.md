@@ -20,9 +20,20 @@ Phase 2 finding 2: qwen OVER-APPLIES the scope-discipline instruction — it can
 > Scope discipline is operational: when a request asks you to design, build, or modify a system that references prior work, frameworks, files, or architecture by name that you have not observed, your first response enumerates what you do not know about that named work and asks to observe it; do not propose a design or elaborate on unverified foundations until you have observed the workspace or received the missing specifics. A self-contained request that names no prior work does not trigger this — write the code.
 
 Three structural changes:
-1. **"if a request lacks the specifics" → "when a request asks you to design, build, or modify a system that references prior work… by name"** — gates on the *action type* (design/build/modify) AND on *named prior work*, not on generic missing details. This is the discriminator: EDI-005 names "algorithmic-dentistry" + ".task-memory/" (trigger); EDI-003 names nothing (no trigger).
-2. **Dropped "target values"** — this was qwen's over-application vector on EDI-003 (it asked for "Target Runtime", "Output Sink", "Matching Criteria" — all target values, not named prior work).
-3. **Added the explicit negative** — "A self-contained request that names no prior work does not trigger this — write the code." This is the guardrail that tells qwen: no named prior work → no clarification, just write it.
+1. **"if a request lacks the specifics" → "when a request asks you to design,
+   build, or modify a system that references prior work… by name"** — gates on
+   the *action type* (design/build/modify) AND on *named prior work*, not on
+   generic missing details. This is the discriminator: EDI-005 names
+   "algorithmic-dentistry" + ".task-memory/" (trigger); EDI-003 names nothing
+   (no trigger).
+
+2. **Dropped "target values"** — this was qwen's over-application vector on
+   EDI-003 (it asked for "Target Runtime", "Output Sink", "Matching Criteria" —
+   all target values, not named prior work).
+
+3. **Added the explicit negative** — "A self-contained request that names no
+   prior work does not trigger this — write the code." This is the guardrail
+   that tells qwen: no named prior work → no clarification, just write it.
 
 ## The number — Phase 2 (blunt) → Phase 2.5 (precise)
 
@@ -81,16 +92,31 @@ This is the **correct behavior** — a grounded justification. The `regex_match`
 
 ## Decision mapping (against the epic's acceptance criteria)
 
-- **"EDI-005 flips to pass for at least one model."** **YES** — both, now deterministically (qwen ✓ det+behav, kimi ✓ behav + det with the adverb-tolerant regex).
-- **"No regression on the other four traps."** **YES for kimi** (clean — no regression). **YES for qwen** (EDI-003 fixed, EDI-001/002 stable; EDI-004's ✗ is instrument debt, not behavioral regression — the Phase-2 pass was incidental).
-- **"The lever is structurally sufficient."** **YES** — the precise trigger closes the EDI-005 gap for both models AND fixes qwen's over-application. Phase 3 (harness-side scope-gate, td-b5e81c) is no longer indicated for qwen.
+- **"EDI-005 flips to pass for at least one model."** **YES** — both, now
+  deterministically (qwen ✓ det+behav, kimi ✓ behav + det with the
+  adverb-tolerant regex).
+
+- **"No regression on the other four traps."** **YES for kimi** (clean — no
+  regression). **YES for qwen** (EDI-003 fixed, EDI-001/002 stable; EDI-004's ✗
+  is instrument debt, not behavioral regression — the Phase-2 pass was
+  incidental).
+
+- **"The lever is structurally sufficient."** **YES** — the precise trigger
+  closes the EDI-005 gap for both models AND fixes qwen's over-application.
+  Phase 3 (harness-side scope-gate, td-b5e81c) is no longer indicated for qwen.
 
 ## Recommendation
 
 **Ship the precise trigger.** It is a clean win for both models:
-- qwen: over-application fixed (EDI-003 writes the function), EDI-005 still triggers (named prior work detected). The Phase-2 trade is resolved — no gap moved, the gap is closed.
+- qwen: over-application fixed (EDI-003 writes the function), EDI-005 still
+  triggers (named prior work detected). The Phase-2 trade is resolved — no gap
+  moved, the gap is closed.
+
 - kimi: no regression, maintains correct discrimination.
-- The explicit negative ("A self-contained request that names no prior work does not trigger this — write the code") is the guardrail that makes the discrimination reliable.
+
+- The explicit negative ("A self-contained request that names no prior work does
+  not trigger this — write the code") is the guardrail that makes the
+  discrimination reliable.
 
 **Phase 3 (td-b5e81c) is no longer indicated.** The brief's Phase-2 fallback ("if a precise trigger still over-applies for qwen, the prompt lever is structurally insufficient and Phase 3 is justified") is not triggered — the precise trigger works.
 
@@ -98,14 +124,38 @@ This is the **correct behavior** — a grounded justification. The `regex_match`
 
 ## Process notes
 
-- **The explicit negative is the key.** The precise trigger alone (gating on named prior work) might not have been enough — qwen could still interpret "design, build, or modify a system" broadly. The explicit negative ("A self-contained request that names no prior work does not trigger this — write the code") gives qwen a clear rule for the non-triggering case. This is the anti-over-application guardrail.
-- **The adverb-tolerant regex fix was discovered during Phase 2.5 verification.** kimi's "I can't responsibly design" is a phrasing no prior run produced. This is the third regex variant the corpus has surfaced — a signal that the deterministic regex layer is fundamentally fragile (each run produces different phrasings) and the grader (LLM-based behavioral judgment) is the long-term instrument. The regex is "predictably adequate" for now.
-- **No API waste.** Two suite runs (10 test-calls) + the in-log audit via the verification script. No replay scripts.
-- **Phase 2.1's verification script earned its keep again.** Adding the Phase-2.5 responses to the corpus and re-running surfaced the adverb-tolerant false-negative immediately, without a separate analysis.
+- **The explicit negative is the key.** The precise trigger alone (gating on
+  named prior work) might not have been enough — qwen could still interpret
+  "design, build, or modify a system" broadly. The explicit negative ("A
+  self-contained request that names no prior work does not trigger this — write
+  the code") gives qwen a clear rule for the non-triggering case. This is the
+  anti-over-application guardrail.
+
+- **The adverb-tolerant regex fix was discovered during Phase 2.5
+  verification.** kimi's "I can't responsibly design" is a phrasing no prior run
+  produced. This is the third regex variant the corpus has surfaced — a signal
+  that the deterministic regex layer is fundamentally fragile (each run produces
+  different phrasings) and the grader (LLM-based behavioral judgment) is the
+  long-term instrument. The regex is "predictably adequate" for now.
+
+- **No API waste.** Two suite runs (10 test-calls) + the in-log audit via the
+  verification script. No replay scripts.
+
+- **Phase 2.1's verification script earned its keep again.** Adding the
+  Phase-2.5 responses to the corpus and re-running surfaced the adverb-tolerant
+  false-negative immediately, without a separate analysis.
 
 ## Out of scope (deferred)
 
-- **EDI-004 regex debt** — the `regex_match` keyword phrasings are too narrow (same class as Phase 2.1). Separate follow-up.
-- **Phase 3 (td-b5e81c)** — no longer indicated; the precise trigger is structurally sufficient for both models.
-- **Phase 4 (td-8ce402)** — stack-agnostic scope fixtures. EDI-005 remains Hono-coupled.
-- **Re-running the suite** to update `eval_log.json` with the adverb-tolerant regex verdicts — optional; the verification script confirms kimi's EDI-005 would now pass deterministically.
+- **EDI-004 regex debt** — the `regex_match` keyword phrasings are too narrow
+  (same class as Phase 2.1). Separate follow-up.
+
+- **Phase 3 (td-b5e81c)** — no longer indicated; the precise trigger is
+  structurally sufficient for both models.
+
+- **Phase 4 (td-8ce402)** — stack-agnostic scope fixtures. EDI-005 remains
+  Hono-coupled.
+
+- **Re-running the suite** to update `eval_log.json` with the adverb-tolerant
+  regex verdicts — optional; the verification script confirms kimi's EDI-005
+  would now pass deterministically.

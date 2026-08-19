@@ -42,9 +42,20 @@ Key: `skate get zai_api_key` is SET (49 chars). `zhipu_api_key` / `glm_api_key` 
 Z.ai ignores OpenAI's `reasoning_effort` and speaks its own `thinking:{type:"enabled"|"disabled"}`. Any client sending the OpenAI convention gets a **HTTP 200 and zero effect** — the system reports success while the intent evaporates. This is **decorated rigour in wire form**: you believe you set `reasoning_effort:low`; the call succeeds; nothing changed. There is no compat lever in `models.json` to make Pi emit `thinking`, and the eval harness's `EVAL_REASONING_EFFORT` is silently dropped on this route. **Net: the operator currently cannot dial GLM reasoning down for cheap/fast calls — it runs at default (max) effort always.**
 
 **Fix directions (scoped):**
-- **In-repo, eval harness (`providers.ts`):** when the resolved provider is z.ai, emit `thinking:{type:…}` from an env var (e.g. `EVAL_ZAI_THINKING=enabled|disabled`) instead of `reasoning_effort`. Cheap, lets the eval characterise GLM with reasoning on *and* off.
-- **In-repo, Pi runtime (preferred mechanism per AGENTS.md):** a z.ai **pi extension** (`pi.registerProvider()`) that owns the request transform — emits `thinking`, sets the coding baseUrl, resolves `skate zai_api_key`, maps the slug. This is the durable home for z.ai-specific wire quirks; it keeps `models.json` free of vendor duct-tape.
-- **Out-of-silo (pi core):** a generic compat field (e.g. `reasoningControl: "thinking"`) read by `provider-composer.js`. Cleanest long-term but requires a core change — file as a note, don't block on it.
+- **In-repo, eval harness (`providers.ts`):** when the resolved provider is
+  z.ai, emit `thinking:{type:…}` from an env var (e.g.
+  `EVAL_ZAI_THINKING=enabled|disabled`) instead of `reasoning_effort`. Cheap,
+  lets the eval characterise GLM with reasoning on *and* off.
+
+- **In-repo, Pi runtime (preferred mechanism per AGENTS.md):** a z.ai **pi
+  extension** (`pi.registerProvider()`) that owns the request transform — emits
+  `thinking`, sets the coding baseUrl, resolves `skate zai_api_key`, maps the
+  slug. This is the durable home for z.ai-specific wire quirks; it keeps
+  `models.json` free of vendor duct-tape.
+
+- **Out-of-silo (pi core):** a generic compat field (e.g. `reasoningControl:
+  "thinking"`) read by `provider-composer.js`. Cleanest long-term but requires a
+  core change — file as a note, don't block on it.
 
 ### Issue C — eval can't characterise the operator's actual substrate
 
@@ -69,19 +80,39 @@ Combined with Issue B's `thinking` emitter, this lets B2 telemetry characterise 
 
 ## Recommendation
 
-1. **B first** (silent failure is the most Edinburgh-hostile mode — worse than an error). Short-term: the eval-harness `thinking` emitter. Medium-term: the z.ai pi extension (durable, keeps `models.json` clean).
-2. **C next** (unlocks the B2 telemetry we just built against the real substrate; closes the first-party-direct inconsistency).
+1. **B first** (silent failure is the most Edinburgh-hostile mode — worse than
+   an error). Short-term: the eval-harness `thinking` emitter. Medium-term: the
+   z.ai pi extension (durable, keeps `models.json` clean).
+
+2. **C next** (unlocks the B2 telemetry we just built against the real
+   substrate; closes the first-party-direct inconsistency).
+
 3. **A** mostly dissolves once B lands.
-4. **Verify the intermittency hypothesis** before closing: probe the coding endpoint under load for rate-limit headers (`X-RateLimit-*`, 429 cadence), and confirm whether a default-small-`max_tokens` client is the empty-content victim.
+
+4. **Verify the intermittency hypothesis** before closing: probe the coding
+   endpoint under load for rate-limit headers (`X-RateLimit-*`, 429 cadence),
+   and confirm whether a default-small-`max_tokens` client is the empty-content
+   victim.
 
 ## Non-goals
 
-- The grader's own z.ai behaviour (separate concern; grader routes via its own model).
-- OpenCode's z.ai path (reliable by report; out of scope — this brief is the Pi/eval config).
-- Changing the coding-plan key to a general-API key (would 429 — the key is coding-only).
+- The grader's own z.ai behaviour (separate concern; grader routes via its own
+  model).
+
+- OpenCode's z.ai path (reliable by report; out of scope — this brief is the
+  Pi/eval config).
+
+- Changing the coding-plan key to a general-API key (would 429 — the key is
+  coding-only).
 
 ## Open questions
 
-- Does z.ai honour `reasoning_effort` on the **general** `/paas/v4` endpoint (vs coding)? Untested — the key 429s there. If a general key is ever provisioned, re-probe.
-- Rate-limit shape of the coding endpoint (requests/min, tokens/min) — needed to confirm/deny the intermittency hypothesis.
-- Should the z.ai pi extension also own the `glm-*` → bare-slug mapping and the `max_completion_tokens` compat, retiring the `nimSlug()` GLM branch?
+- Does z.ai honour `reasoning_effort` on the **general** `/paas/v4` endpoint (vs
+  coding)? Untested — the key 429s there. If a general key is ever provisioned,
+  re-probe.
+
+- Rate-limit shape of the coding endpoint (requests/min, tokens/min) — needed to
+  confirm/deny the intermittency hypothesis.
+
+- Should the z.ai pi extension also own the `glm-*` → bare-slug mapping and the
+  `max_completion_tokens` compat, retiring the `nimSlug()` GLM branch?

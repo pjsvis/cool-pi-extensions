@@ -68,7 +68,9 @@ A newup is a phase boundary, not a session end. The work continues — the
 transcript doesn't. New up when:
 
 - You've completed a logical unit of work and the context is heavy.
+
 - The meter is climbing faster than the work is progressing (*O(n²)* cost).
+
 - The task is **intractable** — persist state, new up, attack with a clean
   slate. A fresh context solves problems a stale one can't, because it isn't
   anchored to its own discarded attempts.

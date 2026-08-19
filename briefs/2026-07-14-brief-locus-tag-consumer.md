@@ -16,23 +16,44 @@ The Protocol v1.1.0 directive emits locus_tags for human navigation *now* and co
 
 `scripts/compact-handoff.ts` — invoked at `td handoff`:
 1. Read the session transcript.
-2. Split on `[LOC:]` / `[WAYPOINT:]` markers; if none, fall back to freeform (no ceremony forced).
-3. Pass each section (+ raw transcript for context) to a cheap model (NVIDIA free tier, or the configured grader).
-4. Emit the §4.41 schema per section: ground-truth objective · tested-and-rejected hypotheses (with `[LOC:]`/`[WAYPOINT:]` anchors) · discovered material constraints · execution state (status, verified artifacts, remaining debt).
-5. Feed the structured summary to `td handoff` as the handoff payload (alongside the diff).
+
+2. Split on `[LOC:]` / `[WAYPOINT:]` markers; if none, fall back to freeform (no
+   ceremony forced).
+
+3. Pass each section (+ raw transcript for context) to a cheap model (NVIDIA
+   free tier, or the configured grader).
+
+4. Emit the §4.41 schema per section: ground-truth objective ·
+   tested-and-rejected hypotheses (with `[LOC:]`/`[WAYPOINT:]` anchors) ·
+   discovered material constraints · execution state (status, verified
+   artifacts, remaining debt).
+
+5. Feed the structured summary to `td handoff` as the handoff payload (alongside
+   the diff).
 
 No `.td-memory/` directory, no branch isolation, no multi-agent memory — the transcript IS the territory. Anchors cite the tag that delimits the section.
 
 ## Acceptance criteria
 
-- `td handoff` produces a **per-section** compaction (not freeform) when locus_tags are present in the transcript; falls back to freeform when absent.
-- A reviewer / handoff-agent receives the rejected-hypotheses map alongside the diff — so it sees what was tried and discarded, not just the final change.
-- Rejected approaches are located by their `[LOC:]` / `[WAYPOINT:]` anchor (the "location anchor" the parked brief's prompt template required).
+- `td handoff` produces a **per-section** compaction (not freeform) when
+  locus_tags are present in the transcript; falls back to freeform when absent.
+
+- A reviewer / handoff-agent receives the rejected-hypotheses map alongside the
+  diff — so it sees what was tried and discarded, not just the final change.
+
+- Rejected approaches are located by their `[LOC:]` / `[WAYPOINT:]` anchor (the
+  "location anchor" the parked brief's prompt template required).
+
 - The compaction model is configurable (default: a free/cheap tier; overridable).
 
 ## Out of scope
 
-- The `.td-memory/` branch-isolated substrate (parked — fabricated upstream; do not revive).
+- The `.td-memory/` branch-isolated substrate (parked — fabricated upstream; do
+  not revive).
+
 - The multi-agent-memory architecture (parked).
-- A separate review-agent protocol — the compaction feeds the *existing* `td` review flow, it doesn't define a new one.
+
+- A separate review-agent protocol — the compaction feeds the *existing* `td`
+  review flow, it doesn't define a new one.
+
 - General tool-calling support in `td` (not needed for compaction).

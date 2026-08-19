@@ -5,8 +5,11 @@
 A persistent, growing collection of small observations that don't fit in existing playbooks, don't justify their own playbook, but are worth capturing because:
 
 - They represent lessons learned that could easily be forgotten
+
 - They capture patterns too small to document formally but too useful to lose
-- They serve as tribal knowledge for agents and humans who weren't there when the lesson was learned
+
+- They serve as tribal knowledge for agents and humans who weren't there when
+  the lesson was learned
 
 This is the **scraps pile**. If it doesn't fit, it goes here until there's enough of it to deserve its own playbook.
 

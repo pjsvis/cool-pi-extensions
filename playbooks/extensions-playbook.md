@@ -19,12 +19,21 @@ extensions/
 ## Conventions
 
 - One extension per directory
-- Entry point: `index.ts` exporting a default function `(pi: ExtensionAPI) => void | Promise<void>`
-- Use `package.json` with `"pi": { "extensions": ["./index.ts"] }` for discoverability
+
+- Entry point: `index.ts` exporting a default function `(pi: ExtensionAPI) =>
+  void | Promise<void>`
+
+- Use `package.json` with `"pi": { "extensions": ["./index.ts"] }` for
+  discoverability
+
 - Config files use JSON with a `DEFAULT_CONFIG` constant in the extension code
+
 - Symlink extensions into `~/.pi/agent/extensions/` for global availability
+
 - Use `pi.registerCommand()` for user-facing slash commands
+
 - Use `pi.registerTool()` for LLM-callable tools
+
 - Use `pi.on("event_name", handler)` for lifecycle hooks
 
 ## External dependencies
@@ -44,8 +53,11 @@ For npm dependencies, add a `package.json` with `dependencies` and run `npm inst
 
 ## Reference
 
-- [Pi extension docs](https://github.com/earendil-works/pi-mono/blob/main/docs/extensions.md)
-- [Pi TUI components](https://github.com/earendil-works/pi-mono/blob/main/docs/tui.md)
+- [Pi extension
+  docs](https://github.com/earendil-works/pi-mono/blob/main/docs/extensions.md)
+
+- [Pi TUI
+  components](https://github.com/earendil-works/pi-mono/blob/main/docs/tui.md)
 
 ---
 
@@ -57,10 +69,14 @@ For npm dependencies, add a `package.json` with `dependencies` and run `npm inst
 
 1. The model was already in Pi's **built-in registry** (`pi-ai/dist/models.generated.js`)
    — confirmed by grep. It should have appeared automatically, no config needed.
+
 2. It was added to `openrouter.modelOverrides` in `~/.pi/agent/models.json`.
+
 3. Per the [Pi models docs](https://github.com/earendil-works/pi-mono/blob/main/docs/models.md):
    *"`modelOverrides` are applied to built-in provider models. Unknown model IDs are ignored."*
+
 4. So `modelOverrides` was silently doing nothing — the entry was unknown to Pi.
+
 5. I moved the model to `openrouter.models` array. Still not visible after restart.
 
 ### Key lessons
@@ -68,21 +84,28 @@ For npm dependencies, add a `package.json` with `dependencies` and run `npm inst
 1. **Don't configure what's built-in.** If a model is in `pi-ai/dist/models.generated.js`,
    it appears automatically. Adding it to `models.json` is at best redundant,
    at worst causes unexpected provider behavior.
+
 2. **Check the registry first.** Before touching `models.json`, verify:
    ```bash
    grep "model-id" ~/.local/share/fnm/node-versions/v22.22.2/installation/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-ai/dist/models.generated.js
    ```
    If found → it's built-in, no config needed.
+
 3. **`modelOverrides` is only for overriding existing built-in models.** It cannot
    register new ones. Unknown IDs are silently ignored.
+
 4. **`models` array on built-in providers is for merging custom models**, not for
    re-declaring built-in models. Adding a `models` array to OpenRouter may switch
    it into a "static config" mode that suppresses the dynamic built-in list.
+
 5. **If a built-in model doesn't appear in the TUI selector**, the issue is likely:
+
    - `enabledModels` allowlist in `~/.pi/agent/settings.json` — only listed models
      appear in the TUI selector. CLI `--list-models` ignores this filter.
      Fix: add the model ID to `settings.json.enabledModels` array.
+
    - Auth not configured for the provider (`hasConfiguredAuth` check)
+
    - A Pi version mismatch (built-in list may differ between versions)
 
 ### `enabledModels` allowlist in settings.json
@@ -121,8 +144,11 @@ cat ~/.pi/agent/models.json | jq -e 'true'
 
 ### Reference
 
-- [Pi models docs](https://github.com/earendil-works/pi-mono/blob/main/docs/models.md)
+- [Pi models
+  docs](https://github.com/earendil-works/pi-mono/blob/main/docs/models.md)
+
 - Built-in registry: `node_modules/@earendil-works/pi-ai/dist/models.generated.js`
+
 - `model-registry.js` in pi-coding-agent `dist/core/` handles merge semantics
 
 ---
@@ -138,10 +164,13 @@ referenced old `cli/` paths, and one playbook still said `npm install`.
 `~/Dev/GitHub/TradingAgents` has a much heavier manifest system worth studying:
 
 - `SILO_MANIFEST.md` — agent orientation and asset map.
+
 - `*/INDEX.jsonl` registries for briefs, debriefs, decisions, docs, playbooks,
   code, scripts, and lexicon.
+
 - `reg.ts` — unified registry CLI (`list`, `sync`, `check`, `enrich`,
   `mine`, `import`, `promote`, `state`, `scripts`).
+
 - `barnacle-scrubber.ts` — mechanical + optional LLM scan for stale
   docs, path rewrites, redundant prose, and drydock quarantine.
 
@@ -160,11 +189,17 @@ just check
 
 1. `MANIFEST.md` lists every file in `docs/`, `playbooks/`, `briefs/`,
    `debriefs/`, `decisions/`, and `prompts/`.
+
 2. `MANIFEST.md` has no stale entries.
+
 3. Internal markdown links resolve.
+
 4. Known path drift is absent:
+
    - `.flox/env/manifest.toml` uses `src/cli/...`, not old `cli/...`.
+
    - `playbooks/terminal-stack.md` uses `bun install`, not `npm install`.
+
    - `docs/edinburgh-protocol-eval.md` uses `src/cli/pi-check/...`.
 
 ### Principle

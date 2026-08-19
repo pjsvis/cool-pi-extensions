@@ -54,11 +54,21 @@ We spent time fighting a deb extraction, nix store path mismatches, and a 1,119-
 
 ## Design principles validated
 
-1. **Zero new infrastructure.** Git, SSH, Tailscale were already running. Messages are directories and JSON files — nothing that needed a daemon, port, or new credential.
-2. **Bounded contexts enforced by filesystem.** Directory ownership prevents cross-context writes.
-3. **Self-describing system.** `just orient` reports multi-machine mode, active messages, mesh status.
-4. **Pull before commit is non-negotiable.** The discipline prevents merge conflicts and missed signals.
-5. **Control plane is GitHub.** Push/pull for coordination means same auth, same audit trail, same availability as the code.
+1. **Zero new infrastructure.** Git, SSH, Tailscale were already running.
+   Messages are directories and JSON files — nothing that needed a daemon, port,
+   or new credential.
+
+2. **Bounded contexts enforced by filesystem.** Directory ownership prevents
+   cross-context writes.
+
+3. **Self-describing system.** `just orient` reports multi-machine mode, active
+   messages, mesh status.
+
+4. **Pull before commit is non-negotiable.** The discipline prevents merge
+   conflicts and missed signals.
+
+5. **Control plane is GitHub.** Push/pull for coordination means same auth, same
+   audit trail, same availability as the code.
 
 ## Next steps
 

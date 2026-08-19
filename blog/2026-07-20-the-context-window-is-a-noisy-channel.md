@@ -16,13 +16,38 @@ Shannon's 1948 picture: a source, a transmitter, a channel, a receiver. The sour
 
 Lay the LLM session over that:
 
-- **The conversation is the source.** Its Shannon entropy — the actual load-bearing information — is tiny next to its byte count. Most of a long transcript is redundancy: re-sent context, abandoned branches, pleasantries, the same constraint stated four times. Useful on first pass (it's what lets the model tolerate noise), pure cost on every subsequent pass.
+- **The conversation is the source.** Its Shannon entropy — the actual
+  load-bearing information — is tiny next to its byte count. Most of a long
+  transcript is redundancy: re-sent context, abandoned branches, pleasantries,
+  the same constraint stated four times. Useful on first pass (it's what lets
+  the model tolerate noise), pure cost on every subsequent pass.
 
-- **The context window is the channel**, with finite capacity C — attention budget, not just token slots. Every turn re-transmits the whole source, so the source rate isn't fixed; it *grows* with the session. This is the O(n²) cost pathology, and it's also the capacity pathology: as the transcript swells, R climbs toward C, and the theorem says what happens at the boundary — reliable reconstruction degrades. The model doesn't get dumber near the top of its context. The channel gets over-driven.
+- **The context window is the channel**, with finite capacity C — attention
+  budget, not just token slots. Every turn re-transmits the whole source, so the
+  source rate isn't fixed; it *grows* with the session. This is the O(n²) cost
+  pathology, and it's also the capacity pathology: as the transcript swells, R
+  climbs toward C, and the theorem says what happens at the boundary — reliable
+  reconstruction degrades. The model doesn't get dumber near the top of its
+  context. The channel gets over-driven.
 
-- **The handoff is lossy compression at a chosen distortion.** Source coding forbids beating H losslessly. Rate-distortion theory says: tolerate distortion D, compress to R(D). The handoff accepts distortion — raw transcript, exact phrasings, dead branches gone — in exchange for a much lower rate. And it's *optimal* compression at that distortion, not a failure: you pay exactly for the loss you accepted. The Edinburgh claim, sharpened: the *decisions* are the low-distortion region (preserve near-losslessly); the *history* is the high-redundancy region (compress aggressively). That's the precise form of "decisions, not history."
+- **The handoff is lossy compression at a chosen distortion.** Source coding
+  forbids beating H losslessly. Rate-distortion theory says: tolerate distortion
+  D, compress to R(D). The handoff accepts distortion — raw transcript, exact
+  phrasings, dead branches gone — in exchange for a much lower rate. And it's
+  *optimal* compression at that distortion, not a failure: you pay exactly for
+  the loss you accepted. The Edinburgh claim, sharpened: the *decisions* are the
+  low-distortion region (preserve near-losslessly); the *history* is the
+  high-redundancy region (compress aggressively). That's the precise form of
+  "decisions, not history."
 
-- **Enough context** is the Shannon question, now answerable: the minimum compressed message M such that I(M; decisions) — the mutual information between your context and the load-bearing state — is sufficient to reconstruct those decisions at acceptable distortion. Not a token count. A mutual-information condition. Five hundred lines of handoff that's high-mutual-information with the decisions beats fifty thousand tokens of transcript that isn't. *Structure, not volume* is the Shannon-rigorous version of the slogan. Stuff-into-Things is source coding.
+- **Enough context** is the Shannon question, now answerable: the minimum
+  compressed message M such that I(M; decisions) — the mutual information
+  between your context and the load-bearing state — is sufficient to reconstruct
+  those decisions at acceptable distortion. Not a token count. A
+  mutual-information condition. Five hundred lines of handoff that's
+  high-mutual-information with the decisions beats fifty thousand tokens of
+  transcript that isn't. *Structure, not volume* is the Shannon-rigorous version
+  of the slogan. Stuff-into-Things is source coding.
 
 ## What it predicts
 
@@ -42,19 +67,48 @@ Shannon built the theory for a wire from A to B; an LLM context window isn't str
 
 This frame is not novel — it is an idea whose time has come, and the wild has been arriving at it from several directions. The honest accounting, because the sculpting should engage with these rather than pretend to invent them:
 
-- **"LLMs as Noisy Channels: A Shannon Perspective on Model Capacity and Scaling Laws"** (Ouyang et al., ICML 2026) models the LLM as a Shannon-Hartley channel, mapping parameters to bandwidth and tokens to signal. The closest frame in spirit — but it operates on *training* (scaling laws, catastrophic overtraining, quantization degradation), not on the inference-time operating regime of re-sending the transcript every turn.
+- **"LLMs as Noisy Channels: A Shannon Perspective on Model Capacity and Scaling
+  Laws"** (Ouyang et al., ICML 2026) models the LLM as a Shannon-Hartley
+  channel, mapping parameters to bandwidth and tokens to signal. The closest
+  frame in spirit — but it operates on *training* (scaling laws, catastrophic
+  overtraining, quantization degradation), not on the inference-time operating
+  regime of re-sending the transcript every turn.
 
-- **"What to Keep, What to Forget: A Rate–Distortion View of Memory Compaction in LLMs and Agents"** (Colaco & Lahjouji) is the closest in substance. It unifies KV-cache, prompt, architectural, and agent-memory compaction under one rate-distortion objective, derives a data-processing lower bound, and names reversibility and query-conditioning as the properties that decide method quality. It even predicts that repeated irreversible summarization compounds error super-linearly. The handoff-as-lossy-compression move is essentially theirs, formalized. What this piece adds is the *channel-capacity* framing of the conversation itself (not the memory layer) and the operational newup discipline as keeping R under C.
+- **"What to Keep, What to Forget: A Rate–Distortion View of Memory Compaction
+  in LLMs and Agents"** (Colaco & Lahjouji) is the closest in substance. It
+  unifies KV-cache, prompt, architectural, and agent-memory compaction under one
+  rate-distortion objective, derives a data-processing lower bound, and names
+  reversibility and query-conditioning as the properties that decide method
+  quality. It even predicts that repeated irreversible summarization compounds
+  error super-linearly. The handoff-as-lossy-compression move is essentially
+  theirs, formalized. What this piece adds is the *channel-capacity* framing of
+  the conversation itself (not the memory layer) and the operational newup
+  discipline as keeping R under C.
 
-- **"Fundamental Limits of Prompt Compression: A Rate-Distortion Framework"** (Girish et al., EPFL/UT Austin) proves the query-aware vs query-agnostic mutual-information gap empirically — the cleanest confirmation that conditioning on the query shifts the accuracy-ratio curve by H(Q), exactly the quantity the survey above charges for not knowing the query.
+- **"Fundamental Limits of Prompt Compression: A Rate-Distortion Framework"**
+  (Girish et al., EPFL/UT Austin) proves the query-aware vs query-agnostic
+  mutual-information gap empirically — the cleanest confirmation that
+  conditioning on the query shifts the accuracy-ratio curve by H(Q), exactly the
+  quantity the survey above charges for not knowing the query.
 
-- **"Forget BIT, It is All about TOKEN: Towards Semantic Information Theory for LLMs"** (Bai, Huawei) models the LLM as a discrete-time channel with feedback and state, using directed information and rate-distortion across pretraining, post-training, and inference — a theoretical backbone for the whole field.
+- **"Forget BIT, It is All about TOKEN: Towards Semantic Information Theory for
+  LLMs"** (Bai, Huawei) models the LLM as a discrete-time channel with feedback
+  and state, using directed information and rate-distortion across pretraining,
+  post-training, and inference — a theoretical backbone for the whole field.
 
-- **"Polynomial Context-Truncation Sensitivity… Sequential Wyner–Ziv Bounds for KV Cache Compression"** (Kim) casts KV-cache compression as sequential Wyner–Ziv source coding and finds polynomial (not geometric) truncation sensitivity — the channel-decay structure under the compaction frame.
+- **"Polynomial Context-Truncation Sensitivity… Sequential Wyner–Ziv Bounds for
+  KV Cache Compression"** (Kim) casts KV-cache compression as sequential
+  Wyner–Ziv source coding and finds polynomial (not geometric) truncation
+  sensitivity — the channel-decay structure under the compaction frame.
 
-- **"Channel Capacity. Why Every Model Has a Ceiling"** (Eleventh Hour Enthusiast, Medium) is the popular-press cousin: context windows as capacity limits, attention as a learned solution to the bottleneck. Closer to the Tishby information-bottleneck line than to the operating-regime argument here.
+- **"Channel Capacity. Why Every Model Has a Ceiling"** (Eleventh Hour
+  Enthusiast, Medium) is the popular-press cousin: context windows as capacity
+  limits, attention as a learned solution to the bottleneck. Closer to the
+  Tishby information-bottleneck line than to the operating-regime argument here.
 
-- **"Hallucinations in Noisy Channels"** (Goldman, working doc) independently runs the training-as-source-coding / inference-as-channel-coding duality, with P(hallucination) ∝ exp(ΔS). A parallel independent articulation.
+- **"Hallucinations in Noisy Channels"** (Goldman, working doc) independently
+  runs the training-as-source-coding / inference-as-channel-coding duality, with
+  P(hallucination) ∝ exp(ΔS). A parallel independent articulation.
 
 The honest summary: the information-theoretic mapping is shared ground, arrived at independently and recently. What is specific to this piece is the *operating-regime* synthesis — the re-send-every-turn observation turned into the explanatory frame for session degradation, the newup discipline read as adaptive re-encoding before R crosses C, and the link to *predictably adequate* as engineering for the floor rather than the ceiling. The pieces are in the wild; the assembly into a management discipline is ours.
 

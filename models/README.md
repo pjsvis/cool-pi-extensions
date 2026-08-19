@@ -5,7 +5,9 @@ This folder documents all models evaluated under the Edinburgh Protocol framewor
 ## Updated: 14 June 2026 — Complete Benchmark
 
 All non-muppet models have been run through the complete eval suite:
-- **Edinburgh Protocol trap vectors** (4 tests) — gateway filters for behavioral compliance
+- **Edinburgh Protocol trap vectors** (4 tests) — gateway filters for behavioral
+  compliance
+
 - **IQ Benchmark** (8 tests) — reasoning depth and planning capability
 
 ### Why We Built This

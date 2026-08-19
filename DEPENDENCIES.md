@@ -27,9 +27,16 @@ Checks each required binary as present (✓) or missing (✗) with an install hi
 
 ## Adding a new dependency
 
-1. **Runtime dependency for an extension** (npm package) → add to that extension's `package.json`, `bun install` there. Pi resolves `node_modules/` next to extension files automatically.
-2. **System binary needed by an extension at runtime** → add it to the toolkit below AND to `scripts/install-deps.sh` (the script is what `just install-deps` runs; doc and script mirror each other).
-3. **Opt-in** (rare — currently none) → list under a new "Optional" section; `just install-deps` flags it optional and won't fail.
+1. **Runtime dependency for an extension** (npm package) → add to that
+   extension's `package.json`, `bun install` there. Pi resolves `node_modules/`
+   next to extension files automatically.
+
+2. **System binary needed by an extension at runtime** → add it to the toolkit
+   below AND to `scripts/install-deps.sh` (the script is what `just
+   install-deps` runs; doc and script mirror each other).
+
+3. **Opt-in** (rare — currently none) → list under a new "Optional" section;
+   `just install-deps` flags it optional and won't fail.
 
 ---
 
@@ -39,8 +46,12 @@ Checks each required binary as present (✓) or missing (✗) with an install hi
 alacritty → herdr → pi → [new tab] → fresh → [new tab] → sidecar
 ```
 
-- **td** runs per-session for agents — session identity, issue state, handoff context.
-- **sidecar** runs alongside for human supervisors — worktrees, td state, conversation history, merge workflow.
+- **td** runs per-session for agents — session identity, issue state, handoff
+  context.
+
+- **sidecar** runs alongside for human supervisors — worktrees, td state,
+  conversation history, merge workflow.
+
 - Both via `marcus/homebrew-tap`: `brew install td sidecar`.
 
 ---

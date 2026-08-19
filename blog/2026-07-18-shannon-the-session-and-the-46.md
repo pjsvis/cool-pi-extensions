@@ -173,13 +173,18 @@ source-coded signal. That's the textbook solution.
 
 - The context window is a finite-capacity channel. Shannon's capacity theorem
   applies.
+
 - The agent is its own noise source. Every turn re-transmits accumulated noise.
   Cost is *O(n²)*. SNR degrades with session length.
+
 - The handoff is source coding — compress the signal to its entropy rate. Drop
   the redundancy and noise.
+
 - The newup is the channel reset. Full capacity restored. Clean SNR.
+
 - The locus tags are the synchronisation preamble. The fresh decoder locks on
   immediately.
+
 - The intractable task is correlated noise — discarded attempts bias the
   decoder toward the failures. Reset the channel. Re-transmit the coded
   signal. Decode cleanly.

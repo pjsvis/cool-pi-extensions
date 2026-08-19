@@ -22,18 +22,34 @@ The registry carries nine curated equations with stable `(file, line, nth)` keys
 
 ### Decision 010 — Decouple translator validation from API access
 WL is a portable interchange format. The translator's *target* (Wolfram Language) is identical whether you evaluate it on free WA web, a local v10.0 kernel, or the Cloud API. Validating against any one validates the translator. We demonstrated this twice with free WA queries before any build effort:
-- `Eigenvalues[{{-p,0,0},{0,0,0},{0,0,0}}]` → `{-p,0,0}` — falsifies the book's "pure hydrostatic compression" claim on the uniaxial config.
-- `σ − (Tr[σ]/3)·I` → `{{-2p/3,0,0},{0,p/3,0},{0,0,p/3}}` — an independent falsification via the deviatoric decomposition, a *composite* expression (trace + scalar multiply + identity + subtraction), not a single named function.
+- `Eigenvalues[{{-p,0,0},{0,0,0},{0,0,0}}]` → `{-p,0,0}` — falsifies the book's
+  "pure hydrostatic compression" claim on the uniaxial config.
+
+- `σ − (Tr[σ]/3)·I` → `{{-2p/3,0,0},{0,p/3,0},{0,0,p/3}}` — an independent
+  falsification via the deviatoric decomposition, a *composite* expression
+  (trace + scalar multiply + identity + subtraction), not a single named
+  function.
 
 The critical-path implication: Phase 1 (the highest-risk piece) runs in parallel with Phase 0 (the API-access gate). The translator consumes no API access; serial-gating it was pure sequencing overhead.
 
 ### Decision 011 — Lookup-first verification registry
 Originally the translator *was* the verifier. Now the registry is the authoritative spec and the translator is the bootstrap/fallback. This is what separates "we wrote a translator once" from "we have a verification system that survives manuscript edits":
 
-- **Curated** — an equation's WL and bound assertions live in `equations.jsonl`, not in the translator code. Humans own the verdict.
-- **Drift-detected** — when the manuscript equation changes, the hash mismatches, the build gate fails, and a human must decide: re-translate, re-curate, or revert the manuscript. Stale entries never silently pass.
-- **Multi-nth** — three equations on the same source line (102 of the tensor-algebra brief) keyed by ordinal, all resolved to three distinct registry entries. The locator scheme handles dense equations without inflating registry IDs.
-- **Fallback** — unregistered equations get a parser-generated candidate WL, flagged `unverified`, ready for promotion. The path from bootstrap to curated is short and obvious.
+- **Curated** — an equation's WL and bound assertions live in `equations.jsonl`,
+  not in the translator code. Humans own the verdict.
+
+- **Drift-detected** — when the manuscript equation changes, the hash
+  mismatches, the build gate fails, and a human must decide: re-translate,
+  re-curate, or revert the manuscript. Stale entries never silently pass.
+
+- **Multi-nth** — three equations on the same source line (102 of the
+  tensor-algebra brief) keyed by ordinal, all resolved to three distinct
+  registry entries. The locator scheme handles dense equations without inflating
+  registry IDs.
+
+- **Fallback** — unregistered equations get a parser-generated candidate WL,
+  flagged `unverified`, ready for promotion. The path from bootstrap to curated
+  is short and obvious.
 
 ### WA-web boundary (demonstrated, not assumed)
 The earlier session's log correctly logged that WA web is not a WL kernel — it's a single-expression NLU engine. WA *mangled* `J` into `BesselJ` and the imaginary unit `i` into `I` (its own "Assuming i is the imaginary unit" prompt confirmed). It cannot evaluate multi-statement WL (assignments + comparison → "doesn't understand"). Therefore WA validates single self-contained definitional expressions only; multi-statement identity checks need a real kernel. The translator target (Wolfram Language) is portable across WA, local v10.0, and Cloud API; the *runtime* must be the latter two. This boundary is explicit and tested.
@@ -95,10 +111,19 @@ The Wolfram Alpha ambiguity (`J → BesselJ`, `i → I`) wasn't a generator fail
 
 ## Next steps
 
-- **`td-1e3602`** — submit for review (`td review`). Independent reviewer should rerun both test scripts to confirm 10/10 + 9/9.
-- **`td-77403f`** — Phase 0 (API access validation; v10.0 upgrade decision). The remaining go/no-go gate for the local-kernel backend (Phase 5).
-- **`td-6f4bd4`** — Phase 2: deploy the curated `APIFunction` assertion set; permissions key; the runtime that proves the translator against the real Cloud backend.
-- **`td-003ad8`** — Phase 3: scaffold `index.ts`, `verify_equation` tool, backend selection. Add `pi.extensions` field to `package.json` only when the file exists.
+- **`td-1e3602`** — submit for review (`td review`). Independent reviewer should
+  rerun both test scripts to confirm 10/10 + 9/9.
+
+- **`td-77403f`** — Phase 0 (API access validation; v10.0 upgrade decision). The
+  remaining go/no-go gate for the local-kernel backend (Phase 5).
+
+- **`td-6f4bd4`** — Phase 2: deploy the curated `APIFunction` assertion set;
+  permissions key; the runtime that proves the translator against the real Cloud
+  backend.
+
+- **`td-003ad8`** — Phase 3: scaffold `index.ts`, `verify_equation` tool,
+  backend selection. Add `pi.extensions` field to `package.json` only when the
+  file exists.
 
 ---
 

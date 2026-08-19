@@ -101,6 +101,10 @@ cargo install --path . --root ~/.local
 
 ## Open Questions
 
-- Should `just install-deps` build `just` itself from source? (Bootstrapping problem — you'd need `just` to run the recipe.)
+- Should `just install-deps` build `just` itself from source? (Bootstrapping
+  problem — you'd need `just` to run the recipe.)
+
 - Should we maintain a `~/dev/github/` convention as the build farm?
-- For Go tools with heavy CGO deps (sqlite3), should we prefer pure-Go alternatives where available?
+
+- For Go tools with heavy CGO deps (sqlite3), should we prefer pure-Go
+  alternatives where available?

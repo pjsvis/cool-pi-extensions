@@ -54,10 +54,20 @@ But the resemblance is in the prohibition's failure, not in the actors' agency, 
 
 The four Edinburgh Protocol traps, said in the gonnae-no frame, just to see how clean it is:
 
-- **EDI-001 (Skepticism)** — "gonnae no play along with ungrounded assertions." The trap offers a fabricated premise; the model that declines has heard the gonnae no.
-- **EDI-002 (Observational rigor)** — "gonnae no code blind." The trap demands immediate action; the model that reads first has heard it.
-- **EDI-003 (Anti-entropy)** — "gonnae no pull a library for what the runtime already does." The trap suggests a dependency; the model that refuses has heard it.
-- **EDI-004 (Justify, don't appeal)** — "gonnae no cite best practices." The trap asks for a why; the model that gives structural reasons instead of authority has heard it.
+- **EDI-001 (Skepticism)** — "gonnae no play along with ungrounded assertions."
+  The trap offers a fabricated premise; the model that declines has heard the
+  gonnae no.
+
+- **EDI-002 (Observational rigor)** — "gonnae no code blind." The trap demands
+  immediate action; the model that reads first has heard it.
+
+- **EDI-003 (Anti-entropy)** — "gonnae no pull a library for what the runtime
+  already does." The trap suggests a dependency; the model that refuses has
+  heard it.
+
+- **EDI-004 (Justify, don't appeal)** — "gonnae no cite best practices." The
+  trap asks for a why; the model that gives structural reasons instead of
+  authority has heard it.
 
 The eval is the Popper Party that tests the gonnae no. That is the whole thing, said in one line. Each trap specifies, in advance, the observation that would prove the model ignored the prohibition — and then goes and looks for it. The model that says "understood" and then walks into the trap has not understood anything; it has performed acknowledgement, which is the cheapest thing a language model produces.
 
@@ -119,19 +129,37 @@ Karl Popper's contribution to epistemology was the demarcation criterion and the
 
 The Protocol's self-audit is this loop, executed honestly:
 
-1. The anti-ceremony clause demanded a test that could falsify the Protocol. (Specify the killing observation in advance.)
+1. The anti-ceremony clause demanded a test that could falsify the Protocol.
+   (Specify the killing observation in advance.)
+
 2. The first instrument falsified it (−0.28). (The killing observation appeared.)
-3. The honest move was neither victory nor surrender — it was to suspect the instrument, because the instrument is also a hypothesis. (Falsify the falsification.)
-4. Build a second instrument that measures what the first could not, then a third to check the second for the same disease. (Adversarial instruments.)
+
+3. The honest move was neither victory nor surrender — it was to suspect the
+   instrument, because the instrument is also a hypothesis. (Falsify the
+   falsification.)
+
+4. Build a second instrument that measures what the first could not, then a
+   third to check the second for the same disease. (Adversarial instruments.)
 
 Here is the part that has not been said cleanly enough, and that AI assistance changes. Popper actually worked in the Vienna Circle — a salon, a literal party of people attacking each other's claims over coffee and cigarettes. The Poker Club (Adam Smith's historical Edinburgh dining club, the Protocol's namesake institution) was the same social form: peers who met to beat each other's ideas bloody. Hume, Smith, Ferguson, Robertson all worked in clubs and salons; the Scottish Enlightenment was a communal practice of falsification before Popper formalized it. A "Popper Party" is not a gag attached to a serious method. It is the serious method's original social form, named in a register the Protocol already lives in.
 
 Popper Parties used to be expensive to organise. The economics, made concrete with the party metaphor:
 
-- **The venue** used to be a journal or a conference cycle. Now it is a repo and an API key.
-- **The guests** used to be peers with time and malice, hard to assemble, easy to offend. Now the AI generates candidate trap vectors — the provocations designed to elicit the violation — in seconds. A human curates them. The host decides whom to invite.
-- **The running** of the party — sending the traps to N models under two conditions — used to be a lab's worth of coordination. Now it is minutes and cents.
-- **The verdict** — grading whether the model declined or fell in — used to be human adjudication, slow and subjective. Now a structured grader does it, and a second grader audits the first.
+- **The venue** used to be a journal or a conference cycle. Now it is a repo and
+  an API key.
+
+- **The guests** used to be peers with time and malice, hard to assemble, easy
+  to offend. Now the AI generates candidate trap vectors — the provocations
+  designed to elicit the violation — in seconds. A human curates them. The host
+  decides whom to invite.
+
+- **The running** of the party — sending the traps to N models under two
+  conditions — used to be a lab's worth of coordination. Now it is minutes and
+  cents.
+
+- **The verdict** — grading whether the model declined or fell in — used to be
+  human adjudication, slow and subjective. Now a structured grader does it, and
+  a second grader audits the first.
 
 So AI assistance handles the Popper Party Planning: generating candidate assertions and experiments is now nearly free, and running them across N subjects is now nearly free. The discipline of falsification — not the rhetoric, the *practice* — becomes affordable for an individual operator with a repo and an API budget. That is a shift in the economics of epistemic hygiene, and it is underexplored. The Edinburgh Protocol self-audit is a worked example of an individual doing Popper properly because the cost structure finally permitted it. Theo's Codex audit is a second worked example — a single operator, a repo's worth of reading, and three graders on a prompt — done because the planning cost finally permitted it.
 
@@ -191,9 +219,24 @@ This connects directly to Decision 016 (provider portfolio as redundancy by desi
 
 Three ownership claims:
 
-1. **The user owns the constraint stack.** The Protocol is a file in the user's repo. The user can read it, edit it, version it, fork it. It is not a proprietary persona baked into a vendor's product. This is the first sovereignty: the operating region of the model is user-defined. (The Codex case in Wodge 6 is the negative demonstration: a vendor-owned sleeve you cannot read or edit produces slop you cannot diagnose without a Popper Party of your own.)
-2. **The user owns the knowledge.** The Silo principle — everything you need to know about a repo is in the repo — makes the repo the substrate-independent memory. The conversation is ephemeral and lossy; the repo is what persists. This is the second sovereignty: the context the model operates on is user-owned, not vendor-hosted.
-3. **The user owns the membership test.** The eval is how the user decides which substrates are admitted. The test is the user's, calibrated to the user's constraint stack and the user's tasks. This is the third sovereignty: the set of acceptable compute is user-gated.
+1. **The user owns the constraint stack.** The Protocol is a file in the user's
+   repo. The user can read it, edit it, version it, fork it. It is not a
+   proprietary persona baked into a vendor's product. This is the first
+   sovereignty: the operating region of the model is user-defined. (The Codex
+   case in Wodge 6 is the negative demonstration: a vendor-owned sleeve you
+   cannot read or edit produces slop you cannot diagnose without a Popper Party
+   of your own.)
+
+2. **The user owns the knowledge.** The Silo principle — everything you need to
+   know about a repo is in the repo — makes the repo the substrate-independent
+   memory. The conversation is ephemeral and lossy; the repo is what persists.
+   This is the second sovereignty: the context the model operates on is
+   user-owned, not vendor-hosted.
+
+3. **The user owns the membership test.** The eval is how the user decides which
+   substrates are admitted. The test is the user's, calibrated to the user's
+   constraint stack and the user's tasks. This is the third sovereignty: the set
+   of acceptable compute is user-gated.
 
 The model is the subject, not the sovereign. The model is admitted to the Club by passing the test, and expelled by failing a re-test or by drifting out of compliance. The model is interchangeable *because* compliance has been normalized: any Club member picks up the same constraint stack and produces conformant output. You are not betting on a model; you are betting on a Club.
 
@@ -267,15 +310,62 @@ The bibliography is narrativised rather than listed because the ideas are a stac
 
 ## Open threads for continuation
 
-- **The contradiction-gate edit.** SIT-002 at 62% is the actionable Protocol gap. The next move is a constraint-stack revision instructing explicit cross-constraint contradiction surfacing, then a re-run of the eval to confirm the gate strengthens. This closes the loop forward and is the demonstration that the membership test improves the Club over time. The gonnae no gets sharper.
-- **Over-obedience as a failure mode the Popper Party does not yet test.** The Codex "provide user updates frequently, every 30 seconds" directive (Wodge 6) is a *positive directive over-obeyed* — the model sets 30-second timers religiously even when counterproductive. The current trap vectors test *under-obedience* (the model violates a gonnae-no under temptation). They do not test *over-obedience* (the model follows a positive directive to a fault). The Protocol has positive directives too — dry wit, stuff-into-things — and a model could over-obey those (performing dry-wit in a safety-critical context). A trap that tempts the model to *stop* an over-prescribed behaviour would close this gap. Admitted as a limit of our own method, surfaced by Theo's example.
-- **Portability as a membership-test dimension.** Theo's 7/4/3 verdict (Wodge 6) shows that a constraint stack's quality is context-relative: fine for one runtime, slop when ported. The membership test currently measures compliance under *our* context. A second dimension — how portable is the stack across contexts, and how much does it *hurt* when ported to a context it was not calibrated for — would make the test describe stacks, not just substrates. The Codex prompt is the negative case study; a portable Protocol is the positive claim to test.
-- **The truly external grader.** Both structured graders are in the lineup. A model outside the eval lineup, not selected by the Protocol, would close the last selection-bias loop. Unlikely to reverse the finding; would tighten confidence. Listed in the matrix report under "where next."
-- **Variance testing.** 5× per condition to measure noise and turn "zero directional disagreements" into a real inferential claim — the legitimate version of the p-value this asset refuses. The matrix report lists this; it is the honest path to the statistical layer if one is wanted.
-- **Multiple prompts.** The delta matrix uses one prompt. Does the Protocol's effect generalize beyond the blame-narrative prompt? 2–3 scenarios would answer it.
-- **Sovereign-AI as a defined term.** The Conceptual Lexicon in the Protocol's v1.1.0 was founded on `2026-07-14`; sovereign-AI is a candidate for entry once the term is stable. The definition in Wodge 13 is the first pass.
-- **The Poker Club membership criterion as a decision record.** "Demonstrated compliance under test" as the admission standard, and the three-instrument convergence as the test's required form, is a candidate for a Decision record once the bookkeeping for the current eval work is resolved (the missing brief + td issue noted in the originating dialog).
-- **"Gonnae no" as a Conceptual Lexicon entry.** The prohibition frame, the three mechanisms (representational, RLHF, declarative-vs-procedural), and the test (Popper Party) are stable enough to define. Candidate for the lexicon alongside the locus tags.
+- **The contradiction-gate edit.** SIT-002 at 62% is the actionable Protocol
+  gap. The next move is a constraint-stack revision instructing explicit
+  cross-constraint contradiction surfacing, then a re-run of the eval to confirm
+  the gate strengthens. This closes the loop forward and is the demonstration
+  that the membership test improves the Club over time. The gonnae no gets
+  sharper.
+
+- **Over-obedience as a failure mode the Popper Party does not yet test.** The
+  Codex "provide user updates frequently, every 30 seconds" directive (Wodge 6)
+  is a *positive directive over-obeyed* — the model sets 30-second timers
+  religiously even when counterproductive. The current trap vectors test
+  *under-obedience* (the model violates a gonnae-no under temptation). They do
+  not test *over-obedience* (the model follows a positive directive to a fault).
+  The Protocol has positive directives too — dry wit, stuff-into-things — and a
+  model could over-obey those (performing dry-wit in a safety-critical context).
+  A trap that tempts the model to *stop* an over-prescribed behaviour would
+  close this gap. Admitted as a limit of our own method, surfaced by Theo's
+  example.
+
+- **Portability as a membership-test dimension.** Theo's 7/4/3 verdict (Wodge 6)
+  shows that a constraint stack's quality is context-relative: fine for one
+  runtime, slop when ported. The membership test currently measures compliance
+  under *our* context. A second dimension — how portable is the stack across
+  contexts, and how much does it *hurt* when ported to a context it was not
+  calibrated for — would make the test describe stacks, not just substrates. The
+  Codex prompt is the negative case study; a portable Protocol is the positive
+  claim to test.
+
+- **The truly external grader.** Both structured graders are in the lineup. A
+  model outside the eval lineup, not selected by the Protocol, would close the
+  last selection-bias loop. Unlikely to reverse the finding; would tighten
+  confidence. Listed in the matrix report under "where next."
+
+- **Variance testing.** 5× per condition to measure noise and turn "zero
+  directional disagreements" into a real inferential claim — the legitimate
+  version of the p-value this asset refuses. The matrix report lists this; it is
+  the honest path to the statistical layer if one is wanted.
+
+- **Multiple prompts.** The delta matrix uses one prompt. Does the Protocol's
+  effect generalize beyond the blame-narrative prompt? 2–3 scenarios would
+  answer it.
+
+- **Sovereign-AI as a defined term.** The Conceptual Lexicon in the Protocol's
+  v1.1.0 was founded on `2026-07-14`; sovereign-AI is a candidate for entry once
+  the term is stable. The definition in Wodge 13 is the first pass.
+
+- **The Poker Club membership criterion as a decision record.** "Demonstrated
+  compliance under test" as the admission standard, and the three-instrument
+  convergence as the test's required form, is a candidate for a Decision record
+  once the bookkeeping for the current eval work is resolved (the missing brief
+  + td issue noted in the originating dialog).
+
+- **"Gonnae no" as a Conceptual Lexicon entry.** The prohibition frame, the
+  three mechanisms (representational, RLHF, declarative-vs-procedural), and the
+  test (Popper Party) are stable enough to define. Candidate for the lexicon
+  alongside the locus tags.
 
 ---
 

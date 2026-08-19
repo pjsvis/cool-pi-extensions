@@ -68,17 +68,26 @@ Your agents can read this file and decrement the counter after each “question-
 
 ## Ongoing Maintenance
 
-- **Barnacle audit** - Run a barnacle audit at least once per sprint (see Decision 007 for the quarterly process).
-- **Popper Party updates** - When a new claim is added, ensure the corresponding experiment section is present; the CI will enforce this.
-- **Skepticism budget reset** - Reset the counter at the start of each sprint (e.g., via a CI job or a manual `td reset` command).
+- **Barnacle audit** - Run a barnacle audit at least once per sprint (see
+  Decision 007 for the quarterly process).
+
+- **Popper Party updates** - When a new claim is added, ensure the corresponding
+  experiment section is present; the CI will enforce this.
+
+- **Skepticism budget reset** - Reset the counter at the start of each sprint
+  (e.g., via a CI job or a manual `td reset` command).
 
 ---
 
 ## Benefits Recap
 
 - **Minimal ceremony** - Only a few files and a couple of CI steps.
-- **High integrity** - Continuous monitoring, falsifiable claims, and a disciplined guardrail.
-- **Scalable** - New repos get the same structure by copying this playbook; agents can `just orient` and start working immediately.
+
+- **High integrity** - Continuous monitoring, falsifiable claims, and a
+  disciplined guardrail.
+
+- **Scalable** - New repos get the same structure by copying this playbook;
+  agents can `just orient` and start working immediately.
 
 ---
 

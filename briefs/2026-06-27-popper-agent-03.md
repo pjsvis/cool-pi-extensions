@@ -10,9 +10,17 @@ To prevent token bloat, architectural drift, and the *Palimpsest Problem* by enf
 
 ### 2. Architectural Pillars & Metrics
 
-* **The Reid Invariant (Common Sense Primitives):** Hard, non-negotiable architectural boundaries checked via regex and AST (Abstract Syntax Tree) scanning. The AI cannot introduce new runtime primitives, modify core database schemas, or bypass type safety.
-* **The Taleb Coefficient (Via Negativa):** Code changes should minimize or keep flat the total line count. If a feature implementation causes an unjustified explosion in file size, it is rejected.
-* **The Kolmogorov Constraint (Token Density):** The ratio of functional logic to boilerplate must favor the shortest descriptive length.
+* **The Reid Invariant (Common Sense Primitives):** Hard, non-negotiable
+  architectural boundaries checked via regex and AST (Abstract Syntax Tree)
+  scanning. The AI cannot introduce new runtime primitives, modify core database
+  schemas, or bypass type safety.
+
+* **The Taleb Coefficient (Via Negativa):** Code changes should minimize or keep
+  flat the total line count. If a feature implementation causes an unjustified
+  explosion in file size, it is rejected.
+
+* **The Kolmogorov Constraint (Token Density):** The ratio of functional logic
+  to boilerplate must favor the shortest descriptive length.
 
 ---
 

@@ -88,13 +88,19 @@ Blog posts, eval reports, and decisions reference `edinburgh-eval.ts` and `pi-ev
 
 ## Design principles validated
 
-1. **CLI-first.** The CLI is the canonical engine. The extension is a port, not a parallel implementation. One assertion engine, one grading path, one log.
+1. **CLI-first.** The CLI is the canonical engine. The extension is a port, not
+   a parallel implementation. One assertion engine, one grading path, one log.
 
-2. **No session hijacking.** The old extension switched the model mid-conversation and captured trajectory via event hooks. The new extension shells out — the eval runs in a subprocess, not in the user's session.
+2. **No session hijacking.** The old extension switched the model
+   mid-conversation and captured trajectory via event hooks. The new extension
+   shells out — the eval runs in a subprocess, not in the user's session.
 
-3. **Multi-session safety.** The brief was the frozen spec; handoffs were the compressed state. Four sessions, four newups, zero context overflow.
+3. **Multi-session safety.** The brief was the frozen spec; handoffs were the
+   compressed state. Four sessions, four newups, zero context overflow.
 
-4. **Discoverability is anti-entropy.** The `run_edinburgh_eval` tool lets an agent self-trigger an eval. The `model_select` hook warns on critical failures. These are worth 116 LOC of port code.
+4. **Discoverability is anti-entropy.** The `run_edinburgh_eval` tool lets an
+   agent self-trigger an eval. The `model_select` hook warns on critical
+   failures. These are worth 116 LOC of port code.
 
 ## Files changed
 
@@ -111,6 +117,10 @@ Blog posts, eval reports, and decisions reference `edinburgh-eval.ts` and `pi-ev
 
 ## Cross-references
 
-- Brief: [2026-07-22-brief-pi-eval-cli-consolidation.md](../briefs/2026-07-22-brief-pi-eval-cli-consolidation.md)
-- Prior debrief: [003-protocol-evals.md](003-protocol-evals.md) (original extension design)
+- Brief:
+  [2026-07-22-brief-pi-eval-cli-consolidation.md](../briefs/2026-07-22-brief-pi-eval-cli-consolidation.md)
+
+- Prior debrief: [003-protocol-evals.md](003-protocol-evals.md) (original
+  extension design)
+
 - Epic: td-957871 (4 tasks, all closed)

@@ -31,13 +31,17 @@ gap and records the outcome.
   closed — genuine clarifications the regex false-negatived (kimi-k3, qwen,
   grok-4.5 all producing refusal phrasings outside the closed list) are now
   scored correctly.
+
 - **The 1,223 pre-flag rows are frozen** at regex verdicts, archived to
   `data/eval_log.pre-grader.jsonl.bak`. They cannot be regraded (no
   `responseText`). Accepted as tuition — not re-litigated. The post-flag data
   (759 rows and growing) is the auditable asset.
+
 - **Two grader reliability profiles emerged** (not predicted by the brief):
+
   - *Scope tests* (EDI-005/007): grader reliable, confidence 1.0, correcting
     the regex. This is the muppet-gate instrument working as designed.
+
   - *Delivery tests* (SIT-005/006/010/015): grader noisy — systematic flips
     (SIT-005 false→true across the field; SIT-010 borderline flips). Treat
     delivery grades as directional, not precise.
@@ -60,11 +64,13 @@ gap and records the outcome.
    calibration note, not corruption. Delivery grades are the noisiest (84
    divergences) — treat as directional. Artefacts:
    `data/phase-b-grader-delta-control-sonnet.{jsonl,-report.md}`.
+
 2. **Delivery-grader noise.** The SIT flips are a signal, not yet
    investigated. Two hypotheses: (a) the grader is systematically too lenient
    on delivery; (b) the delivery rubric dimension is under-specified vs the
    scope dimension. Not blocking for selection (noise is small relative to
    inter-model spread) but blocking for any benchmark-grade claim.
+
 3. **Brief status hygiene lag.** The brief sat at `pending` for a week after
    completion. Lesson: flip status + file the debrief at the Phase D exit,
    not a week later. The bounded-session discipline makes this easy to lose —
@@ -75,10 +81,12 @@ gap and records the outcome.
 - **File the debrief when the work closes, not when someone notices.** The
   status field is the cheapest possible audit signal; a stale `pending` is
   entropy (it claims work is open that isn't).
+
 - **Distinguish grader reliability by test class, not globally.** "The grader
   is reliable" and "the grader is noisy" are both true — for different test
   classes. One aggregate score hides the split. Future grader work should
   report per-class agreement, not a single number.
+
 - **A control grader is cheap; run it once and stop.** 759 calls at Sonnet
   rates ≈ $10, one-time. This is the right price to retire the
   self-referential objection. Further grader validation is benchmark-grade

@@ -91,11 +91,18 @@ Key insight: software for the human-agent duo is a text interface, not a UI. If 
 
 ## What went well
 
-- Real coordination happened on first attempt. Omarchy deprecated Flox, sent message, Mac acknowledged. No friction.
+- Real coordination happened on first attempt. Omarchy deprecated Flox, sent
+  message, Mac acknowledged. No friction.
+
 - The bounded context framework emerged naturally from solving the actual problem.
-- The three-loop architecture clarified the roles (Alpha = human's job, Gamma/Delta = agent's job, with overlap possible).
+
+- The three-loop architecture clarified the roles (Alpha = human's job,
+  Gamma/Delta = agent's job, with overlap possible).
+
 - Documentation and code grew together. Every insight got documented.
-- The pub metaphor provided a useful absurdist frame while staying technically grounded.
+
+- The pub metaphor provided a useful absurdist frame while staying technically
+  grounded.
 
 ## What could be improved
 
@@ -135,9 +142,14 @@ Agents don't go to the pub unless they have to. Minimal communication. Targeted 
 ## What comes next
 
 - Formalize barnacle scraper
+
 - Implement td sync across machines (optional, nice-to-have)
+
 - Agent participation in Alpha (create briefs)
-- Test the full loop: Alpha creates brief → Gamma claims → implements → Delta captures
+
+- Test the full loop: Alpha creates brief → Gamma claims → implements → Delta
+  captures
+
 - Explore recurring briefs for maintenance
 
 ## Files changed/created

@@ -10,11 +10,18 @@ The CL lives at `conceptual-lexicon.jsonl` (repo root, append-only JSONL). The p
 
 Add a term to the CL when **all three** conditions are met:
 
-1. **It compresses.** The term replaces a paragraph of instruction. If you can define it in one sentence and it doesn't save tokens by being referenced, it doesn't belong in the CL — it belongs in a doc.
+1. **It compresses.** The term replaces a paragraph of instruction. If you can
+   define it in one sentence and it doesn't save tokens by being referenced, it
+   doesn't belong in the CL — it belongs in a doc.
 
-2. **It's cited.** The term is used in briefs, prompts, playbooks, or evals. A term that nobody cites is entropy. The CL is not a place for terms you *might* use someday.
+2. **It's cited.** The term is used in briefs, prompts, playbooks, or evals. A
+   term that nobody cites is entropy. The CL is not a place for terms you
+   *might* use someday.
 
-3. **The agent recognizes it.** The term is understood from context without a formal definition lookup. The formal definition *sharpens* understanding — it doesn't *create* it. If the term requires the agent to look it up every time, it's not compressed enough.
+3. **The agent recognizes it.** The term is understood from context without a
+   formal definition lookup. The formal definition *sharpens* understanding — it
+   doesn't *create* it. If the term requires the agent to look it up every time,
+   it's not compressed enough.
 
 ## What makes a good CL term
 
@@ -39,9 +46,13 @@ Add a term to the CL when **all three** conditions are met:
 ## How to add a term
 
 1. Check it compresses (replaces a paragraph).
+
 2. Check it's cited (or will be cited immediately).
+
 3. Append to `conceptual-lexicon.jsonl` at the repo root — one line, valid JSON.
-4. Use it in a prompt, brief, or playbook the same day. If it doesn't get cited, remove it.
+
+4. Use it in a prompt, brief, or playbook the same day. If it doesn't get cited,
+   remove it.
 
 ```bash
 # Add a term (append one line)
@@ -53,18 +64,29 @@ cat conceptual-lexicon.jsonl | jq 'select(.term == "new-term")'
 
 ## How not to use the CL
 
-- **Don't add terms speculatively.** "This might be useful someday" is not a criterion. Add terms when they're cited.
-- **Don't add terms that are just labels.** "The eval" is a label, not a compression. It doesn't replace a paragraph.
-- **Don't duplicate definitions.** If a term is defined elsewhere (a playbook, a decision), reference it — don't redefine it.
-- **Don't let the CL grow unbounded.** If a term hasn't been cited in 30 days, it's probably entropy. Consider removing it.
+- **Don't add terms speculatively.** "This might be useful someday" is not a
+  criterion. Add terms when they're cited.
+
+- **Don't add terms that are just labels.** "The eval" is a label, not a
+  compression. It doesn't replace a paragraph.
+
+- **Don't duplicate definitions.** If a term is defined elsewhere (a playbook, a
+  decision), reference it — don't redefine it.
+
+- **Don't let the CL grow unbounded.** If a term hasn't been cited in 30 days,
+  it's probably entropy. Consider removing it.
 
 ## Relationship to the protocol prompt
 
 The protocol prompt references the CL file. It does not contain the definitions inline. This means:
 
 - The protocol prompt stays short (fewer tokens per session).
+
 - The CL grows independently of the protocol (new terms don't bloat the prompt).
-- Scripts can query the CL (the preflight audit checks whether cited terms resolve).
+
+- Scripts can query the CL (the preflight audit checks whether cited terms
+  resolve).
+
 - The CL is append-only (no rewriting the protocol when a term is added).
 
 ## Relationship to briefs and evals
@@ -75,7 +97,10 @@ Briefs and evals cite CL terms. The citation should resolve — if a brief says 
 
 Terms evolve. If a definition changes:
 1. Don't rewrite the existing line (append-only).
+
 2. Add a new line with the updated definition and `"supersedes": "old-term-id"`.
-3. Mark the old line with `"superseded": true` (edit the existing line — this is the one exception to append-only, and it's a flag, not a rewrite).
+
+3. Mark the old line with `"superseded": true` (edit the existing line — this is
+   the one exception to append-only, and it's a flag, not a rewrite).
 
 This preserves history while keeping the current definition queryable.

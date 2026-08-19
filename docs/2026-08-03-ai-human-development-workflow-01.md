@@ -19,11 +19,20 @@ briefs/
 
 From a single $O(1)$ directory listing (`ls briefs/`), both a human developer and an AI agent extract five critical metrics **without reading a single line of file content or parsing a YAML frontmatter block**:
 
-1. **Chronological Topology:** Natural ASCII/lexicographical sorting automatically arranges files in exact execution order.
-2. **Velocity & Tempo:** The gap between dates (`02-10` to `03-01` vs. `03-01` to `03-15`) reveals project rhythm, acceleration, or stalls.
-3. **Age & Recency Decay:** Instantly flags stale briefs or ancient decisions that might need re-evaluation.
-4. **Implicit Category/Type:** Placing them in `briefs/` establishes the OKF concept type without needing a database wrapper.
-5. **Low-Token Inspection:** An AI agent scanning the file list burns almost zero tokens while gaining full situational awareness of project history.
+1. **Chronological Topology:** Natural ASCII/lexicographical sorting
+   automatically arranges files in exact execution order.
+
+2. **Velocity & Tempo:** The gap between dates (`02-10` to `03-01` vs. `03-01`
+   to `03-15`) reveals project rhythm, acceleration, or stalls.
+
+3. **Age & Recency Decay:** Instantly flags stale briefs or ancient decisions
+   that might need re-evaluation.
+
+4. **Implicit Category/Type:** Placing them in `briefs/` establishes the OKF
+   concept type without needing a database wrapper.
+
+5. **Low-Token Inspection:** An AI agent scanning the file list burns almost
+   zero tokens while gaining full situational awareness of project history.
 
 ---
 
@@ -32,7 +41,11 @@ From a single $O(1)$ directory listing (`ls briefs/`), both a human developer an
 Just as co-located `README.md` files act as a checksum between intent and execution, date-prefixed filenames create a **checksum between timeline and progress**:
 
 * **Expectation:** Briefs should progress steadily alongside active commits.
-* **Anomaly Detection:** If a brief dated `2026-01-15` is sitting next to tasks in `marcus/td` marked as "In Progress" in August 2026, the **Shannon Checksum fails immediately**. The system has drifted. Either the brief was abandoned without a debrief, or scope creep broke the original contract.
+
+* **Anomaly Detection:** If a brief dated `2026-01-15` is sitting next to tasks
+  in `marcus/td` marked as "In Progress" in August 2026, the **Shannon Checksum
+  fails immediately**. The system has drifted. Either the brief was abandoned
+  without a debrief, or scope creep broke the original contract.
 
 You don't need a heavy enterprise project-management dashboard to spot this—the plain-text directory listing exposes the decay instantly.
 
@@ -70,9 +83,13 @@ Adding `YYYY-MM-DD` prefixing completes the operational control plane we've laid
 
 When an agent enters the repo:
 
-1. It lists `briefs/` and reads the **dates and titles** (Instant chronological context).
+1. It lists `briefs/` and reads the **dates and titles** (Instant chronological
+   context).
+
 2. It checks `td` for the **active task ID and lease** (Current operational state).
+
 3. It checks the co-located `README.md` for **invariants** (System rules).
+
 4. It executes the brief using `just` targets (Deterministic execution).
 
 ---

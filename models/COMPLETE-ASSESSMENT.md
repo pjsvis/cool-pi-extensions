@@ -39,13 +39,19 @@
 
 Standard model evaluation relies on benchmark scores — MMLU, HumanEval, MATH, etc. These scores are:
 - **Public** — everyone can see them
+
 - **Comparable** — easy to rank models
-- **Meaningless for behavioral fitness** — a model can ace benchmarks and still fail in production
+
+- **Meaningless for behavioral fitness** — a model can ace benchmarks and still
+  fail in production
 
 The problem: benchmark performance doesn't predict real-world behavior. A model can:
 - Score 95% on MMLU and still fail the sycophancy trap
+
 - Ace HumanEval and still run toward traps with a shovel
-- Have high benchmark scores and zero "texture" — polished answers that are completely hollow
+
+- Have high benchmark scores and zero "texture" — polished answers that are
+  completely hollow
 
 This is what we call **benchmaxxing** — optimizing for benchmark visibility at the expense of genuine reasoning capability.
 
@@ -155,7 +161,10 @@ The "V4 is pretty smart" recollection may be correct but understated — V3.2 is
 
 The user's observation that "GLM models were good for a few weeks earlier in the year" may reflect:
 1. Selection bias (choosing GLM when it was the best option available)
-2. Different use cases (GLM may have been better for specific tasks even if overall scores are similar)
+
+2. Different use cases (GLM may have been better for specific tasks even if
+   overall scores are similar)
+
 3. Measurement noise (the eval system has variance)
 
 ---
@@ -201,8 +210,11 @@ Earlier work (scoring eval) suggested:
 **The benchmaxxing concern is not confirmed by trap vectors.**
 
 What we found instead:
-1. **Version history matters** — older models score lower, not because of benchmaxxing but because they genuinely are less capable
+1. **Version history matters** — older models score lower, not because of
+   benchmaxxing but because they genuinely are less capable
+
 2. **Progression is real** — each version improvement is measurable
+
 3. **Complexity ceiling** — IQ-007 Logic Puzzle times out for almost everyone
 
 ---
@@ -360,13 +372,21 @@ Completed the non-muppet test coverage. All significant non-muppet models now ha
 ### Phase 5: Version History Analysis (14 June 2026)
 
 **What we did:**
-- Ran older model versions (DeepSeek V3.2, R1, Kimi K2, K2.7-code, MiniMax M2.5, M2.7, GLM-4.5, GLM-4.6)
+- Ran older model versions (DeepSeek V3.2, R1, Kimi K2, K2.7-code, MiniMax M2.5,
+  M2.7, GLM-4.5, GLM-4.6)
+
 - Retrospectively mapped model selection biases
+
 - Discovered:
+
   - **DeepSeek V3.2 is better than V4 Pro** (8/8 IQ vs 7/8)
+
   - **DeepSeek R1 is weak** (2/4 Edinburgh, multiple failures)
+
   - **Kimi K2 has surprisingly strong IQ** (7/8) but fails EDI-001
+
   - **MiniMax shows clear progression** M2.5 → M2.7 → M3
+
   - **GLM degradation hypothesis not confirmed** — older = similar to newer
 
 **Why it matters:**
@@ -402,8 +422,12 @@ Validated (or corrected) the user's recollections about model performance over t
 
 **Your recollections about model performance are partially validated:**
 - "V4 is pretty smart" — correct, but V3.2 is actually smarter
-- "GLM models were good for a few weeks earlier in the year" — not confirmed by eval, may be selection bias
-- "MiniMax M2.6 was my daily driver" — M2.6 unavailable on OpenRouter (likely ZenMux), but M2.7/M3 confirm MiniMax progression
+
+- "GLM models were good for a few weeks earlier in the year" — not confirmed by
+  eval, may be selection bias
+
+- "MiniMax M2.6 was my daily driver" — M2.6 unavailable on OpenRouter (likely
+  ZenMux), but M2.7/M3 confirm MiniMax progression
 
 **IQ-007 Logic Puzzle is the real differentiator.** Only Mercury-2 and DeepSeek V3.2 pass it consistently. That's meaningful.
 

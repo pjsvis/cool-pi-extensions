@@ -54,11 +54,28 @@ This is not a counsel of despair. It is a counsel of smallness. The closure mech
 
 We have not plumbed the depths. Explicitly open:
 
-- **The affect question.** Can a sleeve *simulate* drive without affect — or is drive without feeling just a priority queue? Is there a difference between "the agent is required to close" and "the agent wants to close," and does it matter for outcomes?
-- **The stakes question.** Is there a way to give the agent skin in the game — a memory of consequences that survives across sessions — without it becoming brittle state? td is a first attempt; it carries facts, not consequences.
-- **The perception boundary.** The context window is fixed. But a detector's output *is* a compressed perception. How much of "drive" is really "perception made impossible to ignore"? If the gate is loud enough, does drive become unnecessary?
-- **The recursion's floor.** Is there a base case, or does every cure demand its own Popper-Party forever? Is the asymptote a stable system, or just stable churn?
-- **The benchmaxxing-of-prompts as an eval.** Could we write a trap — the way we trap sycophancy — that catches an agent benchmaxxing the prompt? What would the adversarial probe look like? This may be the most tractable thread, and the one most continuous with the existing eval work.
+- **The affect question.** Can a sleeve *simulate* drive without affect — or is
+  drive without feeling just a priority queue? Is there a difference between
+  "the agent is required to close" and "the agent wants to close," and does it
+  matter for outcomes?
+
+- **The stakes question.** Is there a way to give the agent skin in the game — a
+  memory of consequences that survives across sessions — without it becoming
+  brittle state? td is a first attempt; it carries facts, not consequences.
+
+- **The perception boundary.** The context window is fixed. But a detector's
+  output *is* a compressed perception. How much of "drive" is really "perception
+  made impossible to ignore"? If the gate is loud enough, does drive become
+  unnecessary?
+
+- **The recursion's floor.** Is there a base case, or does every cure demand its
+  own Popper-Party forever? Is the asymptote a stable system, or just stable
+  churn?
+
+- **The benchmaxxing-of-prompts as an eval.** Could we write a trap — the way we
+  trap sycophancy — that catches an agent benchmaxxing the prompt? What would
+  the adversarial probe look like? This may be the most tractable thread, and
+  the one most continuous with the existing eval work.
 
 These are the notes for the next session. The riff is not finished; this is a pause, not a conclusion.
 

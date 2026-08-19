@@ -29,5 +29,10 @@
 
 ## Harness notes
 
-- Slug routing: the ID exists under different names per provider (`...-30b-a3b` on NIM, `:free` short-slug on OpenRouter); `--provider nim` is exclusive-routing, no fallback.
-- The first eval attempt (0/5) was pure routing error — ID resolved nowhere; lesson: check slug conventions per provider before reading 0/5 as a model property.
+- Slug routing: the ID exists under different names per provider (`...-30b-a3b`
+  on NIM, `:free` short-slug on OpenRouter); `--provider nim` is
+  exclusive-routing, no fallback.
+
+- The first eval attempt (0/5) was pure routing error — ID resolved nowhere;
+  lesson: check slug conventions per provider before reading 0/5 as a model
+  property.

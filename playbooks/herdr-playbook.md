@@ -90,8 +90,11 @@ The key property: herdr keeps sessions alive across disconnections.
 
 If your SSH connection drops:
 1. Reconnect with `ssh user@omarchy`
+
 2. Run `herdr`
-3. Everything is exactly where it was — pi is mid-sentence, Fresh has unsaved changes, sidecar is running
+
+3. Everything is exactly where it was — pi is mid-sentence, Fresh has unsaved
+   changes, sidecar is running
 
 This is why herdr is the session layer of the stack. The agent works in a persistent context. The human supervises in a persistent context. The network can fail; the work survives.
 

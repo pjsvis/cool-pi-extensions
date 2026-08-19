@@ -2,9 +2,15 @@
 
 Without a shared **assignment control plane**, you hit classic distributed-systems collisions:
 
-* **Race Conditions / File Locks:** Two agents (or a human and an agent) pick up different briefs that touch the same module simultaneously, creating horrific git merge conflicts.
-* **Brief Hijacking:** An agent executes work on a task that another developer was actively refining or already owns.
-* **Context Bleed:** Agents pull stale task states because there's no atomic "Lock / In-Progress / Released" state machine governing the briefs.
+* **Race Conditions / File Locks:** Two agents (or a human and an agent) pick up
+  different briefs that touch the same module simultaneously, creating horrific
+  git merge conflicts.
+
+* **Brief Hijacking:** An agent executes work on a task that another developer
+  was actively refining or already owns.
+
+* **Context Bleed:** Agents pull stale task states because there's no atomic
+  "Lock / In-Progress / Released" state machine governing the briefs.
 
 ---
 
@@ -34,14 +40,20 @@ The control plane requires **three explicit mechanisms**:
 
 Before any agent runs `just brief` or writes code, it must acquire an atomic lease on the task.
 
-* **In-Repo File Locks:** Utilizing a structured tracker (like `td` or GitHub Issues/Labels) where state shifts atomically: `UNASSIGNED` → `CLAIMED: @agent-1 (Lock expires: 2h)` → `IN_REVIEW` → `CLOSED`.
-* **Rule:** If a folder's brief is locked by User A / Agent A, Agent B **refuses to touch files in that directory** and surfaces a waiting/blocked state.
+* **In-Repo File Locks:** Utilizing a structured tracker (like `td` or GitHub
+  Issues/Labels) where state shifts atomically: `UNASSIGNED` → `CLAIMED:
+  @agent-1 (Lock expires: 2h)` → `IN_REVIEW` → `CLOSED`.
+
+* **Rule:** If a folder's brief is locked by User A / Agent A, Agent B **refuses
+  to touch files in that directory** and surfaces a waiting/blocked state.
 
 ### B. Isolated Workspaces (Git Worktrees)
 
 In a multi-user/multi-agent repo, everyone working in `main` on the same directory will cause immediate filesystem friction.
 
-* **The Standard:** Force agents into isolated **Git Worktrees** bound to their specific Brief ID.
+* **The Standard:** Force agents into isolated **Git Worktrees** bound to their
+  specific Brief ID.
+
 * **Execution:**
 ```bash
 git worktree add .trees/brief-104 -b feat/brief-104
@@ -49,7 +61,8 @@ git worktree add .trees/brief-104 -b feat/brief-104
 ```
 
 
-* This isolates local edits and temporary files so agents can run `just test` or `just check-entropy` without stepping on each other's working trees.
+* This isolates local edits and temporary files so agents can run `just test` or
+  `just check-entropy` without stepping on each other's working trees.
 
 ### C. The Brief Assignment Protocol (The Two-Handshake Rule)
 

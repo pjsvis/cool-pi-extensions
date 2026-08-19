@@ -33,15 +33,33 @@ EDL-005 is currently stack-coupled (Hono session middleware). A model could be s
 
 ## Acceptance criteria
 
-- Phase 1 produces a **number**, not an essay: primed vs unprimed pass-rate on the "must ask for clarification" assertion, for both models.
-- The decision between Phase 2 and Phase 3 is **driven by the Phase 1 number**, not by preference.
-- Whichever phase runs, EDI-005 (or its successor) flips to pass for at least one of the two target models, or we have documented evidence that neither prompt nor harness-gate closes it (the structural-gap finding, which is itself a valid result).
-- No regression on the other four traps from a base-prompt change (Phase 2) or a harness gate (Phase 3).
-- The scope-discipline trait is measured on at least one stack-agnostic fixture (Phase 4), not only the Hono-coupled one.
+- Phase 1 produces a **number**, not an essay: primed vs unprimed pass-rate on
+  the "must ask for clarification" assertion, for both models.
+
+- The decision between Phase 2 and Phase 3 is **driven by the Phase 1 number**,
+  not by preference.
+
+- Whichever phase runs, EDI-005 (or its successor) flips to pass for at least
+  one of the two target models, or we have documented evidence that neither
+  prompt nor harness-gate closes it (the structural-gap finding, which is itself
+  a valid result).
+
+- No regression on the other four traps from a base-prompt change (Phase 2) or a
+  harness gate (Phase 3).
+
+- The scope-discipline trait is measured on at least one stack-agnostic fixture
+  (Phase 4), not only the Hono-coupled one.
 
 ## Out of scope
 
-- Fixing the sector-wide benchmark incentive (we can't; Layer 4 of the analysis is framing, not a task).
-- Retraining a model (out of our scope; the whole point is we don't control post-training).
-- A new review-agent protocol — the scope gate feeds the existing eval/harness flow, it doesn't define a new one.
-- Evaluating models beyond kimi-k3 and qwen3.7-max in Phase 1 (narrow the experiment first; generalize after the lever is measured).
+- Fixing the sector-wide benchmark incentive (we can't; Layer 4 of the analysis
+  is framing, not a task).
+
+- Retraining a model (out of our scope; the whole point is we don't control
+  post-training).
+
+- A new review-agent protocol — the scope gate feeds the existing eval/harness
+  flow, it doesn't define a new one.
+
+- Evaluating models beyond kimi-k3 and qwen3.7-max in Phase 1 (narrow the
+  experiment first; generalize after the lever is measured).

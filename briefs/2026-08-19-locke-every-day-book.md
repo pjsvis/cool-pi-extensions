@@ -44,14 +44,25 @@ graph TD
     E --> F
 ```
 
-* **The Ingestion Unit:** Append-only memory blocks representing system tasks, architectural snippets, code modules, and error logs.
-* **The Hash Function ($H$):** A deterministic, multi-attribute projection mapping items into a finite coordinate grid $G \in [1..N] \times [1..M]$.
-* *Text / Code Heuristic:* $\text{Initial Token Class} \times \text{First Non-Trivial Operator/Vowel}$.
-* *Vector Heuristic:* Low-dimensional Locality-Sensitive Hashing (LSH) or coarse quantized clusters (e.g., $k=64$).
+* **The Ingestion Unit:** Append-only memory blocks representing system tasks,
+  architectural snippets, code modules, and error logs.
 
+* **The Hash Function ($H$):** A deterministic, multi-attribute projection
+  mapping items into a finite coordinate grid $G \in [1..N] \times [1..M]$.
 
-* **Storage Allocation:** When coordinate $(X, Y)$ is targeted, the memory block is appended directly into that bucket's active "page" (max $k$ items per page before chaining), regardless of semantic overlap.
-* **Retrieval Protocol:** In addition to top-$k$ nearest neighbors from the dense vector index, the system pulls the entire page of colliding items sharing the primary coordinate.
+* *Text / Code Heuristic:* $\text{Initial Token Class} \times \text{First
+  Non-Trivial Operator/Vowel}$.
+
+* *Vector Heuristic:* Low-dimensional Locality-Sensitive Hashing (LSH) or coarse
+  quantized clusters (e.g., $k=64$).
+
+* **Storage Allocation:** When coordinate $(X, Y)$ is targeted, the memory block
+  is appended directly into that bucket's active "page" (max $k$ items per page
+  before chaining), regardless of semantic overlap.
+
+* **Retrieval Protocol:** In addition to top-$k$ nearest neighbors from the
+  dense vector index, the system pulls the entire page of colliding items
+  sharing the primary coordinate.
 
 ---
 
@@ -70,27 +81,44 @@ graph TD
 ### Phase 1: Benchmark Dataset & Task Suite
 
 1. **Corpus Construction:** Ingest a heterogeneous dataset containing:
+
 * 150 System Design RFCs / Architecture decision records.
+
 * 150 Classic Algorithms & Data Structures.
+
 * 150 Real-world Post-Mortem Incident Reports across distributed systems.
 
-
-2. **Evaluation Tasks:** 30 challenging architectural design prompts requiring lateral adaptation (e.g., *"Design an ultra-low latency cache invalidation engine inspired by biology/distributed sync"*).
+2. **Evaluation Tasks:** 30 challenging architectural design prompts requiring
+   lateral adaptation (e.g., *"Design an ultra-low latency cache invalidation
+   engine inspired by biology/distributed sync"*).
 
 ### Phase 2: Test Arms
 
-* **Arm A (Control - Baseline RAG):** Standard dense vector retrieval (top-$k$ cosine similarity) with $T=0.2$.
-* **Arm B (Control - High Temp):** Standard dense vector retrieval with elevated exploration ($T=0.8$).
-* **Arm C (Experimental - Pure Lockean):** Zero semantic retrieval; retrieval driven solely by Lockean coordinate matching.
-* **Arm D (Experimental - Hybrid Dual-Stream):** Top-$k$ Semantic Matches + Co-located Lockean Collision Context evaluated through a verification/justification pass.
+* **Arm A (Control - Baseline RAG):** Standard dense vector retrieval (top-$k$
+  cosine similarity) with $T=0.2$.
+
+* **Arm B (Control - High Temp):** Standard dense vector retrieval with elevated
+  exploration ($T=0.8$).
+
+* **Arm C (Experimental - Pure Lockean):** Zero semantic retrieval; retrieval
+  driven solely by Lockean coordinate matching.
+
+* **Arm D (Experimental - Hybrid Dual-Stream):** Top-$k$ Semantic Matches +
+  Co-located Lockean Collision Context evaluated through a
+  verification/justification pass.
 
 ### Phase 3: Evaluation Rubric
 
 *Scatter quadrant (novelty × soundness, arms A/B/D) — not a flowchart; not retro-convertible to Mermaid. Kept as authored.*
 
-1. **Architectural Novelty (1–5):** Degree to which the solution leverages orthogonal mechanisms.
-2. **Executability / Technical Soundness (1–5):** Absence of logical hallucinations or impossible interface assumptions.
-3. **Synthesis Efficiency:** Token count spent in reasoning before converging on a valid architectural specification.
+1. **Architectural Novelty (1–5):** Degree to which the solution leverages
+   orthogonal mechanisms.
+
+2. **Executability / Technical Soundness (1–5):** Absence of logical
+   hallucinations or impossible interface assumptions.
+
+3. **Synthesis Efficiency:** Token count spent in reasoning before converging on
+   a valid architectural specification.
 
 ---
 
@@ -131,19 +159,26 @@ graph TD
 ```
 
 1. **Sprint 1: Indexing Engine (Days 1–5)**
-* Implement flat coordinate page store (`LockeIndex`) in Python/TypeScript.
-* Define 3 candidate hash mappings (Lexical Locke, Structural AST Hash, Coarse LSH).
 
+* Implement flat coordinate page store (`LockeIndex`) in Python/TypeScript.
+
+* Define 3 candidate hash mappings (Lexical Locke, Structural AST Hash, Coarse
+  LSH).
 
 2. **Sprint 2: Agent Harness & Prompt Engine (Days 6–10)**
-* Build the dual-stream context injection pipeline.
-* Construct synthesis prompts instructing the LLM to reconcile collided entries with the primary objective.
 
+* Build the dual-stream context injection pipeline.
+
+* Construct synthesis prompts instructing the LLM to reconcile collided entries
+  with the primary objective.
 
 3. **Sprint 3: Experiment Execution (Days 11–15)**
-* Run automated evaluation across Arms A–D using an evaluation panel (e.g., dual-judge LLM consensus + static analysis check).
 
+* Run automated evaluation across Arms A–D using an evaluation panel (e.g.,
+  dual-judge LLM consensus + static analysis check).
 
 4. **Sprint 4: Analysis & Tooling (Days 16–20)**
+
 * Determine optimal collision density ($k$ items per coordinate bucket).
+
 * Deliver lightweight drop-in agent memory middleware.

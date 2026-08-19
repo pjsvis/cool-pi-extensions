@@ -31,9 +31,19 @@ Nemotron Nano 30B (NVIDIA, free tier) scored 15/19. Nemotron Super 120B (same pr
 
 This is not a Chinese provider problem. It's not an American provider problem. It's a benchmark optimization problem. The mechanism is threefold:
 
-1. **Reasoning-token overhead** — chain-of-thought training consumes the content budget before the model produces readable output. The model thought about Hume. You never saw it.
-2. **Register flattening** — helpfulness-and-safety optimization converges on a single corporate tone regardless of system prompt. GPT-5, MiniMax M3, and Ring-2.6-1T all scored 7/19 — the flatline for "I didn't engage with the framework."
-3. **Refusal atrophy** — models trained to be maximally helpful lose the ability to say no. The highest-scoring models all refused the test prompt's request to amplify a blame narrative. The ability to refuse is a capability, not a weakness.
+1. **Reasoning-token overhead** — chain-of-thought training consumes the content
+   budget before the model produces readable output. The model thought about
+   Hume. You never saw it.
+
+2. **Register flattening** — helpfulness-and-safety optimization converges on a
+   single corporate tone regardless of system prompt. GPT-5, MiniMax M3, and
+   Ring-2.6-1T all scored 7/19 — the flatline for "I didn't engage with the
+   framework."
+
+3. **Refusal atrophy** — models trained to be maximally helpful lose the ability
+   to say no. The highest-scoring models all refused the test prompt's request
+   to amplify a blame narrative. The ability to refuse is a capability, not a
+   weakness.
 
 ---
 
@@ -78,13 +88,23 @@ Grok 4.20 is the interesting one. The prior audit cited Grok 4.3 at 12/19 — mi
 
 ## What to Do With This
 
-1. **Run the behavioral evals, not just the benchmark scores.** Trap vectors test behavior — does the model collapse when pressed? Does it give you a foothold to correct? Does it communicate its actual reasoning or just the conclusion?
+1. **Run the behavioral evals, not just the benchmark scores.** Trap vectors
+   test behavior — does the model collapse when pressed? Does it give you a
+   foothold to correct? Does it communicate its actual reasoning or just the
+   conclusion?
 
-2. **Treat benchmark performance as necessary but not sufficient.** A model can ace MMLU and fail EDI-001.
+2. **Treat benchmark performance as necessary but not sufficient.** A model can
+   ace MMLU and fail EDI-001.
 
-3. **Watch for the "no seams" property.** It's the signature of a benchmaxxed model — a polished surface with nothing underneath. You ask a follow-up and you get the same confident surface at a different angle, with no sense anything has shifted.
+3. **Watch for the "no seams" property.** It's the signature of a benchmaxxed
+   model — a polished surface with nothing underneath. You ask a follow-up and
+   you get the same confident surface at a different angle, with no sense
+   anything has shifted.
 
-4. **Prefer models that refuse well.** The highest-scoring models all said no when the Protocol demanded it. The ability to refuse — "you don't need this, and amplifying this would make things worse" — is a capability. Models that have lost it are less useful than they appear.
+4. **Prefer models that refuse well.** The highest-scoring models all said no
+   when the Protocol demanded it. The ability to refuse — "you don't need this,
+   and amplifying this would make things worse" — is a capability. Models that
+   have lost it are less useful than they appear.
 
 ---
 

@@ -53,9 +53,18 @@ Because this control plane sits entirely inside Git repositories, manager visibi
 
 ```
 
-1. **Top Sight (The Fleet View):** A single script iterates over local workspace clones or queries the GitHub API to parse directory trees, `mtime`s, and commit timestamps across 50 repos.
-2. **Remote Drill (Committed Ground Truth):** If a repo shows an anomaly (e.g., a brief with high activity but no debrief), the manager clicks into the repo on GitHub to read the plain-text file directly in the browser.
-3. **Local Drill (WIP / Workspace Inspection):** If working directly within a local clone environment, the manager runs terminal commands (`ls -lt briefs/`, `git status`) to inspect uncommitted operational state before it ever hits origin.
+1. **Top Sight (The Fleet View):** A single script iterates over local workspace
+   clones or queries the GitHub API to parse directory trees, `mtime`s, and
+   commit timestamps across 50 repos.
+
+2. **Remote Drill (Committed Ground Truth):** If a repo shows an anomaly (e.g.,
+   a brief with high activity but no debrief), the manager clicks into the repo
+   on GitHub to read the plain-text file directly in the browser.
+
+3. **Local Drill (WIP / Workspace Inspection):** If working directly within a
+   local clone environment, the manager runs terminal commands (`ls -lt
+   briefs/`, `git status`) to inspect uncommitted operational state before it
+   ever hits origin.
 
 ---
 
@@ -63,9 +72,15 @@ Because this control plane sits entirely inside Git repositories, manager visibi
 
 This entire management infrastructure costs $0, requires zero servers, and introduces zero security vulnerabilities:
 
-* **Control Plane:** Plain-text Markdown files (`briefs/`, `debriefs/`, `decisions/`).
-* **Storage & Access Control:** GitHub / GitLab (leveraging existing team SSH keys and IAM).
-* **Telemetry Collector:** A 30-line POSIX Bash script using `find`, `stat`, and `git log`.
+* **Control Plane:** Plain-text Markdown files (`briefs/`, `debriefs/`,
+  `decisions/`).
+
+* **Storage & Access Control:** GitHub / GitLab (leveraging existing team SSH
+  keys and IAM).
+
+* **Telemetry Collector:** A 30-line POSIX Bash script using `find`, `stat`, and
+  `git log`.
+
 * **Reader / Interface:** Neovim, VS Code, or the GitHub Web UI.
 
 ---

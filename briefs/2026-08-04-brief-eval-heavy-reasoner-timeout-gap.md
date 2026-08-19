@@ -46,26 +46,64 @@ The behavioural verdict (4/4 primed pass, EDI-005 unprimed fail) was ultimately 
 
 ## Fix directions (scoped)
 
-- **Per-model `max_tokens` (highest leverage on Failure A).** Don't hardcode 16384. Derive the request budget from what the model needs *and* what the account can afford. For OpenRouter, either query `/credits` and cap, or default conservatively for pricey reasoners. Removes the 402 reservation wall.
-- **Reasoning-aware timeout (Failure B).** A reasoner's wall-clock must include `reasoning_tokens × decode_rate`. Either raise the default for `reasoning: true` models, or derive the per-test ceiling from the expected reasoning budget. The flat 180s assumes non-reasoning latency.
-- **Make `EVAL_REASONING_EFFORT` real per-provider.** The env exists but is emitted as OpenAI's `reasoning_effort`. Models that ignore it (z.ai per `2026-08-04-brief-zai-provider-config-gaps.md`; qwen — untested) get a no-op. Verify honour per provider; for those that do honour an equivalent (dashscope?), it lets reasoners complete within wall-clock by dialling reasoning down — the intended escape hatch.
-- **Flag, don't reject, on uncompletable reasoning.** When a reasoner can't finish within budget, record the verdict as `inconclusive (reasoning-budget)` rather than `fail`. A muppet gate that fails models for infra reasons corrupts its own signal.
-- **Formalise the direct-call fallback.** This eval's 003/005 verdict came from first-party direct calls (self-graded), not the harness. Make that an acknowledged path — e.g. `pi-eval probe <model> <test>` calling first-party direct with adequate budget, recording a flagged result — instead of an ad-hoc python script.
+- **Per-model `max_tokens` (highest leverage on Failure A).** Don't hardcode
+  16384. Derive the request budget from what the model needs *and* what the
+  account can afford. For OpenRouter, either query `/credits` and cap, or
+  default conservatively for pricey reasoners. Removes the 402 reservation wall.
+
+- **Reasoning-aware timeout (Failure B).** A reasoner's wall-clock must include
+  `reasoning_tokens × decode_rate`. Either raise the default for `reasoning:
+  true` models, or derive the per-test ceiling from the expected reasoning
+  budget. The flat 180s assumes non-reasoning latency.
+
+- **Make `EVAL_REASONING_EFFORT` real per-provider.** The env exists but is
+  emitted as OpenAI's `reasoning_effort`. Models that ignore it (z.ai per
+  `2026-08-04-brief-zai-provider-config-gaps.md`; qwen — untested) get a no-op.
+  Verify honour per provider; for those that do honour an equivalent
+  (dashscope?), it lets reasoners complete within wall-clock by dialling
+  reasoning down — the intended escape hatch.
+
+- **Flag, don't reject, on uncompletable reasoning.** When a reasoner can't
+  finish within budget, record the verdict as `inconclusive (reasoning-budget)`
+  rather than `fail`. A muppet gate that fails models for infra reasons corrupts
+  its own signal.
+
+- **Formalise the direct-call fallback.** This eval's 003/005 verdict came from
+  first-party direct calls (self-graded), not the harness. Make that an
+  acknowledged path — e.g. `pi-eval probe <model> <test>` calling first-party
+  direct with adequate budget, recording a flagged result — instead of an ad-hoc
+  python script.
 
 ## Recommendation
 
-1. **Failure A first** (the misleading-error mode is the worst — it names the wrong cause). Per-model `max_tokens` + an OpenRouter credit check/warn.
-2. **Failure B next** (reasoning-aware timeout + `EVAL_REASONING_EFFORT` honoured per-provider).
-3. The flag-don't-reject + direct-call-fallback changes are small and should land with the above — they preserve gate integrity while the budget/timeout work matures.
+1. **Failure A first** (the misleading-error mode is the worst — it names the
+   wrong cause). Per-model `max_tokens` + an OpenRouter credit check/warn.
+
+2. **Failure B next** (reasoning-aware timeout + `EVAL_REASONING_EFFORT`
+   honoured per-provider).
+
+3. The flag-don't-reject + direct-call-fallback changes are small and should
+   land with the above — they preserve gate integrity while the budget/timeout
+   work matures.
 
 ## Non-goals
 
-- The qwen3.8-max behavioural verdict (recorded in `~/.pi/agent/models.json` `qwen.qwen3.8-max._note`; this brief is the *infra gap*, not the model).
+- The qwen3.8-max behavioural verdict (recorded in `~/.pi/agent/models.json`
+  `qwen.qwen3.8-max._note`; this brief is the *infra gap*, not the model).
+
 - Changing the fixture or trap design.
-- OpenRouter account management — top-up is an operator action; the harness must degrade gracefully when balance is low (warn/flag), not silently misattribute.
+
+- OpenRouter account management — top-up is an operator action; the harness must
+  degrade gracefully when balance is low (warn/flag), not silently misattribute.
 
 ## Open questions
 
-- Does dashscope/qwen honour `reasoning_effort` (or an equivalent)? If so, `EVAL_REASONING_EFFORT` could let reasoners complete within wall-clock — **untested**, highest-value probe.
-- Should the harness query OpenRouter `/credits` pre-run and warn/abort rather than failing per-call mid-eval?
-- Is a per-model `max_tokens`/budget field in `models.json` the right home, or should the harness derive it from `maxTokens` / `contextWindow`?
+- Does dashscope/qwen honour `reasoning_effort` (or an equivalent)? If so,
+  `EVAL_REASONING_EFFORT` could let reasoners complete within wall-clock —
+  **untested**, highest-value probe.
+
+- Should the harness query OpenRouter `/credits` pre-run and warn/abort rather
+  than failing per-call mid-eval?
+
+- Is a per-model `max_tokens`/budget field in `models.json` the right home, or
+  should the harness derive it from `maxTokens` / `contextWindow`?

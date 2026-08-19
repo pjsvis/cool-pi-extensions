@@ -10,8 +10,15 @@ Decision 016 established that providers are a portfolio for failover + freebie c
 
 Two empirical findings drove this decision:
 
-1. **Direct is not always cheaper.** Qwen 3.7 Max direct (DashScope) is $2.50/$7.50; the ZenMux proxy is $0.43/$1.29 — ~5× cheaper. A reflexive "direct first" rule would route the expensive option. The direct qwen route earns its place via the free-tier GLM/DeepSeek freebies and qwen3.7-plus (which ZenMux doesn't carry), not as the cheap 3.7-max route.
-2. **Free-tier freebies are zero-cost until quota.** qwen's GLM-5.2/DeepSeek and zenmux's grok-4.5-free are pure freebie capture (Decision 016). They should be exhausted before paid routes.
+1. **Direct is not always cheaper.** Qwen 3.7 Max direct (DashScope) is
+   $2.50/$7.50; the ZenMux proxy is $0.43/$1.29 — ~5× cheaper. A reflexive
+   "direct first" rule would route the expensive option. The direct qwen route
+   earns its place via the free-tier GLM/DeepSeek freebies and qwen3.7-plus
+   (which ZenMux doesn't carry), not as the cheap 3.7-max route.
+
+2. **Free-tier freebies are zero-cost until quota.** qwen's GLM-5.2/DeepSeek and
+   zenmux's grok-4.5-free are pure freebie capture (Decision 016). They should
+   be exhausted before paid routes.
 
 ## Decision
 
@@ -34,7 +41,20 @@ The eval's fallback chains (`src/cli/pi-check/edinburgh-eval.ts`) are wired to t
 
 ## Consequences
 
-- **A "direct" provider is not a mandate to make it primary.** Adding a direct route adds failover + freebie capture; the cheapest route stays primary even if it's a proxy.
-- **Stale expensive proxies get pruned.** The openrouter grok-4.3 $3/$15 override was dropped — superseded by spacexai direct ($1.25/$2.50). The barnacle review (Decision 007) re-checks this.
-- **Free-tier quotas are finite** (qwen: 90-day new-user quota; zenmux free models: plan-bound). When a freebie exhausts, ordering auto-falls to the next route — no config change needed (the eval's fallback chain handles it; live-config routes remain).
-- **Pricing inversions must be re-checked at each barnacle review.** The Qwen 3.7 Max inversion (proxy 5× cheaper than direct) could flip if either provider changes pricing. Don't let a stale "direct is cheaper" assumption freeze a bad primary.
+- **A "direct" provider is not a mandate to make it primary.** Adding a direct
+  route adds failover + freebie capture; the cheapest route stays primary even
+  if it's a proxy.
+
+- **Stale expensive proxies get pruned.** The openrouter grok-4.3 $3/$15
+  override was dropped — superseded by spacexai direct ($1.25/$2.50). The
+  barnacle review (Decision 007) re-checks this.
+
+- **Free-tier quotas are finite** (qwen: 90-day new-user quota; zenmux free
+  models: plan-bound). When a freebie exhausts, ordering auto-falls to the next
+  route — no config change needed (the eval's fallback chain handles it;
+  live-config routes remain).
+
+- **Pricing inversions must be re-checked at each barnacle review.** The Qwen
+  3.7 Max inversion (proxy 5× cheaper than direct) could flip if either provider
+  changes pricing. Don't let a stale "direct is cheaper" assumption freeze a bad
+  primary.

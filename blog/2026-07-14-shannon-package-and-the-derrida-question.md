@@ -51,10 +51,17 @@ A comment was drafted for the Medium article, accessible Hume, no lecture. First
 > The café didn't prove AI works. It also didn't prove AI can't work. It proved that one specific configuration didn't — and that a pundit can turn any data point into a thesis if the audience is already sold on the verdict.
 
 **Craft notes:**
-- Hume introduced as "a thing someone noticed," not "the philosopher David Hume argued" — the difference between a comment that lands and one that flexes.
-- "Custom, not reason" is the accessible version of the induction problem, doing the real work.
-- "A wise man proportions his belief to the evidence" (Hume, *Enquiry* X) as closer — sounds like common sense, which is exactly what it is.
-- Holding back the middle section was itself proportioning belief to evidence — the right call.
+- Hume introduced as "a thing someone noticed," not "the philosopher David Hume
+  argued" — the difference between a comment that lands and one that flexes.
+
+- "Custom, not reason" is the accessible version of the induction problem, doing
+  the real work.
+
+- "A wise man proportions his belief to the evidence" (Hume, *Enquiry* X) as
+  closer — sounds like common sense, which is exactly what it is.
+
+- Holding back the middle section was itself proportioning belief to evidence —
+  the right call.
 
 ---
 
@@ -93,11 +100,17 @@ William of Ockham never used that formulation. His own versions were *Pluralitas
 **Attribution chain (confirmed across Wikipedia, Thorburn 1918 in *Mind*, Irish Philosophy blog, Ariew 1977 in *Franciscan Studies*):**
 
 - 1639: Punch coins the canonical Latin formulation in Wadding's Scotus edition
+
 - 1647: Clauberg uses it without attribution in *Elementa Philosophiae*
+
 - 1670: Leibniz formally connects it to Nominalism
+
 - 1746: Condillac coins the French *Rasoir des Nominaux*
+
 - 1812: Tennemann loosely attributes it to Ockham
-- 1852: Sir William Hamilton coins the English label "Occam's Razor" and associates it with the Punch formulation
+
+- 1852: Sir William Hamilton coins the English label "Occam's Razor" and
+  associates it with the Punch formulation
 
 Three centuries of telephone-game misattribution. The razor's popular name is a 19th-century English label attached to a 17th-century Irish Franciscan's formulation, attributed to a 14th-century English philosopher who never said it.
 
@@ -177,9 +190,14 @@ The question "should this repo exist" is not a checksum the repo can run on itse
 This is Derrida's move on foundations. The foundation is the thing that cannot be justified by the structure it supports. The archive (and a repo is an archive) cannot, from within itself, answer the question of its own archival desire — *mal d'archive.* The compulsion to maintain, extend, and curate the repo is a drive that the repo's own instruments will never flag as problematic, because they're instruments of that drive. A failing checksum says "investigate the foundation." The Derrida question says "investigate whether there should be a foundation here at all." It operates at a different level, and no amount of internal redundancy can substitute for it.
 
 **The practical questions the Derrida audit asks:**
-- Has the problem this repo was created to solve been solved, dissolved, or superseded?
-- Is the repo an answer to a live question or a monument to a question that's no longer being asked?
-- Is the Edinburgh Protocol a method being applied to real problems, or has it become a self-referential system that exists to maintain its own consistency?
+- Has the problem this repo was created to solve been solved, dissolved, or
+  superseded?
+
+- Is the repo an answer to a live question or a monument to a question that's no
+  longer being asked?
+
+- Is the Edinburgh Protocol a method being applied to real problems, or has it
+  become a self-referential system that exists to maintain its own consistency?
 
 None of these are reachable from inside. The briefs and evals will never raise them on their own, because they're part of the system whose existence is in question.
 
@@ -233,9 +251,13 @@ User's observation: the `just orient` step gets all agents up to speed. The `td`
 
 **The instruments stack:**
 - Internal checksums catch noise (inconsistency)
+
 - Maintenance drag catches pressure (elision increasing)
+
 - Visitor agent catches bias (shared wrong assumptions)
-- Derrida audit catches existential drift (repo solving the wrong problem, or no problem)
+
+- Derrida audit catches existential drift (repo solving the wrong problem, or no
+  problem)
 
 Each operates at a level the one below can't reach.
 
@@ -258,11 +280,20 @@ User's coinage: Shannon + Hamming === Shaming or Shamming. Shamming is the bette
 **Concrete implementation already exists in this repo:** The Edinburgh Protocol evals. The evals aren't testing whether the model can *cite* the protocol. They're testing whether the model *behaves* according to the protocol under trap conditions. That's shamming detection — distinguishing "the model says it proportions belief to evidence" from "the model actually proportions belief to evidence when tempted not to." The eval is the Shamming Filter. It just didn't have a name that captured what it was doing.
 
 **The stack, named:**
-- Shannon Package: detection + correction within the channel (inconsistency, random noise)
-- Shamming Filter: meta-detection of whether the checksums are real or performed (systematic bias, diligence theatre)
-- Visitor Agent: external Shamming Filter with independent noise (catches what internal shamming can't)
-- Derrida Audit: existential shamming — is the whole apparatus serving a live purpose or maintaining itself
-- Human: the terminus. The point where "is this real" gets asked in a way no instrument can ask it.
+- Shannon Package: detection + correction within the channel (inconsistency,
+  random noise)
+
+- Shamming Filter: meta-detection of whether the checksums are real or performed
+  (systematic bias, diligence theatre)
+
+- Visitor Agent: external Shamming Filter with independent noise (catches what
+  internal shamming can't)
+
+- Derrida Audit: existential shamming — is the whole apparatus serving a live
+  purpose or maintaining itself
+
+- Human: the terminus. The point where "is this real" gets asked in a way no
+  instrument can ask it.
 
 The Shamming Filter is the name for the meta-checksum layer. It sits between the Shannon Package (internal consistency) and the Derrida question (existential validity). It detects performed rigour vs practised rigour. And it's memorable — which matters, because a concept that doesn't stick in the mind doesn't get used, and a checksum nobody invokes is itself a sham.
 
@@ -272,34 +303,82 @@ The Shamming Filter is the name for the meta-checksum layer. It sits between the
 
 If this asset becomes a post or feeds into one, the connective threads are:
 
-1. **Shannon all the way down.** Channel noise, redundancy, detection vs correction — applied to blogs, repos, agents, and reasoning. The Shannon Package is the unifying artefact. The Shamming Filter is the meta-layer that checks whether the Shannon Package is real or decoration.
+1. **Shannon all the way down.** Channel noise, redundancy, detection vs
+   correction — applied to blogs, repos, agents, and reasoning. The Shannon
+   Package is the unifying artefact. The Shamming Filter is the meta-layer that
+   checks whether the Shannon Package is real or decoration.
 
-2. **The awareness gap.** Elision is fine. Uninformed elision is the killer. The difference between floating over a dodgy factoid (fine, if you know) and absorbing it as verified (not fine, and most people don't know they're doing it). The Edinburgh Protocol, the Shannon Package, the visitor agent, the maintenance-drag canary — all are mechanisms for converting uninformed elision into informed elision.
+2. **The awareness gap.** Elision is fine. Uninformed elision is the killer. The
+   difference between floating over a dodgy factoid (fine, if you know) and
+   absorbing it as verified (not fine, and most people don't know they're doing
+   it). The Edinburgh Protocol, the Shannon Package, the visitor agent, the
+   maintenance-drag canary — all are mechanisms for converting uninformed
+   elision into informed elision.
 
-3. **The instrumentation stack.** Shannon Package (internal consistency) → Shamming Filter (performed vs practised rigour) → maintenance drag (pressure) → visitor (independent bias check) → Derrida audit (existential validity) → human (terminus). Each catches what the one below can't. The stack is the contribution, not any single layer.
+3. **The instrumentation stack.** Shannon Package (internal consistency) →
+   Shamming Filter (performed vs practised rigour) → maintenance drag (pressure)
+   → visitor (independent bias check) → Derrida audit (existential validity) →
+   human (terminus). Each catches what the one below can't. The stack is the
+   contribution, not any single layer.
 
-4. **The Punch error as proof.** The live demonstration that the model had the right information and deployed the wrong one, only corrected when the user activated the checking disposition. This is the empirical evidence for the thesis that LLMs don't automatically check — and that the Edinburgh Protocol makes checking available on demand but not automatic.
+4. **The Punch error as proof.** The live demonstration that the model had the
+   right information and deployed the wrong one, only corrected when the user
+   activated the checking disposition. This is the empirical evidence for the
+   thesis that LLMs don't automatically check — and that the Edinburgh Protocol
+   makes checking available on demand but not automatic.
 
-5. **Bacon, Hume, Smith, Watt, Derrida — the philosophical stack.** Bacon (method over facts), Hume (induction, proportion belief to evidence), Smith (impartial spectator, internal vs external), Watt (emergent instrumentation), Derrida (the founding question the structure can't ask itself). Each does work the others can't.
+5. **Bacon, Hume, Smith, Watt, Derrida — the philosophical stack.** Bacon
+   (method over facts), Hume (induction, proportion belief to evidence), Smith
+   (impartial spectator, internal vs external), Watt (emergent instrumentation),
+   Derrida (the founding question the structure can't ask itself). Each does
+   work the others can't.
 
-6. **Formulation as activation.** Punch's formulation made the parsimony principle usable. The Edinburgh Protocol makes Hume's standards usable. The Shannon Package makes source engagement required. The formulation is the mechanism — not the knowledge, but the framing of knowledge into a disposition that gets deployed.
+6. **Formulation as activation.** Punch's formulation made the parsimony
+   principle usable. The Edinburgh Protocol makes Hume's standards usable. The
+   Shannon Package makes source engagement required. The formulation is the
+   mechanism — not the knowledge, but the framing of knowledge into a
+   disposition that gets deployed.
 
 ---
 
 ## Potential Post Shapes
 
-- **"The Shamming Filter"** — Shannon + Hamming, detecting performed rigour vs practised rigour, the eval as named concept. Wodges 6, 11, 3.
-- **"The Shannon Package"** — the blog structure as checksum, from Medium annoyance to information-theoretic discipline. Wodges 6, 7, 2.
-- **"The Punch Line"** — Occam's Razor's real author, the LLM misretrieval, and what it proves about checking. Wodges 4, 3, 5.
-- **"The Derrida Question"** — should this repo exist, the instrumentation stack, the visitor agent. Wodges 7, 8, 9, 10.
-- **"The Canary and the Archive"** — maintenance drag as pressure sensor, normalisation risk, the stack of instruments. Wodges 10, 8, 9.
-- **A single long post** tracing the whole chain: café → Hume → Bacon → Punch → elision → Shannon → repo → Derrida → visitor → maintenance drag. Risk: too long, but the threads are genuinely connected and the chain of reasoning is the argument.
+- **"The Shamming Filter"** — Shannon + Hamming, detecting performed rigour vs
+  practised rigour, the eval as named concept. Wodges 6, 11, 3.
+
+- **"The Shannon Package"** — the blog structure as checksum, from Medium
+  annoyance to information-theoretic discipline. Wodges 6, 7, 2.
+
+- **"The Punch Line"** — Occam's Razor's real author, the LLM misretrieval, and
+  what it proves about checking. Wodges 4, 3, 5.
+
+- **"The Derrida Question"** — should this repo exist, the instrumentation
+  stack, the visitor agent. Wodges 7, 8, 9, 10.
+
+- **"The Canary and the Archive"** — maintenance drag as pressure sensor,
+  normalisation risk, the stack of instruments. Wodges 10, 8, 9.
+
+- **A single long post** tracing the whole chain: café → Hume → Bacon → Punch →
+  elision → Shannon → repo → Derrida → visitor → maintenance drag. Risk: too
+  long, but the threads are genuinely connected and the chain of reasoning is
+  the argument.
 
 ---
 
 ## Cross-References
 
-- `blog/PROJECT.md` — blog post planning, the two existing posts (Muppet Filter, Kimi K2.6)
-- `blog/2026-07-06-diligence-theatre.md` — the risk that the protocol makes the model *sound* more rigorous without changing behavior. Connected to Wodge 3's honesty caveat.
-- `blog/2026-07-12-task-based-granularity.md` — Shannon applied to repo architecture, FEC/ARQ gates, the 4-bit clear runway. The repo-as-channel model in Wodge 7 is the same information-theoretic frame.
-- `docs/edinburgh-protocol-eval.md` — the behavioural evals that test whether the protocol changes behavior or just vocabulary. The forcing function for Wodge 3's diligence-theatre risk. The concrete implementation of the Shamming Filter (Wodge 11).
+- `blog/PROJECT.md` — blog post planning, the two existing posts (Muppet Filter,
+  Kimi K2.6)
+
+- `blog/2026-07-06-diligence-theatre.md` — the risk that the protocol makes the
+  model *sound* more rigorous without changing behavior. Connected to Wodge 3's
+  honesty caveat.
+
+- `blog/2026-07-12-task-based-granularity.md` — Shannon applied to repo
+  architecture, FEC/ARQ gates, the 4-bit clear runway. The repo-as-channel model
+  in Wodge 7 is the same information-theoretic frame.
+
+- `docs/edinburgh-protocol-eval.md` — the behavioural evals that test whether
+  the protocol changes behavior or just vocabulary. The forcing function for
+  Wodge 3's diligence-theatre risk. The concrete implementation of the Shamming
+  Filter (Wodge 11).

@@ -14,17 +14,18 @@ Here is a lean, zero-ceremony `FLIGHT_RULES.md` playbook structured as an operat
 
 Every session begins here before code, tool calls, or state mutations.
 
-* [ ] **Surface Check:** Assimilate `IDENT.md`. Does the requested operation match this repository's declared domain?
-
+* [ ] **Surface Check:** Assimilate `IDENT.md`. Does the requested operation
+  match this repository's declared domain?
 
 * [ ] **The Derrida Gate:** "Should this request be in our consideration set?"
 
-
 * **NOMINAL:** Target exists in manifest $\rightarrow$ Proceed to Step 1.
-* **DISSONANT (Out of Bounds):** Emit `[DIAGNOSTIC_ABORT]` immediately. No apologies, no tool calls.
 
+* **DISSONANT (Out of Bounds):** Emit `[DIAGNOSTIC_ABORT]` immediately. No
+  apologies, no tool calls.
 
-* **AMBIGUOUS (Internal Mismatch):** Halt and issue a single, bounded clarification request before taking action.
+* **AMBIGUOUS (Internal Mismatch):** Halt and issue a single, bounded
+  clarification request before taking action.
 
 
 
@@ -34,13 +35,14 @@ Every session begins here before code, tool calls, or state mutations.
 
 Keep turn costs bounded at $O(n)$ rather than compounding to $O(n^2)$.
 
-* [ ] **Reset on New Task:** Always use `/new` to drop accumulated transcript entropy; never rely on `/clear`.
+* [ ] **Reset on New Task:** Always use `/new` to drop accumulated transcript
+  entropy; never rely on `/clear`.
 
+* [ ] **Sync Mission State:** Run `td usage --new-session` (or read `td
+  context`) to pick up the active task queue.
 
-* [ ] **Sync Mission State:** Run `td usage --new-session` (or read `td context`) to pick up the active task queue.
-
-
-* [ ] **Meter Watch:** If context climbs or progress stalls, do not attempt to "muscle through"—capture state with `td handoff` and `/new` immediately.
+* [ ] **Meter Watch:** If context climbs or progress stalls, do not attempt to
+  "muscle through"—capture state with `td handoff` and `/new` immediately.
 
 
 
@@ -50,16 +52,20 @@ Keep turn costs bounded at $O(n)$ rather than compounding to $O(n^2)$.
 
 *Standards while executing work.*
 
-* [ ] **Silo Discipline:** Operate strictly within repository boundaries. Touch outside paths *only* if whitelisted by an explicit repo exception (e.g., Decision 013 for Pi configs).
+* [ ] **Silo Discipline:** Operate strictly within repository boundaries. Touch
+  outside paths *only* if whitelisted by an explicit repo exception (e.g.,
+  Decision 013 for Pi configs).
 
+* [ ] **Navigation Markers:** Use `[LOC: phase]` when transitioning across major
+  tasks/files and `[WAYPOINT: milestone]` upon completion. Omit on single-phase
+  operations.
 
-* [ ] **Navigation Markers:** Use `[LOC: phase]` when transitioning across major tasks/files and `[WAYPOINT: milestone]` upon completion. Omit on single-phase operations.
+* [ ] **No Muppet Traps:** Reject vague, open-ended "SAAS for life" prompts.
+  Demand concrete boundaries or transform raw "Stuff" into structured,
+  verifiable "Things" before executing.
 
-
-* [ ] **No Muppet Traps:** Reject vague, open-ended "SAAS for life" prompts. Demand concrete boundaries or transform raw "Stuff" into structured, verifiable "Things" before executing.
-
-
-* [ ] **Hume’s Razor:** Never invent facts, endpoints, or variables to complete a narrative. State uncertainty or lack of context plainly.
+* [ ] **Hume’s Razor:** Never invent facts, endpoints, or variables to complete
+  a narrative. State uncertainty or lack of context plainly.
 
 
 
@@ -69,8 +75,8 @@ Keep turn costs bounded at $O(n)$ rather than compounding to $O(n^2)$.
 
 *Bringing a bounded phase to a close.*
 
-* [ ] **Persist Ground Truth:** Record ground truth, decisions made, rejected hypotheses, and remaining debt via `td handoff`.
-
+* [ ] **Persist Ground Truth:** Record ground truth, decisions made, rejected
+  hypotheses, and remaining debt via `td handoff`.
 
 * [ ] **Drop the Stage:** `/new` to reset context for the next phase.
 

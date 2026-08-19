@@ -17,9 +17,14 @@ Word Doc / Jira Ticket  <──( Severed Feedback Loop )──>  Actual Executab
 
 By decoupling the spec from the code:
 
-* **Management** got to claim a stage-gate milestone was "complete" based on a signed PDF.
-* **Development** got to write code that rapidly diverged from the spec to meet arbitrary deadlines.
-* **The System** accumulated massive, unmeasured technical debt—hidden safely in the space between the Word doc and the actual implementation.
+* **Management** got to claim a stage-gate milestone was "complete" based on a
+  signed PDF.
+
+* **Development** got to write code that rapidly diverged from the spec to meet
+  arbitrary deadlines.
+
+* **The System** accumulated massive, unmeasured technical debt—hidden safely in
+  the space between the Word doc and the actual implementation.
 
 It created a false sense of progress where product managers were shipping *documents*, not working systems.
 
@@ -42,7 +47,9 @@ When an AI agent (or a disciplined human) reads a folder, it holds both the **De
 
 If `implementation.rs` introduces a silent side-effect or changes an internal rule that contradicts `README.md`, the **Shannon Checksum fails immediately**.
 
-* You don't have to wait 6 months for an integration test failure or a production incident to realize the spec lied.
+* You don't have to wait 6 months for an integration test failure or a
+  production incident to realize the spec lied.
+
 * The disparity surfaces at **commit time**.
 
 ---
@@ -66,8 +73,13 @@ Before AI coding assistants, co-located docs were noble in theory, but humans fr
 
 Now, the incentives are aligned:
 
-1. **The AI relies on the local README** to understand boundary conditions without burning tokens reading 4,000 lines of implementation code.
-2. **The AI can enforce the checksum** by checking if a code modification violates the local README before finalizing a change.
-3. **The AI can update the doc in real-time** when deliberate architectural decisions change during execution.
+1. **The AI relies on the local README** to understand boundary conditions
+   without burning tokens reading 4,000 lines of implementation code.
+
+2. **The AI can enforce the checksum** by checking if a code modification
+   violates the local README before finalizing a change.
+
+3. **The AI can update the doc in real-time** when deliberate architectural
+   decisions change during execution.
 
 Co-location isn't just a convenient developer habit anymore—it is the operational control plane for AI-assisted systems engineering.

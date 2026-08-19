@@ -57,10 +57,12 @@ artifact, so the convention lives here — verify with
    diagram that can't be read where it's committed. Do not widen `COLUMNS` to
    make a too-wide diagram fit — that is benchmaxxing the width, suppressing
    the symptom while the disease (a layout too wide for a terminal) persists.
+
 2. **Vertical by default.** Lay out top-down (`graph TD` / `flowchart TD`)
    unless horizontal is the point (a timeline, a left-to-right pipeline where
    order *is* the message). A simple chain laid out horizontally (`LR`) is a
    bug, not a choice — it forces width for no structural reason.
+
 3. **Too big → refactor, don't widen.** If a diagram still exceeds 80 after
    going vertical, it is too detailed for a flow diagram. Simplify: collapse
    parallel branches that enumerate implementation cases into one node
@@ -73,8 +75,11 @@ Rules:
 - **Keep graphs small.** If dagre's layout starts to look wrong — crossing
   edges, cramped clusters, unreadable spacing — that's the signal to
   escalate to Track 2.
+
 - **No committed SVG.** The `.md` source is the artifact.
+
 - **No pipeline.** Edits just work.
+
 - **Monochrome.** The terminal renderer outputs box-drawing characters
   without colour. This is deliberate — monochrome is legible in any terminal
   theme (light, dark, solarized). Colour is a future enhancement for a
@@ -121,6 +126,7 @@ When to use:
 - **Numbered+token:** complex diagrams (>4 nodes) where descriptive labels
   would make boxes too wide for the terminal. The token keeps each box
   self-explanatory; the key carries the full gloss.
+
 - **Descriptive:** simple diagrams (≤4 nodes) where the label is short
   enough to be self-explanatory. No key needed.
 
@@ -139,17 +145,31 @@ dot -Tsvg path/to/graph.dot -o path/to/graph.svg && open path/to/graph.svg
 ```
 
 Rules:
-- **DOT source is committed.** It is the artifact of record — text, stable, reviewable.
-- **SVG is never committed.** It is ephemeral tooling output. Render, look, discard.
-- **SVG rendering fidelity doesn't matter** (it varies by installed fonts) — because it is never diffed or reproduced across machines. This is the payoff of the ephemeral rule: Track 2 inherits none of the determinism/font-coupling burden that makes faithful ports hard.
-- **A GitHub reader will see raw DOT text** for these diagrams. That is intentional: they are analysis artifacts, not publication.
+- **DOT source is committed.** It is the artifact of record — text, stable,
+  reviewable.
+
+- **SVG is never committed.** It is ephemeral tooling output. Render, look,
+  discard.
+
+- **SVG rendering fidelity doesn't matter** (it varies by installed fonts) —
+  because it is never diffed or reproduced across machines. This is the payoff
+  of the ephemeral rule: Track 2 inherits none of the determinism/font-coupling
+  burden that makes faithful ports hard.
+
+- **A GitHub reader will see raw DOT text** for these diagrams. That is
+  intentional: they are analysis artifacts, not publication.
 
 ## Conventions
 
 ### Where things live
 - **Publication mermaid:** inline in the relevant `.md`.
-- **Analysis DOT:** `docs/diagrams/*.dot` (or alongside the analysis it supports). Commit the `.dot`.
-- **Ephemeral SVG:** gitignored (see scaffolding below). Pick one of: render next to the `.dot` and gitignore `*.svg` there, or render to a scratch dir like `.diagrams/`. Either way, keep `git status` clean.
+
+- **Analysis DOT:** `docs/diagrams/*.dot` (or alongside the analysis it
+  supports). Commit the `.dot`.
+
+- **Ephemeral SVG:** gitignored (see scaffolding below). Pick one of: render
+  next to the `.dot` and gitignore `*.svg` there, or render to a scratch dir
+  like `.diagrams/`. Either way, keep `git status` clean.
 
 ### Scaffolding (deferred until first use)
 
@@ -179,26 +199,38 @@ Wire the validation into a script invoked by `just check` so CI catches DOT synt
 
 Someday a DOT diagram will turn out publication-worthy — too good to leave as raw text. The rule:
 
-- **Default:** DOT SVGs are never committed. Re-author the diagram **small in mermaid** for the docs.
-- **Deliberate exception:** if a diagram genuinely can't be expressed in mermaid at a readable size, commit *that one* SVG by force-adding it (`git add -f path/to.svg`) with a comment in the `.dot` (or the PR) naming *why* this is an exception. This must be a conscious override, not drift.
+- **Default:** DOT SVGs are never committed. Re-author the diagram **small in
+  mermaid** for the docs.
+
+- **Deliberate exception:** if a diagram genuinely can't be expressed in mermaid
+  at a readable size, commit *that one* SVG by force-adding it (`git add -f
+  path/to.svg`) with a comment in the `.dot` (or the PR) naming *why* this is an
+  exception. This must be a conscious override, not drift.
 
 Fuzzy "sometimes we commit SVGs" is where entropy accumulates. The default is no; exceptions are named.
 
 ## When to escalate (Track 1 → Track 2)
 
 Move a diagram from mermaid to DOT when **any** of these hold:
-- The graph is large or dense enough that dagre's layout is visibly wrong (crossings, cramped clusters, unreadable).
-- You need layout features dagre lacks — port-level edges, record/HTML labels, rank constraints, edge concentration, ortho splines.
-- It's an analysis artifact, not a publication — the audience is you, not a reader.
+- The graph is large or dense enough that dagre's layout is visibly wrong
+  (crossings, cramped clusters, unreadable).
+
+- You need layout features dagre lacks — port-level edges, record/HTML labels,
+  rank constraints, edge concentration, ortho splines.
+
+- It's an analysis artifact, not a publication — the audience is you, not a
+  reader.
 
 **Don't escalate preemptively.** Small graphs in mermaid are the default; DOT earns its pipeline cost only when dagre actually fails.
 
 ## Dependency surface
 
 - **Track 1 (GitHub):** nothing local. GitHub provides the renderer.
+
 - **Track 1 (Terminal):** external npm CLI `mermaid-to-md`
   (`~/Dev/GitHub/mermaid-to-md`, symlinked on PATH; Decision 023). No
   in-repo binary; committed art needs no renderer at view time.
+
 - **Track 2:** `dot` (Graphviz). `brew install graphviz` / `apt install
   graphviz`. Verify with `just install-deps`.
 
@@ -207,10 +239,16 @@ No sebastian, no `mmdc`, no Chromium, no wasm. That minimalism is the point.
 ## References
 
 - Decision 012 — the *why* behind this playbook.
+
 - Decision 021 — the eval consolidation that produced the session-newup
   discipline (the terminal renderer was built under the same discipline).
+
 - Decision 023 — the mermaid spinoff: this repo consumes the external CLI.
+
 - `briefs/2026-07-23-brief-mermaid-diagrams-for-docs.md` — this repo's
   diagram-work record (the spun-off tooling briefs moved with the spinoff).
-- sebastian (evaluated, not adopted): https://github.com/aovestdipaperino/sebastian
+
+- sebastian (evaluated, not adopted):
+  https://github.com/aovestdipaperino/sebastian
+
 - Decision 006 (MVAS — don't build the scaffolding before the input exists)

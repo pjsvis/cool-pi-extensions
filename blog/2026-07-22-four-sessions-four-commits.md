@@ -45,13 +45,17 @@ Each task was one session, run under the protocol's bounded-context rule:
 
 1. **Start.** `td start <id>` — the session is recorded, the task's acceptance
    criteria are loaded.
+
 2. **Work.** Read the brief (frozen spec, ~5 KB) + the prior handoff
    (compressed state). Never the raw transcript. Build to the acceptance
    criteria. Commit.
+
 3. **Handoff.** `td handoff <id>` — capture what was done, what remains, the
    decisions made. This is the lossy compression. The handoff is the only
    thing that crosses the `/clear`.
+
 4. **New up.** `/clear` — the megabytes are dropped. The meter resets.
+
 5. **Resume.** The next session runs `td start <id>` and `td context <id>`,
    reads the brief + handoff, and continues. The handoff is the seed; the raw
    transcript is the entropy.

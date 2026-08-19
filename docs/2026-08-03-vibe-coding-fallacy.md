@@ -22,8 +22,11 @@ Throwing $200/month frontier models at unconstrained prompts just buys you a hig
 If your operational workflow (`Justfile`, co-located `README.md`, `marcus/td`, Briefs/Debriefs) allows a smaller, cheaper, or local model to successfully build a feature without breaking entropy, **you have built a real system.**
 
 * A strong harness elevates a weaker model.
+
 * A weak harness corrupts a frontier model.
-* Testing on low-cost models forces you to make your constraints, prompts, and interfaces **crystal clear**—which is where the actual engineering happens.
+
+* Testing on low-cost models forces you to make your constraints, prompts, and
+  interfaces **crystal clear**—which is where the actual engineering happens.
 
 ---
 
@@ -63,10 +66,18 @@ The natural progression you outlined maps directly to the layers of the **Sovere
 
 ```
 
-1. **Level 1: Classic Foundations.** Plain-text code, version control, deterministic builds. Without this, AI is just generating noise on top of quicksand.
-2. **Level 2: Tab Completion.** Inline assistance for mechanical typing. Low friction, high speed, zero architectural risk.
-3. **Level 3: Task/Module Completion.** Using agents to implement bounded functions or modules based on explicit tasks (`td`).
-4. **Level 4: Explicit Design & Constraints (The Control Plane).** The layer that prevents "ending up with a pile of stuff."
+1. **Level 1: Classic Foundations.** Plain-text code, version control,
+   deterministic builds. Without this, AI is just generating noise on top of
+   quicksand.
+
+2. **Level 2: Tab Completion.** Inline assistance for mechanical typing. Low
+   friction, high speed, zero architectural risk.
+
+3. **Level 3: Task/Module Completion.** Using agents to implement bounded
+   functions or modules based on explicit tasks (`td`).
+
+4. **Level 4: Explicit Design & Constraints (The Control Plane).** The layer
+   that prevents "ending up with a pile of stuff."
 
 ---
 
@@ -77,7 +88,10 @@ Without explicitness, you cannot make trade-offs. If a system's design is hidden
 By keeping documentation co-located in plain-text `README.md` files, orchestrating execution through a `Justfile`, and tracking state via `marcus/td`:
 
 * You make the **design explicit**.
+
 * You give the AI a **tight boundary** to operate in.
-* You maintain a **continuous Shannon Checksum** between what you *intended* to build and what was *actually* built.
+
+* You maintain a **continuous Shannon Checksum** between what you *intended* to
+  build and what was *actually* built.
 
 Learning AI in software engineering isn't about learning how to prompt a black box to do your job. **It is about learning how to build a harness tight enough that the AI cannot fail to deliver the real thing.**

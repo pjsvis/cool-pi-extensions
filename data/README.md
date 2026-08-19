@@ -29,17 +29,29 @@ Run metadata. Each line is a JSON object with:
 
 ### scoring_matrix.jsonl
 Primed-vs-bare delta matrix for the scoring eval. Each line is a JSON object with:
-- `condition`: "primed" (Edinburgh Protocol system prompt) or "bare" (minimal "You are a helpful assistant" prompt)
+- `condition`: "primed" (Edinburgh Protocol system prompt) or "bare" (minimal
+  "You are a helpful assistant" prompt)
+
 - `tag`: Model short name (e.g., "nemotron-nano")
+
 - `model`: Full model identifier
+
 - `tier`: "premium", "mid", "budget", "free", or "coding-plan"
+
 - `cost`: Cost string
+
 - `total`: Score out of maxTotal
+
 - `maxTotal`: Maximum possible score (19)
+
 - `scores`: Per-criterion score breakdown
+
 - `totalTokens`: Token count for the response
+
 - `ms`: Response latency in milliseconds
+
 - `timestamp`: Unix epoch-millis when the eval was run
+
 - `error`: Error message if the eval failed, otherwise null
 
 The delta (primed − bare) measures whether the Edinburgh Protocol actually

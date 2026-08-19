@@ -7,9 +7,15 @@ A **Playbook** is a codified set of instructions, patterns, or standards for a s
 ## When to Write a Playbook
 
 1. **Repeatability:** If a task will be done more than twice, write a playbook.
-2. **Complexity:** If a task involves >3 steps or critical constraints, write a playbook.
-3. **Discovery:** If you solve a novel problem ("First Contact"), write a playbook to guide future agents.
-4. **Standards:** If there is a "Right Way" to do something (e.g., File Naming, Front-Matter Format), write a playbook.
+
+2. **Complexity:** If a task involves >3 steps or critical constraints, write a
+   playbook.
+
+3. **Discovery:** If you solve a novel problem ("First Contact"), write a
+   playbook to guide future agents.
+
+4. **Standards:** If there is a "Right Way" to do something (e.g., File Naming,
+   Front-Matter Format), write a playbook.
 
 ## The Structure of a Playbook
 
@@ -48,9 +54,14 @@ If the playbook defines a *style* rather than a *process*, list the rules here.
 ## Maintenance
 
 * Playbooks are living documents.
+
 * If a playbook fails, **update it**. Do not bypass it and leave it broken.
-* **Deprecation:** If a playbook is obsolete, add a `> **DEPRECATED**` banner at the top and link to the successor.
-* **Review after use:** If you discover a gap while following a playbook, fix it and commit.
+
+* **Deprecation:** If a playbook is obsolete, add a `> **DEPRECATED**` banner at
+  the top and link to the successor.
+
+* **Review after use:** If you discover a gap while following a playbook, fix it
+  and commit.
 
 ## The Knowledge System
 

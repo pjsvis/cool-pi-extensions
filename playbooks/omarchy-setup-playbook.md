@@ -99,8 +99,11 @@ ssh -T git@github.com
 ```
 
 If you get "Permission denied (public key)":
-- Check that you added the *public* key (`.pub` file) to GitHub, not the private key
+- Check that you added the *public* key (`.pub` file) to GitHub, not the private
+  key
+
 - Check file permissions: `chmod 600 ~/.ssh/id_ed25519`
+
 - Run `ssh -vT git@github.com` to see what's happening
 
 ---
@@ -344,9 +347,14 @@ bash scripts/sync-pi-to-omarchy.sh
 
 This syncs:
 - `settings.json` — provider preferences, default model, enabled models
+
 - `models.json` — provider endpoints and model configs
-- `auth.json` — API keys for all providers (this is why you delete the script after)
+
+- `auth.json` — API keys for all providers (this is why you delete the script
+  after)
+
 - `extensions/` — silo, defuddle, edinburgh-evals
+
 - `AGENTS.md` — symlinked to `cool-pi-extensions/prompts/edinburgh-protocol.md`
 
 ⚠️ The sync script contains API keys. Delete it on both machines after running.

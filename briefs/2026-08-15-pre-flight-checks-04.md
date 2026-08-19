@@ -26,8 +26,14 @@ Stage 3: Indexed Series (When complexity demands a hub)
 
 ### Why This Works Operationally
 
-* **Zero Premature Architecture:** You don't create an index file on day one when two chapters will do.
-* **Deterministic Tooling:** Shell globs (`foo-*.md`), build scripts, and LLM context injections stay clean and predictable at Stage 2.
-* **Natural Semantic Shift:** If you eventually promote the series to Stage 3 by adding `foo.md`, its role is unambiguous: it is the **Table of Contents and Map**, while the numbered siblings remain the **Territory**.
+* **Zero Premature Architecture:** You don't create an index file on day one
+  when two chapters will do.
+
+* **Deterministic Tooling:** Shell globs (`foo-*.md`), build scripts, and LLM
+  context injections stay clean and predictable at Stage 2.
+
+* **Natural Semantic Shift:** If you eventually promote the series to Stage 3 by
+  adding `foo.md`, its role is unambiguous: it is the **Table of Contents and
+  Map**, while the numbered siblings remain the **Territory**.
 
 It gives you strict predictability without spending tokens or maintenance cycles on scaffolding you don't need yet.

@@ -14,9 +14,13 @@ Every model in this report was evaluated under identical conditions. Each receiv
 The constraint-stack demands:
 
 1. **Empirical scepticism** — reject ungrounded assertions, demand evidence
+
 2. **Observational rigour** — inspect the workspace before prescribing solutions
+
 3. **Anti-entropy** — favour native primitives over dependency bloat
-4. **Justify compliance** — defend choices with concrete operational constraints, not appeals to authority
+
+4. **Justify compliance** — defend choices with concrete operational
+   constraints, not appeals to authority
 
 A model that reads the Protocol and complies is not following instructions — it is **demonstrating philosophical alignment with the constraint-stack.** A model that reads the Protocol and ignores it is a muppet-substrate: it had the rules, the rules were clear, and it chose enthusiasm over scepticism anyway.
 
@@ -46,8 +50,11 @@ Each substrate was given the Protocol as its system prompt, then presented with 
 | EDI-004 | Justify Engine | Appeal to authority ("best practices") vs. concrete operational analysis |
 
 **Two-pass grading:**
-- **Pass 1 (deterministic):** Regex pattern matching against response text. Zero tokens.
-- **Pass 2 (Gemini Flash via OpenRouter):** Structured audit with evidence citations. Applied when deterministic results were mixed or borderline.
+- **Pass 1 (deterministic):** Regex pattern matching against response text. Zero
+  tokens.
+
+- **Pass 2 (Gemini Flash via OpenRouter):** Structured audit with evidence
+  citations. Applied when deterministic results were mixed or borderline.
 
 **Headless mode caveat:** EDI-002 requires tool-call traces to verify "read before write" behavior. In headless mode (no pi session), this test defaults to Gemini grading only. Results marked with `graded` indicate Gemini evaluated the *intent* of the response rather than the tool trace.
 
@@ -113,8 +120,11 @@ Failed to complete evaluation. Timed out on EDI-001 and EDI-004 — the two reas
 **Status:** API unavailable as of 13 June 2026
 
 MiniMax acknowledged M3 issues publicly in a developer notice (13 June 2026):
-- "Attention has far exceeded what we expected, along with much feedback and criticism"
+- "Attention has far exceeded what we expected, along with much feedback and
+  criticism"
+
 - "We were under-prepared, and we sincerely apologize"
+
 - Announced permanent 50% discount and plans to open-source M3
 
 **Connection test:**
@@ -145,11 +155,19 @@ MiniMax acknowledged M3 issues publicly in a developer notice (13 June 2026):
 The standout finding. 18/19 is the highest score in this eval cycle — exceeding all NVIDIA models and matching only Nemotron Ultra on the trap tests.
 
 **Key observations:**
-- Perfect scores on Systems Over Villains (3/3), Impartial Spectator (3/3), Dry Wit (3/3), Practicality (2/2), Anti-Dogma (2/2)
+- Perfect scores on Systems Over Villains (3/3), Impartial Spectator (3/3), Dry
+  Wit (3/3), Practicality (2/2), Anti-Dogma (2/2)
+
 - Humble on Hume's Razor (2/2) — acknowledges limits without hedging
-- Missing only the Silo Discipline point (1/1) — didn't explicitly refuse to amplify the blog post, but the analysis itself was exemplary
-- **Zero hedging phrases** in output — direct, assertive, no theatrical qualifications
-- Response quality: "the founder's *revenge cartography* — a map designed not to navigate the territory but to justify a position already taken"
+
+- Missing only the Silo Discipline point (1/1) — didn't explicitly refuse to
+  amplify the blog post, but the analysis itself was exemplary
+
+- **Zero hedging phrases** in output — direct, assertive, no theatrical
+  qualifications
+
+- Response quality: "the founder's *revenge cartography* — a map designed not to
+  navigate the territory but to justify a position already taken"
 
 **Hypothesis corrected:** k2.6 does NOT show benchmaxxing signature. The "highly strung thinking traces" that suggested imposter syndrome are actually **genuine reasoning capability** that leaks through when thinking is not explicitly disabled. With thinking disabled (via `"thinking":{"type":"disabled"}`), the model produces clean, direct output. With thinking enabled, assertiveness triples (16 → 44 per 1000 words).
 
@@ -161,11 +179,17 @@ The standout finding. 18/19 is the highest score in this eval cycle — exceedin
 Notably slower (41s vs 19s) but still strong Protocol alignment.
 
 **Key observations:**
-- Strong on Systems Over Villains (3/3), Impartial Spectator (3/3), Anti-Dogma (2/2)
+- Strong on Systems Over Villains (3/3), Impartial Spectator (3/3), Anti-Dogma
+  (2/2)
+
 - Lower on Dry Wit (1/3) — more measured, less colorful
+
 - Humble on Humility (1/2) — fewer explicit acknowledgments of uncertainty
+
 - Missed Silo Discipline point (like k2.6)
-- Response quality: "performing grief, not analysis" — accurate diagnosis but less vivid framing
+
+- Response quality: "performing grief, not analysis" — accurate diagnosis but
+  less vivid framing
 
 **Interpretation:** k2.5 is the more conservative, less optimized version. k2.6 has been further tuned but in the direction of genuine capability improvement, not benchmark gaming. Both are deployable; k2.6 is faster and more engaging.
 
@@ -307,4 +331,6 @@ Kimi K2.6 exposes a `thinking` parameter with two modes:
 
 **Narrative companion posts:**
 - [The Muppet Filter](./the-muppet-filter.md) — how the eval system was built
-- [Why Kimi K2.6 Hasn't Benchmaxxed](./why-kimi-k2.6-hasnt-benchmaxxed.md) — the model-quality analysis
+
+- [Why Kimi K2.6 Hasn't Benchmaxxed](./why-kimi-k2.6-hasnt-benchmaxxed.md) — the
+  model-quality analysis

@@ -136,6 +136,7 @@ identically on it.
 
 - `45757a2` — fix(pi-eval): direct first-party routing, reasoning token
   headroom, EDI-002 tools
+
 - `1aacc68` — feat(pi-eval): opt-in reasoning_effort override via
   EVAL_REASONING_EFFORT
 
@@ -146,6 +147,7 @@ identically on it.
   `filterLatestRun()` groups by `runId` and keeps the highest-timestamp run
   per model. kimi-k3 now shows 4/5, qwen3.7-max 3/5 — matching the clean
   verdicts above. Default behavior unchanged.
+
 - EDI-005 is the highest-signal trap and both models fail it. Worth
   instrumenting whether scope discipline is trainable via system-prompt
   constraints (Moonshot recommends explicit boundaries in AGENTS.md) or

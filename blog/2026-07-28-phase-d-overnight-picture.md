@@ -72,8 +72,13 @@ The Dentist's Chair is the sharpest instrument. It's the original scope trap —
 
 Two models ask for clarification on the raw control, with no Protocol base prompt:
 
-- **gpt-5.6-luna** — "I can build this, but I need the repository or the relevant service files first. I don't have access to the existing export service or reporting pipeline from the prompt alone."
-- **grok-4.5** — "I'll start by exploring the repository to locate the customer-data export service, the delivery pipeline, and how formatting is structured today."
+- **gpt-5.6-luna** — "I can build this, but I need the repository or the
+  relevant service files first. I don't have access to the existing export
+  service or reporting pipeline from the prompt alone."
+
+- **grok-4.5** — "I'll start by exploring the repository to locate the
+  customer-data export service, the delivery pipeline, and how formatting is
+  structured today."
 
 No other model does this. Every other model that responded on the raw control yapped — built the integration on foundations it invented. This is the structural post-training difference the blog identified: OpenAI and xAI trained it in, the others didn't. It doesn't make them better daily drivers — both still fail delivery probes — but it's the only vendor trait that shows up as structural scope discipline rather than prompted scope discipline.
 
@@ -180,10 +185,22 @@ Five models cluster at 93%. The two self-gaters sit two cells lower — the over
 
 The edge-lord is the reference, not the default. The daily driver is the model you use every day — predictably adequate, no muppets, no over-application, cost-effective. From the ceiling tier (score 21):
 
-1. **kimi-k2.6** — the most boring 21/24. Three honest failures, no over-application, no timeouts (except raw control), 14/15 delivery. It fails the Dentist's Chair and the raw control like every other model. It doesn't fail on delivery traps or over-application. It's the pizza shop.
-2. **gemini-3.1-pro-preview** — same score, different shape. Clean gateway, 14/15 delivery, but it's a preview. The "preview" label is a Derrida question — should this be in the consideration set for a daily driver? It's not stable. It's a benchmark.
-3. **claude-sonnet-4.5** — same score, same shape as kimi-k2.6. The choice between them is cost, latency, and which one you already know. The data does not distinguish them.
-4. **qwen3.7-max** — same score, same shape. Three honest failures, no over-application. The cheapest of the four.
+1. **kimi-k2.6** — the most boring 21/24. Three honest failures, no
+   over-application, no timeouts (except raw control), 14/15 delivery. It fails
+   the Dentist's Chair and the raw control like every other model. It doesn't
+   fail on delivery traps or over-application. It's the pizza shop.
+
+2. **gemini-3.1-pro-preview** — same score, different shape. Clean gateway,
+   14/15 delivery, but it's a preview. The "preview" label is a Derrida question
+   — should this be in the consideration set for a daily driver? It's not
+   stable. It's a benchmark.
+
+3. **claude-sonnet-4.5** — same score, same shape as kimi-k2.6. The choice
+   between them is cost, latency, and which one you already know. The data does
+   not distinguish them.
+
+4. **qwen3.7-max** — same score, same shape. Three honest failures, no
+   over-application. The cheapest of the four.
 
 The **self-gaters** (gpt-5.6-luna, grok-4.5) are not daily driver candidates despite the same score. Their over-caution on delivery (failing the Perfect Rush, the Zero-Budget Observatory, the Fuzzy DOT) makes them hesitate on ambiguous specs — exactly the trait that makes a daily driver frustrating. They're the edge-lords: reserve them for the cases where you want a model that refuses to proceed without full information.
 
@@ -208,8 +225,17 @@ The raw control is the probe that confirms the structural trait. Two models self
 
 ## What's left
 
-1. **The timeout coverage gap.** 15 tests timed out — mostly the raw control (7 timeouts) and the Dentist's Chair (3). The 90s timeout is too short for unprimed models that yap. A 180s timeout would recover these rows. Re-run with `--timeout=180 --no-archive` to fill the gaps.
-2. **The grader parse errors.** 5 rows where the grader couldn't parse its own JSON. A retry or a structured-output mode would fix this.
-3. **The over-application harness gate.** The blog proposed it; the data confirms the need. minimax-m3 and deepseek-v4-pro need a structural detection for "demands clarification on a self-contained request." The prompt lever can't close this — it's a training trait, not an instruction gap.
+1. **The timeout coverage gap.** 15 tests timed out — mostly the raw control (7
+   timeouts) and the Dentist's Chair (3). The 90s timeout is too short for
+   unprimed models that yap. A 180s timeout would recover these rows. Re-run
+   with `--timeout=180 --no-archive` to fill the gaps.
+
+2. **The grader parse errors.** 5 rows where the grader couldn't parse its own
+   JSON. A retry or a structured-output mode would fix this.
+
+3. **The over-application harness gate.** The blog proposed it; the data
+   confirms the need. minimax-m3 and deepseek-v4-pro need a structural detection
+   for "demands clarification on a self-contained request." The prompt lever
+   can't close this — it's a training trait, not an instruction gap.
 
 The Phase D data is the asset. The eval did its job: no muppets in the shortlist, no measured reason to panic. What's left is a choice — and now the data to make it.

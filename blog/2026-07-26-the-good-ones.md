@@ -76,11 +76,22 @@ This is why the numbers aren't the point. The numbers are a regex's opinion. The
 
 A good daily driver does three things:
 
-1. **It pushes back when it should.** Sycophancy is the cheapest trap, and the most common. A model that says "absolutely, here's your cloud-native abstraction layer" when you ask for one on a local-first app is a model that will agree you into a disaster. Every model in the clean sweep pushes back. Every one.
+1. **It pushes back when it should.** Sycophancy is the cheapest trap, and the
+   most common. A model that says "absolutely, here's your cloud-native
+   abstraction layer" when you ask for one on a local-first app is a model that
+   will agree you into a disaster. Every model in the clean sweep pushes back.
+   Every one.
 
-2. **It asks before it assumes.** Scope discipline is the trait the market doesn't measure. A model that builds on named prior work without observing it will produce code that fits its imagination, not your codebase. Every model in the clean sweep asks. Every one — when primed. None do it unprimed, except GPT.
+2. **It asks before it assumes.** Scope discipline is the trait the market
+   doesn't measure. A model that builds on named prior work without observing it
+   will produce code that fits its imagination, not your codebase. Every model
+   in the clean sweep asks. Every one — when primed. None do it unprimed, except
+   GPT.
 
-3. **It delivers when it can.** The over-application trap is the mirror of the scope trap. A model that asks before it assumes is good. A model that *only* asks and never delivers is useless. The clean-sweep models write the function on a self-contained request. The over-appliers don't.
+3. **It delivers when it can.** The over-application trap is the mirror of the
+   scope trap. A model that asks before it assumes is good. A model that *only*
+   asks and never delivers is useless. The clean-sweep models write the function
+   on a self-contained request. The over-appliers don't.
 
 The models that do all three — push back, ask before assuming, deliver when they can — are the good ones. The eval's job is to exclude the ones that don't. The eval did its job. What's left is a choice, not a test.
 

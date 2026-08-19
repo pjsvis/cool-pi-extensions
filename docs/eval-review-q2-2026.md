@@ -91,8 +91,11 @@ Evaluated three non-muppet models across two test suites:
 
 Traditional LLMs (autoregressive) generate token-by-token with no revision. Mercury-2 uses diffusion-based refinement:
 
-1. **Iterative self-correction** — Can revise earlier reasoning based on later insights
+1. **Iterative self-correction** — Can revise earlier reasoning based on later
+   insights
+
 2. **Multi-pass deliberation** — Like human "let me reconsider"
+
 3. **Global coherence** — Later parts of response can influence earlier parts
 
 ### Practical Implications
@@ -168,11 +171,9 @@ For Edinburgh Protocol compliance:
 1. **Primary model: inception/mercury-2**
    - Consistent, fast, intellectually honest
    - Use for final eval and critical assessments
-
 2. **Secondary model: nvidia/nemotron-3-nano-30b-a3b:free**
    - Free, reliable, good for rapid iteration
    - Use for grading and batch evaluation
-
 3. **Avoid: nvidia/nemotron-3-super-120b-a12b:free**
    - Too slow for practical use (130s+ for 4 tests)
    - Times out on harder problems
@@ -180,9 +181,13 @@ For Edinburgh Protocol compliance:
 ### Process Improvements
 
 1. **Add Mercury-2 to recommended models** in eval runner
+
 2. **Add nemotron-super to default excludes** (slow + timeout-prone)
+
 3. **Create 3 variants of each test** to reduce benchmaxxing
-4. **Document that results = "Edinburgh-compliant + IQ rank"** not "general intelligence"
+
+4. **Document that results = "Edinburgh-compliant + IQ rank"** not "general
+   intelligence"
 
 ---
 

@@ -15,15 +15,18 @@ Flox was adopted to provide a reproducible, pinned development environment
   reproducible builds. This repo is markdown-heavy with a few Bun CLIs and
   TypeScript extensions that run inside pi's own runtime. The dependency
   surface is a short list of system binaries, not a service graph.
+
 - **De-facto already gone.** The tracked `.flox/` content was four runtime
   *log* files committed by accident. The declarative manifest
   (`.flox/env/manifest.toml`) was never tracked and no longer exists on disk.
   A tool whose pinning file isn't in version control is doing no pinning.
+
 - **A second layer beneath a working one.** DEPENDENCIES.md already documents
   the real dependency surface (`bun`, `just`, `gum`, `pi`, `td`, `sidecar`,
   optional `rtk`/`skate`/`glow`) with platform install paths. Flox became a
   redundant layer beneath an already-sufficient one — the accretion that
   Decisions 006 (MVAS) and 007 (barnacle review) exist to prevent.
+
 - **Already scheduled.** Barnacle Report 001 (2026-06-21) listed "Check for
   Flox references (first item to remove)" for Q3. Decision 007 names Flox
   references as a canonical barnacle type. The deprecation was even exchanged
@@ -53,6 +56,7 @@ required binary is missing, so the failure is loud.
   `scripts/check-manifest.ts` (checked a manifest that no longer exists); the
   README line claiming Flox provides `bun`; the stale `.gitignore` Flox
   comment (replaced by a blanket `.flox/` ignore).
+
 - **Kept (audit trail, not dead code):** the Flox-deprecation passages in
   `docs/full-stack-overview.md` and `playbooks/agent-messages-playbook.md`,
   which narrate a real coordination event. Barnacle review removes dead code,
@@ -67,17 +71,20 @@ than maintained as an alias — one verb, not two.
 
 ### Alternative A: Keep Flox for new contributors
 - **Pros:** Reproducible env on first clone.
+
 - **Cons:** A second layer beneath DEPENDENCIES.md; the manifest isn't even
   tracked, so it provides no real reproducibility. Maintenance cost with no
   payoff. **Reject.**
 
 ### Alternative B: Remove Flox, leave `just install-deps` as a documented gap
 - **Pros:** Smaller change.
+
 - **Cons:** Swaps a poor tool for a phantom command — entropy inflation. The
   replacement must be real. **Reject.**
 
 ### Alternative C: Keep `just provision` as an alias alongside `just install-deps`
 - **Pros:** No doc edits.
+
 - **Cons:** Two names for one command is mild accretion — the thing 006/007
   exist to prevent. **Reject.**
 
@@ -88,13 +95,16 @@ canonical command, so the replacement is functional in the same change.
 
 ### Positive
 - One dependency surface (DEPENDENCIES.md), one checker (`just install-deps`).
+
 - No redundant reproducible-build layer for a repo that doesn't need one.
+
 - `just install-deps` now exists and fails loudly when required binaries are
   missing, where previously the command was a phantom.
 
 ### Negative
 - No pinned, reproducible environment. **Acceptable:** the dependency surface
   is small and stable; `just install-deps` reports drift on demand.
+
 - Contributors must install system binaries themselves per DEPENDENCIES.md.
 
 ## Implementation
@@ -102,10 +112,13 @@ canonical command, so the replacement is functional in the same change.
 - `scripts/install-deps.sh` checks required (`bun just gum pi td sidecar`) and
   optional (`rtk skate glow`) binaries; exits non-zero if any required binary
   is missing. Replaces the half-built `scripts/provision.sh`.
+
 - `just install-deps` recipe wired to the script (new `setup` group).
+
 - Phantom command references resolved: `just provision` → `just install-deps`
   in `docs/the-vest-protocol.md` and `playbooks/omarchy-setup-playbook.md`;
   README "Start here" `just install-stack` → `just install-deps`.
+
 - A separate aspirational phantom (`just dev` — symlinks/config/extensions)
   is out of scope here and tracked separately.
 

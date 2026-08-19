@@ -12,12 +12,21 @@ Wrote a TypeScript/Bun CLI (`cli/pi-check/check.ts`) using citty 0.2.2. It reads
 
 **Key features:**
 - Concurrent checks (8 providers in ~2s total)
-- Precise failure classification: `connection refused`, `timeout`, `DNS not found`, `auth` (401/403), `network error`
+
+- Precise failure classification: `connection refused`, `timeout`, `DNS not
+  found`, `auth` (401/403), `network error`
+
 - `!skate get <name>` key resolution via `execSync` to skate CLI
+
 - `--json` machine-readable output with full diagnostic objects
+
 - `--config <path>` for custom models.json locations
+
 - `pi-check <provider>` single-provider filter
-- `--zenmux-mgmt` queries ZenMux management API (subscription tier, quota usage, PAYG balance, flow rate) using `zenmux_management_api_key` from skate
+
+- `--zenmux-mgmt` queries ZenMux management API (subscription tier, quota usage,
+  PAYG balance, flow rate) using `zenmux_management_api_key` from skate
+
 - Global install via `bun link`
 
 **Output:**
@@ -60,9 +69,17 @@ Added `zenmux` to models.json with 14 models across 9 providers:
 ### Model audit findings
 
 - **llama** — server not running on port 1234; connection refused
-- **zai** — TCP-level block via Alibaba Cloud WAF (`open.bigmodel.cn`); periodic, got lucky with a pass window. GLM models accessible via OpenRouter (`z-ai/glm-4.7`)
-- **moonshot** — confirmed working despite initial `Invalid Authentication` false alarm
-- **Kimi K2.6 reasoning quirk** — model pushes output into `reasoning_content` before `content`; needs adequate `maxTokens` budget or reasoning disabled for short prompts
+
+- **zai** — TCP-level block via Alibaba Cloud WAF (`open.bigmodel.cn`);
+  periodic, got lucky with a pass window. GLM models accessible via OpenRouter
+  (`z-ai/glm-4.7`)
+
+- **moonshot** — confirmed working despite initial `Invalid Authentication`
+  false alarm
+
+- **Kimi K2.6 reasoning quirk** — model pushes output into `reasoning_content`
+  before `content`; needs adequate `maxTokens` budget or reasoning disabled for
+  short prompts
 
 ### Files changed
 
@@ -77,9 +94,14 @@ Added `zenmux` to models.json with 14 models across 9 providers:
 ## Known gaps
 
 - `llama` provider needs server startup (probably `llama-server` on port 1234)
+
 - `zai` direct API blocked; fallback to OpenRouter's `z-ai/glm-*` models
-- ZenMux management API needs separate key; regular API key won't work with mgmt endpoints
-- pi-check help shows camelCase `--zenmuxMgmt` flag (citty auto-generates); could alias to `--zenmux-mgmt`
+
+- ZenMux management API needs separate key; regular API key won't work with mgmt
+  endpoints
+
+- pi-check help shows camelCase `--zenmuxMgmt` flag (citty auto-generates);
+  could alias to `--zenmux-mgmt`
 
 ## Next
 

@@ -18,7 +18,8 @@ A recipe belongs in the `justfile` if and only if it is **one of three things**:
    about: @scripts/about.sh
    ```
 
-3. **A VEST Protocol entry point** — `orient`, `browse`, `read`, `about`, `help`, `default`.
+3. **A VEST Protocol entry point** — `orient`, `browse`, `read`, `about`,
+   `help`, `default`.
 
 **A recipe must NOT be in the justfile if it:**
 - Contains a heredoc (`#!/usr/bin/env bash...` block)

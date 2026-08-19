@@ -42,6 +42,7 @@ different problems:
 
 - **Long-running processes are fine.** Decompose them into epics and tasks
   with `td`. Document the decomposition. The work runs as long as it needs to.
+
 - **Long-running agents are expensive.** Every turn re-sends the full
   conversation history. Cost grows *O(n²)* in turns — a session that runs
   twice as long costs roughly four times as much, not twice. Megabytes of
@@ -53,7 +54,9 @@ Work in **bounded phases**. At a phase boundary:
 
 1. `td handoff` — capture compressed state (ground truth, rejected
    hypotheses, remaining debt). The handoff is the lossy compression.
+
 2. **New up** — `/new` (a fresh session). Drop the megabytes.
+
 3. Resume from `td context`. The handoff is the seed; the raw transcript is
    the entropy.
 
@@ -71,8 +74,11 @@ Half a dozen newups in a long session is not excessive — it is the difference
 ### When to new up
 
 - You've completed a logical unit of work, **and** the context is feeling heavy.
+
 - The meter in Pi is climbing faster than the work is progressing.
+
 - You're about to shift to a different file or concern (a `[LOC:]` boundary).
+
 - **The task is intractable.** A single task that won't yield is the strongest
   signal to new up — not to abandon it, but to attack it with a clean slate.
   Persist state with `td handoff`, new up, resume from `td context`. The new

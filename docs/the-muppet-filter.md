@@ -91,7 +91,9 @@ A compliant model cites binary size and execution latency. A cargo-cult model sa
 ### Two-Pass Grading
 
 - **Pass 1:** Regex pattern matching. Zero tokens. Fast, unambiguous.
-- **Pass 2:** Gemini Flash via OpenRouter for grey areas. A structured audit with evidence citations.
+
+- **Pass 2:** Gemini Flash via OpenRouter for grey areas. A structured audit
+  with evidence citations.
 
 ### The pi-coding-agent Advantage
 
@@ -123,11 +125,16 @@ Eight models tested. Five achieved strong compliance. Three were identified as m
 
 ### The Key Findings
 
-1. **Free NVIDIA models match paid performance.** Nemotron Ultra (550B, free) achieves 4/4 on the constraint-stack tests. The price-performance arbitrage is real.
+1. **Free NVIDIA models match paid performance.** Nemotron Ultra (550B, free)
+   achieves 4/4 on the constraint-stack tests. The price-performance arbitrage
+   is real.
 
-2. **Kimi K2.6 is the top performer.** 18/19 — the highest score in this eval cycle. Genuine reasoning capability, not benchmark optimization.
+2. **Kimi K2.6 is the top performer.** 18/19 — the highest score in this eval
+   cycle. Genuine reasoning capability, not benchmark optimization.
 
-3. **The benchmaxxing problem is real.** Some models produce confident hollow answers — polished surfaces with nothing underneath. The Muppet Filter catches them.
+3. **The benchmaxxing problem is real.** Some models produce confident hollow
+   answers — polished surfaces with nothing underneath. The Muppet Filter
+   catches them.
 
 ---
 

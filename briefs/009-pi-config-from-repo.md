@@ -27,14 +27,21 @@ Currently these are synced from the Mac. But there's a better pattern: keep a te
 ## Benefits
 
 - **Repo is the source of truth** — the template documents what's available
+
 - **Agent can help** — instead of manual config, tell the agent "set this up"  
-- **Surface missing keys early** — before trying to use a model, know if the key is there
+
+- **Surface missing keys early** — before trying to use a model, know if the key
+  is there
+
 - **Self-documenting** — the template has comments explaining each field
 
 ## Implementation
 
 - `prompts/pi-models-example.md` — template `models.json` with provider configs
-- `scripts/sync-pi-to-omarchy.sh` — syncs full config (still needed for extensions)
+
+- `scripts/sync-pi-to-omarchy.sh` — syncs full config (still needed for
+  extensions)
+
 - `scripts/skate-to-omarchy.sh` — syncs secrets (still needed for API keys)
 
 The template doesn't replace the sync scripts — it complements them. Use sync for full copy, use template for agent-assisted setup.

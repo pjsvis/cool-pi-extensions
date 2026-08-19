@@ -9,8 +9,15 @@ It has almost nothing to do with traditional linguistic mastery, yet tech YouTub
 
 YouTube is an attention-economy medium driven by visual engagement.
 
-* **The Problem:** A model performing high-level semantic analysis, parsing an intricate 200-page legal contract, or refactoring a complex distributed database is invisible on screen. It’s just terminal text scrolling by. It does not generate clicks, high retention, or viral engagement.
-* **The Solution:** Rendering a 3D canvas, moving a character in *Minecraft*, or navigating a web browser UI using vision-language models (VLMs) creates a immediate, high-fidelity visual feedback loop. You can *see* the model fail or succeed in real time.
+* **The Problem:** A model performing high-level semantic analysis, parsing an
+  intricate 200-page legal contract, or refactoring a complex distributed
+  database is invisible on screen. It’s just terminal text scrolling by. It does
+  not generate clicks, high retention, or viral engagement.
+
+* **The Solution:** Rendering a 3D canvas, moving a character in *Minecraft*, or
+  navigating a web browser UI using vision-language models (VLMs) creates a
+  immediate, high-fidelity visual feedback loop. You can *see* the model fail or
+  succeed in real time.
 
 ---
 
@@ -18,8 +25,16 @@ YouTube is an attention-economy medium driven by visual engagement.
 
 From an engineering standpoint, text-only benchmarks hit a wall because of **data contamination** and model saturation.
 
-* **Saturated Text Metrics:** Benchmarks like MMLU (multitask language understanding), GSM8K (math word problems), and HumanEval (coding) were largely solved or polluted. Because models are trained on internet-scale text datasets, labs effectively leak the test answers into the training data.
-* **Grounding in Environment State:** Games like *Minecraft*, *NetHack*, or interactive browser sandboxes provide dynamic, non-deterministic state spaces. The environment changes continuously based on action sequences. To succeed, a model cannot simply retrieve memorized text; it must translate visual or state inputs into sequential action calls.
+* **Saturated Text Metrics:** Benchmarks like MMLU (multitask language
+  understanding), GSM8K (math word problems), and HumanEval (coding) were
+  largely solved or polluted. Because models are trained on internet-scale text
+  datasets, labs effectively leak the test answers into the training data.
+
+* **Grounding in Environment State:** Games like *Minecraft*, *NetHack*, or
+  interactive browser sandboxes provide dynamic, non-deterministic state spaces.
+  The environment changes continuously based on action sequences. To succeed, a
+  model cannot simply retrieve memorized text; it must translate visual or state
+  inputs into sequential action calls.
 
 ---
 
@@ -35,8 +50,15 @@ The industry is re-platforming LLMs. They are no longer treated merely as "text 
 
 ```
 
-* **The Justification:** Proponents argue that real intelligence requires spatial reasoning, planning over extended time horizons, error recovery, and tool manipulation. Games offer a cheap, zero-risk simulator for testing whether an LLM can maintain a long-term goal state across hundreds of action steps.
-* **The Reality Gap:** Mastering a game API or a canvas element measures **low-level control loop coordination**, not deep linguistic comprehension or conceptual reasoning.
+* **The Justification:** Proponents argue that real intelligence requires
+  spatial reasoning, planning over extended time horizons, error recovery, and
+  tool manipulation. Games offer a cheap, zero-risk simulator for testing
+  whether an LLM can maintain a long-term goal state across hundreds of action
+  steps.
+
+* **The Reality Gap:** Mastering a game API or a canvas element measures
+  **low-level control loop coordination**, not deep linguistic comprehension or
+  conceptual reasoning.
 
 ---
 

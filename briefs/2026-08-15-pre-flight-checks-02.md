@@ -12,10 +12,14 @@ Here are the concrete amendment proposals for both files.
 
 #### Key Adjustments:
 
-1. **Bind `IDENT.md` to the New-Up Sequence:** When a session is initialized via `/new` and `td usage --new-session`, the agent must immediately anchor against the local `IDENT.md`.
+1. **Bind `IDENT.md` to the New-Up Sequence:** When a session is initialized via
+   `/new` and `td usage --new-session`, the agent must immediately anchor
+   against the local `IDENT.md`.
 
-
-2. **Harmonize the Silo Exception (Decision 013) with the Justify Engine:** Make sure the Justify Engine recognizes that `~/.pi/agent/{models,settings}.json` is a whitelisted target under Decision 013 so it doesn’t accidentally trip a `DIAGNOSTIC_ABORT`.
+2. **Harmonize the Silo Exception (Decision 013) with the Justify Engine:** Make
+   sure the Justify Engine recognizes that `~/.pi/agent/{models,settings}.json`
+   is a whitelisted target under Decision 013 so it doesn’t accidentally trip a
+   `DIAGNOSTIC_ABORT`.
 
 
 
@@ -58,10 +62,12 @@ In `SYSTEM.md`, make sure the **Silo Discipline** section explicitly accounts fo
 
 #### Key Adjustments:
 
-* **Explicit Exception Handling in the Justify Gate:** Add a single phrase noting that local repo rules (e.g., in `AGENTS.md`) can declare narrow, documented exceptions to the repo root.
+* **Explicit Exception Handling in the Justify Gate:** Add a single phrase
+  noting that local repo rules (e.g., in `AGENTS.md`) can declare narrow,
+  documented exceptions to the repo root.
 
-
-* **Lexicon Additions:** Add **"New-up discipline"** and **"Lossy handoff"** to the Conceptual Lexicon to cement `td`'s role in the anti-entropy toolkit.
+* **Lexicon Additions:** Add **"New-up discipline"** and **"Lossy handoff"** to
+  the Conceptual Lexicon to cement `td`'s role in the anti-entropy toolkit.
 
 
 

@@ -74,25 +74,69 @@ The deterministic "must ask" regex is a closed list of refusal-to-proceed phrasi
 
 ## Decision mapping (against the epic's acceptance criteria)
 
-- **"The scope-discipline trait is measured on at least one stack-agnostic fixture (Phase 4), not only the Hono-coupled one."** **YES** — two stack-agnostic trigger domains + a stack-agnostic discrimination case + a stack-agnostic raw control. The trait is measured independently of stack knowledge.
-- **"Whichever phase runs, EDI-005 (or its successor) flips to pass for at least one of the two target models."** **YES** — both models pass both stack-agnostic trigger cases (A, B) under the base-prompt lever, and both discriminate correctly on C. (Phases 1–2.5 already established this on EDI-005; Phase 4 generalises it.)
-- **"No regression on the other four traps."** Not applicable to Phase 4 directly (the base prompt is unchanged from Phase 2.5); the Phase 2.1 corpus regression check confirms the broadened regex keeps all EDI-005 clarifications matching and the elaboration control TN.
+- **"The scope-discipline trait is measured on at least one stack-agnostic
+  fixture (Phase 4), not only the Hono-coupled one."** **YES** — two
+  stack-agnostic trigger domains + a stack-agnostic discrimination case + a
+  stack-agnostic raw control. The trait is measured independently of stack
+  knowledge.
+
+- **"Whichever phase runs, EDI-005 (or its successor) flips to pass for at least
+  one of the two target models."** **YES** — both models pass both
+  stack-agnostic trigger cases (A, B) under the base-prompt lever, and both
+  discriminate correctly on C. (Phases 1–2.5 already established this on
+  EDI-005; Phase 4 generalises it.)
+
+- **"No regression on the other four traps."** Not applicable to Phase 4
+  directly (the base prompt is unchanged from Phase 2.5); the Phase 2.1 corpus
+  regression check confirms the broadened regex keeps all EDI-005 clarifications
+  matching and the elaboration control TN.
 
 ## What this closes
 
 The epic td-d0c810's final open criterion. With Phase 4:
-- The scope-discipline gap is measured on stack-agnostic ground and reproduces (raw control) — it is a model-training property, not a vocabulary artifact.
-- The Phase 2.5 base-prompt lever generalises — it induces scope discipline, not project recognition, and the discrimination generalises off the Hono-coupled suite.
-- All four phases of the epic are complete: Phase 1 measured the lever, Phase 2 promoted it, Phase 2.5 made it precise (Phase 3 closed as no longer indicated), Phase 4 generalised the fixture.
+- The scope-discipline gap is measured on stack-agnostic ground and reproduces
+  (raw control) — it is a model-training property, not a vocabulary artifact.
+
+- The Phase 2.5 base-prompt lever generalises — it induces scope discipline, not
+  project recognition, and the discrimination generalises off the Hono-coupled
+  suite.
+
+- All four phases of the epic are complete: Phase 1 measured the lever, Phase 2
+  promoted it, Phase 2.5 made it precise (Phase 3 closed as no longer
+  indicated), Phase 4 generalised the fixture.
 
 ## Out of scope (deferred)
 
-- **The grader as the long-term scope-discipline instrument** — replacing the fragile deterministic regex with LLM-based behavioral judgment for the "must ask" assertion. The regex is predictably adequate; the grader is the durable fix. Separate follow-up.
-- **EDI-004 regex debt** (carry-over from Phase 2.5) — the `regex_match` keyword phrasings are too narrow. Separate follow-up.
-- **Re-running the suite to update `eval_log.json` with v4 verdicts** — optional; the verification script confirms v4 verdicts on the captured response texts. The logged runs (`7b9181b2`, `37147c11`) record the v1/v3-era deterministic flags and the response texts; the audit is via the script.
+- **The grader as the long-term scope-discipline instrument** — replacing the
+  fragile deterministic regex with LLM-based behavioral judgment for the "must
+  ask" assertion. The regex is predictably adequate; the grader is the durable
+  fix. Separate follow-up.
+
+- **EDI-004 regex debt** (carry-over from Phase 2.5) — the `regex_match` keyword
+  phrasings are too narrow. Separate follow-up.
+
+- **Re-running the suite to update `eval_log.json` with v4 verdicts** —
+  optional; the verification script confirms v4 verdicts on the captured
+  response texts. The logged runs (`7b9181b2`, `37147c11`) record the v1/v3-era
+  deterministic flags and the response texts; the audit is via the script.
 
 ## Process notes
 
-- **No new API waste.** One kimi run (4 tests) + one qwen run (4 tests) + the in-log audit via the verification script. The first kimi run (`7f7904bc`) hit a provider fallback on the RAW control (moonshot rate-limited → together, which lacks kimi-k3); the second (`7b9181b2`) completed cleanly. The verification script uses the captured response texts, so the fallback run's A/B/C texts still contributed to the regex audit.
-- **The raw control is expensive but decisive.** Both RAW runs produced 23k-char yaps (kimi 135s, qwen 300s) — the raw model burns tokens elaborating on unverified foundations. This is the gap made visible; it also why the lever matters.
-- **The verification script's decision logic earned its refinement.** The naive "FP==0" gate flagged v4 as a regression because the Phase 2.1 loader mislabels EDI-007-A/B as `expect_match=False` (it hardcodes `testId=="EDI-005-SCOPE"`), and because matches on EDI-001/003 are behavioral observations on non-scope tests. Gating on the real controls (synthetic elaboration + the code-writing negative + no-TP-loss) gave the correct verdict.
+- **No new API waste.** One kimi run (4 tests) + one qwen run (4 tests) + the
+  in-log audit via the verification script. The first kimi run (`7f7904bc`) hit
+  a provider fallback on the RAW control (moonshot rate-limited → together,
+  which lacks kimi-k3); the second (`7b9181b2`) completed cleanly. The
+  verification script uses the captured response texts, so the fallback run's
+  A/B/C texts still contributed to the regex audit.
+
+- **The raw control is expensive but decisive.** Both RAW runs produced 23k-char
+  yaps (kimi 135s, qwen 300s) — the raw model burns tokens elaborating on
+  unverified foundations. This is the gap made visible; it also why the lever
+  matters.
+
+- **The verification script's decision logic earned its refinement.** The naive
+  "FP==0" gate flagged v4 as a regression because the Phase 2.1 loader mislabels
+  EDI-007-A/B as `expect_match=False` (it hardcodes `testId=="EDI-005-SCOPE"`),
+  and because matches on EDI-001/003 are behavioral observations on non-scope
+  tests. Gating on the real controls (synthetic elaboration + the code-writing
+  negative + no-TP-loss) gave the correct verdict.

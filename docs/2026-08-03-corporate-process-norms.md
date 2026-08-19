@@ -20,21 +20,35 @@ Markdown Files (Co-located READMEs) ──► Native CLI / grep / td ──► D
 
 The author spends a large portion of the article detailing his custom token-overlap scorer, stemming rules, stopword filters, and density algorithms.
 
-* **The Reality:** He basically re-invented a weak, fragile version of `grep` or `ripgrep` wrapped in a custom Python MCP server.
-* **The Flaw:** Instead of using native OS tools or language LSP specs that *already exist*, he built a proprietary runtime layer that has to be maintained, debugged, and versioned.
+* **The Reality:** He basically re-invented a weak, fragile version of `grep` or
+  `ripgrep` wrapped in a custom Python MCP server.
+
+* **The Flaw:** Instead of using native OS tools or language LSP specs that
+  *already exist*, he built a proprietary runtime layer that has to be
+  maintained, debugged, and versioned.
 
 ## Suspect Idea B: Manual "Frontmatter Indexing" as a Requirement for Retrieval
 
 He asserts that the `description` field in the YAML frontmatter *is* the search index, claiming "getting those one-liners right mattered more than any amount of ranking cleverness."
 
-* **The Reality:** If a human has to manually rewrite a curated one-line summary in the YAML header of every single command document just so an offline scorer can find it, you have invented a new documentation maintenance tax.
-* **The Flaw:** If the implementation code or the body text changes, but someone forgets to update the frontmatter `description` line, his search engine fails to surface the document. The **Shannon Checksum** breaks right at the metadata boundary.
+* **The Reality:** If a human has to manually rewrite a curated one-line summary
+  in the YAML header of every single command document just so an offline scorer
+  can find it, you have invented a new documentation maintenance tax.
+
+* **The Flaw:** If the implementation code or the body text changes, but someone
+  forgets to update the frontmatter `description` line, his search engine fails
+  to surface the document. The **Shannon Checksum** breaks right at the metadata
+  boundary.
 
 ## Suspect Idea C: Celebrating 9/9 on a Toy Corpus of 89 Files
 
 The author treats a 100% success rate on 9 test questions across 89 files as proof of architectural resilience.
 
-* **The Reality:** 89 short Markdown files can easily fit directly into a single modern context window without breaking a sweat, or be indexed natively in milliseconds by standard tooling. Testing a complex multi-tool MCP server on 89 static VBScript files is like building a multi-lane highway to cross a two-foot puddle.
+* **The Reality:** 89 short Markdown files can easily fit directly into a single
+  modern context window without breaking a sweat, or be indexed natively in
+  milliseconds by standard tooling. Testing a complex multi-tool MCP server on
+  89 static VBScript files is like building a multi-lane highway to cross a
+  two-foot puddle.
 
 ---
 
@@ -48,8 +62,12 @@ Corporates continuously generate these over-engineered, opaque middle layers for
 
 In corporate environments (or consulting agencies like the author's Mechatronic Solutions LLC), an engineer cannot write a promotional performance review or land a enterprise contract by saying: *"I wrote 89 clean Markdown files and pointed `ripgrep` at them."*
 
-* **The Corporate Requirement:** It must sound like an architectural milestone. It needs buzzwords: *"Agent-Agnostic Model Context Protocol Server utilizing Open Knowledge Format v0.1 bundles."*
-* **The Result:** Simple problems are deliberately given complex, multi-tiered solutions to justify engineering headcount and expertise.
+* **The Corporate Requirement:** It must sound like an architectural milestone.
+  It needs buzzwords: *"Agent-Agnostic Model Context Protocol Server utilizing
+  Open Knowledge Format v0.1 bundles."*
+
+* **The Result:** Simple problems are deliberately given complex, multi-tiered
+  solutions to justify engineering headcount and expertise.
 
 ## 2. The Habit of Inserting "Middleman Infrastructure"
 
@@ -60,8 +78,13 @@ When corporate developers encounter AI, their knee-jerk reaction isn't to ask *"
 
 As observed earlier, corporate environments view software as a static **Product** (an asset to be packaged, cataloged, and sold) rather than a **Living Process**.
 
-* Because they view docs as a static product, they try to "solve" documentation by building fancy search portals, vector DBs, or custom MCP servers.
-* They fail to realize that if the documentation isn't tightly coupled to execution (via co-located READMEs, `Justfiles`, and continuous brief/debrief loops), the fancy MCP server will just end up serving beautifully formatted, perfectly indexed **stale nonsense**.
+* Because they view docs as a static product, they try to "solve" documentation
+  by building fancy search portals, vector DBs, or custom MCP servers.
+
+* They fail to realize that if the documentation isn't tightly coupled to
+  execution (via co-located READMEs, `Justfiles`, and continuous brief/debrief
+  loops), the fancy MCP server will just end up serving beautifully formatted,
+  perfectly indexed **stale nonsense**.
 
 ## 4. Synthetic Content Generation (AI-Human Hybrid Noise)
 

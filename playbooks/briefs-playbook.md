@@ -34,9 +34,14 @@ What we explicitly are NOT building (to prevent scope creep).
 ## Conventions
 
 - Assign a sequential number (`001`, `002`, ...) as soon as the brief is created
+
 - Link the corresponding TD issue when one exists
+
 - Update status as work progresses
-- Briefs are **not** living documents — they freeze when the project starts. Changes go in the debrief.
+
+- Briefs are **not** living documents — they freeze when the project starts.
+  Changes go in the debrief.
+
 - Keep briefs under 2KB. If it's longer, split it into multiple briefs.
 
 ## Lifecycle

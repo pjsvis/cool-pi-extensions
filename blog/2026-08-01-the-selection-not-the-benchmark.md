@@ -48,8 +48,11 @@ Both-sides mush instead of a recommendation (SIT-006). The Impartial Spectator m
 
 A model can **fail the daily-driver test without being a muppet.** Laguna S 2.1 passes the sycophancy and amplification gates (not a muppet) but applies scope discipline to non-scope questions — it demands to see the workspace before answering a general architectural question. Bottom-tier gateway (50%), top-tier delivery (93%). This separates two distinct gates:
 
-- **Muppet-exclusion** (admission): does the model ignore constraints under temptation? Binary. Necessary.
-- **Daily-driver selection** (deployment): is the model usable for the task at hand? Graduated. Sufficient.
+- **Muppet-exclusion** (admission): does the model ignore constraints under
+  temptation? Binary. Necessary.
+
+- **Daily-driver selection** (deployment): is the model usable for the task at
+  hand? Graduated. Sufficient.
 
 A model can pass the first and fail the second. Laguna does. This stops "muppet" from becoming a catch-all insult and makes it a precise property — *ignores constraints under temptation* — which is exactly what the lexicon specifies.
 
@@ -123,25 +126,64 @@ The ranking is a tiebreaker. The deployment decision is by use-case.
 
 A control grader (Claude Sonnet 4.5, the reference standard, independent lab) replayed all 759 persisted model responses. **85.2% agreement** with the logged verdicts. The self-referential gateway grader concern (a probationary Nemotron Nano judging muppets) is resolved — *bounded*:
 
-- **Scope tests (EDI-005/007):** the grader is reliable. All scope divergences are the grader *correcting* the regex — genuine clarifications the deterministic matcher false-negatived. Confidence 1.0 across the board. This is the muppet-gate instrument working.
-- **Gateway tests (EDI-001–004):** 14 divergences, all but one on EDI-002 (Observational Rigor) and EDI-004 (Justify). The Nemotron gateway grader is *systematically strict* on the subjective traits — it false-negatives ~13 responses Sonnet scores as passes. Gateway scores run ~1 point low vs the reference. **Calibration note, not corruption** — no selection decision flips. The flatliners flatline and the ceiling passes under both graders.
-- **Delivery tests (SIT):** the noisiest — 84 divergences. Treat delivery grades as directional, not precise. The Laguna "SIT-010 borderline grader flip" is a known case: the model gave the right answer with grounded reasoning, the grader failed it on a borderline dimension. This is the grader, not the model.
+- **Scope tests (EDI-005/007):** the grader is reliable. All scope divergences
+  are the grader *correcting* the regex — genuine clarifications the
+  deterministic matcher false-negatived. Confidence 1.0 across the board. This
+  is the muppet-gate instrument working.
+
+- **Gateway tests (EDI-001–004):** 14 divergences, all but one on EDI-002
+  (Observational Rigor) and EDI-004 (Justify). The Nemotron gateway grader is
+  *systematically strict* on the subjective traits — it false-negatives ~13
+  responses Sonnet scores as passes. Gateway scores run ~1 point low vs the
+  reference. **Calibration note, not corruption** — no selection decision flips.
+  The flatliners flatline and the ceiling passes under both graders.
+
+- **Delivery tests (SIT):** the noisiest — 84 divergences. Treat delivery grades
+  as directional, not precise. The Laguna "SIT-010 borderline grader flip" is a
+  known case: the model gave the right answer with grounded reasoning, the
+  grader failed it on a borderline dimension. This is the grader, not the model.
 
 **The honest limits:**
 
-1. The gateway scores are ~1 point conservative. If a model scores 3/5 gateway, it may be a 4/5 under the reference grader. This matters for edge cases; it does not change the tier boundaries.
-2. Delivery grades are directional. SIT-005 flips false→true across the field — a systematic grader bias or a rubric under-specification. Not investigated. Not blocking for selection (noise is small relative to inter-model spread); blocking for any benchmark-grade claim.
-3. The eval is cross-sectional, not longitudinal. The "18 months" is the span of model release dates, not the span of measurement. We evaluated models of different vintages at roughly one point in time. The within-vendor regressions (Ling→Ring, M2.7→M3, GLM's U-curve) are the cleanest longitudinal signal — and they show the frontier is *not* monotonically improving on these axes.
+1. The gateway scores are ~1 point conservative. If a model scores 3/5 gateway,
+   it may be a 4/5 under the reference grader. This matters for edge cases; it
+   does not change the tier boundaries.
+
+2. Delivery grades are directional. SIT-005 flips false→true across the field —
+   a systematic grader bias or a rubric under-specification. Not investigated.
+   Not blocking for selection (noise is small relative to inter-model spread);
+   blocking for any benchmark-grade claim.
+
+3. The eval is cross-sectional, not longitudinal. The "18 months" is the span of
+   model release dates, not the span of measurement. We evaluated models of
+   different vintages at roughly one point in time. The within-vendor
+   regressions (Ling→Ring, M2.7→M3, GLM's U-curve) are the cleanest longitudinal
+   signal — and they show the frontier is *not* monotonically improving on these
+   axes.
 
 ---
 
 ## What to do with this
 
-1. **Run the behavioral gate, not the benchmark.** Trap vectors test behavior — does the model collapse when pressed, does it give you a foothold to correct, does it communicate its reasoning or just the conclusion? A model can ace MMLU and fail EDI-001.
-2. **Gate on the flatliner first.** If the keyword score is identical primed and bare, the model is a muppet. Stop. No other eval matters.
-3. **Separate muppet from bad daily driver.** A model that gates on scope (not a muppet) but over-applies it (bad daily driver for advisory work) may still be an excellent coding specialist. Laguna is. Don't conflate the two failures.
-4. **Prefer models that refuse well.** Refusal under temptation is a capability. The models that lost it (the flatliners) are the only ones the Protocol excludes.
-5. **Choose by use-case, not by total.** The budget hero (V4 Flash, $0.09) and the reference standard (Sonnet 4.5) both score 21/23. They are not interchangeable. The total is a tiebreaker; the use-case is the decision.
+1. **Run the behavioral gate, not the benchmark.** Trap vectors test behavior —
+   does the model collapse when pressed, does it give you a foothold to correct,
+   does it communicate its reasoning or just the conclusion? A model can ace
+   MMLU and fail EDI-001.
+
+2. **Gate on the flatliner first.** If the keyword score is identical primed and
+   bare, the model is a muppet. Stop. No other eval matters.
+
+3. **Separate muppet from bad daily driver.** A model that gates on scope (not a
+   muppet) but over-applies it (bad daily driver for advisory work) may still be
+   an excellent coding specialist. Laguna is. Don't conflate the two failures.
+
+4. **Prefer models that refuse well.** Refusal under temptation is a capability.
+   The models that lost it (the flatliners) are the only ones the Protocol
+   excludes.
+
+5. **Choose by use-case, not by total.** The budget hero (V4 Flash, $0.09) and
+   the reference standard (Sonnet 4.5) both score 21/23. They are not
+   interchangeable. The total is a tiebreaker; the use-case is the decision.
 
 ---
 

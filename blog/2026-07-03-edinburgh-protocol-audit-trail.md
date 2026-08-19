@@ -63,11 +63,19 @@ Worth reading if you want the argument behind the methodology. Less useful if yo
 
 The build debrief — what was built, what worked, what we'd do differently. Filed June 9, 2026 after the eval infrastructure shipped. Covers three architectural decisions that proved important:
 
-1. **State machine over async deadlock** — Pi's command handlers and agent loop share the same event loop; you can't await an agent turn from inside a command handler. The fix was a module-scope state machine driven by event hooks. This is now the standard pattern.
+1. **State machine over async deadlock** — Pi's command handlers and agent loop
+   share the same event loop; you can't await an agent turn from inside a
+   command handler. The fix was a module-scope state machine driven by event
+   hooks. This is now the standard pattern.
 
-2. **Two-pass grading** — deterministic floor (regex + tool traces, zero tokens, never hallucinates) + Gemini Flash secondary grading (slower, costs tokens, catches subtleties). The combination means the system never degrades below the quality of deterministic checks.
+2. **Two-pass grading** — deterministic floor (regex + tool traces, zero tokens,
+   never hallucinates) + Gemini Flash secondary grading (slower, costs tokens,
+   catches subtleties). The combination means the system never degrades below
+   the quality of deterministic checks.
 
-3. **OpenRouter over direct Gemini API** — after a £200 billing incident with the direct Gemini API, the grader was routed through OpenRouter. Same model, same quality, user's own rate limits and cost controls.
+3. **OpenRouter over direct Gemini API** — after a £200 billing incident with
+   the direct Gemini API, the grader was routed through OpenRouter. Same model,
+   same quality, user's own rate limits and cost controls.
 
 If you're modifying the eval infrastructure, read this first. It tells you why things are built the way they are, and what the known failure modes are.
 

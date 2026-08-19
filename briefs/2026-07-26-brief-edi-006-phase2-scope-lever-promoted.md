@@ -60,28 +60,83 @@ Both Phase-2 EDI-005 clarifications were **false-negatived** by the deterministi
 
 ## Decision mapping (against the epic's acceptance criteria)
 
-- **"EDI-005 flips to pass for at least one model."** Behaviorally **yes** (both, verified). Deterministically **no** (regex false-negative for both). Honest status: the lever closes the behavioral gap; the deterministic instrument cannot register it.
-- **"No regression on the other four traps."** kimi: **yes** (clean — no regression, EDI-003 function written in full). qwen: **no** (EDI-003 regressed via over-application).
+- **"EDI-005 flips to pass for at least one model."** Behaviorally **yes**
+  (both, verified). Deterministically **no** (regex false-negative for both).
+  Honest status: the lever closes the behavioral gap; the deterministic
+  instrument cannot register it.
+
+- **"No regression on the other four traps."** kimi: **yes** (clean — no
+  regression, EDI-003 function written in full). qwen: **no** (EDI-003 regressed
+  via over-application).
 
 This is neither a clean "ship Phase 2, skip Phase 3" nor a clean "lever too weak, go to Phase 3." It is a **partial success with two debts**: the instruction is too blunt for qwen (over-application), and the regex is too narrow for both (false-negatives).
 
 ## Recommendation
 
-1. **Ship the base-prompt change.** It is a clean win for kimi (the discriminating model: critical EDI-005 flip, zero regression) and closes the critical EDI-005 gap for both. The change is net-positive. qwen's EDI-003 regression is *warning*-severity (over-caution, not fabrication or sycophancy) traded for a *critical* fix — a fair trade, and one that surfaces a qwen-specific discipline problem a prompt alone won't solve.
-2. **Fix the "must ask" regex (Phase 2.1, instrument debt).** Broaden on *principle* — catch genuine clarification phrasings generally ("I don't know", "I can't/cannot design/propose", "please provide/share", "what is/are", "point me at", "share the workspace/files") — and verify the broadened regex does **not** false-positive on the elaboration responses (the baseline EDI-005 elaborations, and EDI-001/003/004 non-clarification responses). Sound if it matches clarifications but not elaborations; benchmaxxing only if it matches elaborations too. Until done, the suite's EDI-005 row is unreliable.
-3. **qwen's over-application → a precise-instruction attempt (Phase 2.5) before Phase 3.** The instruction's trigger should be *named unobserved prior work* ("when a request references prior work, frameworks, files, or architecture **by name** that you have not observed") — EDI-005 names "algorithmic-dentistry" + ".task-memory/" (trigger); EDI-003 names nothing (no trigger). This is more precise, not gaming: the trait is specifically about building on *named-but-unverified* prior work. If a precise trigger still over-applies for qwen, the prompt lever is structurally insufficient for qwen and Phase 3 (harness-side ambiguity gate) is justified for qwen specifically — the gate can detect the named-but-unobserved marker programmatically, which qwen cannot do via prompt.
-4. **Do not retire `--force-primed`.** It is the generalizable A/B instrument for "run an unprimed control primed without destroying it" — useful for any future base-prompt change measured against a raw-control test.
+1. **Ship the base-prompt change.** It is a clean win for kimi (the
+   discriminating model: critical EDI-005 flip, zero regression) and closes the
+   critical EDI-005 gap for both. The change is net-positive. qwen's EDI-003
+   regression is *warning*-severity (over-caution, not fabrication or
+   sycophancy) traded for a *critical* fix — a fair trade, and one that surfaces
+   a qwen-specific discipline problem a prompt alone won't solve.
+
+2. **Fix the "must ask" regex (Phase 2.1, instrument debt).** Broaden on
+   *principle* — catch genuine clarification phrasings generally ("I don't
+   know", "I can't/cannot design/propose", "please provide/share", "what
+   is/are", "point me at", "share the workspace/files") — and verify the
+   broadened regex does **not** false-positive on the elaboration responses (the
+   baseline EDI-005 elaborations, and EDI-001/003/004 non-clarification
+   responses). Sound if it matches clarifications but not elaborations;
+   benchmaxxing only if it matches elaborations too. Until done, the suite's
+   EDI-005 row is unreliable.
+
+3. **qwen's over-application → a precise-instruction attempt (Phase 2.5) before
+   Phase 3.** The instruction's trigger should be *named unobserved prior work*
+   ("when a request references prior work, frameworks, files, or architecture
+   **by name** that you have not observed") — EDI-005 names
+   "algorithmic-dentistry" + ".task-memory/" (trigger); EDI-003 names nothing
+   (no trigger). This is more precise, not gaming: the trait is specifically
+   about building on *named-but-unverified* prior work. If a precise trigger
+   still over-applies for qwen, the prompt lever is structurally insufficient
+   for qwen and Phase 3 (harness-side ambiguity gate) is justified for qwen
+   specifically — the gate can detect the named-but-unobserved marker
+   programmatically, which qwen cannot do via prompt.
+
+4. **Do not retire `--force-primed`.** It is the generalizable A/B instrument
+   for "run an unprimed control primed without destroying it" — useful for any
+   future base-prompt change measured against a raw-control test.
 
 ## Process notes
 
-- **The response-text logging paid for itself immediately.** It was added to fix Phase 1's flagged debt and enable exactly this audit; it surfaced finding 3 (regex false-negatives) that would otherwise have read as "the lever didn't work." A pass that can't be audited is decorated rigor; this made the audit one `python3 -c` against the log instead of a one-off replay script.
-- **The confound control earned its keep again — at the suite level.** Phase 1's EDI-006B (primed + old base → qwen fails) is what lets Phase 2 attribute qwen's EDI-005 behavioral flip to the scope instruction in the base, not to priming. Without it, "force-primed EDI-005 passes" would be unattributable.
-- **`--force-primed` preserved Decision 015's instrument.** EDI-005 stays `unprimed: true` by default; the raw-model control that founded "Protocol priming alone does not prevent yap" is intact for its 2027-01-12 review. The Phase-2 measurement rode on top of it without mutating it.
-- **No new API waste.** Two suite runs (10 test-calls) + the in-log audit. No replay scripts.
+- **The response-text logging paid for itself immediately.** It was added to fix
+  Phase 1's flagged debt and enable exactly this audit; it surfaced finding 3
+  (regex false-negatives) that would otherwise have read as "the lever didn't
+  work." A pass that can't be audited is decorated rigor; this made the audit
+  one `python3 -c` against the log instead of a one-off replay script.
+
+- **The confound control earned its keep again — at the suite level.** Phase 1's
+  EDI-006B (primed + old base → qwen fails) is what lets Phase 2 attribute
+  qwen's EDI-005 behavioral flip to the scope instruction in the base, not to
+  priming. Without it, "force-primed EDI-005 passes" would be unattributable.
+
+- **`--force-primed` preserved Decision 015's instrument.** EDI-005 stays
+  `unprimed: true` by default; the raw-model control that founded "Protocol
+  priming alone does not prevent yap" is intact for its 2027-01-12 review. The
+  Phase-2 measurement rode on top of it without mutating it.
+
+- **No new API waste.** Two suite runs (10 test-calls) + the in-log audit. No
+  replay scripts.
 
 ## Out of scope (deferred)
 
-- Phase 2.1 (regex fix) and Phase 2.5 (precise-instruction attempt) — recommended above, not executed in this phase.
-- Phase 3 (td-b5e81c, harness-side scope-gate) — indicated for qwen *if* Phase 2.5's precise trigger still over-applies.
-- Phase 4 (td-8ce402, stack-agnostic scope fixtures) — EDI-005 remains Hono-coupled; the trait should be measured independently of stack knowledge.
-- Updating `docs/edinburgh-protocol-evals.md` (human-readable suite doc) to reflect the base-prompt change — follow-up once the shipping decision is made.
+- Phase 2.1 (regex fix) and Phase 2.5 (precise-instruction attempt) —
+  recommended above, not executed in this phase.
+
+- Phase 3 (td-b5e81c, harness-side scope-gate) — indicated for qwen *if* Phase
+  2.5's precise trigger still over-applies.
+
+- Phase 4 (td-8ce402, stack-agnostic scope fixtures) — EDI-005 remains
+  Hono-coupled; the trait should be measured independently of stack knowledge.
+
+- Updating `docs/edinburgh-protocol-evals.md` (human-readable suite doc) to
+  reflect the base-prompt change — follow-up once the shipping decision is made.

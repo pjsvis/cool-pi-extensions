@@ -2,9 +2,14 @@
 
 ## 1. Purpose
 This agreement formalises the partnership between a **human** and an **agent** when they work together in a repository. Both are peers, members of the *Poker Club*, and share a common commitment to:
-- **Entropy reduction** – continuously transform “stuff” into structured, useful outputs.
-- **Low‑ceremony** – avoid unnecessary process overhead while still preserving rigor.
-- **Skeptical vigilance** – assume that things can go wrong and be ready to investigate.
+- **Entropy reduction** – continuously transform “stuff” into structured, useful
+  outputs.
+
+- **Low‑ceremony** – avoid unnecessary process overhead while still preserving
+  rigor.
+
+- **Skeptical vigilance** – assume that things can go wrong and be ready to
+  investigate.
 
 ## 2. Core Principles
 | Principle | Description |
@@ -15,20 +20,41 @@ This agreement formalises the partnership between a **human** and an **agent** w
 | **Tidy‑First Preference** | When entering a repository, the natural impulse is to tidy up (run `just orient`, perform a barnacle audit, resolve dangling tasks) before inventing new features. |
 | **Relaxed Re‑creation** | Tidying is treated as a low‑pressure, almost meditative activity that restores order and reduces cognitive load. |
 | **Barnacle Detection & Escalation** | The agent always runs `just orient` on entry and must promptly detect any “barnacle smell” (config drift, stale files, missing constraints). If detected, the agent escalates to the human for resolution. |
-1. **Orientation** – The agent executes `just orient`. This loads the Edinburgh Protocol constraint stack and initialises the `td` task database.
-2. **Barnacle Scan** – The agent runs a lightweight barnacle audit (see Decision 007 for the quarterly process). If any drift is found, the agent raises a **Barnacle Alert** to the human.
-3. **Task Review** – Both parties review the current `td` tasks. Unfinished items are either:
+1. **Orientation** – The agent executes `just orient`. This loads the Edinburgh
+   Protocol constraint stack and initialises the `td` task database.
+
+2. **Barnacle Scan** – The agent runs a lightweight barnacle audit (see Decision
+   007 for the quarterly process). If any drift is found, the agent raises a
+   **Barnacle Alert** to the human.
+
+3. **Task Review** – Both parties review the current `td` tasks. Unfinished
+   items are either:
+
    - **Completed** (if already done), or
+
    - **Re‑opened** for further work.
-4. **Tidy‑Up** – Resolve any immediate inconsistencies (missing briefs, stale debriefs, orphaned files). This step is considered *relaxation* rather than *work*.
-5. **Innovation** – Only after the repository is in a clean state do the human or agent propose new work (create a brief, start a feature branch, etc.).
+
+4. **Tidy‑Up** – Resolve any immediate inconsistencies (missing briefs, stale
+   debriefs, orphaned files). This step is considered *relaxation* rather than
+   *work*.
+
+5. **Innovation** – Only after the repository is in a clean state do the human
+   or agent propose new work (create a brief, start a feature branch, etc.).
 
 ## 4. Communication Protocol
-- **Barnacle Alert** – Sent by the agent when a drift is detected. The human must acknowledge and either:
+- **Barnacle Alert** – Sent by the agent when a drift is detected. The human
+  must acknowledge and either:
+
   - Fix the issue immediately, or
+
   - Create a brief to address it in a later sprint.
-- **Question‑Cycle** – Each party may invoke a *skepticism budget* (e.g., three question‑cycles per sprint). Once exhausted, further questions are logged for later review.
-- **Confirmation** – After any tidy‑up action, the agent runs `just check` to verify the repo is back to a healthy state before proceeding.
+
+- **Question‑Cycle** – Each party may invoke a *skepticism budget* (e.g., three
+  question‑cycles per sprint). Once exhausted, further questions are logged for
+  later review.
+
+- **Confirmation** – After any tidy‑up action, the agent runs `just check` to
+  verify the repo is back to a healthy state before proceeding.
 
 ## 5. Roles & Responsibilities
 | Role | Human | Agent |

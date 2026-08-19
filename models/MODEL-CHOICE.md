@@ -7,7 +7,9 @@ not by score alone.
 ## Default (your daily drivers)
 
 - **Kimi K2.6** — 16/16 · $0.95/$4 · fast (~45s). The proven all-rounder.
-- **GLM-5.2** — 16/16 · $1.4/$4.4 · 1M ctx, vision, MIT weights. Long-context + coding.
+
+- **GLM-5.2** — 16/16 · $1.4/$4.4 · 1M ctx, vision, MIT weights. Long-context +
+  coding.
 
 ## Get out more — pick by task
 

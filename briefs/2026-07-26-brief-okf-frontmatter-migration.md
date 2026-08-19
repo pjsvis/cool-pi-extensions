@@ -61,6 +61,7 @@ versions matter:
   fields: `type`, `title`, `description`, `resource`, `tags`, `timestamp`.
   Conformance: every `.md` has parseable frontmatter with a non-empty
   `type`. Everything else is producer-defined.
+
 - **v0.2** ([SPEC.md][okf-spec], current) — supersedes v0.1. Makes
   provenance/trust/lifecycle first-class: `generated`/`verified` (trust),
   `sources` (provenance), `status`/`stale_after` (lifecycle), and the
@@ -141,19 +142,23 @@ Building on Decision 0, the adopted frontmatter set:
 Required-level rationale:
 
 - **`type` required** — non-negotiable; v0.2's one binding requirement (§11).
+
 - **`description` required** — the migration has no point if it stays
   optional; the noise persists. v0.2 only *recommends* `description` (§4.1);
   requiring it is a **repo tightening** beyond the spec, justified because
   authored descriptions are the epic's entire value. The gate enforces
   presence; substance is the operator's job.
+
 - **`status` optional** — not every folder has a meaningful lifecycle
   (`docs/`, `prompts/` largely don't). Extracted when present. **Status
   vocabulary reconciliation is explicitly out of scope** (see below).
+
 - **`timestamp` optional** — some docs are living documents with no
   meaningful single timestamp (e.g. `docs/bestiary.md`). Forcing one
   produces fiction. Extracted when present; ISO 8601. The one existing
   frontmatter file uses `date`; Phase 2 migrates `date` → `timestamp` (no
   alias kept — one file, one phase, not worth a shim).
+
 - **`resource` optional, frontmatter-only** — not surfaced in the register
   (a URL per row would bloat it). Phase 3 populates it for `docs/` from
   `**Source:**` lines.
@@ -251,8 +256,13 @@ For each folder in `FRONTMATTER_REQUIRED`, for each `.md` file (`.md` only —
 extraction), verify:
 
 1. the file starts with `---` frontmatter (parseable by `parseFrontmatter`);
-2. frontmatter contains a non-empty `type` — **this is the v0.2 §11 conformance check**;
-3. frontmatter contains `description` — **this is the repo tightening beyond v0.2**;
+
+2. frontmatter contains a non-empty `type` — **this is the v0.2 §11 conformance
+   check**;
+
+3. frontmatter contains `description` — **this is the repo tightening beyond
+   v0.2**;
+
 4. `type` value equals the folder's canonical token (Decision 3).
 
 Errors (exit 1, same pattern as `checkRegisters`):
@@ -316,7 +326,9 @@ All adopted fields are **flat scalars** — no parser upgrade needed (the
 repo has no YAML library; `parseFrontmatter` is a flat regex and stays so).
 The v0.2 nested families are deferred precisely so this stays true.
 
-1. **`Entry` interface** — add `type: string` (required) and `timestamp?: string` (optional). New construction order, so the JSONL stays deterministic and the diff is readable:
+1. **`Entry` interface** — add `type: string` (required) and `timestamp?:
+   string` (optional). New construction order, so the JSONL stays deterministic
+   and the diff is readable:
 
    ```
    path, type, title, description, status?, timestamp?, sha, bytes
@@ -324,13 +336,18 @@ The v0.2 nested families are deferred precisely so this stays true.
 
    (Identity → lifecycle → checksum. Current order is `path, title, description, sha, bytes, status?`; the regrouping is a one-time churn accepted in Phase 1.)
 
-2. **`extractType(text, dir)`** — new. Returns `fm.type` or `undefined`. The gate enforces presence and correctness; the extractor reads.
+2. **`extractType(text, dir)`** — new. Returns `fm.type` or `undefined`. The
+   gate enforces presence and correctness; the extractor reads.
 
-3. **`extractDescription`** — flip order: `fm.description` first, `fm.dek` second (Decision 2), prose third (removed Phase 4).
+3. **`extractDescription`** — flip order: `fm.description` first, `fm.dek`
+   second (Decision 2), prose third (removed Phase 4).
 
-4. **`extractTimestamp(text)`** — new. Returns `fm.timestamp` or `undefined`. No `date` alias (Decision 1).
+4. **`extractTimestamp(text)`** — new. Returns `fm.timestamp` or `undefined`. No
+   `date` alias (Decision 1).
 
-5. **`extractResource(text)`** — new. Returns `fm.resource` or `undefined`. Frontmatter-only (not in `Entry`), but extracted so Phase 3 can verify `docs/` source URLs migrated correctly.
+5. **`extractResource(text)`** — new. Returns `fm.resource` or `undefined`.
+   Frontmatter-only (not in `Entry`), but extracted so Phase 3 can verify
+   `docs/` source URLs migrated correctly.
 
 6. **`buildEntries`** — populate `entry.type` and `entry.timestamp`.
 
@@ -351,15 +368,19 @@ Phase 3, only its three `.md` files are gated. This is stated here so Phase
 
 - [ ] This brief is frozen (status `in-progress`, committed) before Phase 1
       work begins. ← the artifact the review gate checks against.
+
 - [ ] The version target (v0.2, flat subset, trust fields deferred) and the
       five decisions are cited, not re-litigated, in Phases 1–4.
+
 - [ ] Phase 1 lands `Entry.type` + `Entry.timestamp?`, the extractor flips,
       `extractResource`, and `checkFrontmatter()` with
       `FRONTMATTER_REQUIRED = ["debriefs"]` — **with no parser upgrade**
       (all adopted fields flat).
+
 - [ ] After Phase 1, every line in `debriefs/register.jsonl` has an authored
       `description` (no auto-extracted prose) and a `type: "debrief"`. This
       is the success metric for the pilot.
+
 - [ ] Phase 4 removes the prose fallback from `register-lib.ts` and the
       `FRONTMATTER_REQUIRED` list (all six required by default). No
       per-file prose/​frontmatter coexistence survives.
@@ -369,17 +390,23 @@ Phase 3, only its three `.md` files are gated. This is stated here so Phase
 - **v0.2 trust/provenance/attestation families** (`generated`, `verified`,
   `sources`, `stale_after`, `Attested Computation`) — a dedicated
   trust-fields epic; requires a parser upgrade and provenance authoring.
+
 - **`timestamp` → `generated.at` migration** — deferred to that same epic;
   `timestamp` is legacy-retained here under v0.2 §13.1.
+
 - **`tags` adoption** — folders are the taxonomy; a cross-cutting tag scheme
   is a separate substance decision.
+
 - **Standardising `status` values** to v0.2's `draft|stable|deprecated`
   vocab — substance, not structure; later decision record (Decision 1).
+
 - **`blog/` migration** — excluded folder; `dek` alias kept to avoid
   pre-committing it.
+
 - **OKF `index.md`/`log.md` reserved filenames** — not adopted
   (`register.jsonl` is our structural index; `log.md` has no analogue).
   Compatible with v0.2 (both are optional).
+
 - **Enforcing `description` substance** (is it a good one-liner?) — the
   gate enforces presence; quality is the operator's, surfaced by the
   register, adjudicated by the Derrida Question. Same wall as ever.

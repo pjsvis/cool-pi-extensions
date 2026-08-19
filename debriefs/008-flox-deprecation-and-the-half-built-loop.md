@@ -25,9 +25,11 @@ not aspirational. Three coherent commits landed on a previously dirty tree.
 This was the three-loop architecture (debrief 007) operating as designed:
 - **Alpha-loop** — `blog/PROJECT.md` and `DEPENDENCIES.md` carried the
   imposed and induced requirements into the session.
+
 - **Gamma-loop** — `td` kept the work on track, and — critically — forced a
   pause of the blog task to handle the flox work, then held the blog's
   state so it could resume.
+
 - **Delta-loop** — this debrief and `decisions/008` persist the lesson in
   the repo, not in chat.
 
@@ -132,10 +134,13 @@ default. Barnacle review is the reconciliation cadence.
 
 - **td-24b40f** (P2) — Resolve the `just dev` / `just msgs-*` phantom cluster.
   Larger; may require implementing the messaging system or removing its docs.
+
 - **td-a97f42** (P2) — Fix pre-existing MANIFEST drift (playbook renames + 37
   unlisted docs). Predates this session.
+
 - **td-ffbb74** (P1) — Resume the Muppet Filter blog posts. State held in td;
   drafts intact in `docs/`.
+
 - **Consider** a recipe-lint check to catch phantom `just` commands before
   they become barnacles. Not yet filed.
 

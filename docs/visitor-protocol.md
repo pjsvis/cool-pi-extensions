@@ -57,15 +57,22 @@ flowchart TD
 
 ## Informal Spec
 
-1. **Separate by audience, not by function.** Don't give agents and humans the same verbs — they have different needs. Agents need to act; humans need to understand.
+1. **Separate by audience, not by function.** Don't give agents and humans the
+   same verbs — they have different needs. Agents need to act; humans need to
+   understand.
 
-2. **The entry point teaches the system.** `just orient` should tell you: where you are, what's active, what's available, what to do next. If it doesn't, you haven't finished designing it.
+2. **The entry point teaches the system.** `just orient` should tell you: where
+   you are, what's active, what's available, what to do next. If it doesn't, you
+   haven't finished designing it.
 
-3. **Discovery is zero-friction.** A visitor arriving for the first time should be able to orient themselves in under 60 seconds without reading anything.
+3. **Discovery is zero-friction.** A visitor arriving for the first time should
+   be able to orient themselves in under 60 seconds without reading anything.
 
-4. **One verb per audience.** Don't add more. If you need a third verb, you need a third audience, or you need to split the existing audiences.
+4. **One verb per audience.** Don't add more. If you need a third verb, you need
+   a third audience, or you need to split the existing audiences.
 
-5. **The system teaches itself.** The `orient` output should list the other verbs. `browse` should list the docs. The API references itself.
+5. **The system teaches itself.** The `orient` output should list the other
+   verbs. `browse` should list the docs. The API references itself.
 
 ## Implementation in cool-pi-extensions
 
@@ -149,8 +156,13 @@ In the age of agents — where the visitor might be a language model dropping in
 
 ## Adding to a new project
 
-1. Create `just orient` — output should include: where you are, what's active, what's available, what to do next, and the other verbs.
-2. Create `just browse` — output should include: what's here, how to read it, what to do with it.
-3. Verify: a first-time visitor can orient themselves in under 60 seconds without reading anything.
+1. Create `just orient` — output should include: where you are, what's active,
+   what's available, what to do next, and the other verbs.
+
+2. Create `just browse` — output should include: what's here, how to read it,
+   what to do with it.
+
+3. Verify: a first-time visitor can orient themselves in under 60 seconds
+   without reading anything.
 
 That's it. The simplest API is the hardest to design.

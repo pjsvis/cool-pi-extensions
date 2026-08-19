@@ -15,43 +15,96 @@ The eval surface has split into three engines with duplicated logic: the extensi
 
 ## How
 
-1. **Build `src/cli/pi-eval/`** — a citty CLI (`pi-eval <command>`), following the pi-check/pi-models convention. Subcommands:
-   - `pi-eval run <model> [--fixture=edinburgh|iq|005b|sit|sit2] [--grader=...] [--skip-grading] [--timeout=N] [--provider=...]` — behavioral trap eval (absorbs `pi-eval-runner.ts`)
-   - `pi-eval score <model> [--bare] [--grade] [--grader=...] [--grader-provider=...]` — alignment scoring (absorbs `edinburgh-eval.ts`)
+1. **Build `src/cli/pi-eval/`** — a citty CLI (`pi-eval <command>`), following
+   the pi-check/pi-models convention. Subcommands:
+
+   - `pi-eval run <model> [--fixture=edinburgh|iq|005b|sit|sit2] [--grader=...]
+     [--skip-grading] [--timeout=N] [--provider=...]` — behavioral trap eval
+     (absorbs `pi-eval-runner.ts`)
+
+   - `pi-eval score <model> [--bare] [--grade] [--grader=...]
+     [--grader-provider=...]` — alignment scoring (absorbs `edinburgh-eval.ts`)
+
    - `pi-eval matrix <model> [--grade|--triangular]` — primed/bare delta
+
    - `pi-eval status [model]` — read `data/eval_log.json` + `data/eval_runs.jsonl`
+
    - `pi-eval clear <model>` — invalidate cache
+
    - `pi-eval list` — available models + fixtures
+
    - `pi-eval fixtures` — list/validate fixtures
-2. **Extract shared core** — assertions, Gemini/structured grading, fixture loading, logging — into `src/cli/pi-eval/lib/` modules imported by the subcommands. One assertion engine, one grading path, one log format (JSONL, append-only, `data/eval_log.json`).
+
+2. **Extract shared core** — assertions, Gemini/structured grading, fixture
+   loading, logging — into `src/cli/pi-eval/lib/` modules imported by the
+   subcommands. One assertion engine, one grading path, one log format (JSONL,
+   append-only, `data/eval_log.json`).
+
 3. **Reduce `src/extensions/edinburgh-evals/index.ts`** to ~100 LOC:
-   - `/eval <model>` → shells out to `bun run src/cli/pi-eval/main.ts run <model>`, renders stdout
+
+   - `/eval <model>` → shells out to `bun run src/cli/pi-eval/main.ts run
+     <model>`, renders stdout
+
    - `run_edinburgh_eval` tool → same shell-out, returns CLI stdout as tool result
-   - `model_select` hook → reads `data/eval_log.json` cache, warns on critical failures (no model switch, no state machine)
-   - Delete: `eval-runner.ts`, `assertions.ts`, `gemini-grade.ts`, `types.ts` (logic moves to CLI lib)
-4. **Migrate config** — `src/extensions/edinburgh-evals/config.json` → `src/cli/pi-eval/config.json` (or `.pi/pi-eval.json` project-local); fixture paths, grader model, cache TTL, log path.
-5. **Update `scripts/eval.sh` + `justfile [eval]`** — route to `pi-eval` subcommands; keep `just eval <cmd>` facade for humans.
-6. **Delete** `src/cli/pi-eval-runner.ts` and `src/cli/pi-check/edinburgh-eval.ts` once their logic is absorbed.
+
+   - `model_select` hook → reads `data/eval_log.json` cache, warns on critical
+     failures (no model switch, no state machine)
+
+   - Delete: `eval-runner.ts`, `assertions.ts`, `gemini-grade.ts`, `types.ts`
+     (logic moves to CLI lib)
+
+4. **Migrate config** — `src/extensions/edinburgh-evals/config.json` →
+   `src/cli/pi-eval/config.json` (or `.pi/pi-eval.json` project-local); fixture
+   paths, grader model, cache TTL, log path.
+
+5. **Update `scripts/eval.sh` + `justfile [eval]`** — route to `pi-eval`
+   subcommands; keep `just eval <cmd>` facade for humans.
+
+6. **Delete** `src/cli/pi-eval-runner.ts` and
+   `src/cli/pi-check/edinburgh-eval.ts` once their logic is absorbed.
 
 ## Acceptance criteria
 
-- [ ] `pi-eval run`, `score`, `matrix`, `status`, `clear`, `list`, `fixtures` subcommands all work via `just eval` and direct invocation
-- [ ] One assertion engine, one grading path, one JSONL log format — no duplicated eval logic in the tree
-- [ ] `src/extensions/edinburgh-evals/index.ts` is ≤150 LOC and contains no state machine, no `turn_*`/`message_update`/`tool_execution_*` event hooks, no `pi.setModel()` call
-- [ ] `/eval <model>` slash command and `run_edinburgh_eval` LLM tool still work (shell out to CLI, render output)
-- [ ] `model_select` advisory hook still warns on critical failures (reads CLI cache)
-- [ ] Existing fixtures (`edinburgh`, `iq`, `005b`, `sit`, `sit2`) run unchanged through the new CLI
-- [ ] `data/eval_log.json` format unchanged (no migration needed) or migration script provided
+- [ ] `pi-eval run`, `score`, `matrix`, `status`, `clear`, `list`, `fixtures`
+  subcommands all work via `just eval` and direct invocation
+
+- [ ] One assertion engine, one grading path, one JSONL log format — no
+  duplicated eval logic in the tree
+
+- [ ] `src/extensions/edinburgh-evals/index.ts` is ≤150 LOC and contains no
+  state machine, no `turn_*`/`message_update`/`tool_execution_*` event hooks, no
+  `pi.setModel()` call
+
+- [ ] `/eval <model>` slash command and `run_edinburgh_eval` LLM tool still work
+  (shell out to CLI, render output)
+
+- [ ] `model_select` advisory hook still warns on critical failures (reads CLI
+  cache)
+
+- [ ] Existing fixtures (`edinburgh`, `iq`, `005b`, `sit`, `sit2`) run unchanged
+  through the new CLI
+
+- [ ] `data/eval_log.json` format unchanged (no migration needed) or migration
+  script provided
+
 - [ ] `just eval status` shows the same information as before
+
 - [ ] README + MANIFEST updated; debrief `003` cross-referenced
+
 - [ ] `src/cli/pi-eval-runner.ts` and `src/cli/pi-check/edinburgh-eval.ts` deleted
 
 ## Out of scope
 
-- Real-environment trajectory eval (model inside an actual pi subprocess with real tools/MVFS) — a future brief; current fixtures don't require it
-- Parallel fork-based eval — parked since debrief 003; the CLI's sequential + resumable model is sufficient
+- Real-environment trajectory eval (model inside an actual pi subprocess with
+  real tools/MVFS) — a future brief; current fixtures don't require it
+
+- Parallel fork-based eval — parked since debrief 003; the CLI's sequential +
+  resumable model is sufficient
+
 - New fixtures or assertion types — consolidation only, no new test vectors
+
 - The `data/eval_log.json` historical data migration — format stays stable
+
 - IQ benchmark fixture redesign — carried as-is
 
 ## Approach chosen: B (CLI-first, thin extension port)

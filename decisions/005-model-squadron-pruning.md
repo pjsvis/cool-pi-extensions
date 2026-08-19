@@ -24,8 +24,12 @@ We needed to audit our squadron against current evals and prune accordingly.
 
 **Rationale:**
 - Edinburgh Protocol eval: 7/19 (poor alignment)
+
 - Failed "Systems Over Villains" trap vector
-- Earlier "bankruptcy" assessment was not measurement noise — eval confirms poor fit
+
+- Earlier "bankruptcy" assessment was not measurement noise — eval confirms poor
+  fit
+
 - M2.7 remains strong at 4/4 Edinburgh
 
 **Action:** Remove M3 from active rotation. Keep M2.7.
@@ -34,10 +38,15 @@ We needed to audit our squadron against current evals and prune accordingly.
 
 **Rationale:**
 - 8/8 IQ — same as Mercury-2 (best performer)
+
 - 4/4 Edinburgh trap vectors
+
 - 1M context with IndexShare (2.9x compute reduction)
+
 - MIT open weights
-- Best open-weight coding model (Terminal-Bench 2.1: 81.0 vs Claude Opus 4.8: 85.0)
+
+- Best open-weight coding model (Terminal-Bench 2.1: 81.0 vs Claude Opus 4.8:
+  85.0)
 
 **Action:** Add to zai provider config with 1M context variant.
 
@@ -73,8 +82,11 @@ We needed to audit our squadron against current evals and prune accordingly.
 
 **Rationale:**
 - 18/19 Edinburgh — highest scorer in squadron
+
 - Proven in production
-- K2.7-code claims are vendor-reported only (VentureBeat: "benchmarks don't check out")
+
+- K2.7-code claims are vendor-reported only (VentureBeat: "benchmarks don't
+  check out")
 
 **Action:** K2.6 remains primary. K2.7-code on probation.
 
@@ -83,8 +95,11 @@ We needed to audit our squadron against current evals and prune accordingly.
 ## Consequences
 
 ### Positive
-- Squadron now has clear tier: Premium (K2.6, GLM-5.2), Mid (GLM-5, Qwen 3.7 Max, DS V4 Pro), Free (Nemotron)
+- Squadron now has clear tier: Premium (K2.6, GLM-5.2), Mid (GLM-5, Qwen 3.7
+  Max, DS V4 Pro), Free (Nemotron)
+
 - Drop decision eliminates poor Edinburgh performer
+
 - New models fill capability gaps (1M context, open-weight)
 
 ### Negative

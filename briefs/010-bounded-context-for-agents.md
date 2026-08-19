@@ -134,9 +134,15 @@ In short, **we are converting a procedural idea into a documented, measurable sy
 ### Bottom line
 
 - **Pick `010‑bounded‑context‑for‑agents.md`.**  
+
 - **Replace its content with the block above** (exact copy).  
-- **Run `just brief`** – it will create the UIDs, fire the `intercom` ask, wait for the reviewer, and finally execute the publish step.  
-- **Inspect `performance.log` and `compliance.log`** – they will give us the data we need to *review and analyse* both functional performance and Protocol compliance.
+
+- **Run `just brief`** – it will create the UIDs, fire the `intercom` ask, wait
+  for the reviewer, and finally execute the publish step.
+
+- **Inspect `performance.log` and `compliance.log`** – they will give us the
+  data we need to *review and analyse* both functional performance and Protocol
+  compliance.
 
 Let me know when you’ve applied the edit or if you’d like me to execute the `just brief` run for you.
 

@@ -64,13 +64,22 @@ Every fix above reads as written-while-investigating: it carries the repro, the 
 
 Our briefs/debriefs system is the same species — compressed investigation records for future contexts. The deltas worth adopting from Marcus:
 
-- **Refuted hypotheses belong in the record** — our briefs should name the wrong diagnosis that lost, not just the winner.
-- **Second recurrence triggers shape-change** — our default should be funnel-or-invariant, not another site patch.
-- **Known-limitations sections on our own deliverables** — what we left broken, stated at delivery.
+- **Refuted hypotheses belong in the record** — our briefs should name the wrong
+  diagnosis that lost, not just the winner.
+
+- **Second recurrence triggers shape-change** — our default should be
+  funnel-or-invariant, not another site patch.
+
+- **Known-limitations sections on our own deliverables** — what we left broken,
+  stated at delivery.
+
 - **Failure output names the failing thing** — applies to our eval harness first.
 
 ## Related
 
 - `playbooks/sqlite-playbook.md` — the technical half of the same corpus
-- `playbooks/briefs-playbook.md`, `playbooks/debriefs-playbook.md` — our native record-keeping instruments
+
+- `playbooks/briefs-playbook.md`, `playbooks/debriefs-playbook.md` — our native
+  record-keeping instruments
+
 - `briefs/011-build-from-source.md` — prior td-derived practice

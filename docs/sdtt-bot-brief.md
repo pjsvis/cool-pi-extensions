@@ -32,8 +32,13 @@ The bot's job is to remember it has a map and know how to navigate it.
 ```
 
 - 7x7 conceptually, but incrementable — no hard limit
-- Locations have: description, context (orientation), assets (exercises, links, stories)
-- Content connects: deserts, Harry Philby, ancient walking patterns — pulled in when relevant
+
+- Locations have: description, context (orientation), assets (exercises, links,
+  stories)
+
+- Content connects: deserts, Harry Philby, ancient walking patterns — pulled in
+  when relevant
+
 - No need to know everything upfront — add locations one at a time
 
 ---

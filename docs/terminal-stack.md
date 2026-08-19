@@ -43,11 +43,18 @@ flowchart TD
 ```
 
 1. **Mobile SSH (Echo)** — entry point from iOS/iPadOS (Ghostty, Mosh, Face ID)
+
 2. **Networking (Tailscale)** — WireGuard mesh; any device to any device
+
 3. **Terminal (Alacritty)** — GPU rendering, font, clipboard
-4. **Session multiplexing (herdr)** — tab/session management, daemon, agent orchestration
+
+4. **Session multiplexing (herdr)** — tab/session management, daemon, agent
+   orchestration
+
 5. **AI agent + editor (pi / Fresh)** — the shared agent-human platform
-6. **Observability (td + sidecar)** — session continuity/handoff + human oversight dashboard
+
+6. **Observability (td + sidecar)** — session continuity/handoff + human
+   oversight dashboard
 
 Solid chain = the connection path (arrive → mesh → terminal → mux → agent).
 Dashed edge = observability runs alongside, not in the chain.
@@ -70,17 +77,22 @@ Dashed edge = observability runs alongside, not in the chain.
 - **Cross-platform, single code path.** macOS, Linux, and Windows (via WSL2) —
   same setup, same tools, same keybindings. No platform-specific configuration,
   no "works on Linux but not macOS" surprises.
+
 - **WSL2 as first-class target.** Alacritty runs natively on Windows; connects
   to WSL2 for the Linux toolchain. herdr, pi, and Fresh run inside WSL2. The
   experience is identical to native Linux.
+
 - **Zero GUI dependency.** Everything renders in the terminal. No X forwarding, no
   VNC, no Remote Desktop. Works over `ssh` from a phone, a tablet, a Chromebook,
   or a 15-year-old ThinkPad.
+
 - **Session persistence.** herdr keeps pi and the editor alive across
   disconnections. SSH drops? Reconnect and you're exactly where you left off.
   No `tmux` required — herdr handles it natively.
+
 - **Local rendering, remote execution.** Alacritty handles the pixels. Everything
   else runs on the remote machine. Latency only affects display, not compute.
+
 - **No sync conflicts.** There is no local copy of the project. The editor opens
   files directly on the remote. The agent has direct filesystem access. No
   "remote file system" abstraction layer that breaks `git`, `find`, or shell
@@ -246,7 +258,9 @@ the CPU is.
 
 - **herdr ↔ pi orchestration.** herdr can spawn pi sessions per-project,
   manage agent lifecycle, and route user input between editor and agent tabs.
+
 - **Fresh compose mode + pi.** Fresh's markdown compose mode for long-form
   writing, pi for drafting and editing assistance.
+
 - **Mobile.** The entire stack works over SSH from a phone or tablet. No mobile
   app needed — just a terminal emulator.

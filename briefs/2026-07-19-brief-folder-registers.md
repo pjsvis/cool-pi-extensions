@@ -38,16 +38,31 @@ One generator (`scripts/gen-registers.ts`) emits a `register.jsonl` in each regi
 
 ## Acceptance criteria
 
-- [ ] `scripts/gen-registers.ts` emits `register.jsonl` in all 6 registered folders; output is deterministic across runs
-- [ ] `MANIFEST.md` regenerated from registers; `just help`/`just browse` still render
-- [ ] `scripts/check-manifest.ts` verifies register↔filesystem + MANIFEST↔registers; link + path-drift checks retained
+- [ ] `scripts/gen-registers.ts` emits `register.jsonl` in all 6 registered
+  folders; output is deterministic across runs
+
+- [ ] `MANIFEST.md` regenerated from registers; `just help`/`just browse` still
+  render
+
+- [ ] `scripts/check-manifest.ts` verifies register↔filesystem +
+  MANIFEST↔registers; link + path-drift checks retained
+
 - [ ] `just registers` and `just check` recipes added (hygiene group)
+
 - [ ] All 6 registers committed; `just check` passes clean
+
 - [ ] `td` handoff + debrief note the blocking-flip as deferred work
 
 ## Out of scope
 
-- Content-level (sha) enforcement as blocking — informational only in v1; promote later if wanted.
-- Rich per-folder schemas — uniform core only. True registries (conceptual-lexicon.jsonl, equations.jsonl) stay separate species.
-- Retrofitting YAML frontmatter onto existing files — description extraction degrades gracefully; weak descriptions are a semantic (Derrida) concern.
-- CI — none visible; the agent regenerates as part of any commit touching a registered folder (playbook discipline).
+- Content-level (sha) enforcement as blocking — informational only in v1;
+  promote later if wanted.
+
+- Rich per-folder schemas — uniform core only. True registries
+  (conceptual-lexicon.jsonl, equations.jsonl) stay separate species.
+
+- Retrofitting YAML frontmatter onto existing files — description extraction
+  degrades gracefully; weak descriptions are a semantic (Derrida) concern.
+
+- CI — none visible; the agent regenerates as part of any commit touching a
+  registered folder (playbook discipline).

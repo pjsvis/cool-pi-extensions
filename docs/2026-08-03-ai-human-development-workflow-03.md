@@ -22,10 +22,21 @@ We stripped away the corporate theater and the vibe-coding hype, returning to a 
 
 Instead of hiding complexity in an opaque box, we co-located the intent with the execution. We turned the repository into an autonomous, self-documenting state machine:
 
-1. **Co-located Plain Text (`README.md`):** Serves as a continuous **Shannon Checksum**. If the code changes and the local README doesn't, the checksum fails at the commit boundary.
-2. **Zero-Effort OKF (ISO Dates):** Prefixing files (`2026-08-04-brief.md`) across `briefs/`, `debriefs/`, `decisions/`, and `playbooks/` gives human and agent instant $O(1)$ chronological topology without extra database overhead. The active view stays small; older files migrate to `.archive/`.
-3. **Operational Vocabulary (`Justfile`):** Hardened, standard endpoints (`just brief`, `just debrief`) abstract build and verification steps into a shared protocol.
-4. **In-Flight Memory (`marcus/td`):** Atomic task tracking and locks ensure context persists across session resets and prevents multi-agent collisions.
+1. **Co-located Plain Text (`README.md`):** Serves as a continuous **Shannon
+   Checksum**. If the code changes and the local README doesn't, the checksum
+   fails at the commit boundary.
+
+2. **Zero-Effort OKF (ISO Dates):** Prefixing files (`2026-08-04-brief.md`)
+   across `briefs/`, `debriefs/`, `decisions/`, and `playbooks/` gives human and
+   agent instant $O(1)$ chronological topology without extra database overhead.
+   The active view stays small; older files migrate to `.archive/`.
+
+3. **Operational Vocabulary (`Justfile`):** Hardened, standard endpoints (`just
+   brief`, `just debrief`) abstract build and verification steps into a shared
+   protocol.
+
+4. **In-Flight Memory (`marcus/td`):** Atomic task tracking and locks ensure
+   context persists across session resets and prevents multi-agent collisions.
 
 Repo memory remains the absolute ground truth; the agent’s internal memory is merely a volatile cache. Briefs start as aspirational hypotheses, debriefs record the collision with reality, and decisions solidify into hardened playbooks.
 
@@ -55,13 +66,26 @@ To keep the workspace grounded and prevent us from falling back into corporate b
 
 ### 1. The James Watt Question: *What is the thermodynamic efficiency of this mechanism?*
 
-* **The Test:** Does this tool actually reduce the energy (tokens, friction, cognitive load, time) required to achieve work, or is it an over-engineered engine that burns friction just to turn its own gears?
-* **The Application:** A custom MCP server indexing 89 files with a proprietary Python search engine fails the James Watt test—it burns massive operational energy for zero efficiency gain over `grep`. A `YYYY-MM-DD` filename passes instantly—it delivers $O(1)$ chronological context at zero token cost.
+* **The Test:** Does this tool actually reduce the energy (tokens, friction,
+  cognitive load, time) required to achieve work, or is it an over-engineered
+  engine that burns friction just to turn its own gears?
+
+* **The Application:** A custom MCP server indexing 89 files with a proprietary
+  Python search engine fails the James Watt test—it burns massive operational
+  energy for zero efficiency gain over `grep`. A `YYYY-MM-DD` filename passes
+  instantly—it delivers $O(1)$ chronological context at zero token cost.
 
 ### 2. The Daniel Derrida Question: *What is the explicit contract, and where is the difference between the signifier and the reality?*
 
-* **The Test:** Where is the disparity between what we *claim* the system is doing and what it is *actually* executing? Is there an unexamined gap between the text and the execution?
-* **The Application:** Vibe coding and off-site Word docs fail this test—they create a wide gap between declared intent and actual code. Co-located READMEs and the two-job Brief/Debrief loop pass this test—they force an immediate reconciliation step (the Shannon Checksum) that surfaces disparities at commit time.
+* **The Test:** Where is the disparity between what we *claim* the system is
+  doing and what it is *actually* executing? Is there an unexamined gap between
+  the text and the execution?
+
+* **The Application:** Vibe coding and off-site Word docs fail this test—they
+  create a wide gap between declared intent and actual code. Co-located READMEs
+  and the two-job Brief/Debrief loop pass this test—they force an immediate
+  reconciliation step (the Shannon Checksum) that surfaces disparities at commit
+  time.
 
 ---
 

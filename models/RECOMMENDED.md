@@ -84,14 +84,22 @@
 
 ### WHY DROP MINIMAX M3?
 - Edinburgh Protocol scoring: 7/19 (vs M2.7's 4/4)
+
 - Failed "Systems Over Villains" trap vector
-- Earlier "bankruptcy" assessment may have been ZenMux proxy artifact, but eval confirms poor fit
+
+- Earlier "bankruptcy" assessment may have been ZenMux proxy artifact, but eval
+  confirms poor fit
+
 - **Recommendation:** Keep M2.7, drop M3 from active rotation
 
 ### WHY KEEP KIMI K2.6 OVER K2.7-CODE?
 - K2.6: 18/19 Edinburgh, proven in production
+
 - K2.7-code: 4/4 (vendor-reported), independent eval pending
-- Vendor claims 30% fewer thinking tokens but "benchmarks don't check out" (VentureBeat)
+
+- Vendor claims 30% fewer thinking tokens but "benchmarks don't check out"
+  (VentureBeat)
+
 - **Recommendation:** Use K2.6 as primary, test K2.7-code for specific use cases
 
 ### WHY KEEP GLM-5 OVER GLM-5.1?

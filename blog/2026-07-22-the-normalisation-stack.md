@@ -14,11 +14,13 @@ that the cost is invisible until you notice its absence:
 1. **The Edinburgh Protocol** normalises the *model* — compresses behavioural
    variance, raises the floor, keeps the ceiling. Evidence: primed-vs-bare
    delta, two independent graders, 42% variance reduction across 25 models.
+
 2. **The silo process** (briefs, debriefs, decisions, playbooks, registers,
    justfile) normalises the *work* — freezes scope before code, audits
    changes after, makes debt visible, provides verified action paths.
    Evidence: every epic in the repo has a brief, a commit, and a debrief you
    can trace.
+
 3. **The bounded-context discipline** (handoff, newup, resume) normalises the
    *cost* — keeps token spend O(n) in turns, not O(n²). Evidence: the eval
    consolidation — 4 sessions, 4 commits, ~29 minutes, zero context overflow,
@@ -53,8 +55,10 @@ sustainable. Each layer addresses a failure mode the others can't reach:
 
 - A normalised model without a silo process produces good tokens in service
   of unscoped work — brilliant output that solves the wrong problem.
+
 - A silo process without bounded context produces well-documented work that
   costs $46 per session — the briefs are clean, the meter is on fire.
+
 - Bounded context without a normalised model produces cheap sessions full of
   muppet behaviour — the handoffs are crisp, the model agrees with everything
   and runs toward every trap.
@@ -74,9 +78,12 @@ the Protocol active (primed), once without (bare). Score both conditions with
 two independent graders of different architectures. The result:
 
 - Standard deviation drops 42% (4.3 to 2.5). The pack compresses.
+
 - The floor rises from 0 to 7 out of 16. The ceiling doesn't move.
+
 - 22 of 24 models become deployable (above 12/16). Twelve that were risky
   become safe.
+
 - Both graders agree on the direction of the delta for every model. Zero
   disagreements.
 
@@ -106,12 +113,15 @@ The structure:
   is a self-contained spec with acceptance criteria and an explicit "out of
   scope" section. It doesn't change after work starts — changes go in the
   debrief.
+
 - **Decisions** record the *why* behind architectural choices. An ADR has
   context, the decision, the alternatives considered, and the consequences.
   It's the record a future session reads to understand why the code is the
   way it is.
+
 - **Debriefs** capture what happened — what worked, what didn't, what to do
   differently. They're the institutional memory that survives the newup.
+
 - **Playbooks** codify the repeatable patterns — how to write a brief, how to
   file a decision, how to run an eval. They're the process layer that makes
   the other three cheap to produce.
@@ -265,9 +275,11 @@ the stack is a cheap gate that provides one or more of three things:
 - **Decision points** — opinion/proceed, brief/code, eval/deploy,
   handoff/newup, `just check`. Each forces a deliberate choice at a phase
   boundary.
+
 - **Action paths** — the justfile recipes, the playbooks, the `pi-eval` CLI
   commands, the `td` workflow. Each is a tested path that avoids discovery
   cost.
+
 - **Structured information access** — `td context` gives compressed state,
   `just orient` gives current state, the registers give structural state, the
   briefs give frozen specs. Each provides the right granularity at the right

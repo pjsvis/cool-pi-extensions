@@ -51,26 +51,49 @@ The VEST protocol (Visitor, Entry, Self, Teach) — four concepts with relations
 
 ## Optional (Category 2 — prose is doing fine, but could benefit)
 
-- `docs/edinburgh-protocol-evals.md` — the eval pipeline (fixture → inject → capture → assert → grade → log). A flowchart would summarise the pipeline. Only if the Category 1 files go smoothly.
-- `blog/2026-07-22-four-sessions-four-commits.md` — the task DAG is already ASCII art. Converting to mermaid would render on GitHub but lose the terminal-native aesthetic. **Leave as-is** unless there's a specific reason.
+- `docs/edinburgh-protocol-evals.md` — the eval pipeline (fixture → inject →
+  capture → assert → grade → log). A flowchart would summarise the pipeline.
+  Only if the Category 1 files go smoothly.
+
+- `blog/2026-07-22-four-sessions-four-commits.md` — the task DAG is already
+  ASCII art. Converting to mermaid would render on GitHub but lose the
+  terminal-native aesthetic. **Leave as-is** unless there's a specific reason.
 
 ## Out of scope (Category 3 — prose is the right medium)
 
-- Blog posts about theory (Shannon, $46, normalisation stack) — these are *arguments*, not architectures. The normalisation stack already has a diagram.
+- Blog posts about theory (Shannon, $46, normalisation stack) — these are
+  *arguments*, not architectures. The normalisation stack already has a diagram.
+
 - The muppet-filter, audit trail, scoreboard posts — narratives, not systems.
-- Any file where the prose describes *why* without describing *what connects to what*.
+
+- Any file where the prose describes *why* without describing *what connects to
+  what*.
 
 ## Acceptance criteria
 
-- [x] `docs/terminal-stack.md` has a mermaid flowchart (numbered-box+token, 6 nodes + key list)
-- [x] `docs/standard-mono-repo-pattern.md` has a mermaid flowchart (circular, 4 nodes, descriptive labels) — two instances
-- [x] `playbooks/briefs-playbook.md` has a mermaid state diagram (4 states + back-edge)
-- [x] `docs/visitor-protocol.md` has a mermaid flowchart (4 nodes, descriptive labels)
+- [x] `docs/terminal-stack.md` has a mermaid flowchart (numbered-box+token, 6
+  nodes + key list)
+
+- [x] `docs/standard-mono-repo-pattern.md` has a mermaid flowchart (circular, 4
+  nodes, descriptive labels) — two instances
+
+- [x] `playbooks/briefs-playbook.md` has a mermaid state diagram (4 states +
+  back-edge)
+
+- [x] `docs/visitor-protocol.md` has a mermaid flowchart (4 nodes, descriptive
+  labels)
+
 - [x] Each diagram renders cleanly with `just mermaid <file>` (all exit 0)
+
 - [x] Each diagram renders on GitHub (mermaid block is valid syntax)
+
 - [x] No prose is deleted — the diagram is additive, the prose carries the *why*
-- [x] Diagrams follow the conventions in `playbooks/diagrams-playbook.md` (numbered+token vs descriptive, monochrome)
+
+- [x] Diagrams follow the conventions in `playbooks/diagrams-playbook.md`
+  (numbered+token vs descriptive, monochrome)
+
 - [x] Extractor emits the numbered-box key list after the diagram (coupled pair)
+
 - [x] README updated with mermaid-tui extension + CLI entries
 
 ## Out of scope

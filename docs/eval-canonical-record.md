@@ -87,6 +87,10 @@ Run IDs link into `data/eval_log.json`: `jq 'select(.runId | startswith("<id>"))
 
 ## Method
 
-- Framework & traps: [`docs/edinburgh-protocol-evals.md`](edinburgh-protocol-evals.md)
-- Verdict logic (grader-sole, Decision 022): [`decisions/022-drop-regex-eval-grader-sole-verdict.md`](../decisions/022-drop-regex-eval-grader-sole-verdict.md)
+- Framework & traps:
+  [`docs/edinburgh-protocol-evals.md`](edinburgh-protocol-evals.md)
+
+- Verdict logic (grader-sole, Decision 022):
+  [`decisions/022-drop-regex-eval-grader-sole-verdict.md`](../decisions/022-drop-regex-eval-grader-sole-verdict.md)
+
 - Engine: `src/cli/pi-eval/` (`pi-eval run <model> [--provider ...]`)

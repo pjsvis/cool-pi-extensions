@@ -36,7 +36,13 @@ What's left undone.
 
 ## Conventions
 
-- Write the debrief immediately after the project completes, while the details are fresh
-- Be honest about mistakes — a debrief that says "everything went perfectly" is useless
+- Write the debrief immediately after the project completes, while the details
+  are fresh
+
+- Be honest about mistakes — a debrief that says "everything went perfectly" is
+  useless
+
 - Link back to the brief and any TD issues
-- Debriefs are **final** — append dated addenda if new information emerges, don't edit the original
+
+- Debriefs are **final** — append dated addenda if new information emerges,
+  don't edit the original

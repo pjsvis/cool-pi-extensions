@@ -49,11 +49,17 @@ The brief specified parallel forks for each test case. The current implementatio
 
 ## Design principles validated
 
-1. **Cache-first.** Every `/eval` check hits the cache before spending tokens. With a 168h TTL, repeated evaluations are free. This makes periodic checking practical.
+1. **Cache-first.** Every `/eval` check hits the cache before spending tokens.
+   With a 168h TTL, repeated evaluations are free. This makes periodic checking
+   practical.
 
-2. **Advisory, not authoritarian.** The `model_select` hook warns but doesn't block. The eval is an impartial spectator, not a censor. The human always has the final say.
+2. **Advisory, not authoritarian.** The `model_select` hook warns but doesn't
+   block. The eval is an impartial spectator, not a censor. The human always has
+   the final say.
 
-3. **Configurable grader.** The grader model is in config, not hardcoded. Swap `google/gemini-2.5-flash` for `google/gemini-2.5-pro` or any other OpenRouter model without code changes.
+3. **Configurable grader.** The grader model is in config, not hardcoded. Swap
+   `google/gemini-2.5-flash` for `google/gemini-2.5-pro` or any other OpenRouter
+   model without code changes.
 
 ## Files changed
 

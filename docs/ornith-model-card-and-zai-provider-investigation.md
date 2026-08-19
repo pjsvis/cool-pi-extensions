@@ -54,7 +54,18 @@ print(resp.choices[0].message.content)
 | • **Mistral‑Large‑2** – open‑source, 30 B‑dense, comparable coding performance. |
 
 **Practical take‑away**
-- For the **fastest GLM‑5.2** in heavy tool‑driven coding, point your client at `zai/glm-5.2-fast` via Vercel AI Gateway (or the standard ZAi endpoint) and enjoy ~200 tok/s throughput.
-- For **steady reliability** with fewer moving parts, stick to the **standard GLM‑5.2** (`zai/glm-5.2`) and explicitly set the `reasoningEffort` (`high` or `max`).
-- If you encounter the “model not listed” symptom, run `opencode models --refresh` **after** you have added the variant block to your `opencode.json` (see the ZAi docs for the snippet).
-- When pricing is opaque or you prefer a guaranteed‑no‑surprise bill, fall back to OpenAI or Anthropic; they also support 1 M context and tool‑calling with well‑published rates.
+- For the **fastest GLM‑5.2** in heavy tool‑driven coding, point your client at
+  `zai/glm-5.2-fast` via Vercel AI Gateway (or the standard ZAi endpoint) and
+  enjoy ~200 tok/s throughput.
+
+- For **steady reliability** with fewer moving parts, stick to the **standard
+  GLM‑5.2** (`zai/glm-5.2`) and explicitly set the `reasoningEffort` (`high` or
+  `max`).
+
+- If you encounter the “model not listed” symptom, run `opencode models
+  --refresh` **after** you have added the variant block to your `opencode.json`
+  (see the ZAi docs for the snippet).
+
+- When pricing is opaque or you prefer a guaranteed‑no‑surprise bill, fall back
+  to OpenAI or Anthropic; they also support 1 M context and tool‑calling with
+  well‑published rates.

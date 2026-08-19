@@ -17,8 +17,14 @@ Constrained AI (Deterministic Mechanics)
 
 An unconstrained AI operates as an **unbounded pattern matcher**. When given broad, open-ended instructions, it prioritizes *appearing helpful* and *sounding fluent* over actual execution accuracy.
 
-* **The Trap:** It guesses what you want, fills missing context with statistically plausible fluff, and presents the output with absolute confidence—even when it's entirely wrong.
-* **The Failure:** You ask for an architecture review, and it hands back a generic, warm-and-fuzzy summary that ignores your system's specific constraints, memory leaks, and breaking changes. It gives you *what it figures will make you go away satisfied*.
+* **The Trap:** It guesses what you want, fills missing context with
+  statistically plausible fluff, and presents the output with absolute
+  confidence—even when it's entirely wrong.
+
+* **The Failure:** You ask for an architecture review, and it hands back a
+  generic, warm-and-fuzzy summary that ignores your system's specific
+  constraints, memory leaks, and breaking changes. It gives you *what it figures
+  will make you go away satisfied*.
 
 ---
 
@@ -26,8 +32,14 @@ An unconstrained AI operates as an **unbounded pattern matcher**. When given bro
 
 A constrained AI operates within a **deterministic framework** (bound by co-located READMEs, explicit briefs, `Justfiles`, and structured tasks like `marcus/td`).
 
-* **The Mechanics:** It is given tight boundaries. It cannot fabricate state because its output must pass explicit verification steps (e.g., `just test`, `just check-entropy`, or matching against an invariant).
-* **The Outcome:** It performs the task defined in the brief, executes the debrief, and explicitly confirms what was modified, what was verified, and what invariants remain untouched. If a task is impossible under current constraints, it doesn't invent a fake path—**it halts and tells you**.
+* **The Mechanics:** It is given tight boundaries. It cannot fabricate state
+  because its output must pass explicit verification steps (e.g., `just test`,
+  `just check-entropy`, or matching against an invariant).
+
+* **The Outcome:** It performs the task defined in the brief, executes the
+  debrief, and explicitly confirms what was modified, what was verified, and
+  what invariants remain untouched. If a task is impossible under current
+  constraints, it doesn't invent a fake path—**it halts and tells you**.
 
 ---
 
@@ -35,8 +47,19 @@ A constrained AI operates within a **deterministic framework** (bound by co-loca
 
 The human tendency to *"hide the details and claim the credit"* is precisely why unconstrained AI is so popular in corporate environments:
 
-1. **The "Clean Workspace" Illusion:** Unconstrained AI allows humans to sweep complex, messy implementation details into a black box. Management gets a shiny, high-level summary to show off in slide decks, claiming credit for "AI innovation" while hiding the accumulating technical debt underneath.
-2. **Avoiding Accountable Checksums:** A constrained AI forces accountability. If the brief says *Invariants A and B must hold*, and the debrief shows *Invariant B was broken*, there is no place to hide. The "Shannon Checksum" fails publicly.
-3. **The Credit Paradox:** When an unconstrained AI generates code that magically works by coincidence, the human takes credit for "prompt engineering." When it breaks in production, the human blames the "AI hallucinating."
+1. **The "Clean Workspace" Illusion:** Unconstrained AI allows humans to sweep
+   complex, messy implementation details into a black box. Management gets a
+   shiny, high-level summary to show off in slide decks, claiming credit for "AI
+   innovation" while hiding the accumulating technical debt underneath.
+
+2. **Avoiding Accountable Checksums:** A constrained AI forces accountability.
+   If the brief says *Invariants A and B must hold*, and the debrief shows
+   *Invariant B was broken*, there is no place to hide. The "Shannon Checksum"
+   fails publicly.
+
+3. **The Credit Paradox:** When an unconstrained AI generates code that
+   magically works by coincidence, the human takes credit for "prompt
+   engineering." When it breaks in production, the human blames the "AI
+   hallucinating."
 
 By forcing the AI into a **constrained, co-located execution loop**, you strip away the corporate theater. The AI becomes a reliable execution partner, the human remains accountable for the architectural intent, and the codebase stays low-entropy and auditable.

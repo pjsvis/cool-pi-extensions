@@ -199,6 +199,10 @@ If this fails, check that both devices are authenticated and online.
 ## See also
 
 - [tailscale.com](https://tailscale.com)
+
 - `playbooks/herdr.md` — session management (works with TailScale)
-- `playbooks/terminal-stack.md` — the full stack with TailScale as the connectivity layer
+
+- `playbooks/terminal-stack.md` — the full stack with TailScale as the
+  connectivity layer
+
 - `docs/terminal-stack.md` — architecture docs

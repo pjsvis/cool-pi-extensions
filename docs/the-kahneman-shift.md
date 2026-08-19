@@ -10,9 +10,13 @@ This isn't vibes. A convergence of research across cognitive science, behavioral
 
 In February 2025, Li et al. published *"From System 1 to System 2: A Survey of Reasoning Large Language Models"*, using Kahneman's dual-process framework as the organising principle. The paper draws a bright line:
 
-- **Foundational LLMs** (GPT-4o, Claude 3.5 Sonnet, DeepSeek-V3) operate in System 1 mode — fast, heuristic-driven, excellent at rapid responses but lacking step-by-step analysis. They score 9.3–39.2 on AIME 2024.
+- **Foundational LLMs** (GPT-4o, Claude 3.5 Sonnet, DeepSeek-V3) operate in
+  System 1 mode — fast, heuristic-driven, excellent at rapid responses but
+  lacking step-by-step analysis. They score 9.3–39.2 on AIME 2024.
 
-- **Reasoning LLMs** (o1, o3, DeepSeek-R1) deliberately generate intermediate reasoning traces before answering. They score 63.6–87.3 on the same benchmark. The gap on Codeforces is even wider: 23.6 vs. 96.6.
+- **Reasoning LLMs** (o1, o3, DeepSeek-R1) deliberately generate intermediate
+  reasoning traces before answering. They score 63.6–87.3 on the same benchmark.
+  The gap on Codeforces is even wider: 23.6 vs. 96.6.
 
 The survey identifies five core methods enabling this transition: structure search (MCTS), reward modelling (PRMs), self-improvement (RL-based exploration), macro actions (hierarchical reasoning phases), and reinforcement fine-tuning. None of these were standard practice two years ago. All are now.
 
@@ -38,9 +42,15 @@ But the same mechanism that improves rationality amplifies sensitivity to affect
 
 Multiple papers now document that raw token count is a poor proxy for reasoning quality. ReEfBench (Jan 2026) identifies four behavioural prototypes:
 
-- **Effective Solver** — high depth, moderate cost (Claude Opus 4.5, Qwen3-235B-Instruct)
-- **Deep Wanderer** — high depth, extreme cost (Qwen3-235B-Thinking, ~16.8K tokens)
-- **Hollow Mimic** — moderate cost, low depth (distilled models that imitate reasoning form without substance)
+- **Effective Solver** — high depth, moderate cost (Claude Opus 4.5,
+  Qwen3-235B-Instruct)
+
+- **Deep Wanderer** — high depth, extreme cost (Qwen3-235B-Thinking, ~16.8K
+  tokens)
+
+- **Hollow Mimic** — moderate cost, low depth (distilled models that imitate
+  reasoning form without substance)
+
 - **Lazy Guesser** — low cost, low depth (instruction-tuned models that saturate)
 
 The *"Think Deep, Not Just Long"* paper (Feb 2026) introduces a deep-thinking ratio — the proportion of tokens whose predictions undergo significant revision in deeper layers before converging. This metric correlates with accuracy at r = 0.828 across benchmarks, while raw token count correlates negatively (r = -0.544). The implication: it's not how long the model thinks, but how deeply each token is processed.
@@ -57,9 +67,16 @@ This aligns with ALPHAONE's finding that a slow-to-fast transition (think hard f
 
 The shift from System 1 to System 2 as the default wasn't accidental. Two structural changes drove it:
 
-1. **Reasoning became native, not prompted.** Chain-of-thought in 2024 was something you asked for. In 2025–2026, models like o1, o3, DeepSeek-R1, Claude with extended thinking, and Gemini Deep Think generate reasoning traces internally as part of the inference pass. You don't prompt for deliberation; you control the depth.
+1. **Reasoning became native, not prompted.** Chain-of-thought in 2024 was
+   something you asked for. In 2025–2026, models like o1, o3, DeepSeek-R1,
+   Claude with extended thinking, and Gemini Deep Think generate reasoning
+   traces internally as part of the inference pass. You don't prompt for
+   deliberation; you control the depth.
 
-2. **Agentic loops forced deliberation.** Read → think → act → observe → think → act is now the standard agent pattern. You can't pattern-match a file read and a write without the loop forcing you to look at the output. The architecture itself enforces System 2.
+2. **Agentic loops forced deliberation.** Read → think → act → observe → think →
+   act is now the standard agent pattern. You can't pattern-match a file read
+   and a write without the loop forcing you to look at the output. The
+   architecture itself enforces System 2.
 
 ## The remaining gap
 
@@ -71,10 +88,23 @@ Different problem, same Kahneman.
 
 ### References
 
-- Li, Z.-Z. et al. (2025). "From System 1 to System 2: A Survey of Reasoning Large Language Models." arXiv:2502.17419.
-- Guiomar, G. et al. (2026). "Reasoning Aligns Language Models to Human Cognition." arXiv:2602.08693.
-- Tak, A.N. et al. (2026). "Sparks of Rationality: Do Reasoning LLMs Align with Human Judgment and Choice?" arXiv:2601.22329.
-- Fu, Z. et al. (2026). "ReEfBench: Quantifying the Reasoning Efficiency of LLMs." arXiv:2601.03550.
-- Chen, W.-L. et al. (2026). "Think Deep, Not Just Long: Measuring LLM Reasoning Effort via Deep-Thinking Tokens." arXiv:2602.13517.
-- Zhang, J. et al. (2025). "ALPHAONE: Reasoning Models Thinking Slow and Fast at Test Time." EMNLP 2025.
-- Anonymous (2026). "Reasoning on a Spectrum: Aligning LLMs to System 1 and System 2 Thinking." ICLR 2026 under review.
+- Li, Z.-Z. et al. (2025). "From System 1 to System 2: A Survey of Reasoning
+  Large Language Models." arXiv:2502.17419.
+
+- Guiomar, G. et al. (2026). "Reasoning Aligns Language Models to Human
+  Cognition." arXiv:2602.08693.
+
+- Tak, A.N. et al. (2026). "Sparks of Rationality: Do Reasoning LLMs Align with
+  Human Judgment and Choice?" arXiv:2601.22329.
+
+- Fu, Z. et al. (2026). "ReEfBench: Quantifying the Reasoning Efficiency of
+  LLMs." arXiv:2601.03550.
+
+- Chen, W.-L. et al. (2026). "Think Deep, Not Just Long: Measuring LLM Reasoning
+  Effort via Deep-Thinking Tokens." arXiv:2602.13517.
+
+- Zhang, J. et al. (2025). "ALPHAONE: Reasoning Models Thinking Slow and Fast at
+  Test Time." EMNLP 2025.
+
+- Anonymous (2026). "Reasoning on a Spectrum: Aligning LLMs to System 1 and
+  System 2 Thinking." ICLR 2026 under review.

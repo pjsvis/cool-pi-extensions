@@ -13,17 +13,33 @@ The Edinburgh Protocol's SILO DISCIPLINE constrains the agent to the repository 
 A blanket "the agent may edit anywhere under `~/.pi/`" would be too broad: `~/.pi/agent/auth.json` holds API keys and OAuth tokens, and secrets (skate) must remain the user's domain. The exception needs to be **narrow, named, and exclusive of secrets**.
 
 **Enforcement reality (verified 2026-07-10; reconciled 2026-07-29, td-077b8d):**
-- The silo extension is installed at `~/.pi/agent/extensions/silo/` as a **symlink** to the repo source `src/extensions/silo/` — matching `defuddle` and `edinburgh-evals`. (Previously a stale separate copy that had drifted from the repo; reconciled 2026-07-29. The stale copy is preserved at `~/.pi/agent/extensions/silo.bak.20260729-152335`.)
-- Its global config sets `"siloRoot": "/path/to/repo"` — a placeholder that does not exist, so the extension **self-disables** (`existsSync` fails → `sandboxEnabled = false`). Silo is therefore **not currently enforcing**; "I'm staying in" is a policy constraint, not a hard code boundary, in this repo today. This is intentional pending `allowedPaths` (see Implementation) — activating a real `siloRoot` now would hard-block the Pi-config work this exception exists to permit.
-- Pi config files present: `models.json` (provider/model definitions), `settings.json` (settings), `auth.json` (secrets, mode 600).
+- The silo extension is installed at `~/.pi/agent/extensions/silo/` as a
+  **symlink** to the repo source `src/extensions/silo/` — matching `defuddle`
+  and `edinburgh-evals`. (Previously a stale separate copy that had drifted from
+  the repo; reconciled 2026-07-29. The stale copy is preserved at
+  `~/.pi/agent/extensions/silo.bak.20260729-152335`.)
+
+- Its global config sets `"siloRoot": "/path/to/repo"` — a placeholder that does
+  not exist, so the extension **self-disables** (`existsSync` fails →
+  `sandboxEnabled = false`). Silo is therefore **not currently enforcing**; "I'm
+  staying in" is a policy constraint, not a hard code boundary, in this repo
+  today. This is intentional pending `allowedPaths` (see Implementation) —
+  activating a real `siloRoot` now would hard-block the Pi-config work this
+  exception exists to permit.
+
+- Pi config files present: `models.json` (provider/model definitions),
+  `settings.json` (settings), `auth.json` (secrets, mode 600).
 
 ## Decision
 
 **A single, scoped exception to SILO DISCIPLINE for this repo.** The agent MAY read and edit the Pi agent **configuration** files `~/.pi/agent/models.json` and `~/.pi/agent/settings.json` on the user's behalf.
 
 The exception is **narrow and exclusive**. It does NOT extend to:
-- `~/.pi/agent/auth.json` or any file containing API keys, OAuth tokens, or credentials.
+- `~/.pi/agent/auth.json` or any file containing API keys, OAuth tokens, or
+  credentials.
+
 - skate secrets (`skate get` / `skate set`) — secrets remain the user's domain.
+
 - any other path outside the repo.
 
 This is the **sole** exception to "I'm staying in." All other out-of-repo requests continue to be declined.
@@ -34,38 +50,77 @@ This is the **sole** exception to "I'm staying in." All other out-of-repo reques
 
 ### Alternative A: No exception — user edits Pi config manually
 - **Pros:** Maximally conservative; silo stays intact.
-- **Cons:** Defeats the purpose of an agent in a Pi-configuration repo; reduces the agent to a snippet-generator for the exact work the repo exists to do. **Reject.**
+
+- **Cons:** Defeats the purpose of an agent in a Pi-configuration repo; reduces
+  the agent to a snippet-generator for the exact work the repo exists to do.
+  **Reject.**
 
 ### Alternative B: Blanket exception for all of `~/.pi/`
 - **Pros:** Simple; no enumeration.
-- **Cons:** Co-mingles secrets (`auth.json`, skate); a broad hole in the boundary. Violates the secrets-stay-user's-domain principle. **Reject.**
+
+- **Cons:** Co-mingles secrets (`auth.json`, skate); a broad hole in the
+  boundary. Violates the secrets-stay-user's-domain principle. **Reject.**
 
 ### Alternative C: In-repo extensions only, never edit `models.json`
 - **Pros:** Everything version-controlled; silo never breached.
-- **Cons:** Extensions cannot express all runtime state — removing a built-in provider, personal overrides, default-model selection still require `models.json` / `settings.json`. Partial. **Adopt extensions as the preferred path for definitions**, but keep the `models.json` / `settings.json` exception for runtime state.
+
+- **Cons:** Extensions cannot express all runtime state — removing a built-in
+  provider, personal overrides, default-model selection still require
+  `models.json` / `settings.json`. Partial. **Adopt extensions as the preferred
+  path for definitions**, but keep the `models.json` / `settings.json` exception
+  for runtime state.
 
 **Chosen:** Scoped exception for `models.json` + `settings.json` only; secrets excluded; extensions preferred for durable definitions.
 
 ## Consequences
 
 ### Positive
-- The agent can manage Pi config end-to-end (provider wiring, model exposure, cerebras retirement — Decision 014) without degrading to copy-paste handoffs.
+- The agent can manage Pi config end-to-end (provider wiring, model exposure,
+  cerebras retirement — Decision 014) without degrading to copy-paste handoffs.
+
 - The exception is named and bounded — auditable at quarterly barnacle review.
+
 - Secrets boundary preserved: `auth.json` and skate remain out of scope.
 
 ### Negative
-- A deliberate, narrow hole in the silo. **Mitigated by:** two-file scope, explicit secrets exclusion, documented here and in `AGENTS.md`.
-- **Enforcement gap (current):** because silo is inactive today (placeholder `siloRoot`), this exception is policy-only. If silo is later activated with a real `siloRoot`, the extension will hard-block `~/.pi/agent/` — the exception would become unenforceable. Closing this requires an `allowedPaths` mechanism in the silo extension (see Implementation).
+- A deliberate, narrow hole in the silo. **Mitigated by:** two-file scope,
+  explicit secrets exclusion, documented here and in `AGENTS.md`.
+
+- **Enforcement gap (current):** because silo is inactive today (placeholder
+  `siloRoot`), this exception is policy-only. If silo is later activated with a
+  real `siloRoot`, the extension will hard-block `~/.pi/agent/` — the exception
+  would become unenforceable. Closing this requires an `allowedPaths` mechanism
+  in the silo extension (see Implementation).
 
 ## Implementation
 
-- **`AGENTS.md`** — exception clause added (loaded into every session's context). This is the operative "explicit in the repo" surface.
+- **`AGENTS.md`** — exception clause added (loaded into every session's
+  context). This is the operative "explicit in the repo" surface.
+
 - **This ADR** — full rationale, scope, and enforcement-gap record.
-- **Enforcement follow-up (~~pending~~ DONE 2026-07-29, td-788f5b):** `allowedPaths` field added to the silo extension (`src/extensions/silo/check.ts` `isPathAllowed` + `checkCommand`; `index.ts` threads `config.allowedPaths` into both the bash-tool and interactive-bash paths). Matching is **exact-resolved-path, never prefix** — verified by `check.test.ts` (`auth.json` stays blocked when `models.json` is allowed; sibling/prefix attacks fail). Project config declared at `.pi/silo.json` (this repo) listing the two permitted files. The placeholder `siloRoot` is intentionally retained — silo remains self-disabled until a real `siloRoot` is set; `allowedPaths` is honoured the moment silo activates. Security-relevant change; reviewed in td-788f5b.
+
+- **Enforcement follow-up (~~pending~~ DONE 2026-07-29, td-788f5b):**
+  `allowedPaths` field added to the silo extension
+  (`src/extensions/silo/check.ts` `isPathAllowed` + `checkCommand`; `index.ts`
+  threads `config.allowedPaths` into both the bash-tool and interactive-bash
+  paths). Matching is **exact-resolved-path, never prefix** — verified by
+  `check.test.ts` (`auth.json` stays blocked when `models.json` is allowed;
+  sibling/prefix attacks fail). Project config declared at `.pi/silo.json` (this
+  repo) listing the two permitted files. The placeholder `siloRoot` is
+  intentionally retained — silo remains self-disabled until a real `siloRoot` is
+  set; `allowedPaths` is honoured the moment silo activates. Security-relevant
+  change; reviewed in td-788f5b.
 
 ## References
 
-- Edinburgh Protocol — SILO DISCIPLINE (`prompts/edinburgh-protocol.md`; global `~/.pi/agent/AGENTS.md`)
-- Silo extension: `src/extensions/silo/index.ts` (source); installed at `~/.pi/agent/extensions/silo/` (**symlink** to source since td-077b8d, 2026-07-29)
+- Edinburgh Protocol — SILO DISCIPLINE (`prompts/edinburgh-protocol.md`; global
+  `~/.pi/agent/AGENTS.md`)
+
+- Silo extension: `src/extensions/silo/index.ts` (source); installed at
+  `~/.pi/agent/extensions/silo/` (**symlink** to source since td-077b8d,
+  2026-07-29)
+
 - Pi custom-provider docs: `docs/custom-provider.md` (`pi.registerProvider()`)
-- Decision 014 (pending) — model/provider wiring this exception enables: Z.ai primary, cerebras retired, ZenMux wired
+
+- Decision 014 (pending) — model/provider wiring this exception enables: Z.ai
+  primary, cerebras retired, ZenMux wired

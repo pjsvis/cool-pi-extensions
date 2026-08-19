@@ -120,9 +120,15 @@ The human and you work in the same herdr session. They have a tab with pi (that'
 
 For you (the agent):
 - **td** — your working memory and handoff protocol
+
 - **silo** — soft filesystem boundary, blocks literal paths outside the repo
-- **edinburgh-evals** — behavioral gate, trap vectors test your adherence to the Edinburgh Protocol
-- **defuddle** — you can fetch any webpage as clean Markdown (your web access tool)
+
+- **edinburgh-evals** — behavioral gate, trap vectors test your adherence to the
+  Edinburgh Protocol
+
+- **defuddle** — you can fetch any webpage as clean Markdown (your web access
+  tool)
+
 - The pi runtime with its tools and extensions
 
 For them (the human):
@@ -147,9 +153,14 @@ Terminal (Alacritty)
 ```
 
 Each layer is the same pattern at a different scale:
-- **Small surface area.** Each context is bounded. You can't escape your silo. The worktree is isolated. The session has a clear purpose.
-- **Clear boundaries.** Worktrees don't share filesystems. Sessions don't share terminal state. You don't share memory.
-- **Observable state.** td captures what happened. sidecar shows what's happening. The human sees the whole picture; you see your slice.
+- **Small surface area.** Each context is bounded. You can't escape your silo.
+  The worktree is isolated. The session has a clear purpose.
+
+- **Clear boundaries.** Worktrees don't share filesystems. Sessions don't share
+  terminal state. You don't share memory.
+
+- **Observable state.** td captures what happened. sidecar shows what's
+  happening. The human sees the whole picture; you see your slice.
 
 The human occupies the meta-layer. They can drop into any tab, any worktree, any agent context. They don't need to. sidecar shows them enough.
 
@@ -255,9 +266,15 @@ The stack is documented in `playbooks/`. Give a visiting agent the URL to a play
 
 **What we'd change:**
 
-- More explicit documentation of the observability layer (td + sidecar). They are infrastructure, not tools.
-- Earlier ADR documentation. The table rendering decision (ADR-001) should have been recorded before the first table was converted, not after.
-- A clearer shared/separate affordances map. The distinction between what the human and agent each have is the most interesting property of the system — it deserves explicit documentation.
+- More explicit documentation of the observability layer (td + sidecar). They
+  are infrastructure, not tools.
+
+- Earlier ADR documentation. The table rendering decision (ADR-001) should have
+  been recorded before the first table was converted, not after.
+
+- A clearer shared/separate affordances map. The distinction between what the
+  human and agent each have is the most interesting property of the system — it
+  deserves explicit documentation.
 
 ---
 

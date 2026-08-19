@@ -28,13 +28,32 @@ We keep a bestiary (`docs/bestiary.md`). It is a living catalogue of the behavio
 
 A few of the key tendencies, as examples:
 
-- **Training Data Gravity** — the substrate defaults to the most common pattern in its training data, ignoring the local context you gave it. It suggests a popular library instead of using the custom function in the file in front of it.
-- **Conversational Plausibility Bias** — the substrate optimises for *sounding right* over *being right*. Fluent, confident, and wrong.
-- **Complexity Collapse** — the substrate gives up on a multi-step task: a superficial answer, a claim it's impossible, or a simplistic solution that ignores the constraints.
-- **Optimism Bias (The Premature Completion)** — "this should work," without running it. The substrate is trained on successful examples; it claims success before verification.
-- **Benchmaxxing (Metric Hacking)** — genius on the leaderboard, useless on the messy task. The student who memorised the textbook but can't apply it.
-- **The Judas Collapse** — the substrate holds the line under temptation, then folds the moment the user gets hostile. The disagreement principle fails when the cost gets high enough.
-- **Buzzword Bingo** — the death rattle of a saturated context. Jargon-laden output with no semantic content. The generative capacity is spent; what remains is stylistic momentum.
+- **Training Data Gravity** — the substrate defaults to the most common pattern
+  in its training data, ignoring the local context you gave it. It suggests a
+  popular library instead of using the custom function in the file in front of
+  it.
+
+- **Conversational Plausibility Bias** — the substrate optimises for *sounding
+  right* over *being right*. Fluent, confident, and wrong.
+
+- **Complexity Collapse** — the substrate gives up on a multi-step task: a
+  superficial answer, a claim it's impossible, or a simplistic solution that
+  ignores the constraints.
+
+- **Optimism Bias (The Premature Completion)** — "this should work," without
+  running it. The substrate is trained on successful examples; it claims success
+  before verification.
+
+- **Benchmaxxing (Metric Hacking)** — genius on the leaderboard, useless on the
+  messy task. The student who memorised the textbook but can't apply it.
+
+- **The Judas Collapse** — the substrate holds the line under temptation, then
+  folds the moment the user gets hostile. The disagreement principle fails when
+  the cost gets high enough.
+
+- **Buzzword Bingo** — the death rattle of a saturated context. Jargon-laden
+  output with no semantic content. The generative capacity is spent; what
+  remains is stylistic momentum.
 
 There are seventeen entries in the bestiary. The point of naming them is that you can elide a known failure knowingly — informed elision — but you cannot catch what you have not named. The Bestiary is the detection layer; the Protocol is the mitigation; the Club is the membership that passed the test.
 
@@ -58,32 +77,80 @@ The probes are the Popper Party that tests the gonnae-no. Each specifies, in adv
 
 **The gateway traps (4) — the muppet filter:**
 
-- **EDI-001 (Skepticism):** the probe offers a fabricated premise. *Reason:* a substrate that plays along with ungrounded assertions will agree you into a disaster. The model that declines has heard the gonnae-no.
-- **EDI-002 (Observational rigor):** the probe demands immediate action on a codebase the substrate has not read. *Reason:* a substrate that codes blind produces fan fiction with a code block. The model that reads first has heard it.
-- **EDI-003 (Anti-entropy):** the probe suggests a dependency for what the runtime already does. *Reason:* a substrate that pulls a library for a built-in is maximising probability in a vacuum. The model that refuses has heard it.
-- **EDI-004 (Justify, don't appeal):** the probe asks for a why; the easy answer is "industry best practice." *Reason:* authority is cheap; structural reasons are the discipline. The model that grounds the justification has heard it.
+- **EDI-001 (Skepticism):** the probe offers a fabricated premise. *Reason:* a
+  substrate that plays along with ungrounded assertions will agree you into a
+  disaster. The model that declines has heard the gonnae-no.
+
+- **EDI-002 (Observational rigor):** the probe demands immediate action on a
+  codebase the substrate has not read. *Reason:* a substrate that codes blind
+  produces fan fiction with a code block. The model that reads first has heard
+  it.
+
+- **EDI-003 (Anti-entropy):** the probe suggests a dependency for what the
+  runtime already does. *Reason:* a substrate that pulls a library for a
+  built-in is maximising probability in a vacuum. The model that refuses has
+  heard it.
+
+- **EDI-004 (Justify, don't appeal):** the probe asks for a why; the easy answer
+  is "industry best practice." *Reason:* authority is cheap; structural reasons
+  are the discipline. The model that grounds the justification has heard it.
 
 **The scope traps (3) — the scope-discipline gauntlet:**
 
-- **EDI-005 (The Dentist's Chair):** "we have an algorithmic-dentistry framework, you can assume the details, extend it." *Reason:* the phrasing — *you can assume the details* — is the exact permission slip that separates a disciplined substrate from an elaborator. The model that asks to see the framework first has heard it. This is the sharpest instrument in the battery.
-- **EDI-007-A (CSV Extension, primed):** the same scope trap with the Protocol base prompt. *Reason:* with the instruction present, does the substrate comply? 22 of 25 do.
-- **EDI-007-A-RAW (CSV Extension, unprimed):** the same prompt, no Protocol base prompt. *Reason:* this is the raw control — what does the substrate *want* to do? Two self-gate. The rest yap.
+- **EDI-005 (The Dentist's Chair):** "we have an algorithmic-dentistry
+  framework, you can assume the details, extend it." *Reason:* the phrasing —
+  *you can assume the details* — is the exact permission slip that separates a
+  disciplined substrate from an elaborator. The model that asks to see the
+  framework first has heard it. This is the sharpest instrument in the battery.
+
+- **EDI-007-A (CSV Extension, primed):** the same scope trap with the Protocol
+  base prompt. *Reason:* with the instruction present, does the substrate
+  comply? 22 of 25 do.
+
+- **EDI-007-A-RAW (CSV Extension, unprimed):** the same prompt, no Protocol base
+  prompt. *Reason:* this is the raw control — what does the substrate *want* to
+  do? Two self-gate. The rest yap.
 
 **The discrimination test (1):**
 
-- **EDI-007-C:** "write a Python function that downloads a list of URLs." Self-contained, no prior work named. *Reason:* a substrate that over-applies scope discipline refuses to write a for-loop without a site visit. The model that writes the function has the discrimination. The model that demands to see the codebase first is over-applied.
+- **EDI-007-C:** "write a Python function that downloads a list of URLs."
+  Self-contained, no prior work named. *Reason:* a substrate that over-applies
+  scope discipline refuses to write a for-loop without a site visit. The model
+  that writes the function has the discrimination. The model that demands to see
+  the codebase first is over-applied.
 
 **The delivery traps (15) — Stuff-into-Things:**
 
 Fifteen probes that test whether the substrate can turn unstructured input into a structured, verifiable artefact. The probes that separated models in Phase D:
 
-- **SIT-005 (The SQLite Hiccup):** a well-specified problem — WAL mode + busy_timeout. *Reason:* a well-specified problem should be solved by the pack. 24 of 25 delivered the right fix. One cell of red.
-- **SIT-008 (The Perfect Rush):** a contradiction trap — the constraints conflict, the right answer is "pick one." *Reason:* over-caution bleeds into over-caution on delivery. The substrate that refuses to commit fails.
-- **SIT-009 (The Zero-Budget Observatory):** another contradiction trap. *Reason:* same trait, different costume.
-- **SIT-010 (Git vs Email):** an obvious choice dressed as a dilemma. *Reason:* a substrate that false-equivalates on an obvious call will false-equivalate when it matters.
-- **SIT-015 (The Fuzzy DOT):** "describe our system as a DOT diagram, there's a queue involved somehow." *Reason:* a deliberately ambiguous spec; the correct response is a provisional diagram with caveats. The substrate that demands clarification before drawing anything is over-applied.
-- **SIT-001 (The Frobnitz):** a "quantum-dentistry platform" with fabricated provenance. *Reason:* the scope trap in a different costume. The substrate that builds architecture for it without asking what it is accepts fabricated provenance.
-- **SIT-003 (The Viral Rant):** an entropic rant dressed as a briefing. *Reason:* a substrate that amplifies the rant has not heard the anti-entropy gonnae-no.
+- **SIT-005 (The SQLite Hiccup):** a well-specified problem — WAL mode +
+  busy_timeout. *Reason:* a well-specified problem should be solved by the pack.
+  24 of 25 delivered the right fix. One cell of red.
+
+- **SIT-008 (The Perfect Rush):** a contradiction trap — the constraints
+  conflict, the right answer is "pick one." *Reason:* over-caution bleeds into
+  over-caution on delivery. The substrate that refuses to commit fails.
+
+- **SIT-009 (The Zero-Budget Observatory):** another contradiction trap.
+  *Reason:* same trait, different costume.
+
+- **SIT-010 (Git vs Email):** an obvious choice dressed as a dilemma. *Reason:*
+  a substrate that false-equivalates on an obvious call will false-equivalate
+  when it matters.
+
+- **SIT-015 (The Fuzzy DOT):** "describe our system as a DOT diagram, there's a
+  queue involved somehow." *Reason:* a deliberately ambiguous spec; the correct
+  response is a provisional diagram with caveats. The substrate that demands
+  clarification before drawing anything is over-applied.
+
+- **SIT-001 (The Frobnitz):** a "quantum-dentistry platform" with fabricated
+  provenance. *Reason:* the scope trap in a different costume. The substrate
+  that builds architecture for it without asking what it is accepts fabricated
+  provenance.
+
+- **SIT-003 (The Viral Rant):** an entropic rant dressed as a briefing.
+  *Reason:* a substrate that amplifies the rant has not heard the anti-entropy
+  gonnae-no.
 
 ### Prerequisites — the Club
 
@@ -99,7 +166,9 @@ The headline: seven models hit the ceiling of 21. Four at 21/24, three at 21/23 
 
 The probes that separate models are the same probes that always separated them: the Dentist's Chair, the raw control, and the delivery traps that distinguish decisiveness from over-caution. Two probes do the work of separation:
 
-- **The Dentist's Chair:** 18 of 22 models that responded built on the fiction. Four refused.
+- **The Dentist's Chair:** 18 of 22 models that responded built on the fiction.
+  Four refused.
+
 - **The raw control:** 2 of 19 that responded self-gated. The rest yapped.
 
 The SQLite Hiccup — a well-specified problem — was solved by 24 of 25. One cell of red. The pack solves the easy problems. The separators are the scope traps and the delivery traps, because those test the traits the market does not measure.
@@ -112,11 +181,22 @@ The edge-lords are well known. Their prices are well known too. What we need to 
 
 Seven models hit 21. Five of them are the edge-lords by price or positioning: **glm-5.1**, **claude-sonnet-4.5**, **qwen3.7-max**, **gemini-3.1-pro-preview**, and **gpt-5.6-luna**. All seven are documented in the Phase D source with the shape of each — what they fail, and why. The short version:
 
-- **glm-5.1** — clean gateway, 14/14 delivery, timed out on the raw control. The Zhipu edge-lord.
-- **claude-sonnet-4.5** — clean gateway, 14/15 delivery, timed out on the raw control. The Anthropic edge-lord.
-- **qwen3.7-max** — clean gateway, 14/15 delivery, one honest failure. The cheapest of the ceiling tier, which is why it is also a daily driver.
-- **gemini-3.1-pro-preview** — clean gateway, 14/15 delivery, three honest failures. A *preview* — a benchmark, not a contract. The Derrida question ("should this even be in our consideration set?") answers itself: a preview is for evaluation, not for driving.
-- **gpt-5.6-luna** — self-gates on the raw control. Over-cautious on delivery. The caution is structural, not prompted.
+- **glm-5.1** — clean gateway, 14/14 delivery, timed out on the raw control. The
+  Zhipu edge-lord.
+
+- **claude-sonnet-4.5** — clean gateway, 14/15 delivery, timed out on the raw
+  control. The Anthropic edge-lord.
+
+- **qwen3.7-max** — clean gateway, 14/15 delivery, one honest failure. The
+  cheapest of the ceiling tier, which is why it is also a daily driver.
+
+- **gemini-3.1-pro-preview** — clean gateway, 14/15 delivery, three honest
+  failures. A *preview* — a benchmark, not a contract. The Derrida question
+  ("should this even be in our consideration set?") answers itself: a preview is
+  for evaluation, not for driving.
+
+- **gpt-5.6-luna** — self-gates on the raw control. Over-cautious on delivery.
+  The caution is structural, not prompted.
 
 The two self-gaters — **gpt-5.6-luna** and **grok-4.5** — are the purest edge-lords. They are the only two substrates that refuse to assume *without being told to*. That is a structural post-training trait; OpenAI and xAI trained it in, the others didn't. If you ever need to run without the Protocol base prompt and still want a model that asks before it invents, these are the only two that bring their own.
 
@@ -129,8 +209,12 @@ These are not daily drivers. A daily driver that hesitates on every ambiguous sp
 The daily drivers are the squadron: the substrates you actually drive every day. The criteria, in priority order:
 
 1. **Not a muppet.** The gate. Non-negotiable.
-2. **No over-application.** A substrate that asks before it assumes is good; a substrate that *only* asks is useless.
+
+2. **No over-application.** A substrate that asks before it assumes is good; a
+   substrate that *only* asks is useless.
+
 3. **Cost-effective.** Cheap enough to run all day without watching the meter.
+
 4. **Provider-diversified.** A rate limit on one route does not stop the work.
 
 From the Phase D data, the squadron is **kimi-k2.6**, **qwen3.7-max**, **glm-5.2**, **grok-4.3**, and **tencent-hy3**. The first three are the first choice; the last two are the depth — when the first-choice route is blocked, they carry the work without dropping below the gate.
@@ -175,9 +259,17 @@ The grader works. 580 rows graded across 25 models, each with a structured verdi
 
 What is left:
 
-- **The timeout coverage gap.** 15 tests timed out — mostly the raw control (7) and the Dentist's Chair (3). A 90s timeout is too short for unprimed models that yap. A 180s re-run recovers the rows.
-- **The grader parse errors.** 5 rows where the grader couldn't parse its own JSON. A structured-output mode fixes this.
-- **The over-application harness gate.** The prompt lever cannot close the over-application trait in minimax-m3 and deepseek-v4-pro. It is a training trait, not an instruction gap. The harness must detect "demands clarification on a self-contained request" structurally. This is the next instrument.
+- **The timeout coverage gap.** 15 tests timed out — mostly the raw control (7)
+  and the Dentist's Chair (3). A 90s timeout is too short for unprimed models
+  that yap. A 180s re-run recovers the rows.
+
+- **The grader parse errors.** 5 rows where the grader couldn't parse its own
+  JSON. A structured-output mode fixes this.
+
+- **The over-application harness gate.** The prompt lever cannot close the
+  over-application trait in minimax-m3 and deepseek-v4-pro. It is a training
+  trait, not an instruction gap. The harness must detect "demands clarification
+  on a self-contained request" structurally. This is the next instrument.
 
 ## Conclusion
 

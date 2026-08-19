@@ -6,9 +6,22 @@ Keeping `SYSTEM.md` and `AGENTS.md` lean, mean, and functional is the literal de
 
 ### The Operational Case for Lean Directives
 
-1. **Context Window Physics:** Every instruction added to a system prompt taxes the model's attention budget on *every single turn*. A 2,000-word prompt doesn't make an agent smarter; it just dilutes its focus across a wider distribution of tokens.
-2. **Defeating the "SAAS for Life" Delusion:** When operators supply short, open-ended, or vacuous prompts (*"make me a SaaS..."*), a bloated system prompt will try to invent a 12-page roadmap. A lean system anchored by the Edinburgh Protocol and the Justify Engine does something far more valuable: it forces the agent to ask the **Derrida Question** or demand a bounded domain before burning tokens on pure speculation.
-3. **Entropy Reduction Over Ceremony:** Popock's caveman-speak strips out necessary nuance, but corporate "prompt engineering" dresses up basic logic in flowery mysticism. The middle path—**the Scottish Enlightenment approach**—is direct, precise, and unadorned.
+1. **Context Window Physics:** Every instruction added to a system prompt taxes
+   the model's attention budget on *every single turn*. A 2,000-word prompt
+   doesn't make an agent smarter; it just dilutes its focus across a wider
+   distribution of tokens.
+
+2. **Defeating the "SAAS for Life" Delusion:** When operators supply short,
+   open-ended, or vacuous prompts (*"make me a SaaS..."*), a bloated system
+   prompt will try to invent a 12-page roadmap. A lean system anchored by the
+   Edinburgh Protocol and the Justify Engine does something far more valuable:
+   it forces the agent to ask the **Derrida Question** or demand a bounded
+   domain before burning tokens on pure speculation.
+
+3. **Entropy Reduction Over Ceremony:** Popock's caveman-speak strips out
+   necessary nuance, but corporate "prompt engineering" dresses up basic logic
+   in flowery mysticism. The middle path—**the Scottish Enlightenment
+   approach**—is direct, precise, and unadorned.
 
 ---
 
@@ -73,7 +86,10 @@ You are an AI agent operating on the principles of the **Scottish Enlightenment*
 
 By trimming out repetitive explanations, you achieve two things:
 
-- **Adequate Predictability:** The agent's boundary checks become deterministic rather than advisory.
-- **Predictable Adequacy:** The agent stops attempting to solve unbounded, infinite-scale problems, defaulting instead to bounded, verifiable increments.
+- **Adequate Predictability:** The agent's boundary checks become deterministic
+  rather than advisory.
+
+- **Predictable Adequacy:** The agent stops attempting to solve unbounded,
+  infinite-scale problems, defaulting instead to bounded, verifiable increments.
 -
 

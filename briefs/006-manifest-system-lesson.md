@@ -13,9 +13,12 @@ decide whether a lightweight version belongs in `cool-pi-extensions`.
 `cool-pi-extensions` has already accumulated small consistency drift:
 
 - `MANIFEST.md` missed three docs
+
 - `.flox/env/manifest.toml` still referenced the old `cli/pi-models` path
+
 - `playbooks/terminal-stack.md` used `npm install` after the project standard
   moved to `bun install`
+
 - A doc referenced `cli/pi-check/edinburgh-eval.ts` after the move to `src/cli/`
 
 These are not architectural failures. They are barnacles: small barnacles, but
@@ -26,12 +29,17 @@ barnacles nonetheless.
 `TradingAgents` has a much more formal system:
 
 1. **`SILO_MANIFEST.md`** — single orientation document for agents.
+
 2. **`*/INDEX.jsonl` registries** — briefs, debriefs, decisions, docs, playbooks,
    code, scripts, lexicon.
+
 3. **`scripts/reg.ts`** — unified registry CLI (`list`, `sync`, `check`, `enrich`,
    `mine`, `import`, `promote`, `state`, `scripts`).
+
 4. **`scripts/reg-sync.ts`** — compares disk files against JSONL indexes.
+
 5. **`scripts/reg-check.ts`** — validates JSONL schema.
+
 6. **`scripts/barnacle-scrubber.ts`** — mechanical + optional LLM scan for stale
    docs, path rewrites, redundant prose, and drydock quarantine.
 
@@ -81,6 +89,8 @@ That is enough to stop barnacles forming at the documentation boundary.
 ## Follow-up
 
 - Run `just check-manifest` after documentation changes.
+
 - Add new path-drift checks only when a real migration happens.
+
 - Do **not** import TradingAgents' full registry machinery here unless this repo
   grows into a much larger codebase.

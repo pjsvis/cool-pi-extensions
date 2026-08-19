@@ -11,7 +11,9 @@
 An agent given this playbook and a target repo (new or existing) will:
 
 1. **Review** the repo's current state — what's there, what's missing.
+
 2. **Propose** a retrofit plan — what to add, what to change, what to leave.
+
 3. **Carry out** the plan using `td` for task tracking and the Edinburgh
    Protocol for behavioural constraints, in bounded phases with handoffs.
 
@@ -116,7 +118,9 @@ td status 2>/dev/null          # existing task memory?
 
 The agent reports:
 - **What exists** — structure, tooling, documentation.
+
 - **What's missing** — which of the four layers are absent.
+
 - **What's already there but named differently** — e.g. `docs/` instead of
   `briefs/`, a wiki instead of `decisions/`.
 
@@ -177,10 +181,13 @@ A fresh session should be able to run `just orient` and understand the project.
 - **Don't copy this repo's content wholesale.** The briefs, decisions, and
   playbooks in this repo are specific to this repo's history. A retrofitted
   repo grows its own.
+
 - **Don't create all four directories upfront.** Empty directories are entropy.
   Create them when the work demands them.
+
 - **Don't replace existing structure that works.** If the repo has a `docs/`
   folder that serves as `briefs/`, map it — don't rename it.
+
 - **Don't skip the handoff.** Bounded phases without handoffs are just short
   sessions. The handoff is what makes the newup safe.
 
@@ -192,8 +199,10 @@ This playbook's phases are bounded by design. Each phase is a logical unit of
 work. Between phases, the agent hands off and new up:
 
 - `td handoff` captures the compressed state.
+
 - `/new` starts a fresh session and drops the accumulated transcript (NOT
   `/clear` — `/clear` does not empty the context window; only `/new` does).
+
 - `td context` resumes from the handoff.
 
 This is not optional. A retrofit that runs as a single long session is the
