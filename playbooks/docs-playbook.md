@@ -36,31 +36,9 @@ The JSON fixture is a runtime dependency — the extension reads it directly. Th
 - Keep the narrative voice consistent with the Edinburgh Protocol: precise,
   dryly witty, anti-bloat
 
-### List spacing (loosen numbered lists; bullets stay tight)
+### List spacing
 
-Two rules, split by axis.
-
-**Soft-wrap by length (both types):** any list item >80 cols is soft-wrapped
-at word boundaries so no line exceeds the terminal (`scripts/softwrap-lists.py`).
-This is the 80-col discipline — applies to bullets and numbered lists alike.
-
-**Loosen by type:**
-
-1. **Numbered lists → loose** (blank line between items). A numbered list is a
-   guided tour: the reader processes step 1, then step 2. The blank line gives
-   the rhythm a sequence deserves, even when items are short.
-
-2. **Bullets → tight.** A bullet list is a scannable set, not a sequence;
-   compact is the point. The `- ` marker disambiguates the boundary even when an
-   item wraps (the continuation indent makes the marker pop at the left margin),
-   so wrapped bullets don't need air. Exception: nested bullets or
-   multi-paragraph items loosen for *structure*, not rhythm.
-
-This supersedes the earlier "wrap → spacer" rule: the loosen trigger is type
-(numbered), not length. Wrapping bullets are tight-but-wrapped — readable,
-because the marker is the boundary. The boundary-disambiguation argument that
-drove the length-based rule turned out to be moot for bullets (the marker
-already does that job); it was only ever real for *nested* structure.
+Numbered lists get a blank line between items — a guided tour deserves room between steps. Bullets stay tight (the marker is the boundary).
 
 ## When to create a docs/ file
 
