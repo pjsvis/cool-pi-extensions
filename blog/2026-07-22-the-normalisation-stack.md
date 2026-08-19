@@ -181,7 +181,29 @@ the theory in
 Each layer is cheap. Each prevents a failure mode the others can't reach.
 The composition is the argument:
 
-```mermaid
+<!-- mermaid-to-md:art -->
+```text
+  ┌──────────────────────┐
+  │ opinion then proceed │
+  └───────────┬──────────┘
+              │
+              ▼
+    ┌───────────────────┐
+    │ Layer 1: Protocol │
+    └─────────┬─────────┘
+              │
+              ▼
+  ┌───────────────────────┐
+  │ Layer 2: Silo process │
+  └───────────┬───────────┘
+              │
+              ▼
+┌──────────────────────────┐
+│ Layer 3: Bounded context │
+└──────────────────────────┘
+```
+
+```mmd
 flowchart TD
   G["opinion then proceed"]
   L1["Layer 1: Protocol"]

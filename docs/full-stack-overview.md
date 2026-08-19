@@ -72,7 +72,29 @@ These two tools are used 90% by agents. That's the signal: when infrastructure i
 Most dev tooling is built for either humans or agents — never both in the
 same workspace. This stack is different.
 
-```mermaid
+<!-- mermaid-to-md:art -->
+```text
+                        ┌───────────┐
+                        │ Alacritty │
+                        └─────┬─────┘
+                              │
+                              ▼
+                          ┌───────┐
+                          │ herdr │
+                          └──┬┬───┘
+          ┌──────────────────┼┴─────────────────────┐
+          ▼                  ▼                      ▼
+   ┌────────────┐   ┌────────────────┐    ┌───────────────────┐
+   │ pi — agent │   │ Fresh — editor │    │ sidecar — monitor │
+   └──────┬─────┘   └────────────────┘    └───────────────────┘
+          │
+          ▼
+┌──────────────────┐
+│ td — task memory │
+└──────────────────┘
+```
+
+```mmd
 flowchart TD
   A["Alacritty"]
   H["herdr"]

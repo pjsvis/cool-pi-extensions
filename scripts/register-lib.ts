@@ -152,12 +152,15 @@ export function renderRegisterJsonl(entries: Entry[]): string {
   return entries.map((e) => JSON.stringify(e)).join("\n") + "\n";
 }
 
-/** Render one folder as a MANIFEST.md section. */
+/** Render one folder as a MANIFEST.md section.
+ *  Entries separated by blank lines per ADR-001 bold+description format
+ *  (decisions/019) — consecutive bold lines merge into paragraph blobs in
+ *  markdown renderers. */
 export function manifestSection(spec: { title: string; blurb: string }, entries: Entry[]): string {
   const lines = [`## ${spec.title}`, spec.blurb, ""];
   for (const e of entries) {
     const d = e.description ? ` — ${e.description}` : "";
-    lines.push(`**[${e.path}](${e.path})**${d}`);
+    lines.push(`**[${e.path}](${e.path})**${d}`, "");
   }
   return lines.join("\n") + "\n";
 }

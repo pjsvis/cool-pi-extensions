@@ -17,11 +17,19 @@ The entry point is the documentation. No manual, no index, no onboarding doc. Ju
 
 ## The VEST Acronym
 
-```mermaid
+<!-- mermaid-to-md:art -->
+```text
+                               ┌────────────────────┐                                    ┌──────────────────────┐
+┌─────────────────────────┐    │ Entry (teaches the │    ┌──────────────────────────┐    │ Teach (zero-friction │
+│ Visitor (knows nothing) ├───▶│      system)       ├───▶│ Self (references itself) ├───▶│      discovery)      │
+└─────────────────────────┘    └────────────────────┘    └──────────────────────────┘    └──────────────────────┘
+```
+
+```mmd
 flowchart LR
-  V["Visitor\n(knows nothing)"] --> E["Entry\n(teaches the system)"]
-  E --> S["Self\n(references itself)"]
-  S --> T["Teach\n(zero-friction discovery)"]
+  V["Visitor<br/>(knows nothing)"] --> E["Entry<br/>(teaches the system)"]
+  E --> S["Self<br/>(references itself)"]
+  S --> T["Teach<br/>(zero-friction discovery)"]
 ```
 
 | Letter | Principle | What it means |

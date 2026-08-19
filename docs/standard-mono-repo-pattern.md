@@ -22,13 +22,24 @@ that varies by repo; these four are structural:
 | `debriefs/` | Delta | What we learned — post-project reflections |
 | `playbooks/` | Meta | How to use each silo — instructions for producing data |
 
-```mermaid
+<!-- mermaid-to-md:art -->
+```text
+                                                     ┌─────────────────────────┐    ┌───────────────────┐
+┌─────────────────┐    ┌────────────────────────┐    │ Decisions (why we chose │    │ Debriefs (what we │
+│ Playbooks (how) ├╌╌╌▶│ Briefs (what to build) ├───▶│           X)            ├───▶│     learned)      │
+└────────┬────────┘    └────────────────────────┘    └─────────────────────────┘    └─────────┬─────────┘
+         ╎                          ▲                             ▲                           ▲
+         └╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┼╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┴╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┤
+                                    └─────────────────────────────────────────────────────────┘
+```
+
+```mmd
 flowchart LR
-  P["Playbooks\n(how)"] -.-> B
+  P["Playbooks<br/>(how)"] -.-> B
   P -.-> D
   P -.-> R
-  B["Briefs\n(what to build)"] --> D["Decisions\n(why we chose X)"]
-  D --> R["Debriefs\n(what we learned)"]
+  B["Briefs<br/>(what to build)"] --> D["Decisions<br/>(why we chose X)"]
+  D --> R["Debriefs<br/>(what we learned)"]
   R --> B
 ```
 
@@ -105,10 +116,20 @@ Three silos form a lifecycle:
 
 Each feeds the next. A brief triggers decisions. Decisions produce outcomes. Outcomes produce debriefs. Debriefs inform future briefs. The loop is the repository's institutional memory.
 
-```mermaid
+<!-- mermaid-to-md:art -->
+```text
+                              ┌─────────────────────────┐    ┌───────────────────┐
+┌────────────────────────┐    │ Decisions (why we chose │    │ Debriefs (what we │
+│ Briefs (what to build) ├───▶│           X)            ├───▶│     learned)      │
+└────────────────────────┘    └─────────────────────────┘    └─────────┬─────────┘
+             ▲                                                         │
+             └─────────────────────────────────────────────────────────┘
+```
+
+```mmd
 flowchart LR
-  B["Briefs\n(what to build)"] --> D["Decisions\n(why we chose X)"]
-  D --> R["Debriefs\n(what we learned)"]
+  B["Briefs<br/>(what to build)"] --> D["Decisions<br/>(why we chose X)"]
+  D --> R["Debriefs<br/>(what we learned)"]
   R --> B
 ```
 
