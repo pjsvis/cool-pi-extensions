@@ -67,6 +67,13 @@ const QWEN_KEY = process.env["DASHSCOPE_API_KEY"] || skate("qwen_api_key");
 const MOONSHOT_URL = "https://api.moonshot.ai/v1/chat/completions";
 const DASHSCOPE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions";
 const NVIDIA_KEY = process.env["NVIDIA_API_KEY"] || skate("nvidia_api_key");
+// TokenRouter — OpenAI-compatible aggregator/router (one key, many models;
+// free tier carries subsidy slugs like moonshotai/kimi-k3-free). Base URL +
+// key from skate (env overrides). skate stores the /v1 base; the chat path is
+// appended here to match the other OpenAI-compat constants (full endpoint).
+const TOKENROUTER_KEY = process.env["TOKENROUTER_API_KEY"] || skate("tokenrouter_api_key");
+const TOKENROUTER_BASE = (process.env["TOKENROUTER_API_URL"] || skate("tokenrouter_api_url") || "").replace(/\/+$/, "");
+const TOKENROUTER_URL = TOKENROUTER_BASE + "/chat/completions";
 
 // ── Utilities ───────────────────────────────────────────────────────────────
 
@@ -538,6 +545,24 @@ export async function callModel(
   const chain: ProviderEndpoint[] = [];
   const bareSlug = model.includes("/") ? model.split("/").pop()! : model;
 
+  // tokenrouter — explicit-only, exclusive routing (--provider tokenrouter).
+  // A new/unvetted router is tested in isolation: one endpoint, no first-party
+  // or cross-router fallback. If it fails, the eval fails loudly rather than
+  // silently substituting another substrate (cf. the kimi-k3 OpenRouter 429
+  // incident that masked real failures). Skips the family first-party routing
+  // (kimi→moonshot-direct) that would otherwise fire first and reject the
+  // tokenrouter-specific -free slug. Uses the B2 streaming path (tokenrouter
+  // is OpenAI-compat SSE); tool-requiring traps still route via the OpenRouter
+  // tool loop (callModelWithTools) — a known, flagged gap for this provider.
+  if (provider === "tokenrouter") {
+    if (!TOKENROUTER_KEY) throw new Error("tokenrouter key not set (checked env TOKENROUTER_API_KEY and skate tokenrouter_api_key)");
+    if (!TOKENROUTER_BASE) throw new Error("tokenrouter base url not set (checked env TOKENROUTER_API_URL and skate tokenrouter_api_url)");
+    return await streamOpenAICompat(
+      { p: "tokenrouter", m: model, k: TOKENROUTER_KEY, url: TOKENROUTER_URL },
+      systemPrompt, userPrompt, timeoutMs, TOKEN_GAP_SEC * 1000,
+    );
+  }
+
   // Direct first-party endpoints first — more reliable than resellers and
   // immune to reseller capacity limits. Skipped silently if no key is set.
   if (model.includes("kimi") || model.includes("moonshot")) {
@@ -746,7 +771,12 @@ async function callOpenRouterWithTools(
     const response = await fetch(OPENROUTER_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${OPENROUTER_KEY}` },
-      body: JSON.stringify({ model, messages, tools: enabledTools, tool_choice: "auto", temperature: 0, max_tokens: 2048 }),
+      // Match the text path's 16384 (see callOpenAICompat note): reasoning
+      // models burn a small budget on the thinking trace and return an empty
+      // visible answer — nemotron-3.5-lightning starved at 2048 on EDI-002
+      // (tool logic correct, 0 visible chars, graded fail). Reasoning + tool
+      // calls need more headroom than plain text.
+      body: JSON.stringify({ model, messages, tools: enabledTools, tool_choice: "auto", temperature: 0, max_tokens: 16384 }),
       signal: AbortSignal.timeout(timeoutMs),
     });
 

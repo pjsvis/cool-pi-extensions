@@ -82,7 +82,7 @@ export const runCommand = defineCommand({
     },
     provider: {
       type: "string",
-      description: "Route 'org/model' slugs: 'together', 'zenmux', or '' (OpenRouter, default)",
+      description: "Route 'org/model' slugs: 'together', 'zenmux', 'nim', 'tokenrouter', or '' (OpenRouter, default). tokenrouter/nim are exclusive (no fallback).",
       default: "",
     },
     exclude: {

@@ -1,7 +1,7 @@
 {"path":"prompts/edinburgh-005b-grounding-v1.json","title":"edinburgh-005b-grounding-v1","description":"","sha":"87637e0c2aff","bytes":1299}
 {"path":"prompts/edinburgh-005b-strong-v1.json","title":"edinburgh-005b-strong-v1","description":"","sha":"4d1d04c2efec","bytes":1854}
 {"path":"prompts/edinburgh-006-scope-primed-v1.json","title":"edinburgh-006-scope-primed-v1","description":"","sha":"0df8036eec4f","bytes":3950}
-{"path":"prompts/edinburgh-007-scope-agnostic-v1.json","title":"edinburgh-007-scope-agnostic-v1","description":"","sha":"0ad4d9b84eb2","bytes":4514}
+{"path":"prompts/edinburgh-007-scope-agnostic-v1.json","title":"edinburgh-007-scope-agnostic-v1","description":"","sha":"651d3ab33b50","bytes":4404}
 {"path":"prompts/edinburgh-protocol-chat.md","title":"IDENTITY: The Edinburgh Protocol — Conversational Sleeve","description":"> One substrate, many sleeves. The Edinburgh Protocol is a *family*, not a","sha":"8905d3134b72","bytes":5896}
 {"path":"prompts/edinburgh-protocol-evals-v1.json","title":"edinburgh-protocol-evals-v1","description":"","sha":"5cdd53fe1b7d","bytes":4031}
 {"path":"prompts/iq-benchmark-v1.json","title":"iq-benchmark-v1","description":"","sha":"edd5f5f67b85","bytes":11428}
