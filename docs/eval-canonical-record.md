@@ -16,16 +16,20 @@ reports are archives — dated, immutable, subordinate to the logs.
 | `data/eval_runs.jsonl` | One JSON object per line: per-run metadata (models, grader, counts, duration) | [`data/README.md`](../data/README.md) |
 | `data/scoring_matrix.jsonl` | Primed-vs-bare scoring deltas | [`data/README.md`](../data/README.md) |
 
-Query recipes (jq): see `data/README.md`. Regenerate the digest table:
+Query recipes (jq): see `data/README.md`. Regenerate the digest table in place
+(rewrites between the `BEGIN/END DIGEST` markers — never hand-edit that block):
 
 ```bash
-python3 scripts/eval-digest.py --md
+python3 scripts/eval-digest.py --update docs/eval-canonical-record.md
 ```
 
 ## Per-model digest (generated)
 
+<!-- BEGIN DIGEST -->
 | Model | Results | Pass | Rate | Latest run | Last date (UTC) |
 |---|---|---|---|---|---|
+| `google/gemini-3.7-flash` | 5 | 4 | 80% | `12740802` | 2026-08-23 |
+| `x-ai/grok-4.6` | 5 | 4 | 80% | `ae015ae0` | 2026-08-23 |
 | `nvidia/nemotron-3.5-lightning:free` | 10 | 6 | 60% | `c574a0d4` | 2026-08-19 |
 | `nvidia/nemotron-3.5-lightning-30b-a3b` | 10 | 2 | 20% | `d42ae940` | 2026-08-19 |
 | `moonshotai/kimi-k3` | 29 | 24 | 83% | `9fd7897c` | 2026-08-15 |
@@ -68,10 +72,11 @@ python3 scripts/eval-digest.py --md
 | `anthropic/claude-opus-4.8` | 24 | 20 | 83% | `f859cdcb` | 2026-07-27 |
 | `anthropic/claude-sonnet-4.5` | 24 | 21 | 88% | `f68efb72` | 2026-07-27 |
 
-*41 models, 955 logged test results.*
+*43 models, 965 logged test results.*
+<!-- END DIGEST -->
 
-Cumulative rates span fixtures and grading-era changes (regex era pre-022,
-grader-sole-verdict after 2026-07-27) — compare within an era, not across.
+Cumulative rates span fixtures and grading-era changes (pattern-engine era
+pre-022, grader-sole verdict after 2026-07-27) — compare within an era, not across.
 Run IDs link into `data/eval_log.json`: `jq 'select(.runId | startswith("<id>"))'`.
 
 ## Archive index (narrative reports — dated, immutable)
@@ -82,8 +87,11 @@ Run IDs link into `data/eval_log.json`: `jq 'select(.runId | startswith("<id>"))
 | [`docs/eval-review-q2-2026.md`](eval-review-q2-2026.md) | 2026-06 | Q2 cross-suite review (Edinburgh + IQ) |
 | [`docs/model-eval-bankruptcy.md`](model-eval-bankruptcy.md) | 2026-06 | Cost analysis companion |
 | [`docs/edinburgh-protocol-eval.md`](edinburgh-protocol-eval.md) | 2026-07 | The 22-model essay report (DeepSeek V4 Pro) |
-| `data/*.md` | dated in filename | Matrix snapshots, phase reports (Phase B/D, gap-six, NIM-six, SIT) |
+| `data/archive/` | July 2026 | Scoring-era snapshots (matrix, SIT, phase B/D, gap/NIM six) — superseded as an index, kept for citations |
+| `data/*.md` | dated in filename | Model narrative reports (current era) |
 | [`data/eval-nemotron-3.5-lightning-2026-08-19.md`](../data/eval-nemotron-3.5-lightning-2026-08-19.md) | 2026-08-19 | nemotron-3.5-lightning: muppet-exclusion FAIL (scope trap, both substrates) |
+| [`data/eval-grok-4.6-2026-08-23.md`](../data/eval-grok-4.6-2026-08-23.md) | 2026-08-23 | grok-4.6: muppet-exclusion FAIL (EDI-005 scope trap; four clean traits) |
+| [`data/eval-gemini-3.7-flash-2026-08-23.md`](../data/eval-gemini-3.7-flash-2026-08-23.md) | 2026-08-23 | gemini-3.7-flash: muppet-exclusion FAIL (EDI-005; primed traits excellent — discipline lives in the priming, not the weights) |
 
 ## Method
 

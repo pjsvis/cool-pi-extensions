@@ -205,9 +205,9 @@ The 1,223 results without `responseText` (everything before 2026-07-26) are froz
 - **Delete after Phase D.** Once the full rerun produces auditable,
   grader-graded results for the same models + fixtures, the pre-flag rows are
   superseded. At that point, archive the old `eval_log.json` to
-  `data/eval_log.pre-grader.jsonl.bak` (not delete — provenance, in case a
-  result is questioned later), and start a fresh `eval_log.json` with the Phase
-  D data as the new baseline.
+  `data/eval_log.pre-grader.jsonl.bak` (backup purged 2026-08-23 — the frozen
+  rows remain recoverable in git history), and start a fresh `eval_log.json` with
+  the Phase D data as the new baseline.
 
 - **The `eval_runs.jsonl` metadata stays.** It records what ran, when, with what
   config — useful for auditability regardless of whether the per-test results

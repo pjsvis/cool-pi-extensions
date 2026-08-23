@@ -163,6 +163,8 @@ Project briefs define **what** and **why** before code is written. Frozen when w
 
 **[briefs/2026-08-19-locke-every-day-book.md](briefs/2026-08-19-locke-every-day-book.md)** — Standard semantic retrieval (dense vector embeddings) optimizes for proximity, which reinforces convergent thinking and causes architectura…
 
+**[briefs/2026-08-23-brief-results-control-plane.md](briefs/2026-08-23-brief-results-control-plane.md)** — Three deliverables + one rename:
+
 
 ## Debriefs
 Post-implementation reflections. Capture what worked, what didn't, what to try next.
@@ -340,6 +342,8 @@ Structured reference material.
 **[docs/2026-08-06-npm-publishing-playbook.md](docs/2026-08-06-npm-publishing-playbook.md)** — How to protect your npm package from being stolen in a supply chain attack and improve its position in security ratings
 
 **[docs/2026-08-07-comparison-techniques.md](docs/2026-08-07-comparison-techniques.md)** — Luke’s presentation style in his evaluation videos (like this breakdown of *KAT Coder V2.5 Dev vs Base Qwen 35B*) works because he cuts thr…
+
+**[docs/2026-08-21-local-llm-26g.md](docs/2026-08-21-local-llm-26g.md)** — Before You Spend a Fortune on a Laptop for Local AI, See What 24GB Can Do — 16 Works Too.
 
 **[docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md](docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md)** — *Generated with [markdown-printer](https://github.com/levz0r/markdown-printer) (v1.2.0) by [Lev Gelfenbuim](https://lev.engineer)*
 

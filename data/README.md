@@ -57,6 +57,18 @@ Primed-vs-bare delta matrix for the scoring eval. Each line is a JSON object wit
 The delta (primed − bare) measures whether the Edinburgh Protocol actually
 changes model behavior. Zero or negative delta = ceremony, not anti-entropy.
 
+## Layout
+
+- `eval-<model>-<date>.md` — narrative reports for individual model evals
+  (current era, immutable once written)
+- `archive/` — July 2026 scoring-era snapshots; superseded as an index by
+  [`docs/eval-canonical-record.md`](../docs/eval-canonical-record.md)
+- `graded_matrix*.jsonl`, `phase-b-grader-delta*.jsonl` — scoring-era ground
+  truth (append-only, retained; schemas in `data/archive/README.md` era notes
+  and `briefs/2026-07-16-brief-edinburgh-eval-delta-and-sit-v2.md`)
+- `grader-mock.json` — test fixture for `src/cli/pi-eval/lib/grading.ts`
+  (not results data)
+
 ## Principles
 
 1. **Append-only**: Never delete entries, only add new ones

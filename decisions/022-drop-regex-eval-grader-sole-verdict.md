@@ -5,7 +5,7 @@
 **Supersedes:** the regex assertion engine as a behavioral verdict (not as a structural check)
 **Epic:** td-2a3099 (Replace the regex with the grader)
 **Brief:** [2026-07-26-brief-replace-regex-with-grader.md](../briefs/2026-07-26-brief-replace-regex-with-grader.md), [2026-07-27-brief-phase-c-grader-sole-scope-verdict.md](../briefs/2026-07-27-brief-phase-c-grader-sole-scope-verdict.md)
-**Evidence:** [data/phase-b-grader-delta-report.md](../data/phase-b-grader-delta-report.md) (18/112 regex errors, 16.1%)
+**Evidence:** [data/archive/phase-b-grader-delta-report.md](../data/archive/phase-b-grader-delta-report.md) (18/112 regex errors, 16.1%)
 
 ## Context
 

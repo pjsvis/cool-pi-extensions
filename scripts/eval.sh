@@ -6,12 +6,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-LOG_PATH="$REPO_ROOT/data/eval_log.json"
 
 # ── Color codes ─────────────────────────────────────────────────────────────
 CYAN='\033[0;36m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
 RED='\033[0;31m'
 DIM='\033[2m'
 RESET='\033[0m'
@@ -71,58 +68,12 @@ cmd_traps() {
 
 # ── Command: status ──────────────────────────────────────────────────────────
 cmd_status() {
-  echo -e "${CYAN}=== Edinburgh Protocol Eval Status ===${RESET}"
+  echo -e "${CYAN}=== Edinburgh Protocol Eval Results ===${RESET}"
   echo ""
-  
-  if [[ ! -f "$LOG_PATH" ]]; then
-    echo -e "${YELLOW}No eval results found (no data/eval_log.json)${RESET}"
-    echo "Run: just eval edinburgh  or  just eval traps"
-    return
-  fi
-  
-  echo -e "${GREEN}Model                     Score  Pass/Total  Last Run${RESET}"
-  echo "─────────────────────────────────────────────────────────"
-  
-  # Quick summary using grep and simple parsing
-  if command -v jq &>/dev/null; then
-    # Get unique model/test counts
-    local total_entries=$(jq -s 'length' "$LOG_PATH" 2>/dev/null)
-    local unique_models=$(jq -r '.modelId' "$LOG_PATH" 2>/dev/null | sort -u | wc -l | tr -d ' ')
-    local passed_count=$(jq -r 'select(.passed==true)' "$LOG_PATH" 2>/dev/null | wc -l | tr -d ' ')
-    
-    echo -e "  ${DIM}Total entries: $total_entries | Models: $unique_models | Passed: $passed_count${RESET}"
-    echo ""
-    
-    # Show latest per model using jq. Data is JSONL; schema: modelId, testName, passed, timestamp (epoch-ms).
-    jq -s -r '[.[] | {model: .modelId, passed: .passed, ts: .timestamp}] |
-           group_by(.model) |
-           map({model: .[0].model, passed: ([.[].passed] | map(if . then 1 else 0 end) | add), total: length, ts: (map(.ts) | max)}) |
-           sort_by(.ts) | reverse | .[:15][] | "\(.model)\t\(.passed)/\(.total)\t\(.ts)"' "$LOG_PATH" 2>/dev/null | while IFS=$'\t' read -r model score ts; do
-      if [[ -n "$model" && "$model" != "null" ]]; then
-        # timestamp is epoch-millis; convert to date+minute
-        if [[ "$ts" =~ ^[0-9]+$ ]]; then
-          date=$(date -r "$((ts/1000))" "+%Y-%m-%d %H:%M" 2>/dev/null || echo "$ts")
-        else
-          date="${ts:0:16}"
-          [[ -z "$date" ]] && date="unknown"
-        fi
-        printf "  %-30s %-6s %s\n" "$model" "$score" "$date"
-      fi
-    done
-  else
-    echo -e "  ${YELLOW}jq not installed — showing raw log tail${RESET}"
-    echo ""
-    tail -5 "$LOG_PATH" | while IFS= read -r line; do
-      model=$(echo "$line" | grep -o '"modelId":"[^"]*"' | cut -d'"' -f4)
-      test=$(echo "$line" | grep -o '"testId":"[^"]*"' | cut -d'"' -f4)
-      passed=$(echo "$line" | grep -o '"passed":[^,]*' | cut -d':' -f2)
-      echo "  $model | $test | passed=$passed"
-    done
-  fi
-  
+  python3 "$REPO_ROOT/scripts/eval-digest.py"
   echo ""
-  echo -e "${DIM}Log: $LOG_PATH${RESET}"
-  echo -e "${DIM}Run 'just eval traps' or 'just eval edinburgh' for new results${RESET}"
+  echo -e "${DIM}Drill down: just results <model> | just results run <runId>${RESET}"
+  echo -e "${DIM}Canonical index: docs/eval-canonical-record.md${RESET}"
 }
 
 

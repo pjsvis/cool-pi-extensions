@@ -22,7 +22,7 @@ We had the protocol. We had no counterfactual. The question "does the protocol d
 
 - Ran 25 models. **Net delta −0.28.** Protocol slightly hurts on average.
 
-- Result persisted: `data/matrix-2026-07-16.md`
+- Result persisted: `data/archive/matrix-2026-07-16.md`
 
 - Diagnosis: keyword scorer rewards format markers (bullet lists, hedging) that
   the protocol's philosophical register suppresses. Measuring format, not
@@ -36,7 +36,7 @@ We had the protocol. We had no counterfactual. The question "does the protocol d
 
 - Ran 25 models. **Net delta +3.81.** 14/16 positive, 0 negative.
 
-- Result persisted: `data/graded_matrix.jsonl`, `data/matrix-graded-2026-07-16.md`
+- Result persisted: `data/graded_matrix.jsonl`, `data/archive/matrix-graded-2026-07-16.md`
 
 - Grader infrastructure: `gradeResponse()` in `edinburgh-eval.ts`, supports
   `--grader` and `--grader-provider` flags
@@ -51,7 +51,7 @@ We had the protocol. We had no counterfactual. The question "does the protocol d
 - Sign test: p < 0.001 under both graders independently
 
 - Result persisted: `data/graded_matrix_gemini.jsonl`,
-  `data/matrix-triangular-2026-07-16.md`
+  `data/archive/matrix-triangular-2026-07-16.md`
 
 ### Phase 4: Stuff-into-Things v1 eval (6 tests)
 - Built fixture `prompts/stuff-into-things-v1.json` — ingestion gate (4 tests) +
@@ -62,7 +62,7 @@ We had the protocol. We had no counterfactual. The question "does the protocol d
 - Ran 22 models. Ingestion gate 96–100%. Contradiction trap 62%. Delivery gate
   83–91%.
 
-- Result persisted: `data/sit-eval-2026-07-16.md`
+- Result persisted: `data/archive/sit-eval-2026-07-16.md`
 
 ### Phase 5: Stuff-into-Things v2 eval (15 tests) — IN PROGRESS
 - Added 9 new tests: contradiction flavor pack (SIT-007/008/009), delivery
@@ -135,10 +135,10 @@ We had the protocol. We had no counterfactual. The question "does the protocol d
 - `prompts/stuff-into-things-v2.json` — 15-test fixture
 - `scripts/sit-eval.sh` — original (non-resumable) SIT eval script
 - `scripts/sit-eval-resumable.sh` — resumable version
-- `data/matrix-2026-07-16.md` — keyword scorer results
-- `data/matrix-graded-2026-07-16.md` — Qwen grader results
-- `data/matrix-triangular-2026-07-16.md` — triangulation results
-- `data/sit-eval-2026-07-16.md` — SIT v1 results
+- `data/archive/matrix-2026-07-16.md` — keyword scorer results
+- `data/archive/matrix-graded-2026-07-16.md` — Qwen grader results
+- `data/archive/matrix-triangular-2026-07-16.md` — triangulation results
+- `data/archive/sit-eval-2026-07-16.md` — SIT v1 results
 - `models/POKER-CLUB-MEMBERSHIP.md` — membership review
 - `data/scoring_matrix.jsonl` — keyword scorer matrix data
 - `data/graded_matrix.jsonl` — Qwen grader matrix data

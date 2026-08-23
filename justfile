@@ -1,5 +1,5 @@
 # cool-pi-extensions — facade only. Implementation lives in scripts/.
-# See playbooks/justfile.md for the boundary rule.
+# See playbooks/justfile-playbook.md for the boundary rule.
 
 set shell := ["bash", "-o", "pipefail", "-c"]
 
@@ -46,31 +46,20 @@ show-edinburgh:
     @glow SYSTEM.md
 
 # ── Edinburgh Protocol Eval ──────────────────────────────────────────────
-# Evaluate model alignment with the Protocol. Two eval engines:
-#   • edinburgh — scoring eval (philosophy alignment)
-#   • traps     — behavioral trap tests (skepticism, rigor, anti-entropy)
-#   • pi        — route to the new canonical pi-eval CLI (task 1 of td-957871)
-#
-# Usage:
-#   just eval list         — show available models
-#   just eval status       — show recent results from data/eval_log.json
-#   just eval edinburgh    — run scoring eval (defaults to Kimi models)
-#   just eval edinburgh kimi --json   — JSON output
-#   just eval edinburgh kimi --bare    — bare-substrate control (no Protocol)
-#   just eval matrix kimi              — run both conditions, show delta
-#   just eval traps        — run trap eval (all Ollama models)
-#   just eval traps qwen2.5:3b        — test specific model
-#   just eval traps nvidia/nemotron-3-ultra-550b-a55b:free  — OpenRouter model
-#   just eval "pi fixtures --validate"  — new CLI (canonical engine)
-#   just eval "pi run <model> --fixture=edinburgh"  — new CLI
-#
-#   just eval "pi matrix kimi"           — new CLI: primed/bare delta
-#   just eval "pi matrix kimi --grade"   — new CLI: reasoning grader delta
-#   just eval "pi matrix kimi --triangular" — new CLI: two-grader triangulation
-#   just eval "pi score kimi"            — new CLI: keyword scoring
-#   just eval "pi score kimi --grade"    — new CLI: with reasoning grader
-#
-# Requires: OPENROUTER_API_KEY for Gemini grading on trap evals
+# pi-eval is the canonical engine (src/cli/pi-eval). Reading results:
+#   just results              — per-model digest table (all models, latest)
+#   just results <model>      — latest-run per-test breakdown
+#   just results run <id>     — full run detail (grades, evidence, preview)
+#   just suite                — the trap-suite documentation (EDI-001…007)
+# Running evals: just eval <cmd> — see `just eval help` (scripts/eval.sh)
+
+[group("eval")]
+results *ARGS="":
+    @python3 scripts/eval-digest.py {{ ARGS }}
+
+[group("eval")]
+suite:
+    @glow docs/edinburgh-protocol-evals.md 2>/dev/null || cat docs/edinburgh-protocol-evals.md
 
 [group("eval")]
 eval ARGS="":

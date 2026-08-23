@@ -11,7 +11,7 @@ protocol: Edinburgh Protocol v1.1.0
 **Status:** done
 **Protocol:** Edinburgh Protocol v1.1.0
 **Origin:** td-5b08ba (Phase C). Supersedes the brief's §Phase C "regex=floor, grader=ceiling" architecture on the strength of the Phase B data.
-**Evidence:** `data/phase-b-grader-delta-report.md` (18/112 regex errors, 16.1%), `src/cli/pi-eval/lib/grading.ts`, `src/cli/pi-eval/commands/run.ts`
+**Evidence:** `data/archive/phase-b-grader-delta-report.md` (18/112 regex errors, 16.1%), `src/cli/pi-eval/lib/grading.ts`, `src/cli/pi-eval/commands/run.ts`
 
 ## The decision
 

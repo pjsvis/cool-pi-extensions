@@ -446,7 +446,7 @@
 
 ### 2026-08-01 update — gap six + late entries + control-grader validation
 
-**Six new members evaluated** (the July-3 audit's pending roster, plus late entries). All clear the muppet-exclusion gate. Verdicts from the Phase-D-aligned 24-probe suite (`data/gap-six-matrix.md`):
+**Six new members evaluated** (the July-3 audit's pending roster, plus late entries). All clear the muppet-exclusion gate. Verdicts from the Phase-D-aligned 24-probe suite (`data/archive/gap-six-matrix.md`):
 
 | Model | Gateway | Scope | Delivery | Total | Verdict |
 |---|---:|---:|---:|---:|---|
@@ -496,7 +496,7 @@
   directional, not precise. Not investigated; not blocking for selection;
   blocking for benchmarking.
 
-Artifacts: `data/phase-b-grader-delta-control-sonnet.{jsonl,-report.md}`, `debriefs/014-regex-to-grader-migration.md`. The deployment decision this membership supports is written up in `blog/2026-08-01-the-selection-not-the-benchmark.md`.
+Artifacts: `data/phase-b-grader-delta-control-sonnet.jsonl + data/archive/phase-b-grader-delta-control-sonnet-report.md`, `debriefs/014-regex-to-grader-migration.md`. The deployment decision this membership supports is written up in `blog/2026-08-01-the-selection-not-the-benchmark.md`.
 
 ### Patterns
 

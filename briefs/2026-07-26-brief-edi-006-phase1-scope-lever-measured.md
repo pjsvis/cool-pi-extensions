@@ -4,7 +4,7 @@
 **Status:** complete (Phase 1 of td-d0c810)
 **Protocol:** Edinburgh Protocol v1.1.0
 **TD:** td-d17fbf
-**Evidence:** `prompts/edinburgh-006-scope-primed-v1.json` (fixture), `data/eval_log.json` (runs da819b57, b9435778), `data/phase1-scope-primed-verification.md` (verified response texts), `scripts/phase1-verify-responses.ts` (verification harness)
+**Evidence:** `prompts/edinburgh-006-scope-primed-v1.json` (fixture), `data/eval_log.json` (runs da819b57, b9435778), `data/archive/phase1-scope-primed-verification.md` (verified response texts), `scripts/phase1-verify-responses.ts` (verification harness)
 
 ## What
 

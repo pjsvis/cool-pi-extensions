@@ -239,9 +239,9 @@ The evidence behind the argument. Stored as append-only JSONL in the repository.
 
 - `data/eval_log.json` — Stuff-into-Things v2 results (15 tests, 22+ models)
 
-- `data/eval-results-matrix-2026-07-16.md` — ranked comparison table
+- `data/archive/eval-results-matrix-2026-07-16.md` — ranked comparison table
 
-- `data/normalisation-analysis-2026-07-16.md` — variance compression, Claude
+- `data/archive/normalisation-analysis-2026-07-16.md` — variance compression, Claude
   gap, adequacy thresholds
 
 - `models/POKER-CLUB-MEMBERSHIP.md` — membership review (17 Full, 5

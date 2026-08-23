@@ -74,7 +74,7 @@ The cost is low: NIM free tier (1000–5000 credits, 40 req/min), grader calls a
 | `minimaxai/minimax-m2.7` | provider-independence (vs zenmux) | re-test |
 | `deepseek-ai/deepseek-v4-flash` | provider-independence (vs OpenRouter) | re-test |
 
-3. Matrix output: `data/nim-six-matrix.md` (does not touch phase-d-matrix).
+3. Matrix output: `data/archive/nim-six-matrix.md` (does not touch phase-d-matrix).
 
 4. Monitor and grab free evals when rate limits allow — the 40 req/min cap means
    the batch is paced, not parallel.
@@ -90,10 +90,10 @@ The cost is low: NIM free tier (1000–5000 credits, 40 req/min), grader calls a
   full batch. **Done — red (zenmux fallback bug) → green (exclusive routing).
   Model works but slow/variable on NIM free tier; 180s timeout set.**
 
-- [ ] Three-model sweep (gpt-oss-120b, kimi-k2-instruct, sarvam-m) complete or partial — resumable, gaps acceptable; results in `data/eval_log.json`. **Running in background (PID in data/nim-six.pid).**
+- [ ] Three-model sweep (gpt-oss-120b, kimi-k2-instruct, sarvam-m) complete or partial — resumable, gaps acceptable; results in `data/eval_log.json`. **Running in background (background run, logs since purged).**
   **Adjusted from six to three: the provider-independence re-tests are DEFERRED — eval_log has no `provider` field, so NIM rows would be indistinguishable from existing zenmux/OpenRouter rows under the same modelId. Re-tests need a harness follow-up (log provider in `run.ts`).**
 
-- [ ] `data/nim-six-matrix.md` generated: model × fixture summary +
+- [ ] `data/archive/nim-six-matrix.md` generated: model × fixture summary +
   grader-vs-deterministic delta (the gap-six pattern).
 
 - [ ] GPT-OSS-120B verdict recorded — the muppet-thesis data point (pass/fail

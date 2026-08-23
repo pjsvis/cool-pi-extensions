@@ -5,7 +5,7 @@
 **Protocol:** Edinburgh Protocol v1.1.0
 **TD:** td-f4f67f (Phase 2.1 of td-d0c810)
 **Prior:** `briefs/2026-07-26-brief-edi-006-phase2-scope-lever-promoted.md` (Phase 2, finding 3)
-**Evidence:** `scripts/phase2-1-regex-verify.py` (verification harness), `data/eval_log.json` (Phase-2 responseText), `data/phase1-scope-primed-verification.md` (Phase-1 captures), `prompts/edinburgh-protocol-evals-v1.json` + `prompts/edinburgh-006-scope-primed-v1.json` (fixtures)
+**Evidence:** `scripts/phase2-1-regex-verify.py` (verification harness), `data/eval_log.json` (Phase-2 responseText), `data/archive/phase1-scope-primed-verification.md` (Phase-1 captures), `prompts/edinburgh-protocol-evals-v1.json` + `prompts/edinburgh-006-scope-primed-v1.json` (fixtures)
 
 ## What
 

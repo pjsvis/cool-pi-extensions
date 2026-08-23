@@ -12,7 +12,7 @@
 | **Pipeline** | `ollama pull` (9.6 GB) → `pi-eval run gemma4:e4b` |
 | **Job PID** | `30860` (detached, `nohup`) |
 | **Started** | 2026-08-03 11:48:18 |
-| **Transcript log** | `data/eval-e4b-bg.log` |
+| **Transcript log** | purged 2026-08-23 (run debris); results live in `data/eval_log.json` |
 | **Structured results** | `data/eval_log.json` (+ run metadata) |
 
 ## Status — COMPLETE (3 runs; latest A-verified 18:05)
@@ -32,7 +32,7 @@
 ## How to monitor
 
 ```bash
-# clean tail (strips Ollama's TTY progress glyphs):
+# clean tail (strips Ollama's TTY progress glyphs) — log purged 2026-08-23:
 tail -f data/eval-e4b-bg.log | sed $'s/\x1b\\[[0-9;?]*[a-zA-Z]//g'
 
 # alive?

@@ -20,9 +20,9 @@ gap and records the outcome.
 | Phase | Plan | Executed | Evidence |
 |---|---|---|---|
 | A — log responseText + prompts | flip `EVAL_LOG_RESPONSES` default on | ✓ 2026-07-26 | `eval_log.json` rows now carry `responseText`, `userPrompt`, `systemPrompt` |
-| B — grade the 182 logged rows, quantify the regex gap | delta report | ✓ 2026-07-27 | `data/phase-b-grader-delta-report.md` — regex disagreed with grader on **18/112 (16.1%)** of scope tests (17 false-negatives, 1 false-positive) |
+| B — grade the 182 logged rows, quantify the regex gap | delta report | ✓ 2026-07-27 | `data/archive/phase-b-grader-delta-report.md` — regex disagreed with grader on **18/112 (16.1%)** of scope tests (17 false-negatives, 1 false-positive) |
 | C — wire grader as primary scope instrument, regex as pre-filter | `gradeScopeDiscipline` + `combineVerdicts` update | ✓ 2026-07-27 | `src/cli/pi-eval/lib/grading.ts`; Phase D ran with both graders |
-| D — full rerun, auditable | 24 candidates × 3 fixtures | ✓ 2026-07-28 | `data/phase-d-matrix.md` (25 models × 24 probes), `data/rerun-all-progress.log` |
+| D — full rerun, auditable | 24 candidates × 3 fixtures | ✓ 2026-07-28 | `data/archive/phase-d-matrix.md` (25 models × 24 probes) |
 
 ## The outcome
 
@@ -33,7 +33,8 @@ gap and records the outcome.
   scored correctly.
 
 - **The 1,223 pre-flag rows are frozen** at regex verdicts, archived to
-  `data/eval_log.pre-grader.jsonl.bak`. They cannot be regraded (no
+  `data/eval_log.pre-grader.jsonl.bak` (backup purged 2026-08-23 —
+  the frozen rows remain recoverable in git history). They cannot be regraded (no
   `responseText`). Accepted as tuition — not re-litigated. The post-flag data
   (759 rows and growing) is the auditable asset.
 
@@ -63,7 +64,7 @@ gap and records the outcome.
    mean gateway EDI-002/004 scores run ~1 point low vs the reference — a
    calibration note, not corruption. Delivery grades are the noisiest (84
    divergences) — treat as directional. Artefacts:
-   `data/phase-b-grader-delta-control-sonnet.{jsonl,-report.md}`.
+   `data/phase-b-grader-delta-control-sonnet.jsonl + data/archive/phase-b-grader-delta-control-sonnet-report.md`.
 
 2. **Delivery-grader noise.** The SIT flips are a signal, not yet
    investigated. Two hypotheses: (a) the grader is systematically too lenient

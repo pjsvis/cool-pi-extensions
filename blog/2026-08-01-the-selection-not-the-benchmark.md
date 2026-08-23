@@ -191,7 +191,7 @@ A control grader (Claude Sonnet 4.5, the reference standard, independent lab) re
 
 32 models. 759 logged responses with full response text, auditable and re-gradeable. Two graders (scope: Gemini 2.5 Flash; gateway: Nemotron Nano 30B), validated against a control (Sonnet 4.5, 85.2% agreement). One binary gate, five attributes, and the honest admission that the instrument is adequate for selection and not for benchmarking — which is exactly the point, because selection is the thing we were doing all along.
 
-The data is in `data/eval_log.json`. The matrices are in `data/phase-d-matrix.md` and `data/gap-six-matrix.md`. The control-grader validation is in `data/phase-b-grader-delta-control-sonnet-report.md`. The membership register is in `models/POKER-CLUB-MEMBERSHIP.md`. Every claim here links to an auditable artifact.
+The data is in `data/eval_log.json`. The matrices are in `data/archive/phase-d-matrix.md` and `data/archive/gap-six-matrix.md`. The control-grader validation is in `data/archive/phase-b-grader-delta-control-sonnet-report.md`. The membership register is in `models/POKER-CLUB-MEMBERSHIP.md`. Every claim here links to an auditable artifact.
 
 ---
 

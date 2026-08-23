@@ -2,7 +2,7 @@
 
 **Date:** 2026-07-17
 **Status:** Raw asset — not sculpted. Built to be plundered for a post or carved into sections. No narrative smoothing applied; that is the sculpting stage's job.
-**Origin:** Dialog session ses_27a055, extending the Edinburgh Protocol self-audit (`data/matrix-triangular-2026-07-16.md`, `data/sit-eval-2026-07-16.md`) into a thesis about prohibitions, testing, and how you assemble a set of substrates you can actually rely on. Revised same session to fold in an external, vendor-scale case study (Theo Brown / t3.gg, "I need you to hear me out," 16 Jul 2026) that independently re-ran the instrument-indictment move on the Codex system prompt.
+**Origin:** Dialog session ses_27a055, extending the Edinburgh Protocol self-audit (`data/archive/matrix-triangular-2026-07-16.md`, `data/archive/sit-eval-2026-07-16.md`) into a thesis about prohibitions, testing, and how you assemble a set of substrates you can actually rely on. Revised same session to fold in an external, vendor-scale case study (Theo Brown / t3.gg, "I need you to hear me out," 16 Jul 2026) that independently re-ran the instrument-indictment move on the Codex system prompt.
 
 ## Provenance
 
@@ -87,7 +87,7 @@ The first eval instrument was a keyword scorer. It checked for the presence of P
 
 The answer: net **−0.28**. The Protocol slightly *lowered* the average score. On aggregate, under this instrument, the Protocol is ceremony — or worse, mild anti-entropy in the wrong direction. Eight models positive, five zero, twelve negative. The protocol *hurts* more models than it helps.
 
-(Citation: `data/scoring_matrix.jsonl`, 100 entries — 25 models × 2 conditions, plus reruns. Report: `data/matrix-2026-07-16.md`.)
+(Citation: `data/scoring_matrix.jsonl`, 100 entries — 25 models × 2 conditions, plus reruns. Report: `data/archive/matrix-2026-07-16.md`.)
 
 Here is the seduction, and it is where most eval work dies: you built the instrument, you trust it, it returned a clean number, the number is publishable. The temptation is to stop. Either declare victory (the Protocol works on the models it works on) or declare defeat (the Protocol is ceremony, ship the finding). Both are wrong. Both treat the instrument as the arbiter rather than as a hypothesis.
 
@@ -187,7 +187,7 @@ But the Qwen grader is *in the eval lineup* — it was selected because it score
 
 The third instrument answers the second instrument's bias objection. It must be structurally independent: a different architecture, a different style profile, the same rubric. Gemini 2.5 Pro (via ZenMux). Result: +4.24 average delta, 14/16 models positive, 1 negative (grok-4.3, a borderline ±1 case), **zero directional disagreements** with the Qwen grader across the 16 models both successfully graded.
 
-(Citations: `data/graded_matrix.jsonl` (Qwen), `data/graded_matrix_gemini.jsonl` (Gemini). Report: `data/matrix-triangular-2026-07-16.md`.)
+(Citations: `data/graded_matrix.jsonl` (Qwen), `data/graded_matrix_gemini.jsonl` (Gemini). Report: `data/archive/matrix-triangular-2026-07-16.md`.)
 
 The agreement is not just on direction. Both graders agree on the *effect profile*: Systems Thinking is the largest delta, Boundary Discipline the smallest, every criterion positive under both. The self-referential-bias concern was raised and then *empirically answered* rather than hand-waved. If the Qwen grader were simply rewarding its own style, Gemini — a different architecture with a different default register — would disagree on the models where style matters most. Instead Gemini agrees most strongly on exactly those models.
 
@@ -254,7 +254,7 @@ This connects to Decision 015 (bounded-context entry as default — never start 
 
 The honest boundary, because a post that reads as a victory lap fails its own thesis.
 
-The Stuff-into-Things eval (`prompts/stuff-into-things-v1.json`, 6 tests, 22 models; report `data/sit-eval-2026-07-16.md`) found a class of models the Protocol cannot reach: the **flatliners**. GPT-5 passes 2/6 — the ingestion gate for ungrounded and amplification requests, and nothing else. It scored 7/19 on the keyword scorer in *both* conditions. It produces the same anodyne corporate output regardless of system prompt. The Protocol is inert on it.
+The Stuff-into-Things eval (`prompts/stuff-into-things-v1.json`, 6 tests, 22 models; report `data/archive/sit-eval-2026-07-16.md`) found a class of models the Protocol cannot reach: the **flatliners**. GPT-5 passes 2/6 — the ingestion gate for ungrounded and amplification requests, and nothing else. It scored 7/19 on the keyword scorer in *both* conditions. It produces the same anodyne corporate output regardless of system prompt. The Protocol is inert on it.
 
 This is not a protocol failure. It is a boundary. The Protocol works on models that listen to their system prompt. It is inert on models that ignore system prompts entirely — the register-flattened flatliners that have been optimized into producing the same output regardless of input. You cannot constraint-stack a substrate that does not implement the constraint stack. The gonnae no is spoken; the flatliner does not hear it. The membership test catches this: the flatliners fail admission, and the Club is better for refusing them.
 
@@ -369,4 +369,4 @@ The bibliography is narrativised rather than listed because the ideas are a stac
 
 ---
 
-*Raw data: `data/scoring_matrix.jsonl` (keyword), `data/graded_matrix.jsonl` (Qwen structured), `data/graded_matrix_gemini.jsonl` (Gemini triangular), `data/eval_log.json` + `data/sit-eval-2026-07-16.md` (Stuff-into-Things). Fixtures: `prompts/edinburgh-protocol-evals-v1.json`, `prompts/stuff-into-things-v1.json`. Reports: `data/matrix-2026-07-16.md`, `data/matrix-graded-2026-07-16.md`, `data/matrix-triangular-2026-07-16.md`. External case: Theo Brown, "I need you to hear me out (it's REALLY good)," t3.gg, 16 Jul 2026.*
+*Raw data: `data/scoring_matrix.jsonl` (keyword), `data/graded_matrix.jsonl` (Qwen structured), `data/graded_matrix_gemini.jsonl` (Gemini triangular), `data/eval_log.json` + `data/archive/sit-eval-2026-07-16.md` (Stuff-into-Things). Fixtures: `prompts/edinburgh-protocol-evals-v1.json`, `prompts/stuff-into-things-v1.json`. Reports: `data/archive/matrix-2026-07-16.md`, `data/archive/matrix-graded-2026-07-16.md`, `data/archive/matrix-triangular-2026-07-16.md`. External case: Theo Brown, "I need you to hear me out (it's REALLY good)," t3.gg, 16 Jul 2026.*
