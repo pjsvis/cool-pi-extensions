@@ -165,6 +165,8 @@ Project briefs define **what** and **why** before code is written. Frozen when w
 
 **[briefs/2026-08-23-brief-results-control-plane.md](briefs/2026-08-23-brief-results-control-plane.md)** — Three deliverables + one rename:
 
+**[briefs/2026-09-27-brief-mac-window-management-blackout.md](briefs/2026-09-27-brief-mac-window-management-blackout.md)** — 2026-09-27: surveyed every auto-launching utility on the machine, then disabled
+
 
 ## Debriefs
 Post-implementation reflections. Capture what worked, what didn't, what to try next.
@@ -231,6 +233,8 @@ Recorded architectural decisions with context, rationale, and consequences.
 
 **[decisions/023-spin-off-mermaid-to-md.md](decisions/023-spin-off-mermaid-to-md.md)** — Mermaid tooling developed in-repo: the Rust renderer (`src/cli/mermaid-tui/`), the extract script (`scripts/mermaid-extract.sh`), the pi ex…
 
+**[decisions/024-okuda-pi-theme-alert-trio.md](decisions/024-okuda-pi-theme-alert-trio.md)** — The Okuda silo (`../okuda`) ships a six-hue palette — slate blue, amber, yellow,
+
 
 ## Playbooks
 How-to guides for recurring tasks. Give pi the URL and it executes.
@@ -272,6 +276,8 @@ How-to guides for recurring tasks. Give pi the URL and it executes.
 **[playbooks/insights-playbook.md](playbooks/insights-playbook.md)** — A persistent, growing collection of small observations that don't fit in existing playbooks, don't justify their own playbook, but are wort…
 
 **[playbooks/justfile-playbook.md](playbooks/justfile-playbook.md)** — The `justfile` is the facade of the project. It is the public API surface for both agents and humans. It is not a scratchpad, not a monolit…
+
+**[playbooks/okuda-theme-playbook.md](playbooks/okuda-theme-playbook.md)** — How we apply the Okuda palette across the terminal stack. Currently two
 
 **[playbooks/omarchy-setup-playbook.md](playbooks/omarchy-setup-playbook.md)** — Omarchy is the headless Linux box under the desk. It's the remote machine that runs the terminal-native stack — pi, herdr, Fresh, sidecar,…
 

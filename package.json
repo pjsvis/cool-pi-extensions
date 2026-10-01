@@ -1,0 +1,10 @@
+{
+  "name": "cool-pi-extensions",
+  "version": "0.1.0",
+  "description": "Pi extensions and the Okuda theme. Installed as a local-path package; themes/ is edited in place — no copy.",
+  "keywords": ["pi-package"],
+  "private": true,
+  "pi": {
+    "themes": ["./themes"]
+  }
+}

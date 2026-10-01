@@ -108,3 +108,11 @@ The registry of defined terms. Cited terms in briefs/evals should resolve here (
 * **The Derrida question**: "should this even be in our consideration set?"
   External constraints (vendor, procurement, compliance) asked before the eval,
   not after.
+
+* **Saramago Barrier**: the gate on slab. A wall of text is admissible in
+  the silo only above the barrier — demonstrated mastery where the wall is
+  the instrument (Saramago's unpunctuated flow enacts its subject), not the
+  failure. The burden of proof sits with the proposer: if you think you're
+  up to José's level, try it on. Below the barrier, a slab is decorated
+  Stuff; above it, the slab is the Thing. Codified in the authoring
+  playbook's short-paragraphs entry, 2026-09-10.

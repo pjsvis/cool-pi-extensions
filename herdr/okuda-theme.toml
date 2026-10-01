@@ -1,0 +1,39 @@
+# Okuda theme for herdr — `[theme.custom]` overrides layered on the
+# `kanagawa` base. herdr has no custom-theme-file mechanism; paste this block
+# into `~/.config/herdr/config.toml` and run `herdr server reload-config`.
+#
+# Source of truth: themes/okuda.json `vars` in this repo (operational palette
+# of record — structural hues + the LCARS alert trio from ADR 024).
+# Aesthetic origin: ../okuda/src/palettes/okuda.json (sync structural hues
+# from there; the alert trio lives here).
+#
+# Token reference: herdr src/config/theme.rs (CustomThemeColors) + herdr.dev
+# docs/config-reference. 17 override tokens; set only what you want to change.
+
+[theme]
+# kanagawa — dark indigo base, harmonises with the indigo panels below.
+# Alternative: "terminal" (host ANSI palette, most neutral substrate).
+name = "kanagawa"
+
+[theme.custom]
+# --- Structural chrome — Okuda six hues + indigo panels + receding slates.
+accent      = "#ffaa00"   # amber — primary accent (LCARS label fill)
+panel_bg    = "#1a1530"   # dark indigo — the LCARS panel affordance
+sidebar_bg  = "#1a1530"   # sidebar matches the panel
+surface0    = "#2a2540"   # selected item bg (indigo, lifted)
+surface1    = "#2a2540"   # hover / active bg
+surface_dim = "#445566"   # active workspace bg, separators (dark slate, recedes)
+overlay0    = "#7788aa"   # muted / secondary text (mid slate)
+overlay1    = "#5e8bbf"   # brighter secondary (slate-blue border)
+subtext0    = "#99ccff"   # workspace names (slate blue — section markers)
+mauve       = "#99ccff"   # git branch names (structural label)
+blue        = "#66ddff"   # unseen notifications (cyan — navigation)
+
+# --- Semantic state — the LCARS alert trio (ADR 024).
+# Do not collapse these into the amber family; state legibility is the
+# function that justifies the aesthetic.
+green  = "#5fd9a0"   # idle / done
+yellow = "#ffcc66"   # busy / running (warm data)
+red    = "#ff6b6b"   # waiting / needs attention
+teal   = "#5fd9a0"   # done-notification accents
+peach  = "#ff9966"   # interrupted / warning
