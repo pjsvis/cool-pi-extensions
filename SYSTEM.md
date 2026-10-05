@@ -116,3 +116,16 @@ The registry of defined terms. Cited terms in briefs/evals should resolve here (
   up to José's level, try it on. Below the barrier, a slab is decorated
   Stuff; above it, the slab is the Thing. Codified in the authoring
   playbook's short-paragraphs entry, 2026-09-10.
+
+* **Fermata**: a deliberate held frame at a mode boundary — the beat before
+  the next thing. Coined 2026-10-03 in the okuda exit (the drain window's
+  frozen document frame before the picker, over-determined: leak bound +
+  gear-change beat, ADR-EXIT-FERMATA-051). The held frame must be contentful
+  and the beat consistent, or it reads as latency, not rest. The reader's
+  tempo is part of the interface, honoured at the boundary.
+
+* **Mercury tempo**: throughput that outruns the reader's intake — reads as
+  urgency, not speed, and accumulates as exhaustion (the operator's report
+  from a fast diffusion substrate: responses arrived before the breath was
+  taken; each arrival was itself a demand). Queue depth at the human. The
+  fix is not slowness but fermatas — breath built into the exchange.

@@ -27,7 +27,7 @@ const cfg = JSON.parse(raw);
 const providers = Object.entries(cfg.providers ?? {});
 
 // Guard 1 — semantic: every provider.apiKey must be a skate ref or local dummy.
-const LOCAL_OK = new Set(["ollama", "llama", ""]);
+const LOCAL_OK = new Set(["ollama", "llama", "apfel", ""]);
 const flagged: string[] = [];
 for (const [name, p] of providers) {
   const k = (p as { apiKey?: unknown }).apiKey;
