@@ -456,10 +456,12 @@
       "_note": "Built-in minimax is anthropic-messages; prior custom block forced openai-completions on api.minimax.io/v1. Now trusting Pi default protocol — verify via probe."
     },
     "zai": {
-      "apiKey": "!skate get zai_api_key"
+      "apiKey": "!skate get zai_api_key",
+      "_note": "429 'Insufficient balance or no resource package' (probe 2026-10-05) — account recharge needed, not config. Free GLM route meanwhile: nvidia/z-ai/glm-5.3 (NIM free tier, pongs)."
     },
     "nvidia": {
-      "apiKey": "!skate get nvidia_api_key"
+      "apiKey": "!skate get nvidia_api_key",
+      "_note": "Catalog supplies the model list (nothing hand-maintained to prune). Free-tier probe 2026-10-05: nemotron-3-super-120b-a12b ✓, nemotron-3.5-lightning-30b-a3b ✓, moonshotai/kimi-k3 ✓ (earlier empty-response resolved), z-ai/glm-5.3 ✓, deepseek-ai/deepseek-v4.1-flash ✗ (no response in 180s — free-tier latency, leave in catalog). Brief: briefs/2026-10-05-brief-model-registry-probe-sweep.md"
     },
     "together": {
       "apiKey": "!skate get togetherai_api_key",

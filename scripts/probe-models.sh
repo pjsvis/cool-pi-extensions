@@ -67,33 +67,44 @@ fi
 
 probe_one() {
   local ref="$1"
-  local out rc
-  # gtimeout if available, else bare (rely on pi's own behaviour)
+  local out rc=0
+  # gtimeout if available, else bare (rely on pi's own behaviour).
+  # Capture the exit code from the command itself: `|| true` masks it, which is
+  # how connection errors ("Connection error.", exit 1) used to report as pass.
   if command -v gtimeout >/dev/null 2>&1; then
-    out=$(gtimeout "$TIMEOUT" pi --model "$ref" --print "Reply with exactly: pong" 2>&1) || true
+    out=$(gtimeout "$TIMEOUT" pi --model "$ref" --print "Reply with exactly: pong" 2>&1) || rc=$?
   else
-    out=$(pi --model "$ref" --print "Reply with exactly: pong" 2>&1) || true
+    out=$(pi --model "$ref" --print "Reply with exactly: pong" 2>&1) || rc=$?
   fi
-  rc=$?
-  # pi --print exits non-zero on API errors; capture the first meaningful line
+  # pi --print exits 0 on success and non-zero on transport/API errors
+  # (verified: 1 for connection refused, HTTP 429, HTTP 507). rc is the source
+  # of truth; stdout is retained for the diagnosable first line.
   local first_line
   first_line=$(printf '%s\n' "$out" | head -1)
-  if [[ $rc -eq 0 && -n "$out" && "$out" != *"401"* && "$out" != *"404"* && "$out" != *"429"* ]]; then
-    printf '%s\x1f%s\x1f%s\n' "$ref" "pass" "$first_line"
-  elif [[ $rc -eq 124 ]]; then
+  if [[ $rc -eq 124 ]]; then
     printf '%s\x1f%s\x1f%s\n' "$ref" "timeout" "exceeded ${TIMEOUT}s"
+  elif [[ $rc -eq 0 ]]; then
+    printf '%s\x1f%s\x1f%s\n' "$ref" "pass" "$first_line"
   else
     printf '%s\x1f%s\x1f%s\n' "$ref" "fail" "$first_line"
   fi
 }
 
 # ── Run ─────────────────────────────────────────────────────────────────────
+# Probe each model exactly once, then render from the collected results. (The
+# original looped over MODELS twice — once to render, once to count — so every
+# probe fired two full chat completions.)
+
+RESULTS=()
+for ref in "${MODELS[@]}"; do
+  RESULTS+=("$(probe_one "$ref")")
+done
 
 if [[ "$JSON" == true ]]; then
   echo '{"results":['
   first=true
-  for ref in "${MODELS[@]}"; do
-    IFS=$'\x1f' read -r r status detail <<< "$(probe_one "$ref")"
+  for row in "${RESULTS[@]}"; do
+    IFS=$'\x1f' read -r r status detail <<< "$row"
     $first || echo ","
     first=false
     printf '  {"ref":%s,"status":%s,"detail":%s}' \
@@ -111,20 +122,20 @@ else
 fi
 
 passed=0; failed=0; timedout=0
-for ref in "${MODELS[@]}"; do
-  IFS=$'\x1f' read -r r status detail <<< "$(probe_one "$ref")"
+for row in "${RESULTS[@]}"; do
+  IFS=$'\x1f' read -r r status detail <<< "$row"
   case "$status" in
     pass)
       passed=$((passed+1))
-      [[ "$JSON" == false ]] && echo "  ${G}✓${X} ${ref}  ${D}${detail}${X}"
+      [[ "$JSON" == false ]] && echo "  ${G}✓${X} ${r}  ${D}${detail}${X}"
       ;;
     timeout)
       timedout=$((timedout+1))
-      [[ "$JSON" == false ]] && echo "  ${Y}⏱${X} ${ref}  ${Y}TIMEOUT${X} ${D}(${detail})${X}"
+      [[ "$JSON" == false ]] && echo "  ${Y}⏱${X} ${r}  ${Y}TIMEOUT${X} ${D}(${detail})${X}"
       ;;
     *)
       failed=$((failed+1))
-      [[ "$JSON" == false ]] && echo "  ${R}✗${X} ${ref}  ${R}FAIL${X} ${D}— ${detail}${X}"
+      [[ "$JSON" == false ]] && echo "  ${R}✗${X} ${r}  ${R}FAIL${X} ${D}— ${detail}${X}"
       ;;
   esac
 done
@@ -135,5 +146,7 @@ if [[ "$JSON" == false ]]; then
   echo ""
 fi
 
-[[ $failed -gt 0 || $timedout -gt 0 ]] && exit 1
+if [[ $failed -gt 0 || $timedout -gt 0 ]]; then
+  exit 1
+fi
 exit 0

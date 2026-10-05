@@ -167,6 +167,8 @@ Project briefs define **what** and **why** before code is written. Frozen when w
 
 **[briefs/2026-09-27-brief-mac-window-management-blackout.md](briefs/2026-09-27-brief-mac-window-management-blackout.md)** — 2026-09-27: surveyed every auto-launching utility on the machine, then disabled
 
+**[briefs/2026-10-05-brief-model-registry-probe-sweep.md](briefs/2026-10-05-brief-model-registry-probe-sweep.md)** — 2 remain gated on an operator action and on field use.
+
 
 ## Debriefs
 Post-implementation reflections. Capture what worked, what didn't, what to try next.
