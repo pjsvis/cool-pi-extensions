@@ -30,13 +30,18 @@ strong and emphasis as distinct roles has nowhere to put them.
   it must not disturb — `CHANGELOG.md`: *"The markdown renderer now preserves
   existing ANSI escape codes when they appear before inline elements."*
 
+**Precedent — the project already ships both shapes:**
+
+`scrollbarTrack` / `scrollbarThumb` were added as *optional* roles with
+fallbacks (`muted` / `text`); `thinkingText` was added as a new role outright.
+So the two forms this request needs — add a role, and add it optionally with a
+fallback — are both already established in the theme contract.
+
 **What I'd like:**
 
-Two *optional* colour roles, `mdBold` and `mdItalic` (naming to match the `md*`
+Two optional colour roles, `mdBold` and `mdItalic` (naming to match the `md*`
 family; `mdStrong` / `mdEmphasis` equally fine). Optional so existing themes stay
-valid, and the renderer keeps today's SGR behaviour when a token is absent. There
-is precedent for both shapes: `scrollbarTrack` / `scrollbarThumb` were added as
-optional roles with fallbacks, and `thinkingText` was added as a new role.
+valid and the renderer keeps today's SGR behaviour when a token is absent.
 
 **Why not a workaround:**
 
