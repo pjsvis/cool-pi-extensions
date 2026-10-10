@@ -1,7 +1,7 @@
 # Decision 013: Silo exception — Pi agent config files (models.json, settings.json)
 
 **Date:** 2026-07-10  
-**Status:** Accepted  
+**Status:** Accepted — enforcement gap closed 2026-10-10 (td-dd7c9b; see Update)  
 **Review:** 2026-09-21 (quarterly barnacle review)
 
 ---
@@ -19,13 +19,12 @@ A blanket "the agent may edit anywhere under `~/.pi/`" would be too broad: `~/.p
   the repo; reconciled 2026-07-29. The stale copy is preserved at
   `~/.pi/agent/extensions/silo.bak.20260729-152335`.)
 
-- Its global config sets `"siloRoot": "/path/to/repo"` — a placeholder that does
-  not exist, so the extension **self-disables** (`existsSync` fails →
-  `sandboxEnabled = false`). Silo is therefore **not currently enforcing**; "I'm
-  staying in" is a policy constraint, not a hard code boundary, in this repo
-  today. This is intentional pending `allowedPaths` (see Implementation) —
-  activating a real `siloRoot` now would hard-block the Pi-config work this
-  exception exists to permit.
+- Its global config **formerly** set `"siloRoot": "/path/to/repo"` — a
+  placeholder that does not exist, so the extension self-disabled (`existsSync`
+  fails → `sandboxEnabled = false`), leaving "I'm staying in" a policy
+  constraint rather than a hard code boundary. That placeholder was removed on
+  2026-10-10 (see Update, below); silo now activates with `siloRoot = ctx.cwd`
+  and this exception is enforced by `allowedPaths`.
 
 - Pi config files present: `models.json` (provider/model definitions),
   `settings.json` (settings), `auth.json` (secrets, mode 600).
@@ -86,11 +85,10 @@ This is the **sole** exception to "I'm staying in." All other out-of-repo reques
 - A deliberate, narrow hole in the silo. **Mitigated by:** two-file scope,
   explicit secrets exclusion, documented here and in `AGENTS.md`.
 
-- **Enforcement gap (current):** because silo is inactive today (placeholder
-  `siloRoot`), this exception is policy-only. If silo is later activated with a
-  real `siloRoot`, the extension will hard-block `~/.pi/agent/` — the exception
-  would become unenforceable. Closing this requires an `allowedPaths` mechanism
-  in the silo extension (see Implementation).
+- **Enforcement gap (~~current~~ CLOSED 2026-10-10):** the exception was
+  policy-only while silo was inactive (placeholder `siloRoot`). The placeholder
+  is gone, so silo activates at `ctx.cwd` and `allowedPaths` now holds the
+  two-file exception as a hard boundary. See Update, below.
 
 ## Implementation
 
@@ -106,10 +104,35 @@ This is the **sole** exception to "I'm staying in." All other out-of-repo reques
   paths). Matching is **exact-resolved-path, never prefix** — verified by
   `check.test.ts` (`auth.json` stays blocked when `models.json` is allowed;
   sibling/prefix attacks fail). Project config declared at `.pi/silo.json` (this
-  repo) listing the two permitted files. The placeholder `siloRoot` is
-  intentionally retained — silo remains self-disabled until a real `siloRoot` is
-  set; `allowedPaths` is honoured the moment silo activates. Security-relevant
-  change; reviewed in td-788f5b.
+  repo) listing the two permitted files. **Activated 2026-10-10 (td-dd7c9b):**
+  the placeholder `siloRoot` was removed, so silo self-activates at `ctx.cwd` and
+  `allowedPaths` is now the enforcing boundary. Security-relevant change;
+  reviewed in td-788f5b, re-verified green (17/17) at activation.
+
+## Update — 2026-10-10
+
+The enforcement gap is closed. `src/extensions/silo/config.json` — the global
+config, tracked here and installed by **symlink** — dropped its placeholder
+`siloRoot`; it is now `{"enabled": true}`. Consequences:
+
+- **Root-at-cwd.** `index.ts:155` resolves `siloRoot = config.siloRoot ??
+  ctx.cwd`, so with the field absent every session roots the boundary at its
+  working directory unless a project `.pi/silo.json` overrides. The boundary is
+  live, not self-disabled.
+
+- **The exception enforces.** This repo's `.pi/silo.json` lists
+  `~/.pi/agent/models.json` and `~/.pi/agent/settings.json`; `isPathAllowed`
+  admits exactly those two. Verified end-to-end 2026-10-10: both allowed,
+  `~/.pi/agent/auth.json` **blocked**, other `~/.pi/agent/*` paths and
+  `/etc/passwd` blocked, in-repo paths allowed. Secrets exclusion intact.
+
+- **No absolute path may be committed here.** The config travels in git and is
+  installed by symlink, so a machine-specific `siloRoot` would be wrong on any
+  other machine. Root must stay implicit (`ctx.cwd`) or per-project.
+
+- **Wider effect.** The global config applies to *every* session; sessions
+  without a project `.pi/silo.json` now root at their cwd with no exceptions.
+  Repos needing out-of-root access declare it in `.pi/silo.json`.
 
 ## References
 
