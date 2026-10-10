@@ -353,6 +353,8 @@ Structured reference material.
 
 **[docs/2026-08-21-local-llm-26g.md](docs/2026-08-21-local-llm-26g.md)** — Before You Spend a Fortune on a Laptop for Local AI, See What 24GB Can Do — 16 Works Too.
 
+**[docs/2026-10-10-pi-theme-mdbold-mditalic-issue-draft.md](docs/2026-10-10-pi-theme-mdbold-mditalic-issue-draft.md)** — > Draft for submission to [`earendil-works/pi`](https://github.com/earendil-works/pi). Reviewed against pi 1.1.0 (release install, macOS 26…
+
 **[docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md](docs/NVIDIA-Quietly-Released-an-AI-Model-That-Could-Make-You-Money-by-Code-Coup-Coding-Nexus-Jun,-2026-Medium-2026-06-10.md)** — *Generated with [markdown-printer](https://github.com/levz0r/markdown-printer) (v1.2.0) by [Lev Gelfenbuim](https://lev.engineer)*
 
 **[docs/apfel-help.md](docs/apfel-help.md)** — apfel v1.9.0 — Apple Intelligence from the command line
