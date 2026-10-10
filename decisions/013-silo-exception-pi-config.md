@@ -1,7 +1,7 @@
 # Decision 013: Silo exception — Pi agent config files (models.json, settings.json)
 
 **Date:** 2026-07-10  
-**Status:** Accepted — enforcement gap closed 2026-10-10 (td-dd7c9b; see Update)  
+**Status:** Accepted — policy exception stands; the enforcement mechanism was removed 2026-10-10 (td-866140; see Update)  
 **Review:** 2026-09-21 (quarterly barnacle review)
 
 ---
@@ -133,6 +133,19 @@ config, tracked here and installed by **symlink** — dropped its placeholder
 - **Wider effect.** The global config applies to *every* session; sessions
   without a project `.pi/silo.json` now root at their cwd with no exceptions.
   Repos needing out-of-root access declare it in `.pi/silo.json`.
+
+**Superseded the same day (td-866140).** The mechanism above was removed: the
+silo extension turned out to block legitimate in-silo work. `extractPaths`
+(`check.ts`) used an unanchored regex that matches at any `/`, so a relative
+path yields a phantom absolute fragment — `cat src/foo.ts` resolved `/foo.ts`
+and was blocked, as were `ls src/`, `echo a/b`, and `grep foo src/check.ts`. The
+renderer's advertised contract was not what it implemented. The operator's
+decision is **delete, not patch**, recorded in
+`decisions/025-remove-silo-extension.md`.
+
+With the extension gone, `allowedPaths` enforces nothing here: this exception is
+**policy-only** again, carried by `AGENTS.md` and this record — which is the
+honest state for a boundary no code could hold.
 
 ## References
 

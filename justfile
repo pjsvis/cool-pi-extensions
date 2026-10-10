@@ -85,11 +85,6 @@ check:
 probe *args="":
     @scripts/probe-models.sh {{args}}
 
-# Run extension tests (silo boundary verification).
-[group("hygiene")]
-test:
-    @bun test src/extensions/silo/
-
 [group("hygiene")]
 popper:
     @bun run scripts/semantic-integrity.ts

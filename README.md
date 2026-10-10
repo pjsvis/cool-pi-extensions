@@ -36,9 +36,6 @@ Consistent results, less variance. See [SYSTEM.md](SYSTEM.md) — the Protocol i
 **defuddle**
 Fetch any webpage as clean Markdown. Domain allow/block lists, telemetry logging, `/defuddle` slash command.
 
-**silo**
-Soft filesystem boundary — blocks commands with literal paths outside the repo root. Catches accidental excursions; not hard isolation (see extension docs). "I'm staying in."
-
 **edinburgh-evals**
 Model behavioral gate. Thin port over the `pi-eval` CLI — `/eval <model>` command, `run_edinburgh_eval` LLM tool, `model_select` advisory hook. The CLI is the canonical eval engine (`src/cli/pi-eval/`).
 
@@ -130,7 +127,6 @@ cd src/cli/pi-models && bun install
 ```bash
 mkdir -p ~/.pi/agent/extensions
 ln -sf ~/.pi/extensions/src/extensions/defuddle/defuddle.ts ~/.pi/agent/extensions/defuddle.ts
-cp -r ~/.pi/extensions/src/extensions/silo ~/.pi/agent/extensions/silo
 ```
 
 ### Set the system-prompt (optional)
@@ -148,19 +144,6 @@ ln -sf ~/.pi/extensions/SYSTEM.md ~/.pi/agent/AGENTS.md
 Fetch any webpage as clean Markdown via the [defuddle.md](https://defuddle.md) API.
 
 **Commands:** `/defuddle <url>`, `/defuddle allow <domain>`, `/defuddle list`, `/defuddle stats`
-
----
-
-**silo**
-
-Soft filesystem boundary. Blocks commands whose literal arguments reference paths outside the repo root — catches the cooperative agent's accidental excursions. Does not withstand adversarial input (runtime-constructed paths, symlinks). Uses pi's built-in local bash backend so the agent sees the same environment and MVFS overlay as a normal session. Boundary behaviour verified by `bun test src/extensions/silo/`.
-
-**Config:** `~/.pi/agent/extensions/silo/config.json` (global) or `.pi/silo.json` (project-local). `siloRoot` is optional and defaults to the session cwd — a global config must not set an absolute path (it travels via symlink); override per project in `.pi/silo.json`:
-```json
-{ "enabled": true, "allowedPaths": ["~/.pi/agent/models.json"] }
-```
-
-Escape hatch: `pi --no-silo`. Status: `/silo-status`.
 
 ---
 

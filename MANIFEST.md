@@ -237,6 +237,8 @@ Recorded architectural decisions with context, rationale, and consequences.
 
 **[decisions/024-okuda-pi-theme-alert-trio.md](decisions/024-okuda-pi-theme-alert-trio.md)** — The Okuda silo (`../okuda`) ships a six-hue palette — slate blue, amber, yellow,
 
+**[decisions/025-remove-silo-extension.md](decisions/025-remove-silo-extension.md)** — `src/extensions/silo/` was a pi extension that wrapped the bash tool with a
+
 
 ## Playbooks
 How-to guides for recurring tasks. Give pi the URL and it executes.
