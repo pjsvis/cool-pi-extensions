@@ -19,9 +19,13 @@
  *   .pi/silo.json                      (project-local)
  *   ~/.pi/agent/extensions/silo/config.json  (global)
  *
+ * `siloRoot` is optional and defaults to the session cwd. A *global* config
+ * must NOT set an absolute `siloRoot` — it is installed by symlink and travels
+ * in git, so a machine-specific path would be wrong on another machine. Put
+ * per-project overrides in `.pi/silo.json` instead.
+ *
  * ```json
  * {
- *   "siloRoot": "/path/to/repo",
  *   "enabled": true,
  *   "allowedPaths": ["~/.pi/agent/models.json", "~/.pi/agent/settings.json"]
  * }

@@ -155,9 +155,9 @@ Fetch any webpage as clean Markdown via the [defuddle.md](https://defuddle.md) A
 
 Soft filesystem boundary. Blocks commands whose literal arguments reference paths outside the repo root — catches the cooperative agent's accidental excursions. Does not withstand adversarial input (runtime-constructed paths, symlinks). Uses pi's built-in local bash backend so the agent sees the same environment and MVFS overlay as a normal session. Boundary behaviour verified by `bun test src/extensions/silo/`.
 
-**Config:** `~/.pi/agent/extensions/silo/config.json` or `.pi/silo.json` (project-local):
+**Config:** `~/.pi/agent/extensions/silo/config.json` (global) or `.pi/silo.json` (project-local). `siloRoot` is optional and defaults to the session cwd — a global config must not set an absolute path (it travels via symlink); override per project in `.pi/silo.json`:
 ```json
-{ "siloRoot": "/path/to/repo", "enabled": true }
+{ "enabled": true, "allowedPaths": ["~/.pi/agent/models.json"] }
 ```
 
 Escape hatch: `pi --no-silo`. Status: `/silo-status`.
