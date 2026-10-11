@@ -85,6 +85,12 @@ check:
 probe *args="":
     @scripts/probe-models.sh {{args}}
 
+# Audit the Pi agent config (~/.pi/agent): settings paths resolve, skills have
+# live referents, no un-git'd backups. Read-only lint (Decision 013); exit 1 on findings.
+[group("hygiene")]
+pi-audit *args="":
+    @bun run scripts/audit-pi-config.ts {{args}}
+
 [group("hygiene")]
 popper:
     @bun run scripts/semantic-integrity.ts
