@@ -25,27 +25,13 @@
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
-/** Paths that hold live values. Matching is on the raw tool input, so both
- *  `/Users/x/.pi/agent/auth.json` and `~/.pi/agent/auth.json` are caught. */
-const PROTECTED_PATHS: { re: RegExp; what: string }[] = [
-	{ re: /\.pi\/agent\/auth\.json/, what: "pi's provider credentials" },
-	{ re: /Library\/Application Support\/charm\/kv/, what: "the Skate store (plaintext at rest)" },
-	{ re: /\.skate_env\b/, what: "a plaintext export of the store" },
-	{ re: /\.pi\/scrub-backup/, what: "a scrub backup (plaintext copies of removed values)" },
-	{ re: /\.config\/[^\s"']*\/(\.env|\.env\.[^\s"']*)$|\.config\/[^\s"']*\.env\b/, what: "a .env replica" },
-	{ re: /\.ssh\/id_/, what: "an SSH private key" },
-	{ re: /\.aws\/credentials/, what: "AWS credentials" },
-	{ re: /\.netrc\b/, what: "netrc credentials" },
-	{ re: /\.config\/gh\/hosts\.yml/, what: "the GitHub CLI token" },
-	{ re: /\.docker\/config\.json/, what: "Docker registry credentials" },
-	{ re: /\.kube\/config/, what: "kubeconfig credentials" },
-];
+import { PROTECTED_COMMANDS, PROTECTED_PATHS } from "./protected.ts";
 
-/** Commands whose purpose is to print a value into the transcript. */
-const PROTECTED_COMMANDS: { re: RegExp; what: string }[] = [
-	{ re: /\bskate\s+get\b/, what: "reading a value out of the store" },
-	{ re: /\bskate\s+list\b(?!\s+(-\w*k|--keys-only))/, what: "`skate list` without `-k` prints values" },
-];
+// The two rule tables are GENERATED, from machines/mac/secret-locations.json —
+// one list of credential locations shared with the perimeter scanner, so the
+// guard cannot enforce a different truth than the sweep. Regenerate with
+// `just guard-sync` in the machines silo; `just seal-check` there fails when
+// this copy is stale.
 
 /** `env` and `printenv` are blocked unless their output is reduced to names or
  *  a count. `env | wc -l` and `env | cut -d= -f1` cannot leak a value; a bare

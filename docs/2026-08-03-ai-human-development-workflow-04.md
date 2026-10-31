@@ -70,6 +70,6 @@ None of your process changes. The agent is just a temporary worker passing throu
 
 You can plug in whatever high-cost models, vector indices, or fancy UI harnesses you want. But they no longer own your architecture.
 
-They are constrained to work **for** the repo, executing bounded tasks within explicit guardrails, validated by the continuous **Shannon Checksum**, and audited against the James Watt and Daniel Derrida questions.
+They are constrained to work **for** the repo, executing bounded tasks within explicit guardrails, validated by the continuous **Shannon Checksum**, and audited against the James Watt and Jaques Derrida questions.
 
 If it isn't persisted in the territory, it didn't happen. If it can't survive inspection against the repo, it doesn't ship.

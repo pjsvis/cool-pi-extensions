@@ -1,8 +1,4 @@
-Here is the development story: how we moved from corporate friction to the vibe-coding delusion, and finally to our minimal, deterministic control plane—guided by incremental steps and epistemic guardrails.
-
----
-
-## The Development Story
+# The Development Story
 
 ### Act I: The Old Way (The Illusion of Control)
 
@@ -14,7 +10,9 @@ The primary effect was severing the feedback loop. By hiding the documentation f
 
 Then came the AI wave, promising a magical shortcut: *Vibe Coding*. The dream was irresistible—say a single sentence into a prompt box, sweep the implementation details into an unconstrained model, and watch software materialise.
 
-To make this work, the industry built over-engineered "edge-lord" stacks: heavy vector databases, complex custom graph wrappers, and opaque MCP servers that indexed descriptions of code rather than the code itself. But the unconstrained AI didn't build software—it built a *picture* of software. It gave us what it figured would make us go away happy, while underneath, unmeasured entropy, broken invariants, and subtle hallucinations accumulated. We had simply traded corporate Word documents for high-cost probabilistic fluff.
+To make this work, the industry built over-engineered "edge-lord" stacks: heavy vector databases, complex custom graph wrappers, and opaque MCP servers that indexed descriptions of code rather than the code itself. 
+
+But the unconstrained AI didn't build software—it built a *picture* of software. It gave us what it figured would make us go away happy, while underneath, unmeasured entropy, broken invariants, and subtle hallucinations accumulated. We had simply traded corporate Word documents for high-cost probabilistic fluff.
 
 ### Act III: Our Way (The Sovereign Agentic Workspace)
 
@@ -75,7 +73,7 @@ To keep the workspace grounded and prevent us from falling back into corporate b
   energy for zero efficiency gain over `grep`. A `YYYY-MM-DD` filename passes
   instantly—it delivers $O(1)$ chronological context at zero token cost.
 
-### 2. The Daniel Derrida Question: *What is the explicit contract, and where is the difference between the signifier and the reality?*
+### 2. The Jaques Derrida Question: *What is the explicit contract, and where is the difference between the signifier and the reality?*
 
 * **The Test:** Where is the disparity between what we *claim* the system is
   doing and what it is *actually* executing? Is there an unexamined gap between
@@ -91,6 +89,6 @@ To keep the workspace grounded and prevent us from falling back into corporate b
 
 ## Verdict
 
-By anchoring our work in the **James Watt Question** (demanding practical efficiency) and the **Daniel Derrida Question** (demanding structural truth and exposing deltas), we ensure our workspace remains lean, explicit, and low-entropy.
+By anchoring our work in the **James Watt Question** (demanding practical efficiency) and the **Jaques Derrida Question** (demanding structural truth and exposing deltas), we ensure our workspace remains lean, explicit, and low-entropy.
 
 **Artifact is proof.** If it isn't persisted in plain text in the repo, it doesn't exist. If it isn't immediately available for inspection, it is friction.
