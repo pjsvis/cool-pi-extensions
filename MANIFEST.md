@@ -239,6 +239,8 @@ Recorded architectural decisions with context, rationale, and consequences.
 
 **[decisions/025-remove-silo-extension.md](decisions/025-remove-silo-extension.md)** — `src/extensions/silo/` was a pi extension that wrapped the bash tool with a
 
+**[decisions/026-the-palette-belongs-to-okuda.md](decisions/026-the-palette-belongs-to-okuda.md)** — `playbooks/okuda-theme-playbook.md` documented how the Okuda palette is applied to
+
 
 ## Playbooks
 How-to guides for recurring tasks. Give pi the URL and it executes.
@@ -281,8 +283,6 @@ How-to guides for recurring tasks. Give pi the URL and it executes.
 
 **[playbooks/justfile-playbook.md](playbooks/justfile-playbook.md)** — The `justfile` is the facade of the project. It is the public API surface for both agents and humans. It is not a scratchpad, not a monolit…
 
-**[playbooks/okuda-theme-playbook.md](playbooks/okuda-theme-playbook.md)** — How we apply the Okuda palette across the terminal stack. Currently two
-
 **[playbooks/omarchy-setup-playbook.md](playbooks/omarchy-setup-playbook.md)** — Omarchy is the headless Linux box under the desk. It's the remote machine that runs the terminal-native stack — pi, herdr, Fresh, sidecar,…
 
 **[playbooks/playbooks-playbook.md](playbooks/playbooks-playbook.md)** — A Playbook is a codified set of instructions, patterns, or standards for a specific repeatable task. It exists to reduce cognitive load, en…
@@ -323,7 +323,7 @@ Structured reference material.
 
 **[docs/2026-08-03-ai-human-development-workflow-02.md](docs/2026-08-03-ai-human-development-workflow-02.md)** — This is the definitive formulation of a Self-Sustaining, Repo-Centric Architecture. You have laid out a complete, closed-loop memory model…
 
-**[docs/2026-08-03-ai-human-development-workflow-03.md](docs/2026-08-03-ai-human-development-workflow-03.md)** — Here is the development story: how we moved from corporate friction to the vibe-coding delusion, and finally to our minimal, deterministic…
+**[docs/2026-08-03-ai-human-development-workflow-03.md](docs/2026-08-03-ai-human-development-workflow-03.md)** — We began in the era of corporate theater. Software was treated as a static product to be delivered through rigid stage-gates. We built mass…
 
 **[docs/2026-08-03-ai-human-development-workflow-04.md](docs/2026-08-03-ai-human-development-workflow-04.md)** — That is the ultimate architectural checkmate.
 
